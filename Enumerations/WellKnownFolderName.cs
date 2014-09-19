@@ -1,0 +1,258 @@
+// ---------------------------------------------------------------------------
+// <copyright file="WellKnownFolderName.cs" company="Microsoft">
+//     Copyright (c) Microsoft Corporation.  All rights reserved.
+// </copyright>
+// ---------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------
+// <summary>Defines the WellKnownFolderName enumeration.</summary>
+//-----------------------------------------------------------------------
+
+namespace Microsoft.Exchange.WebServices.Data
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
+    // The values in this enumeration must match the values of the
+    // DistinguishedFolderIdNameType type in the schema.
+
+    /// <summary>
+    /// Defines well known folder names.
+    /// </summary>
+    public enum WellKnownFolderName
+    {
+        /// <summary>
+        /// The Calendar folder.
+        /// </summary>
+        [EwsEnum("calendar")]
+        Calendar,
+
+        /// <summary>
+        /// The Contacts folder.
+        /// </summary>
+        [EwsEnum("contacts")]
+        Contacts,
+
+        /// <summary>
+        /// The Deleted Items folder
+        /// </summary>
+        [EwsEnum("deleteditems")]
+        DeletedItems,
+
+        /// <summary>
+        /// The Drafts folder.
+        /// </summary>
+        [EwsEnum("drafts")]
+        Drafts,
+
+        /// <summary>
+        /// The Inbox folder.
+        /// </summary>
+        [EwsEnum("inbox")]
+        Inbox,
+
+        /// <summary>
+        /// The Journal folder.
+        /// </summary>
+        [EwsEnum("journal")]
+        Journal,
+
+        /// <summary>
+        /// The Notes folder.
+        /// </summary>
+        [EwsEnum("notes")]
+        Notes,
+
+        /// <summary>
+        /// The Outbox folder.
+        /// </summary>
+        [EwsEnum("outbox")]
+        Outbox,
+
+        /// <summary>
+        /// The Sent Items folder.
+        /// </summary>
+        [EwsEnum("sentitems")]
+        SentItems,
+
+        /// <summary>
+        /// The Tasks folder.
+        /// </summary>
+        [EwsEnum("tasks")]
+        Tasks,
+
+        /// <summary>
+        /// The message folder root.
+        /// </summary>
+        [EwsEnum("msgfolderroot")]
+        MsgFolderRoot,
+
+        /// <summary>
+        /// The root of the Public Folders hierarchy.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2007_SP1)]
+        [EwsEnum("publicfoldersroot")]
+        PublicFoldersRoot,
+
+        /// <summary>
+        /// The root of the mailbox.
+        /// </summary>
+        [EwsEnum("root")]
+        Root,
+
+        /// <summary>
+        /// The Junk E-mail folder.
+        /// </summary>
+        [EwsEnum("junkemail")]
+        JunkEmail,
+
+        /// <summary>
+        /// The Search Folders folder, also known as the Finder folder.
+        /// </summary>
+        [EwsEnum("searchfolders")]
+        SearchFolders,
+
+        /// <summary>
+        /// The Voicemail folder.
+        /// </summary>
+        [EwsEnum("voicemail")]
+        VoiceMail,
+
+        /// <summary>
+        /// The Dumpster 2.0 root folder.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2010_SP1)]
+        [EwsEnum("recoverableitemsroot")]
+        RecoverableItemsRoot,
+
+        /// <summary>
+        /// The Dumpster 2.0 soft deletions folder.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2010_SP1)]
+        [EwsEnum("recoverableitemsdeletions")]
+        RecoverableItemsDeletions,
+
+        /// <summary>
+        /// The Dumpster 2.0 versions folder.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2010_SP1)]
+        [EwsEnum("recoverableitemsversions")]
+        RecoverableItemsVersions,
+
+        /// <summary>
+        /// The Dumpster 2.0 hard deletions folder.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2010_SP1)]
+        [EwsEnum("recoverableitemspurges")]
+        RecoverableItemsPurges,
+
+        /// <summary>
+        /// The root of the archive mailbox.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2010_SP1)]
+        [EwsEnum("archiveroot")]
+        ArchiveRoot,
+
+        /// <summary>
+        /// The message folder root in the archive mailbox.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2010_SP1)]
+        [EwsEnum("archivemsgfolderroot")]
+        ArchiveMsgFolderRoot,
+
+        /// <summary>
+        /// The Deleted Items folder in the archive mailbox
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2010_SP1)]
+        [EwsEnum("archivedeleteditems")]
+        ArchiveDeletedItems,
+
+        /// <summary>
+        /// The Dumpster 2.0 root folder in the archive mailbox.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2010_SP1)]
+        [EwsEnum("archiverecoverableitemsroot")]
+        ArchiveRecoverableItemsRoot,
+
+        /// <summary>
+        /// The Dumpster 2.0 soft deletions folder in the archive mailbox.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2010_SP1)]
+        [EwsEnum("archiverecoverableitemsdeletions")]
+        ArchiveRecoverableItemsDeletions,
+
+        /// <summary>
+        /// The Dumpster 2.0 versions folder in the archive mailbox.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2010_SP1)]
+        [EwsEnum("archiverecoverableitemsversions")]
+        ArchiveRecoverableItemsVersions,
+
+        /// <summary>
+        /// The Dumpster 2.0 hard deletions folder in the archive mailbox.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2010_SP1)]
+        [EwsEnum("archiverecoverableitemspurges")]
+        ArchiveRecoverableItemsPurges,
+
+        /// <summary>
+        /// The Sync Issues folder.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2013)]
+        [EwsEnum("syncissues")]
+        SyncIssues,
+
+        /// <summary>
+        /// The Conflicts folder
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2013)]
+        [EwsEnum("conflicts")]
+        Conflicts,
+
+        /// <summary>
+        /// The Local failures folder
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2013)]
+        [EwsEnum("localfailures")]
+        LocalFailures,
+
+        /// <summary>
+        /// The Server failures folder
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2013)]
+        [EwsEnum("serverfailures")]
+        ServerFailures,
+
+        /// <summary>
+        /// The Recipient Cache folder
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2013)]
+        [EwsEnum("recipientcache")]
+        RecipientCache,
+
+        /// <summary>
+        /// The Quick Contacts folder
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2013)]
+        [EwsEnum("quickcontacts")]
+        QuickContacts,
+
+        /// <summary>
+        /// Conversation history folder
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2013)]
+        [EwsEnum("conversationhistory")]
+        ConversationHistory,
+
+        /// <summary>
+        /// ToDo search folder
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2013)]
+        [EwsEnum("todosearch")]
+        ToDoSearch,
+
+        //// Note when you adding new folder id here, please update sources\test\Services\src\ComponentTests\GlobalVersioningControl.cs
+        //// IsExchange2013Folder method accordingly.
+    }
+}

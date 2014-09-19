@@ -1,0 +1,213 @@
+// ---------------------------------------------------------------------------
+// <copyright file="Recurrence.WeeklyPattern.cs" company="Microsoft">
+//     Copyright (c) Microsoft Corporation.  All rights reserved.
+// </copyright>
+// ---------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------
+// <summary>Defines the Recurrence.WeeklyPattern class.</summary>
+//-----------------------------------------------------------------------
+
+namespace Microsoft.Exchange.WebServices.Data
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
+    /// <content>
+    /// Contains nested type Recurrence.WeeklyPattern.
+    /// </content>
+    public abstract partial class Recurrence
+    {
+        /// <summary>
+        /// Represents a recurrence pattern where each occurrence happens on specific days a specific number of weeks after the previous one.
+        /// </summary>
+        public sealed class WeeklyPattern : IntervalPattern
+        {
+            private DayOfTheWeekCollection daysOfTheWeek = new DayOfTheWeekCollection();
+            private DayOfWeek? firstDayOfWeek;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="WeeklyPattern"/> class.
+            /// </summary>
+            public WeeklyPattern()
+                : base()
+            {
+                this.daysOfTheWeek.OnChange += this.DaysOfTheWeekChanged;
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="WeeklyPattern"/> class.
+            /// </summary>
+            /// <param name="startDate">The date and time when the recurrence starts.</param>
+            /// <param name="interval">The number of weeks between each occurrence.</param>
+            /// <param name="daysOfTheWeek">The days of the week when occurrences happen.</param>
+            public WeeklyPattern(
+                DateTime startDate,
+                int interval,
+                params DayOfTheWeek[] daysOfTheWeek)
+                : base(startDate, interval)
+            {
+                this.daysOfTheWeek.AddRange(daysOfTheWeek);
+            }
+
+            /// <summary>
+            /// Change event handler.
+            /// </summary>
+            /// <param name="complexProperty">The complex property.</param>
+            private void DaysOfTheWeekChanged(ComplexProperty complexProperty)
+            {
+                this.Changed();
+            }
+
+            /// <summary>
+            /// Gets the name of the XML element.
+            /// </summary>
+            /// <value>The name of the XML element.</value>
+            internal override string XmlElementName
+            {
+                get { return XmlElementNames.WeeklyRecurrence; }
+            }
+
+            /// <summary>
+            /// Write properties to XML.
+            /// </summary>
+            /// <param name="writer">The writer.</param>
+            internal override void InternalWritePropertiesToXml(EwsServiceXmlWriter writer)
+            {
+                base.InternalWritePropertiesToXml(writer);
+
+                this.DaysOfTheWeek.WriteToXml(writer, XmlElementNames.DaysOfWeek);
+
+                if (this.firstDayOfWeek.HasValue)
+                {
+                    //  We only allow the "FirstDayOfWeek" parameter for the Exchange2010_SP1 schema
+                    //  version.
+                    //
+                    EwsUtilities.ValidatePropertyVersion(
+                        (ExchangeService) writer.Service,
+                        ExchangeVersion.Exchange2010_SP1,
+                        "FirstDayOfWeek");
+                    
+                    writer.WriteElementValue(
+                        XmlNamespace.Types,
+                        XmlElementNames.FirstDayOfWeek,
+                        this.firstDayOfWeek.Value);
+                }
+            }
+
+            /// <summary>
+            /// Patterns to json.
+            /// </summary>
+            /// <param name="service">The service.</param>
+            /// <returns></returns>
+            internal override JsonObject PatternToJson(ExchangeService service)
+            {
+                JsonObject jsonPattern = base.PatternToJson(service);
+
+                jsonPattern.Add(XmlElementNames.DayOfWeek, this.DaysOfTheWeek.InternalToJson(service));
+
+                if (this.firstDayOfWeek.HasValue)
+                {
+                    //  We only allow the "FirstDayOfWeek" parameter for the Exchange2010_SP1 schema
+                    //  version.
+                    //
+                    EwsUtilities.ValidatePropertyVersion(
+                        service,
+                        ExchangeVersion.Exchange2010_SP1,
+                        "FirstDayOfWeek");
+
+                    jsonPattern.Add(
+                        XmlElementNames.FirstDayOfWeek,
+                        this.firstDayOfWeek.Value);
+                }
+
+                return jsonPattern;
+            }
+
+            /// <summary>
+            /// Tries to read element from XML.
+            /// </summary>
+            /// <param name="reader">The reader.</param>
+            /// <returns>True if appropriate element was read.</returns>
+            internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+            {
+                if (base.TryReadElementFromXml(reader))
+                {
+                    return true;
+                }
+                else
+                {
+                    switch (reader.LocalName)
+                    {
+                        case XmlElementNames.DaysOfWeek:
+                            this.DaysOfTheWeek.LoadFromXml(reader, reader.LocalName);
+                            return true;
+                        case XmlElementNames.FirstDayOfWeek:
+                            this.FirstDayOfWeek = reader.ReadElementValue<DayOfWeek>(
+                                XmlNamespace.Types,
+                                XmlElementNames.FirstDayOfWeek);
+                            return true;
+                        default:
+                            return false;
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Loads from json.
+            /// </summary>
+            /// <param name="jsonProperty">The json property.</param>
+            /// <param name="service"></param>
+            internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
+            {
+                base.LoadFromJson(jsonProperty, service);
+
+                foreach (string key in jsonProperty.Keys)
+                {
+                    switch (key)
+                    {
+                        case XmlElementNames.DaysOfWeek:
+                            this.DaysOfTheWeek.LoadFromJsonValue(jsonProperty.ReadAsString(key));
+                            break;
+                        case XmlElementNames.FirstDayOfWeek:
+                            this.FirstDayOfWeek = jsonProperty.ReadEnumValue<DayOfWeek>(key);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Validates this instance.
+            /// </summary>
+            internal override void InternalValidate()
+            {
+                base.InternalValidate();
+
+                if (this.DaysOfTheWeek.Count == 0)
+                {
+                    throw new ServiceValidationException(Strings.DaysOfTheWeekNotSpecified);
+                }
+            }
+
+            /// <summary>
+            /// Gets the list of the days of the week when occurrences happen.
+            /// </summary>
+            public DayOfTheWeekCollection DaysOfTheWeek
+            {
+                get { return this.daysOfTheWeek; }
+            }
+
+            /// <summary>
+            /// Gets or sets the first day of the week for this recurrence.
+            /// </summary>
+            public DayOfWeek FirstDayOfWeek
+            {
+                get { return this.GetFieldValueOrThrowIfNull<DayOfWeek>(this.firstDayOfWeek, "FirstDayOfWeek"); }
+                set { this.SetFieldValue<DayOfWeek?>(ref this.firstDayOfWeek, value); }
+            }
+        }
+    }
+}

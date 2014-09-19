@@ -1,0 +1,317 @@
+// ---------------------------------------------------------------------------
+// <copyright file="TimeZoneTransition.cs" company="Microsoft">
+//     Copyright (c) Microsoft Corporation.  All rights reserved.
+// </copyright>
+// ---------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------
+// <summary>Defines the TimeZoneTransition class.</summary>
+//-----------------------------------------------------------------------
+
+namespace Microsoft.Exchange.WebServices.Data
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
+    /// <summary>
+    /// Represents the base class for all time zone transitions.
+    /// </summary>
+    internal class TimeZoneTransition : ComplexProperty
+    {
+        private const string PeriodTarget = "Period";
+        private const string GroupTarget = "Group";
+
+        private TimeZoneDefinition timeZoneDefinition;
+        private TimeZonePeriod targetPeriod;
+        private TimeZoneTransitionGroup targetGroup;
+
+        /// <summary>
+        /// Creates a time zone period transition of the appropriate type given an XML element name.
+        /// </summary>
+        /// <param name="timeZoneDefinition">The time zone definition to which the transition will belong.</param>
+        /// <param name="xmlElementName">The XML element name.</param>
+        /// <returns>A TimeZonePeriodTransition instance.</returns>
+        internal static TimeZoneTransition Create(TimeZoneDefinition timeZoneDefinition, string xmlElementName)
+        {
+            switch (xmlElementName)
+            {
+                case XmlElementNames.AbsoluteDateTransition:
+                    return new AbsoluteDateTransition(timeZoneDefinition);
+                case XmlElementNames.RecurringDayTransition:
+                    return new RelativeDayOfMonthTransition(timeZoneDefinition);
+                case XmlElementNames.RecurringDateTransition:
+                    return new AbsoluteDayOfMonthTransition(timeZoneDefinition);
+                case XmlElementNames.Transition:
+                    return new TimeZoneTransition(timeZoneDefinition);
+                default:
+                    throw new ServiceLocalException(
+                        string.Format(
+                            Strings.UnknownTimeZonePeriodTransitionType,
+                            xmlElementName));
+            }
+        }
+
+        /// <summary>
+        /// Creates a time zone transition based on the specified transition time.
+        /// </summary>
+        /// <param name="timeZoneDefinition">The time zone definition that will own the transition.</param>
+        /// <param name="targetPeriod">The period the transition will target.</param>
+        /// <param name="transitionTime">The transition time to initialize from.</param>
+        /// <returns>A TimeZoneTransition.</returns>
+        internal static TimeZoneTransition CreateTimeZoneTransition(
+            TimeZoneDefinition timeZoneDefinition,
+            TimeZonePeriod targetPeriod,
+            TimeZoneInfo.TransitionTime transitionTime)
+        {
+            TimeZoneTransition transition;
+
+            if (transitionTime.IsFixedDateRule)
+            {
+                transition = new AbsoluteDayOfMonthTransition(timeZoneDefinition, targetPeriod);
+            }
+            else
+            {
+                transition = new RelativeDayOfMonthTransition(timeZoneDefinition, targetPeriod);
+            }
+
+            transition.InitializeFromTransitionTime(transitionTime);
+
+            return transition;
+        }
+
+        /// <summary>
+        /// Gets the XML element name associated with the transition.
+        /// </summary>
+        /// <returns>The XML element name associated with the transition.</returns>
+        internal virtual string GetXmlElementName()
+        {
+            return XmlElementNames.Transition;
+        }
+
+        /// <summary>
+        /// Creates a time zone transition time.
+        /// </summary>
+        /// <returns>A TimeZoneInfo.TransitionTime.</returns>
+        internal virtual TimeZoneInfo.TransitionTime CreateTransitionTime()
+        {
+            throw new ServiceLocalException(Strings.InvalidOrUnsupportedTimeZoneDefinition);
+        }
+
+        /// <summary>
+        /// Initializes this transition based on the specified transition time.
+        /// </summary>
+        /// <param name="transitionTime">The transition time to initialize from.</param>
+        internal virtual void InitializeFromTransitionTime(TimeZoneInfo.TransitionTime transitionTime)
+        {
+        }
+
+        /// <summary>
+        /// Tries to read element from XML.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns>True if element was read.</returns>
+        internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+        {
+            switch (reader.LocalName)
+            {
+                case XmlElementNames.To:
+                    string targetKind = reader.ReadAttributeValue(XmlAttributeNames.Kind);
+                    string targetId = reader.ReadElementValue();
+
+                    switch (targetKind)
+                    {
+                        case TimeZoneTransition.PeriodTarget:
+                            if (!this.timeZoneDefinition.Periods.TryGetValue(targetId, out this.targetPeriod))
+                            {
+                                throw new ServiceLocalException(
+                                    string.Format(
+                                        Strings.PeriodNotFound,
+                                        targetId));
+                            }
+
+                            break;
+                        case TimeZoneTransition.GroupTarget:
+                            if (!this.timeZoneDefinition.TransitionGroups.TryGetValue(targetId, out this.targetGroup))
+                            {
+                                throw new ServiceLocalException(
+                                    string.Format(
+                                        Strings.TransitionGroupNotFound,
+                                        targetId));
+                            }
+
+                            break;
+                        default:
+                            throw new ServiceLocalException(Strings.UnsupportedTimeZonePeriodTransitionTarget);
+                    }
+
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// Loads from json.
+        /// </summary>
+        /// <param name="jsonProperty">The json property.</param>
+        /// <param name="service">The service.</param>
+        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
+        {
+            base.LoadFromJson(jsonProperty, service);
+
+            foreach (string key in jsonProperty.Keys)
+            {
+                switch (key)
+                {
+                    case XmlElementNames.To:
+                        string targetKind = jsonProperty.ReadAsJsonObject(key).ReadAsString(XmlAttributeNames.Kind);
+                        string targetId = jsonProperty.ReadAsJsonObject(key).ReadAsString(XmlElementNames.Value);
+
+                        switch (targetKind)
+                        {
+                            case TimeZoneTransition.PeriodTarget:
+                                if (!this.timeZoneDefinition.Periods.TryGetValue(targetId, out this.targetPeriod))
+                                {
+                                    throw new ServiceLocalException(
+                                        string.Format(
+                                            Strings.PeriodNotFound,
+                                            targetId));
+                                }
+
+                                break;
+                            case TimeZoneTransition.GroupTarget:
+                                if (!this.timeZoneDefinition.TransitionGroups.TryGetValue(targetId, out this.targetGroup))
+                                {
+                                    throw new ServiceLocalException(
+                                        string.Format(
+                                            Strings.TransitionGroupNotFound,
+                                            targetId));
+                                }
+
+                                break;
+                            default:
+                                throw new ServiceLocalException(Strings.UnsupportedTimeZonePeriodTransitionTarget);
+                        }
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Serializes the property to a Json value.
+        /// </summary>
+        /// <param name="service">The service.</param>
+        /// <returns>
+        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
+        /// </returns>
+        internal override object InternalToJson(ExchangeService service)
+        {
+            JsonObject jsonTimeZoneTransition = new JsonObject();
+            JsonObject jsonToElement = new JsonObject();
+
+            jsonTimeZoneTransition.Add(XmlElementNames.To, jsonToElement);
+
+            if (this.targetPeriod != null)
+            {
+                jsonToElement.Add(XmlAttributeNames.Kind, PeriodTarget);
+                jsonToElement.Add(XmlElementNames.Value, this.targetPeriod.Id);
+            }
+            else
+            {
+                jsonToElement.Add(XmlAttributeNames.Kind, GroupTarget);
+                jsonToElement.Add(XmlElementNames.Value, this.targetGroup.Id);
+            }
+
+            return jsonTimeZoneTransition;
+        }
+
+        /// <summary>
+        /// Writes elements to XML.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
+        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+        {
+            writer.WriteStartElement(XmlNamespace.Types, XmlElementNames.To);
+
+            if (this.targetPeriod != null)
+            {
+                writer.WriteAttributeValue(XmlAttributeNames.Kind, PeriodTarget);
+                writer.WriteValue(this.targetPeriod.Id, XmlElementNames.To);
+            }
+            else
+            {
+                writer.WriteAttributeValue(XmlAttributeNames.Kind, GroupTarget);
+                writer.WriteValue(this.targetGroup.Id, XmlElementNames.To);
+            }
+
+            writer.WriteEndElement(); // To
+        }
+
+        /// <summary>
+        /// Loads from XML.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        internal void LoadFromXml(EwsServiceXmlReader reader)
+        {
+            this.LoadFromXml(reader, this.GetXmlElementName());
+        }
+
+        /// <summary>
+        /// Writes to XML.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
+        internal void WriteToXml(EwsServiceXmlWriter writer)
+        {
+            this.WriteToXml(writer, this.GetXmlElementName());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TimeZoneTransition"/> class.
+        /// </summary>
+        /// <param name="timeZoneDefinition">The time zone definition the transition will belong to.</param>
+        internal TimeZoneTransition(TimeZoneDefinition timeZoneDefinition)
+            : base()
+        {
+            this.timeZoneDefinition = timeZoneDefinition;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TimeZoneTransition"/> class.
+        /// </summary>
+        /// <param name="timeZoneDefinition">The time zone definition the transition will belong to.</param>
+        /// <param name="targetGroup">The transition group the transition will target.</param>
+        internal TimeZoneTransition(TimeZoneDefinition timeZoneDefinition, TimeZoneTransitionGroup targetGroup)
+            : this(timeZoneDefinition)
+        {
+            this.targetGroup = targetGroup;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TimeZoneTransition"/> class.
+        /// </summary>
+        /// <param name="timeZoneDefinition">The time zone definition the transition will belong to.</param>
+        /// <param name="targetPeriod">The period the transition will target.</param>
+        internal TimeZoneTransition(TimeZoneDefinition timeZoneDefinition, TimeZonePeriod targetPeriod)
+            : this(timeZoneDefinition)
+        {
+            this.targetPeriod = targetPeriod;
+        }
+
+        /// <summary>
+        /// Gets the target period of the transition.
+        /// </summary>
+        internal TimeZonePeriod TargetPeriod
+        {
+            get { return this.targetPeriod; }
+        }
+
+        /// <summary>
+        /// Gets the target transition group of the transition.
+        /// </summary>
+        internal TimeZoneTransitionGroup TargetGroup
+        {
+            get { return this.targetGroup; }
+        }
+    }
+}

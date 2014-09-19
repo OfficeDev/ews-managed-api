@@ -1,0 +1,4139 @@
+<xs:schema id="messages"
+    elementFormDefault="qualified"
+    version="Exchange2013_SP1"
+    xmlns:m="http://schemas.microsoft.com/exchange/services/2006/messages"
+    xmlns:tns="http://schemas.microsoft.com/exchange/services/2006/messages"
+    xmlns:t="http://schemas.microsoft.com/exchange/services/2006/types"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://schemas.microsoft.com/exchange/services/2006/messages">
+    <!-- Import common types. -->
+    <xs:import namespace="http://schemas.microsoft.com/exchange/services/2006/types" schemaLocation="types.xsd"/>
+    <!-- Basic response type -->
+    <!-- Common to all responses -->
+    <xs:simpleType name="ResponseCodeType">
+        <xs:annotation>
+            <xs:documentation>
+                Represents the message keys that can be returned by response error messages
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="NoError"/>
+            <xs:enumeration value="ErrorAccessDenied"/>
+            <xs:enumeration value="ErrorAccessModeSpecified"/>
+            <xs:enumeration value="ErrorAccountDisabled"/>
+            <xs:enumeration value="ErrorAddDelegatesFailed"/>
+            <xs:enumeration value="ErrorAddressSpaceNotFound"/>
+            <xs:enumeration value="ErrorADOperation"/>
+            <xs:enumeration value="ErrorADSessionFilter"/>
+            <xs:enumeration value="ErrorADUnavailable"/>
+            <xs:enumeration value="ErrorAutoDiscoverFailed"/>
+            <xs:enumeration value="ErrorAffectedTaskOccurrencesRequired"/>
+            <xs:enumeration value="ErrorAttachmentNestLevelLimitExceeded" />
+            <xs:enumeration value="ErrorAttachmentSizeLimitExceeded"/>
+            <xs:enumeration value="ErrorArchiveFolderPathCreation"/>
+            <xs:enumeration value="ErrorArchiveMailboxNotEnabled"/>
+            <xs:enumeration value="ErrorArchiveMailboxServiceDiscoveryFailed"/>
+            <xs:enumeration value="ErrorAvailabilityConfigNotFound"/>
+            <xs:enumeration value="ErrorBatchProcessingStopped"/>
+            <xs:enumeration value="ErrorCalendarCannotMoveOrCopyOccurrence"/>
+            <xs:enumeration value="ErrorCalendarCannotUpdateDeletedItem"/>
+            <xs:enumeration value="ErrorCalendarCannotUseIdForOccurrenceId"/>
+            <xs:enumeration value="ErrorCalendarCannotUseIdForRecurringMasterId"/>
+            <xs:enumeration value="ErrorCalendarDurationIsTooLong"/>
+            <xs:enumeration value="ErrorCalendarEndDateIsEarlierThanStartDate"/>
+            <xs:enumeration value="ErrorCalendarFolderIsInvalidForCalendarView"/>
+            <xs:enumeration value="ErrorCalendarInvalidAttributeValue"/>
+            <xs:enumeration value="ErrorCalendarInvalidDayForTimeChangePattern"/>
+            <xs:enumeration value="ErrorCalendarInvalidDayForWeeklyRecurrence"/>
+            <xs:enumeration value="ErrorCalendarInvalidPropertyState"/>
+            <xs:enumeration value="ErrorCalendarInvalidPropertyValue"/>
+            <xs:enumeration value="ErrorCalendarInvalidRecurrence"/>
+            <xs:enumeration value="ErrorCalendarInvalidTimeZone"/>
+            <xs:enumeration value="ErrorCalendarIsCancelledForAccept"/>
+            <xs:enumeration value="ErrorCalendarIsCancelledForDecline"/>
+            <xs:enumeration value="ErrorCalendarIsCancelledForRemove"/>
+            <xs:enumeration value="ErrorCalendarIsCancelledForTentative"/>
+            <xs:enumeration value="ErrorCalendarIsDelegatedForAccept"/>
+            <xs:enumeration value="ErrorCalendarIsDelegatedForDecline"/>
+            <xs:enumeration value="ErrorCalendarIsDelegatedForRemove"/>
+            <xs:enumeration value="ErrorCalendarIsDelegatedForTentative"/>
+            <xs:enumeration value="ErrorCalendarIsNotOrganizer"/>
+            <xs:enumeration value="ErrorCalendarIsOrganizerForAccept"/>
+            <xs:enumeration value="ErrorCalendarIsOrganizerForDecline"/>
+            <xs:enumeration value="ErrorCalendarIsOrganizerForRemove"/>
+            <xs:enumeration value="ErrorCalendarIsOrganizerForTentative"/>
+            <xs:enumeration value="ErrorCalendarOccurrenceIndexIsOutOfRecurrenceRange"/>
+            <xs:enumeration value="ErrorCalendarOccurrenceIsDeletedFromRecurrence"/>
+            <xs:enumeration value="ErrorCalendarOutOfRange"/>
+            <xs:enumeration value="ErrorCalendarMeetingRequestIsOutOfDate"/>
+            <xs:enumeration value="ErrorCalendarViewRangeTooBig"/>
+            <xs:enumeration value="ErrorCallerIsInvalidADAccount"/>
+            <xs:enumeration value="ErrorCannotArchiveCalendarContactTaskFolderException"/>
+            <xs:enumeration value="ErrorCannotArchiveItemsInPublicFolders"/>
+            <xs:enumeration value="ErrorCannotArchiveItemsInArchiveMailbox"/>
+            <xs:enumeration value="ErrorCannotCreateCalendarItemInNonCalendarFolder"/>
+            <xs:enumeration value="ErrorCannotCreateContactInNonContactFolder"/>
+            <xs:enumeration value="ErrorCannotCreatePostItemInNonMailFolder"/>
+            <xs:enumeration value="ErrorCannotCreateTaskInNonTaskFolder"/>
+            <xs:enumeration value="ErrorCannotDeleteObject"/>
+            <xs:enumeration value="ErrorCannotDisableMandatoryExtension"/>
+            <xs:enumeration value="ErrorCannotGetSourceFolderPath"/>
+            <xs:enumeration value="ErrorCannotGetExternalEcpUrl"/>
+            <xs:enumeration value="ErrorCannotOpenFileAttachment"/>
+            <xs:enumeration value="ErrorCannotDeleteTaskOccurrence"/>
+            <xs:enumeration value="ErrorCannotEmptyFolder"/>
+            <xs:enumeration value="ErrorCannotSetCalendarPermissionOnNonCalendarFolder"/>
+            <xs:enumeration value="ErrorCannotSetNonCalendarPermissionOnCalendarFolder"/>
+            <xs:enumeration value="ErrorCannotSetPermissionUnknownEntries"/>
+            <xs:enumeration value="ErrorCannotSpecifySearchFolderAsSourceFolder"/>
+            <xs:enumeration value="ErrorCannotUseFolderIdForItemId"/>
+            <xs:enumeration value="ErrorCannotUseItemIdForFolderId"/>
+            <xs:enumeration value="ErrorChangeKeyRequired"/>
+            <xs:enumeration value="ErrorChangeKeyRequiredForWriteOperations"/>
+            <xs:enumeration value="ErrorClientDisconnected"/>
+            <xs:enumeration value="ErrorClientIntentInvalidStateDefinition"/>
+            <xs:enumeration value="ErrorClientIntentNotFound"/>
+            <xs:enumeration value="ErrorConnectionFailed"/>
+            <xs:enumeration value="ErrorContainsFilterWrongType"/>
+            <xs:enumeration value="ErrorContentConversionFailed"/>
+            <xs:enumeration value="ErrorContentIndexingNotEnabled"/>
+            <xs:enumeration value="ErrorCorruptData"/>
+            <xs:enumeration value="ErrorCreateItemAccessDenied"/>
+            <xs:enumeration value="ErrorCreateManagedFolderPartialCompletion"/>
+            <xs:enumeration value="ErrorCreateSubfolderAccessDenied"/>
+            <xs:enumeration value="ErrorCrossMailboxMoveCopy"/>
+            <xs:enumeration value="ErrorCrossSiteRequest"/>
+            <xs:enumeration value="ErrorDataSizeLimitExceeded"/>
+            <xs:enumeration value="ErrorDataSourceOperation"/>
+            <xs:enumeration value="ErrorDelegateAlreadyExists"/>
+            <xs:enumeration value="ErrorDelegateCannotAddOwner"/>
+            <xs:enumeration value="ErrorDelegateMissingConfiguration"/>
+            <xs:enumeration value="ErrorDelegateNoUser"/>
+            <xs:enumeration value="ErrorDelegateValidationFailed"/>
+            <xs:enumeration value="ErrorDeleteDistinguishedFolder"/>
+            <xs:enumeration value="ErrorDeleteItemsFailed"/>
+            <xs:enumeration value="ErrorDeleteUnifiedMessagingPromptFailed"/>
+            <xs:enumeration value="ErrorDistinguishedUserNotSupported"/>
+            <xs:enumeration value="ErrorDistributionListMemberNotExist"/>
+            <xs:enumeration value="ErrorDuplicateInputFolderNames"/>
+            <xs:enumeration value="ErrorDuplicateUserIdsSpecified"/>
+            <xs:enumeration value="ErrorEmailAddressMismatch"/>
+            <xs:enumeration value="ErrorEventNotFound"/>
+            <xs:enumeration value="ErrorExceededConnectionCount"/>
+            <xs:enumeration value="ErrorExceededSubscriptionCount"/>
+            <xs:enumeration value="ErrorExceededFindCountLimit"/>
+            <xs:enumeration value="ErrorExpiredSubscription"/>
+            <xs:enumeration value="ErrorExtensionNotFound"/>
+            <xs:enumeration value="ErrorFolderCorrupt"/>
+            <xs:enumeration value="ErrorFolderNotFound"/>
+            <xs:enumeration value="ErrorFolderPropertRequestFailed"/>
+            <xs:enumeration value="ErrorFolderSave"/>
+            <xs:enumeration value="ErrorFolderSaveFailed"/>
+            <xs:enumeration value="ErrorFolderSavePropertyError"/>
+            <xs:enumeration value="ErrorFolderExists"/>
+            <xs:enumeration value="ErrorFreeBusyGenerationFailed"/>
+            <xs:enumeration value="ErrorGetServerSecurityDescriptorFailed"/>
+            <xs:enumeration value="ErrorImContactLimitReached"/>
+            <xs:enumeration value="ErrorImGroupDisplayNameAlreadyExists"/>
+            <xs:enumeration value="ErrorImGroupLimitReached"/>
+            <xs:enumeration value="ErrorImpersonateUserDenied"/>
+            <xs:enumeration value="ErrorImpersonationDenied"/>
+            <xs:enumeration value="ErrorImpersonationFailed"/>
+            <xs:enumeration value="ErrorIncorrectSchemaVersion"/>
+            <xs:enumeration value="ErrorIncorrectUpdatePropertyCount"/>
+            <xs:enumeration value="ErrorIndividualMailboxLimitReached"/>
+            <xs:enumeration value="ErrorInsufficientResources"/>
+            <xs:enumeration value="ErrorInternalServerError"/>
+            <xs:enumeration value="ErrorInternalServerTransientError"/>
+            <xs:enumeration value="ErrorInvalidAccessLevel"/>
+            <xs:enumeration value="ErrorInvalidArgument"/>
+            <xs:enumeration value="ErrorInvalidAttachmentId"/>
+            <xs:enumeration value="ErrorInvalidAttachmentSubfilter"/>
+            <xs:enumeration value="ErrorInvalidAttachmentSubfilterTextFilter"/>
+            <xs:enumeration value="ErrorInvalidAuthorizationContext"/>
+            <xs:enumeration value="ErrorInvalidChangeKey"/>
+            <xs:enumeration value="ErrorInvalidClientSecurityContext"/>
+            <xs:enumeration value="ErrorInvalidCompleteDate"/>
+            <xs:enumeration value="ErrorInvalidContactEmailAddress"/>
+            <xs:enumeration value="ErrorInvalidContactEmailIndex"/>
+            <xs:enumeration value="ErrorInvalidCrossForestCredentials"/>
+            <xs:enumeration value="ErrorInvalidDelegatePermission"/>
+            <xs:enumeration value="ErrorInvalidDelegateUserId"/>
+            <xs:enumeration value="ErrorInvalidExcludesRestriction"/>
+            <xs:enumeration value="ErrorInvalidExpressionTypeForSubFilter"/>
+            <xs:enumeration value="ErrorInvalidExtendedProperty"/>
+            <xs:enumeration value="ErrorInvalidExtendedPropertyValue"/>
+            <xs:enumeration value="ErrorInvalidFolderId"/>
+            <xs:enumeration value="ErrorInvalidFolderTypeForOperation"/>
+            <xs:enumeration value="ErrorInvalidFractionalPagingParameters"/>
+            <xs:enumeration value="ErrorInvalidFreeBusyViewType"/>
+            <xs:enumeration value="ErrorInvalidId"/>
+            <xs:enumeration value="ErrorInvalidIdEmpty"/>
+            <xs:enumeration value="ErrorInvalidIdMalformed"/>
+            <xs:enumeration value="ErrorInvalidIdMalformedEwsLegacyIdFormat"/>
+            <xs:enumeration value="ErrorInvalidIdMonikerTooLong"/>
+            <xs:enumeration value="ErrorInvalidIdNotAnItemAttachmentId"/>
+            <xs:enumeration value="ErrorInvalidIdReturnedByResolveNames"/>
+            <xs:enumeration value="ErrorInvalidIdStoreObjectIdTooLong"/>
+            <xs:enumeration value="ErrorInvalidIdTooManyAttachmentLevels"/>
+            <xs:enumeration value="ErrorInvalidIdXml"/>
+            <xs:enumeration value="ErrorInvalidImContactId"/>
+            <xs:enumeration value="ErrorInvalidImDistributionGroupSmtpAddress"/>
+            <xs:enumeration value="ErrorInvalidImGroupId"/>
+            <xs:enumeration value="ErrorInvalidIndexedPagingParameters"/>
+            <xs:enumeration value="ErrorInvalidInternetHeaderChildNodes"/>
+            <xs:enumeration value="ErrorInvalidItemForOperationArchiveItem"/>
+            <xs:enumeration value="ErrorInvalidItemForOperationCreateItemAttachment"/>
+            <xs:enumeration value="ErrorInvalidItemForOperationCreateItem"/>
+            <xs:enumeration value="ErrorInvalidItemForOperationAcceptItem"/>
+            <xs:enumeration value="ErrorInvalidItemForOperationDeclineItem"/>
+            <xs:enumeration value="ErrorInvalidItemForOperationCancelItem"/>
+            <xs:enumeration value="ErrorInvalidItemForOperationExpandDL"/>
+            <xs:enumeration value="ErrorInvalidItemForOperationRemoveItem"/>
+            <xs:enumeration value="ErrorInvalidItemForOperationSendItem"/>
+            <xs:enumeration value="ErrorInvalidItemForOperationTentative"/>
+            <xs:enumeration value="ErrorInvalidLogonType"/>
+            <xs:enumeration value="ErrorInvalidLikeRequest"/>
+            <xs:enumeration value="ErrorInvalidMailbox"/>
+            <xs:enumeration value="ErrorInvalidManagedFolderProperty"/>
+            <xs:enumeration value="ErrorInvalidManagedFolderQuota"/>
+            <xs:enumeration value="ErrorInvalidManagedFolderSize"/>
+            <xs:enumeration value="ErrorInvalidMergedFreeBusyInterval"/>
+            <xs:enumeration value="ErrorInvalidNameForNameResolution"/>
+            <xs:enumeration value="ErrorInvalidOperation"/>
+            <xs:enumeration value="ErrorInvalidNetworkServiceContext"/>
+            <xs:enumeration value="ErrorInvalidOofParameter"/>
+            <xs:enumeration value="ErrorInvalidPagingMaxRows"/>
+            <xs:enumeration value="ErrorInvalidParentFolder"/>
+            <xs:enumeration value="ErrorInvalidPercentCompleteValue"/>
+            <xs:enumeration value="ErrorInvalidPermissionSettings"/>
+            <xs:enumeration value="ErrorInvalidPhoneCallId"/>
+            <xs:enumeration value="ErrorInvalidPhoneNumber"/>
+            <xs:enumeration value="ErrorInvalidUserInfo"/>
+            <xs:enumeration value="ErrorInvalidPropertyAppend"/>
+            <xs:enumeration value="ErrorInvalidPropertyDelete"/>
+            <xs:enumeration value="ErrorInvalidPropertyForExists"/>
+            <xs:enumeration value="ErrorInvalidPropertyForOperation"/>
+            <xs:enumeration value="ErrorInvalidPropertyRequest"/>
+            <xs:enumeration value="ErrorInvalidPropertySet"/>
+            <xs:enumeration value="ErrorInvalidPropertyUpdateSentMessage"/>
+            <xs:enumeration value="ErrorInvalidProxySecurityContext"/>
+            <xs:enumeration value="ErrorInvalidPullSubscriptionId"/>
+            <xs:enumeration value="ErrorInvalidPushSubscriptionUrl"/>
+            <xs:enumeration value="ErrorInvalidRecipients"/>
+            <xs:enumeration value="ErrorInvalidRecipientSubfilter"/>
+            <xs:enumeration value="ErrorInvalidRecipientSubfilterComparison"/>
+            <xs:enumeration value="ErrorInvalidRecipientSubfilterOrder"/>
+            <xs:enumeration value="ErrorInvalidRecipientSubfilterTextFilter"/>
+            <xs:enumeration value="ErrorInvalidReferenceItem"/>
+            <xs:enumeration value="ErrorInvalidRequest"/>
+            <xs:enumeration value="ErrorInvalidRestriction"/>
+            <xs:enumeration value="ErrorInvalidRetentionTagTypeMismatch"/>
+            <xs:enumeration value="ErrorInvalidRetentionTagInvisible"/>
+            <xs:enumeration value="ErrorInvalidRetentionTagInheritance"/>
+            <xs:enumeration value="ErrorInvalidRetentionTagIdGuid"/>
+            <xs:enumeration value="ErrorInvalidRoutingType"/>
+            <xs:enumeration value="ErrorInvalidScheduledOofDuration"/>
+            <xs:enumeration value="ErrorInvalidSchemaVersionForMailboxVersion"/>
+            <xs:enumeration value="ErrorInvalidSecurityDescriptor"/>
+            <xs:enumeration value="ErrorInvalidSendItemSaveSettings"/>
+            <xs:enumeration value="ErrorInvalidSerializedAccessToken"/>
+            <xs:enumeration value="ErrorInvalidServerVersion"/>
+            <xs:enumeration value="ErrorInvalidSid"/>
+            <xs:enumeration value="ErrorInvalidSIPUri"/>
+            <xs:enumeration value="ErrorInvalidSmtpAddress"/>
+            <xs:enumeration value="ErrorInvalidSubfilterType"/>
+            <xs:enumeration value="ErrorInvalidSubfilterTypeNotAttendeeType"/>
+            <xs:enumeration value="ErrorInvalidSubfilterTypeNotRecipientType"/>
+            <xs:enumeration value="ErrorInvalidSubscription"/>
+            <xs:enumeration value="ErrorInvalidSubscriptionRequest"/>
+            <xs:enumeration value="ErrorInvalidSyncStateData"/>
+            <xs:enumeration value="ErrorInvalidTimeInterval"/>
+            <xs:enumeration value="ErrorInvalidUserOofSettings"/>
+            <xs:enumeration value="ErrorInvalidUserPrincipalName"/>
+            <xs:enumeration value="ErrorInvalidUserSid"/>
+            <xs:enumeration value="ErrorInvalidUserSidMissingUPN"/>
+            <xs:enumeration value="ErrorInvalidValueForProperty"/>
+            <xs:enumeration value="ErrorInvalidWatermark"/>
+            <xs:enumeration value="ErrorIPGatewayNotFound"/>
+            <xs:enumeration value="ErrorIrresolvableConflict"/>
+            <xs:enumeration value="ErrorItemCorrupt"/>
+            <xs:enumeration value="ErrorItemNotFound"/>
+            <xs:enumeration value="ErrorItemPropertyRequestFailed"/>
+            <xs:enumeration value="ErrorItemSave"/>
+            <xs:enumeration value="ErrorItemSavePropertyError"/>
+            <xs:enumeration value="ErrorLegacyMailboxFreeBusyViewTypeNotMerged"/>
+            <xs:enumeration value="ErrorLocalServerObjectNotFound"/>
+            <xs:enumeration value="ErrorLogonAsNetworkServiceFailed"/>
+            <xs:enumeration value="ErrorMailboxConfiguration"/>
+            <xs:enumeration value="ErrorMailboxDataArrayEmpty"/>
+            <xs:enumeration value="ErrorMailboxDataArrayTooBig"/>
+            <xs:enumeration value="ErrorMailboxHoldNotFound"/>
+            <xs:enumeration value="ErrorMailboxLogonFailed"/>
+            <xs:enumeration value="ErrorMailboxMoveInProgress"/>
+            <xs:enumeration value="ErrorMailboxStoreUnavailable"/>
+            <xs:enumeration value="ErrorMailRecipientNotFound"/>
+            <xs:enumeration value="ErrorMailTipsDisabled"/>
+            <xs:enumeration value="ErrorManagedFolderAlreadyExists"/>
+            <xs:enumeration value="ErrorManagedFolderNotFound"/>
+            <xs:enumeration value="ErrorManagedFoldersRootFailure"/>
+            <xs:enumeration value="ErrorMeetingSuggestionGenerationFailed"/>
+            <xs:enumeration value="ErrorMessageDispositionRequired"/>
+            <xs:enumeration value="ErrorMessageSizeExceeded"/>
+            <xs:enumeration value="ErrorMimeContentConversionFailed"/>
+            <xs:enumeration value="ErrorMimeContentInvalid"/>
+            <xs:enumeration value="ErrorMimeContentInvalidBase64String"/>
+            <xs:enumeration value="ErrorMissingArgument"/>
+            <xs:enumeration value="ErrorMissingEmailAddress"/>
+            <xs:enumeration value="ErrorMissingEmailAddressForManagedFolder"/>
+            <xs:enumeration value="ErrorMissingInformationEmailAddress"/>
+            <xs:enumeration value="ErrorMissingInformationReferenceItemId"/>
+            <xs:enumeration value="ErrorMissingItemForCreateItemAttachment"/>
+            <xs:enumeration value="ErrorMissingManagedFolderId"/>
+            <xs:enumeration value="ErrorMissingRecipients"/>
+            <xs:enumeration value="ErrorMissingUserIdInformation"/>
+            <xs:enumeration value="ErrorMoreThanOneAccessModeSpecified"/>
+            <xs:enumeration value="ErrorMoveCopyFailed"/>
+            <xs:enumeration value="ErrorMoveDistinguishedFolder"/>
+            <xs:enumeration value="ErrorMultiLegacyMailboxAccess"/>
+            <xs:enumeration value="ErrorNameResolutionMultipleResults"/>
+            <xs:enumeration value="ErrorNameResolutionNoMailbox"/>
+            <xs:enumeration value="ErrorNameResolutionNoResults"/>
+            <xs:enumeration value="ErrorNoApplicableProxyCASServersAvailable"/>
+            <xs:enumeration value="ErrorNoCalendar"/>
+            <xs:enumeration value="ErrorNoDestinationCASDueToKerberosRequirements"/>
+            <xs:enumeration value="ErrorNoDestinationCASDueToSSLRequirements"/>
+            <xs:enumeration value="ErrorNoDestinationCASDueToVersionMismatch"/>
+            <xs:enumeration value="ErrorNoFolderClassOverride"/>
+            <xs:enumeration value="ErrorNoFreeBusyAccess"/>
+            <xs:enumeration value="ErrorNonExistentMailbox"/>
+            <xs:enumeration value="ErrorNonPrimarySmtpAddress"/>
+            <xs:enumeration value="ErrorNoPropertyTagForCustomProperties"/>
+            <xs:enumeration value="ErrorNoPublicFolderReplicaAvailable"/>
+            <xs:enumeration value="ErrorNoPublicFolderServerAvailable"/>
+            <xs:enumeration value="ErrorNoRespondingCASInDestinationSite"/>
+            <xs:enumeration value="ErrorNotDelegate"/>
+            <xs:enumeration value="ErrorNotEnoughMemory"/>
+            <xs:enumeration value="ErrorObjectTypeChanged"/>
+            <xs:enumeration value="ErrorOccurrenceCrossingBoundary"/>
+            <xs:enumeration value="ErrorOccurrenceTimeSpanTooBig" />
+            <xs:enumeration value="ErrorOperationNotAllowedWithPublicFolderRoot" />
+            <xs:enumeration value="ErrorParentFolderIdRequired"/>
+            <xs:enumeration value="ErrorParentFolderNotFound"/>
+            <xs:enumeration value="ErrorPasswordChangeRequired"/>
+            <xs:enumeration value="ErrorPasswordExpired"/>
+            <xs:enumeration value="ErrorPhoneNumberNotDialable"/>
+            <xs:enumeration value="ErrorPropertyUpdate"/>
+            <xs:enumeration value="ErrorPromptPublishingOperationFailed"/>
+            <xs:enumeration value="ErrorPropertyValidationFailure"/>
+            <xs:enumeration value="ErrorProxiedSubscriptionCallFailure"/>
+            <xs:enumeration value="ErrorProxyCallFailed"/>
+            <xs:enumeration value="ErrorProxyGroupSidLimitExceeded"/>
+            <xs:enumeration value="ErrorProxyRequestNotAllowed"/>
+            <xs:enumeration value="ErrorProxyRequestProcessingFailed"/>
+            <xs:enumeration value="ErrorProxyServiceDiscoveryFailed"/>
+            <xs:enumeration value="ErrorProxyTokenExpired"/>
+            <xs:enumeration value="ErrorPublicFolderMailboxDiscoveryFailed"/>
+            <xs:enumeration value="ErrorPublicFolderOperationFailed"/>
+            <xs:enumeration value="ErrorPublicFolderRequestProcessingFailed"/>
+            <xs:enumeration value="ErrorPublicFolderServerNotFound"/>
+            <xs:enumeration value="ErrorPublicFolderSyncException"/>
+            <xs:enumeration value="ErrorQueryFilterTooLong"/>
+            <xs:enumeration value="ErrorQuotaExceeded"/>
+            <xs:enumeration value="ErrorReadEventsFailed"/>
+            <xs:enumeration value="ErrorReadReceiptNotPending"/>
+            <xs:enumeration value="ErrorRecurrenceEndDateTooBig"/>
+            <xs:enumeration value="ErrorRecurrenceHasNoOccurrence"/>
+            <xs:enumeration value="ErrorRemoveDelegatesFailed"/>
+            <xs:enumeration value="ErrorRequestAborted"/>
+            <xs:enumeration value="ErrorRequestStreamTooBig"/>
+            <xs:enumeration value="ErrorRequiredPropertyMissing"/>
+            <xs:enumeration value="ErrorResolveNamesInvalidFolderType"/>
+            <xs:enumeration value="ErrorResolveNamesOnlyOneContactsFolderAllowed"/>
+            <xs:enumeration value="ErrorResponseSchemaValidation"/>
+            <xs:enumeration value="ErrorRestrictionTooLong"/>
+            <xs:enumeration value="ErrorRestrictionTooComplex"/>
+            <xs:enumeration value="ErrorResultSetTooBig"/>
+            <xs:enumeration value="ErrorInvalidExchangeImpersonationHeaderData"/>
+            <xs:enumeration value="ErrorSavedItemFolderNotFound"/>
+            <xs:enumeration value="ErrorSchemaValidation"/>
+            <xs:enumeration value="ErrorSearchFolderNotInitialized"/>
+            <xs:enumeration value="ErrorSendAsDenied"/>
+            <xs:enumeration value="ErrorSendMeetingCancellationsRequired"/>
+            <xs:enumeration value="ErrorSendMeetingInvitationsOrCancellationsRequired"/>
+            <xs:enumeration value="ErrorSendMeetingInvitationsRequired"/>
+            <xs:enumeration value="ErrorSentMeetingRequestUpdate"/>
+            <xs:enumeration value="ErrorSentTaskRequestUpdate"/>
+            <xs:enumeration value="ErrorServerBusy"/>
+            <xs:enumeration value="ErrorServiceDiscoveryFailed"/>
+            <xs:enumeration value="ErrorStaleObject"/>
+            <xs:enumeration value="ErrorSubmissionQuotaExceeded"/>
+            <xs:enumeration value="ErrorSubscriptionAccessDenied"/>
+            <xs:enumeration value="ErrorSubscriptionDelegateAccessNotSupported"/>
+            <xs:enumeration value="ErrorSubscriptionNotFound"/>
+            <xs:enumeration value="ErrorSubscriptionUnsubscribed"/>
+            <xs:enumeration value="ErrorSyncFolderNotFound"/>
+            <xs:enumeration value="ErrorTeamMailboxNotFound"/>
+            <xs:enumeration value="ErrorTeamMailboxNotLinkedToSharePoint"/>
+            <xs:enumeration value="ErrorTeamMailboxUrlValidationFailed"/>
+            <xs:enumeration value="ErrorTeamMailboxNotAuthorizedOwner"/>
+            <xs:enumeration value="ErrorTeamMailboxActiveToPendingDelete"/>
+            <xs:enumeration value="ErrorTeamMailboxFailedSendingNotifications"/>
+            <xs:enumeration value="ErrorTeamMailboxErrorUnknown"/>
+            <xs:enumeration value="ErrorTimeIntervalTooBig"/>
+            <xs:enumeration value="ErrorTimeoutExpired"/>
+            <xs:enumeration value="ErrorTimeZone"/>
+            <xs:enumeration value="ErrorToFolderNotFound"/>
+            <xs:enumeration value="ErrorTokenSerializationDenied"/>
+            <xs:enumeration value="ErrorTooManyObjectsOpened"/>
+            <xs:enumeration value="ErrorUpdatePropertyMismatch"/>
+            <xs:enumeration value="ErrorUnifiedMessagingDialPlanNotFound"/>
+            <xs:enumeration value="ErrorUnifiedMessagingReportDataNotFound"/>
+            <xs:enumeration value="ErrorUnifiedMessagingPromptNotFound"/>
+            <xs:enumeration value="ErrorUnifiedMessagingRequestFailed"/>
+            <xs:enumeration value="ErrorUnifiedMessagingServerNotFound"/>
+            <xs:enumeration value="ErrorUnableToGetUserOofSettings"/>
+            <xs:enumeration value="ErrorUnableToRemoveImContactFromGroup"/>
+            <xs:enumeration value="ErrorUnsupportedSubFilter"/>
+            <xs:enumeration value="ErrorUnsupportedCulture"/>
+            <xs:enumeration value="ErrorUnsupportedMapiPropertyType"/>
+            <xs:enumeration value="ErrorUnsupportedMimeConversion"/>
+            <xs:enumeration value="ErrorUnsupportedPathForQuery"/>
+            <xs:enumeration value="ErrorUnsupportedPathForSortGroup"/>
+            <xs:enumeration value="ErrorUnsupportedPropertyDefinition"/>
+            <xs:enumeration value="ErrorUnsupportedQueryFilter"/>
+            <xs:enumeration value="ErrorUnsupportedRecurrence"/>
+            <xs:enumeration value="ErrorUnsupportedTypeForConversion"/>
+            <xs:enumeration value="ErrorUpdateDelegatesFailed"/>
+            <xs:enumeration value="ErrorUserNotUnifiedMessagingEnabled"/>
+            <xs:enumeration value="ErrorVoiceMailNotImplemented"/>
+            <xs:enumeration value="ErrorValueOutOfRange"/>
+            <xs:enumeration value="ErrorVirusDetected"/>
+            <xs:enumeration value="ErrorVirusMessageDeleted"/>
+            <xs:enumeration value="ErrorWebRequestInInvalidState"/>
+            <xs:enumeration value="ErrorWin32InteropError"/>
+            <xs:enumeration value="ErrorWorkingHoursSaveFailed"/>
+            <xs:enumeration value="ErrorWorkingHoursXmlMalformed"/>
+            <xs:enumeration value="ErrorWrongServerVersion"/>
+            <xs:enumeration value="ErrorWrongServerVersionDelegate"/>
+            <xs:enumeration value="ErrorMissingInformationSharingFolderId"/>
+            <xs:enumeration value="ErrorDuplicateSOAPHeader" />
+            <xs:enumeration value="ErrorSharingSynchronizationFailed" />
+            <xs:enumeration value="ErrorSharingNoExternalEwsAvailable" />
+            <xs:enumeration value="ErrorFreeBusyDLLimitReached"/>
+            <xs:enumeration value="ErrorInvalidGetSharingFolderRequest" />
+            <xs:enumeration value="ErrorNotAllowedExternalSharingByPolicy" />
+            <xs:enumeration value="ErrorUserNotAllowedByPolicy" />
+            <xs:enumeration value="ErrorPermissionNotAllowedByPolicy" />
+            <xs:enumeration value="ErrorOrganizationNotFederated" />
+            <xs:enumeration value="ErrorMailboxFailover" />
+            <xs:enumeration value="ErrorInvalidExternalSharingInitiator" />
+            <xs:enumeration value="ErrorMessageTrackingPermanentError" />
+            <xs:enumeration value="ErrorMessageTrackingTransientError" />
+            <xs:enumeration value="ErrorMessageTrackingNoSuchDomain" />
+            <xs:enumeration value="ErrorUserWithoutFederatedProxyAddress" />
+            <xs:enumeration value="ErrorInvalidOrganizationRelationshipForFreeBusy" />
+            <xs:enumeration value="ErrorInvalidFederatedOrganizationId" />
+            <xs:enumeration value="ErrorInvalidExternalSharingSubscriber" />
+            <xs:enumeration value="ErrorInvalidSharingData" />
+            <xs:enumeration value="ErrorInvalidSharingMessage" />
+            <xs:enumeration value="ErrorNotSupportedSharingMessage" />
+            <xs:enumeration value="ErrorApplyConversationActionFailed" />
+            <xs:enumeration value="ErrorInboxRulesValidationError" />
+            <xs:enumeration value="ErrorOutlookRuleBlobExists" />
+            <xs:enumeration value="ErrorRulesOverQuota" />
+            <xs:enumeration value="ErrorNewEventStreamConnectionOpened" />
+            <xs:enumeration value="ErrorMissedNotificationEvents" />
+            <xs:enumeration value="ErrorDuplicateLegacyDistinguishedName" />
+            <xs:enumeration value="ErrorInvalidClientAccessTokenRequest" />
+            <xs:enumeration value="ErrorNoSpeechDetected" />
+            <xs:enumeration value="ErrorUMServerUnavailable" />
+            <xs:enumeration value="ErrorRecipientNotFound" />
+            <xs:enumeration value="ErrorRecognizerNotInstalled" />
+            <xs:enumeration value="ErrorSpeechGrammarError" />
+            <xs:enumeration value="ErrorInvalidManagementRoleHeader" />
+            <xs:enumeration value="ErrorLocationServicesDisabled"/>
+            <xs:enumeration value="ErrorLocationServicesRequestTimedOut"/>
+            <xs:enumeration value="ErrorLocationServicesRequestFailed"/>
+            <xs:enumeration value="ErrorLocationServicesInvalidRequest"/>
+            <xs:enumeration value="ErrorWeatherServiceDisabled"/>
+            <xs:enumeration value="ErrorMailboxScopeNotAllowedWithoutQueryString" />
+            <xs:enumeration value="ErrorArchiveMailboxSearchFailed" />
+            <xs:enumeration value="ErrorGetRemoteArchiveFolderFailed" />
+            <xs:enumeration value="ErrorFindRemoteArchiveFolderFailed" />
+            <xs:enumeration value="ErrorGetRemoteArchiveItemFailed" />
+            <xs:enumeration value="ErrorExportRemoteArchiveItemsFailed" />
+            <xs:enumeration value="ErrorInvalidPhotoSize" />
+            <xs:enumeration value="ErrorSearchQueryHasTooManyKeywords"/>
+            <xs:enumeration value="ErrorSearchTooManyMailboxes"/>
+            <xs:enumeration value="ErrorInvalidRetentionTagNone"/>
+            <xs:enumeration value="ErrorDiscoverySearchesDisabled"/>
+            <xs:enumeration value="ErrorCalendarSeekToConditionNotSupported"/>
+            <xs:enumeration value="ErrorCalendarIsGroupMailboxForAccept"/>
+            <xs:enumeration value="ErrorCalendarIsGroupMailboxForDecline"/>
+            <xs:enumeration value="ErrorCalendarIsGroupMailboxForTentative"/>
+            <xs:enumeration value="ErrorCalendarIsGroupMailboxForSuppressReadReceipt"/>
+            <xs:enumeration value="ErrorOrganizationAccessBlocked"/>
+            <xs:enumeration value="ErrorInvalidLicense"/>
+            <xs:enumeration value="ErrorMessagePerFolderCountReceiveQuotaExceeded"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+  <xs:complexType name="ResponseMessageType">
+    <xs:sequence minOccurs="0">
+      <xs:element name="MessageText" type="xs:string" minOccurs="0"/>
+      <xs:element name="ResponseCode" type="m:ResponseCodeType" minOccurs="0"/>
+      <xs:element name="DescriptiveLinkKey" type="xs:int" minOccurs="0"/>
+      <xs:element name="MessageXml" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="ResponseClass" type="t:ResponseClassType" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfResponseMessagesType">
+    <xs:choice maxOccurs="unbounded">
+      <xs:element name="CreateItemResponseMessage" type="m:ItemInfoResponseMessageType"/>
+      <xs:element name="DeleteItemResponseMessage" type="m:DeleteItemResponseMessageType"/>
+      <xs:element name="GetItemResponseMessage" type="m:ItemInfoResponseMessageType"/>
+      <xs:element name="UpdateItemResponseMessage" type="m:UpdateItemResponseMessageType"/>
+      <xs:element name="UpdateItemInRecoverableItemsResponseMessage" type="m:UpdateItemInRecoverableItemsResponseMessageType"/>
+      <xs:element name="SendItemResponseMessage" type="m:ResponseMessageType"/>
+      <xs:element name="DeleteFolderResponseMessage" type="m:ResponseMessageType"/>
+      <xs:element name="EmptyFolderResponseMessage" type="m:ResponseMessageType"/>
+      <xs:element name="CreateFolderResponseMessage" type="m:FolderInfoResponseMessageType"/>
+      <xs:element name="GetFolderResponseMessage" type="m:FolderInfoResponseMessageType"/>
+      <xs:element name="FindFolderResponseMessage" type="m:FindFolderResponseMessageType"/>
+      <xs:element name="UpdateFolderResponseMessage" type="m:FolderInfoResponseMessageType"/>
+      <xs:element name="MoveFolderResponseMessage" type="m:FolderInfoResponseMessageType"/>
+      <xs:element name="CopyFolderResponseMessage" type="m:FolderInfoResponseMessageType"/>
+      <xs:element name="CreateFolderPathResponseMessage" type="m:FolderInfoResponseMessageType"/>
+      <xs:element name="CreateAttachmentResponseMessage" type="m:AttachmentInfoResponseMessageType"/>
+      <xs:element name="DeleteAttachmentResponseMessage" type="m:DeleteAttachmentResponseMessageType"/>
+      <xs:element name="GetAttachmentResponseMessage" type="m:AttachmentInfoResponseMessageType"/>
+      <xs:element name="UploadItemsResponseMessage" type="m:UploadItemsResponseMessageType"/>
+      <xs:element name="ExportItemsResponseMessage" type="m:ExportItemsResponseMessageType"/>
+      <xs:element name="MarkAllItemsAsReadResponseMessage" type="m:ResponseMessageType"/>
+      <xs:element name="GetClientAccessTokenResponseMessage" type="m:GetClientAccessTokenResponseMessageType"/>
+      <xs:element name="GetAppManifestsResponseMessage" type="m:ResponseMessageType"/>
+      <xs:element name="GetClientExtensionResponseMessage" type="m:ResponseMessageType"/>
+      <xs:element name="SetClientExtensionResponseMessage" type="m:ResponseMessageType"/>
+      <xs:element name="GetEncryptionConfigurationResponseMessage" type="m:ResponseMessageType"/>
+      <xs:element name="SetEncryptionConfigurationResponseMessage" type="m:ResponseMessageType"/>
+      <!-- Generic reponse to enumerating the items below a folder -->
+      <xs:element name="FindItemResponseMessage" type="m:FindItemResponseMessageType"/>
+      <xs:element name="MoveItemResponseMessage" type="m:ItemInfoResponseMessageType"/>
+      <xs:element name="ArchiveItemResponseMessage" type="m:ItemInfoResponseMessageType"/>
+      <xs:element name="CopyItemResponseMessage" type="m:ItemInfoResponseMessageType"/>
+      <!-- ANR responses -->
+      <xs:element name="ResolveNamesResponseMessage" type="m:ResolveNamesResponseMessageType"/>
+      <xs:element name="ExpandDLResponseMessage" type="m:ExpandDLResponseMessageType"/>
+      <!-- GetServerTimeZones response -->
+      <xs:element name="GetServerTimeZonesResponseMessage" type="m:GetServerTimeZonesResponseMessageType"/>
+      <!-- Notification responses -->
+      <xs:element name="GetEventsResponseMessage" type="m:GetEventsResponseMessageType"/>
+      <xs:element name="GetStreamingEventsResponseMessage" type="m:GetStreamingEventsResponseMessageType"/>
+      <xs:element name="SubscribeResponseMessage" type="m:SubscribeResponseMessageType"/>
+      <xs:element name="UnsubscribeResponseMessage" type="m:ResponseMessageType"/>
+      <!-- Send Notification response -->
+      <xs:element name="SendNotificationResponseMessage" type="m:SendNotificationResponseMessageType" />
+      <!-- Sync responses -->
+      <xs:element name="SyncFolderHierarchyResponseMessage" type="m:SyncFolderHierarchyResponseMessageType"/>
+      <xs:element name="SyncFolderItemsResponseMessage" type="m:SyncFolderItemsResponseMessageType"/>
+      <!-- Managed Folder responses -->
+      <xs:element name="CreateManagedFolderResponseMessage" type="m:FolderInfoResponseMessageType"/>
+      <!-- ConvertId response-->
+      <xs:element name="ConvertIdResponseMessage" type="m:ConvertIdResponseMessageType"/>
+      <!-- Sharing responses-->
+      <xs:element name="GetSharingMetadataResponseMessage" type="m:GetSharingMetadataResponseMessageType"/>
+      <xs:element name="RefreshSharingFolderResponseMessage" type="m:RefreshSharingFolderResponseMessageType"/>
+      <xs:element name="GetSharingFolderResponseMessage" type="m:GetSharingFolderResponseMessageType"/>
+      <!-- UserConfiguration responses-->
+      <xs:element name="CreateUserConfigurationResponseMessage" type="m:ResponseMessageType"/>
+      <xs:element name="DeleteUserConfigurationResponseMessage" type="m:ResponseMessageType"/>
+      <xs:element name="GetUserConfigurationResponseMessage" type="m:GetUserConfigurationResponseMessageType"/>
+      <xs:element name="UpdateUserConfigurationResponseMessage" type="m:ResponseMessageType"/>
+      <xs:element name="GetRoomListsResponse" type="m:GetRoomListsResponseMessageType"/>
+      <xs:element name="GetRoomsResponse" type="m:GetRoomsResponseMessageType"/>
+      <xs:element name="GetRemindersResponse" type="m:GetRemindersResponseMessageType"/>
+      <xs:element name="PerformReminderActionResponse" type="m:PerformReminderActionResponseMessageType"/>
+      <!-- ApplyConversation response-->
+      <xs:element name="ApplyConversationActionResponseMessage" type="m:ApplyConversationActionResponseMessageType"/>
+      <!-- FindMailboxStatisticsByKeywords response-->
+      <xs:element name="FindMailboxStatisticsByKeywordsResponseMessage" type="m:FindMailboxStatisticsByKeywordsResponseMessageType"/>
+      <!-- GetSearchableMailboxes response -->
+      <xs:element name="GetSearchableMailboxesResponseMessage" type="m:GetSearchableMailboxesResponseMessageType"/>
+      <!-- SearchMailboxes response -->
+      <xs:element name="SearchMailboxesResponseMessage" type="m:SearchMailboxesResponseMessageType"/>
+      <!-- GetDiscoverySearchConfiguration response -->
+      <xs:element name="GetDiscoverySearchConfigurationResponseMessage" type="m:GetDiscoverySearchConfigurationResponseMessageType"/>
+      <!-- GetHoldOnMailboxes response -->
+      <xs:element name="GetHoldOnMailboxesResponseMessage" type="m:GetHoldOnMailboxesResponseMessageType"/>
+      <!-- SetHoldOnMailboxes response -->
+      <xs:element name="SetHoldOnMailboxesResponseMessage" type="m:SetHoldOnMailboxesResponseMessageType"/>
+      <!-- GetNonIndexableItemStatistics response -->
+      <xs:element name="GetNonIndexableItemStatisticsResponseMessage" type="m:GetNonIndexableItemStatisticsResponseMessageType"/>
+      <!-- GetNonIndexableItemDetails response -->
+      <xs:element name="GetNonIndexableItemDetailsResponseMessage" type="m:GetNonIndexableItemDetailsResponseMessageType"/>
+      <!-- FindPeople response -->
+      <xs:element name="FindPeopleResponseMessage" type="m:FindPeopleResponseMessageType"/>
+      <!-- GetPasswordExpirationDate response -->
+      <xs:element name="GetPasswordExpirationDateResponse" type="m:GetPasswordExpirationDateResponseMessageType"/>
+      <!-- GetPersona response -->
+      <xs:element name="GetPersonaResponseMessage" type="m:GetPersonaResponseMessageType"/>
+      <!-- GetConversationItems response -->
+      <xs:element name="GetConversationItemsResponseMessage" type="m:GetConversationItemsResponseMessageType"/>
+      <!-- GetUserRetentionPolicyTags response -->
+      <xs:element name="GetUserRetentionPolicyTagsResponseMessage" type="m:GetUserRetentionPolicyTagsResponseMessageType"/>
+      <!-- GetUserPhoto response -->
+      <xs:element name="GetUserPhotoResponseMessage" type="m:GetUserPhotoResponseMessageType"/>
+      <!-- MarkAsJunk response-->
+      <xs:element name="MarkAsJunkResponseMessage" type="m:MarkAsJunkResponseMessageType" />
+      <!-- UpdateMailboxAssociation response-->
+      <xs:element name="UpdateMailboxAssociationResponseMessage" type="m:ResponseMessageType"/>
+      <!-- UpdateGroupMailbox response-->
+      <xs:element name="UpdateGroupMailboxResponseMessage" type="m:ResponseMessageType"/>
+      <!-- PostModernGroupItem response-->
+      <xs:element name="PostModernGroupItemResponseMessage" type="m:ResponseMessageType"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <!-- Base types for all messages. -->
+  <xs:complexType name="BaseResponseMessageType">
+    <xs:sequence>
+      <xs:element name="ResponseMessages" type="m:ArrayOfResponseMessagesType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="BaseRequestType" abstract="true"/>
+  <!-- Folder Service messages. -->
+  <xs:complexType name="GetFolderType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="FolderShape" type="t:FolderResponseShapeType"/>
+          <xs:element name="FolderIds" type="t:NonEmptyArrayOfBaseFolderIdsType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetFolder" type="m:GetFolderType"/>
+
+  <!-- Upload Items -->
+  <!-- request -->
+  <xs:complexType name="UploadItemsType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="Items" type="t:NonEmptyArrayOfUploadItemsType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UploadItems" type="m:UploadItemsType"/>
+
+  <!-- upload Items response message -->
+  <xs:complexType name="UploadItemsResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="ItemId" type="t:ItemIdType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <!-- upload items response -->
+  <xs:complexType name="UploadItemsResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UploadItemsResponse" type="m:UploadItemsResponseType"/>
+
+  <!-- ExportItems -->
+  <xs:complexType name="ExportItemsType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ItemIds" type="t:NonEmptyArrayOfItemIdsType" minOccurs ="1" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ExportItems" type="m:ExportItemsType"/>
+
+  <!-- ExportItems response message -->
+  <xs:complexType name="ExportItemsResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="ItemId" type="t:ItemIdType" minOccurs ="0" maxOccurs ="1"/>
+          <xs:element name="Data" type="xs:base64Binary" minOccurs="0" maxOccurs ="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- ExportItems response type  -->
+  <xs:complexType name="ExportItemsResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ExportItemsResponse" type="m:ExportItemsResponseType"/>
+
+
+  <!-- Creating a folder. -->
+  <xs:complexType name="CreateFolderType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ParentFolderId" type="t:TargetFolderIdType"/>
+          <xs:element name="Folders" type="t:NonEmptyArrayOfFoldersType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateFolder" type="m:CreateFolderType"/>
+  <!-- Enumerate folders beneath the elements of a list of folders (Reading, 1) -->
+  <xs:complexType name="FindFolderType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="FolderShape" type="t:FolderResponseShapeType"/>
+          <xs:choice maxOccurs="1" minOccurs="0">
+            <xs:element name="IndexedPageFolderView" type="t:IndexedPageViewType"/>
+            <xs:element name="FractionalPageFolderView" type="t:FractionalPageViewType"/>
+          </xs:choice>
+          <xs:element name="Restriction" type="t:RestrictionType" minOccurs="0"/>
+          <xs:element name="ParentFolderIds" type="t:NonEmptyArrayOfBaseFolderIdsType"/>
+        </xs:sequence>
+        <xs:attribute name="Traversal" type="t:FolderQueryTraversalType" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FindFolder" type="m:FindFolderType"/>
+  <!-- Generic response to reading a folder's properties.  -->
+  <xs:complexType name="FolderInfoResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="Folders" type="t:ArrayOfFoldersType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <!-- FindFolder response type-->
+  <xs:complexType name="FindFolderResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="RootFolder" type="t:FindFolderParentType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FindFolderResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FindFolderResponse" type="m:FindFolderResponseType"/>
+  <!-- Deleting a folder.  -->
+  <xs:complexType name="DeleteFolderType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="FolderIds" type="t:NonEmptyArrayOfBaseFolderIdsType"/>
+        </xs:sequence>
+        <xs:attribute name="DeleteType" type="t:DisposalType" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DeleteFolder" type="m:DeleteFolderType"/>
+  <xs:complexType name="DeleteFolderResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DeleteFolderResponse" type="m:DeleteFolderResponseType"/>
+  <!-- Emptying a folder.  -->
+  <xs:complexType name="EmptyFolderType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="FolderIds" type="t:NonEmptyArrayOfBaseFolderIdsType"/>
+        </xs:sequence>
+        <xs:attribute name="DeleteType" type="t:DisposalType" use="required"/>
+        <xs:attribute name="DeleteSubFolders" type="xs:boolean" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EmptyFolder" type="m:EmptyFolderType"/>
+  <xs:complexType name="EmptyFolderResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EmptyFolderResponse" type="m:EmptyFolderResponseType"/>
+  <!-- Base for Move/Copy folders -->
+  <xs:complexType name="BaseMoveCopyFolderType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ToFolderId" type="t:TargetFolderIdType"/>
+          <xs:element name="FolderIds" type="t:NonEmptyArrayOfBaseFolderIdsType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <!-- Move folders -->
+  <xs:complexType name="MoveFolderType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseMoveCopyFolderType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <!-- Copy folders -->
+  <xs:complexType name="CopyFolderType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseMoveCopyFolderType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MoveFolder" type="m:MoveFolderType"/>
+  <xs:element name="CopyFolder" type="m:CopyFolderType"/>
+  <xs:complexType name="UpdateFolderType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="FolderChanges" type="t:NonEmptyArrayOfFolderChangesType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UpdateFolder" type="m:UpdateFolderType"/>
+  <xs:complexType name="CreateFolderResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateFolderResponse" type="m:CreateFolderResponseType"/>
+  <xs:complexType name="GetFolderResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetFolderResponse" type="m:GetFolderResponseType"/>
+  <xs:complexType name="UpdateFolderResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UpdateFolderResponse" type="m:UpdateFolderResponseType"/>
+  <xs:complexType name="MoveFolderResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CopyFolderResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MoveFolderResponse" type="m:MoveFolderResponseType"/>
+  <xs:element name="CopyFolderResponse" type="m:CopyFolderResponseType"/>
+
+  <xs:complexType name="CreateFolderPathType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ParentFolderId" type="t:TargetFolderIdType"/>
+          <xs:element name="RelativeFolderPath" type="t:NonEmptyArrayOfFoldersType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateFolderPath" type="m:CreateFolderPathType"/>
+  <xs:complexType name="CreateFolderPathResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateFolderPathResponse" type="m:CreateFolderPathResponseType"/>
+  <!-- Reading an item.  -->
+
+  <xs:complexType name="GetItemType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ItemShape" type="t:ItemResponseShapeType"/>
+          <xs:element name="ItemIds" type="t:NonEmptyArrayOfBaseItemIdsType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetItem" type="m:GetItemType"/>
+
+  <xs:complexType name="CreateItemType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="SavedItemFolderId" type="t:TargetFolderIdType" minOccurs="0"/>
+          <xs:element name="Items" type="t:NonEmptyArrayOfAllItemsType"/>
+        </xs:sequence>
+        <xs:attribute name="MessageDisposition" type="t:MessageDispositionType" use="optional"/>
+        <xs:attribute name="SendMeetingInvitations" type="t:CalendarItemCreateOrDeleteOperationType" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="CreateItem" type="m:CreateItemType"/>
+    
+  <xs:complexType name="PostModernGroupItemType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ModernGroupEmailAddress" type="t:EmailAddressType" minOccurs="1" maxOccurs="1" />
+          <xs:element name="Items" type="t:NonEmptyArrayOfAllItemsType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:element name="PostModernGroupItem" type="m:PostModernGroupItemType" />
+  
+  <xs:complexType name="PostModernGroupItemResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType> 
+  <xs:element name="PostModernGroupItemResponse" type="m:PostModernGroupItemResponseType" />
+
+  <xs:complexType name="UpdateItemType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="SavedItemFolderId" type="t:TargetFolderIdType" minOccurs="0"/>
+          <xs:element name="ItemChanges" type="t:NonEmptyArrayOfItemChangesType"/>
+        </xs:sequence>
+        <xs:attribute name="ConflictResolution" type="t:ConflictResolutionType" use="required"/>
+        <xs:attribute name="MessageDisposition" type="t:MessageDispositionType"  use="optional"/>
+        <xs:attribute name="SendMeetingInvitationsOrCancellations" type="t:CalendarItemUpdateOperationType"  use="optional"/>
+        <xs:attribute name="SuppressReadReceipts" type="xs:boolean" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="UpdateItem" type="m:UpdateItemType"/>
+    
+  <xs:complexType name="ItemInfoResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="Items" type="t:ArrayOfRealItemsType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="UpdateItemResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ItemInfoResponseMessageType">
+        <xs:sequence>
+          <xs:element name="ConflictResults" type="t:ConflictResultsType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- Updating a draft item in dumpster-->
+
+  <xs:complexType name="UpdateItemInRecoverableItemsType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ItemId" type="t:ItemIdType" />
+          <xs:element name="Updates" type="t:NonEmptyArrayOfItemChangeDescriptionsType" minOccurs="0"/>
+          <xs:element name="Attachments" type="t:NonEmptyArrayOfAttachmentsType" minOccurs="0"/>
+          <xs:element name="MakeItemImmutable" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="UpdateItemInRecoverableItems" type="m:UpdateItemInRecoverableItemsType"/>
+
+  <xs:complexType name="UpdateItemInRecoverableItemsResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ItemInfoResponseMessageType">
+        <xs:sequence>
+          <xs:element name="Attachments" type="t:ArrayOfAttachmentsType" minOccurs="0"/>
+          <xs:element name="ConflictResults" type="t:ConflictResultsType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <!-- Deleting an item.  -->
+
+  <xs:complexType name="DeleteItemType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ItemIds" type="t:NonEmptyArrayOfBaseItemIdsType"/>
+        </xs:sequence>
+        <xs:attribute name="DeleteType" type="t:DisposalType" use="required" />
+        <xs:attribute name="SendMeetingCancellations" type="t:CalendarItemCreateOrDeleteOperationType" use="optional"/>
+        <xs:attribute name="AffectedTaskOccurrences" type="t:AffectedTaskOccurrencesType" use="optional"/>
+        <xs:attribute name="SuppressReadReceipts" type="xs:boolean" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="DeleteItem" type="m:DeleteItemType"/>
+
+  <!-- Attachment info response message -->
+
+  <xs:complexType name="AttachmentInfoResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="Attachments" type="t:ArrayOfAttachmentsType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- Delete attachment response message -->
+
+  <xs:complexType name="DeleteAttachmentResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="RootItemId" type="t:RootItemIdType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- Base for Move/Copy items between folders -->
+
+  <xs:complexType name="BaseMoveCopyItemType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ToFolderId" type="t:TargetFolderIdType"/>
+          <xs:element name="ItemIds" type="t:NonEmptyArrayOfBaseItemIdsType"/>
+          <xs:element name="ReturnNewItemIds" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <!-- Move items between folders -->
+  <xs:complexType name="MoveItemType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseMoveCopyItemType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <!-- Copy items between folders -->
+  <xs:complexType name="CopyItemType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseMoveCopyItemType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MoveItem" type="m:MoveItemType"/>
+  <xs:element name="CopyItem" type="m:CopyItemType"/>
+  
+  <!-- Archive Items to a folder in archive. -->
+  <xs:complexType name="ArchiveItemType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ArchiveSourceFolderId" type="t:TargetFolderIdType"/>
+          <xs:element name="ItemIds" type="t:NonEmptyArrayOfBaseItemIdsType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ArchiveItem" type="m:ArchiveItemType"/>
+
+  <!-- Send an email or post a note to a folder. -->
+  <xs:complexType name="SendItemType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ItemIds" type="t:NonEmptyArrayOfBaseItemIdsType"/>
+          <xs:element name="SavedItemFolderId" type="t:TargetFolderIdType" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="SaveItemToFolder" type="xs:boolean" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SendItem" type="m:SendItemType"/>
+
+  <!-- Response to a command to send or post an item -->
+  <xs:complexType name="SendItemResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SendItemResponse" type="m:SendItemResponseType"/>
+
+  <xs:complexType name="QueryStringType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="ResetCache" type="xs:boolean" use="optional"/>
+        <xs:attribute name="ReturnHighlightTerms" type="xs:boolean" use="optional"/>
+        <xs:attribute name="ReturnDeletedItems" type="xs:boolean" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!-- Enumerate items in a list of folders (Reading, 2) -->
+  <xs:complexType name="FindItemType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ItemShape" type="t:ItemResponseShapeType"/>
+          <xs:choice minOccurs="0">
+            <xs:element name="IndexedPageItemView" type="t:IndexedPageViewType"/>
+            <xs:element name="FractionalPageItemView" type="t:FractionalPageViewType"/>
+            <xs:element name="SeekToConditionPageItemView" type="t:SeekToConditionPageViewType"/>
+            <xs:element name="CalendarView" type="t:CalendarViewType"/>
+            <xs:element name="ContactsView" type="t:ContactsViewType"/>
+          </xs:choice>
+          <xs:choice minOccurs="0">
+            <xs:element name="GroupBy" type="t:GroupByType"/>
+            <xs:element name="DistinguishedGroupBy" type="t:DistinguishedGroupByType"/>
+          </xs:choice>
+          <xs:element name="Restriction" type="t:RestrictionType" minOccurs="0"/>
+          <xs:element name="SortOrder" type="t:NonEmptyArrayOfFieldOrdersType" minOccurs="0"/>
+          <xs:element name="ParentFolderIds" type="t:NonEmptyArrayOfBaseFolderIdsType"/>
+          <xs:element name="QueryString" type="m:QueryStringType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="Traversal" type="t:ItemQueryTraversalType" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="FindItem" type="m:FindItemType"/>
+
+  <!-- Enumerate Conversation in a folder -->
+  <xs:complexType name="FindConversationType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:choice minOccurs="0">
+            <xs:element name="IndexedPageItemView" type="t:IndexedPageViewType"/>
+            <xs:element name="SeekToConditionPageItemView" type="t:SeekToConditionPageViewType"/>
+          </xs:choice>
+          <xs:element name="SortOrder" type="t:NonEmptyArrayOfFieldOrdersType" minOccurs="0"/>
+          <xs:element name="ParentFolderId" type="t:TargetFolderIdType" minOccurs="1"/>
+          <xs:element name="MailboxScope" type="t:MailboxSearchLocationType" minOccurs="0" maxOccurs="1" />
+          <xs:element name="QueryString" type="m:QueryStringType" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="ConversationShape" type="t:ConversationResponseShapeType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="Traversal" type="t:ConversationQueryTraversalType" use="optional"/>
+        <xs:attribute name="ViewFilter" type="t:ViewFilterType" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="FindConversation" type="m:FindConversationType"/>
+
+  <xs:complexType name="FindConversationResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="Conversations" type="t:ArrayOfConversationsType" minOccurs="0" />
+          <xs:element name="HighlightTerms" type="t:ArrayOfHighlightTermsType" minOccurs="0" />
+          <xs:element name="TotalConversationsInView" type="xs:int" minOccurs="0" />
+          <xs:element name="IndexedOffset" type="xs:int" minOccurs="0" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="FindConversationResponse" type="m:FindConversationResponseMessageType"/>
+
+  <!-- Apply Actions to a conversation -->
+
+  <xs:complexType name="ApplyConversationActionType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ConversationActions" type="t:NonEmptyArrayOfApplyConversationActionType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="ApplyConversationAction" type="m:ApplyConversationActionType"/>
+
+  <!-- ApplyConversationAction response -->
+  <xs:complexType name="ApplyConversationActionResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="ApplyConversationActionResponse" type="m:ApplyConversationActionResponseType"/>
+
+  <xs:complexType name="ApplyConversationActionResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <!-- Enumerate People in a folder -->
+  <xs:complexType name="FindPeopleType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="PersonaShape" type="t:PersonaResponseShapeType" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="IndexedPageItemView" type="t:IndexedPageViewType" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="Restriction" type="t:RestrictionType" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="AggregationRestriction" type="t:RestrictionType" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="SortOrder" type="t:NonEmptyArrayOfFieldOrdersType" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="ParentFolderId" type="t:TargetFolderIdType" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="QueryString" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="FindPeople" type="m:FindPeopleType"/>
+
+  <xs:complexType name="FindPeopleResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="People" type="t:ArrayOfPeopleType" minOccurs="0"/>
+          <xs:element name="TotalNumberOfPeopleInView" type="xs:int" minOccurs="0" />
+          <xs:element name="FirstMatchingRowIndex" type="xs:int" minOccurs="0" />
+          <xs:element name="FirstLoadedRowIndex" type="xs:int" minOccurs="0" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="FindPeopleResponse" type="m:FindPeopleResponseMessageType"/>
+
+  <!-- Get a specific Persona -->
+  <xs:complexType name="GetPersonaType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="PersonaId" type="t:ItemIdType" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="EmailAddress" type="t:EmailAddressType" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetPersona" type="m:GetPersonaType"/>
+
+  <xs:complexType name="GetPersonaResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="Persona" type="t:PersonaType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetPersonaResponseMessage" type="m:GetPersonaResponseMessageType"/>
+
+  <!-- Update Mailbox Association properties on a Slave storage -->
+  <xs:complexType name="UpdateMailboxAssociationType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="Association" type="t:MailboxAssociationType" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="Master" type="t:MasterMailboxType" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="UpdateMailboxAssociation" type="m:UpdateMailboxAssociationType"/>
+
+  <xs:complexType name="UpdateMailboxAssociationResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:element name="UpdateMailboxAssociationResponse" type="m:UpdateMailboxAssociationResponseType" />
+  
+  <!-- Update Group Mailbox properties -->
+  <xs:complexType name="UpdateGroupMailboxType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="GroupSmtpAddress" type="t:NonEmptyStringType" minOccurs="1" maxOccurs="1" />
+          <xs:element name="ExecutingUserSmtpAddress" type="t:NonEmptyStringType" minOccurs="0" maxOccurs="1" />
+          <xs:element name="DomainController" type="xs:string" minOccurs="0" maxOccurs="1" />
+          <xs:element name="ForceConfigurationAction" type="t:GroupMailboxConfigurationActionType" minOccurs="1" maxOccurs="1" />
+          <xs:element name="MemberIdentifierType" type="t:GroupMemberIdentifierType" minOccurs="0" maxOccurs="1" />
+          <xs:element name="AddedMembers" type="t:ArrayOfStringsType" minOccurs="0" maxOccurs="1" />
+          <xs:element name="RemovedMembers" type="t:ArrayOfStringsType" minOccurs="0" maxOccurs="1" />
+          <xs:element name="AddedPendingMembers" type="t:ArrayOfStringsType" minOccurs="0" maxOccurs="1" />
+          <xs:element name="RemovedPendingMembers" type="t:ArrayOfStringsType" minOccurs="0" maxOccurs="1" />
+          <xs:element name="PermissionsVersion" type="xs:int" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UpdateGroupMailbox" type="m:UpdateGroupMailboxType"/>
+
+  <xs:complexType name="UpdateGroupMailboxResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType> 
+  <xs:element name="UpdateGroupMailboxResponse" type="m:UpdateGroupMailboxResponseType" />
+  
+  <!-- Creating attachments -->
+  <xs:complexType name="CreateAttachmentType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ParentItemId" type="t:ItemIdType" minOccurs="1" />
+          <xs:element name="Attachments" type="t:NonEmptyArrayOfAttachmentsType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateAttachment" type="m:CreateAttachmentType" />
+  <xs:complexType name="CreateAttachmentResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateAttachmentResponse" type="m:CreateAttachmentResponseType"/>
+
+  <!-- Deleting attachments -->
+  <xs:complexType name="DeleteAttachmentType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="AttachmentIds" type="t:NonEmptyArrayOfRequestAttachmentIdsType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DeleteAttachment" type="m:DeleteAttachmentType" />
+  <xs:complexType name="DeleteAttachmentResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DeleteAttachmentResponse" type="m:DeleteAttachmentResponseType"/>
+
+  <!-- Accessing attachments -->
+  <xs:complexType name="GetAttachmentType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="AttachmentShape" type="t:AttachmentResponseShapeType" minOccurs="0"/>
+          <xs:element name="AttachmentIds" type="t:NonEmptyArrayOfRequestAttachmentIdsType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetAttachment" type="m:GetAttachmentType" />
+  <xs:complexType name="GetAttachmentResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetAttachmentResponse" type="m:GetAttachmentResponseType"/>
+
+  <xs:complexType name="CreateItemResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateItemResponse" type="m:CreateItemResponseType"/>
+  <xs:complexType name="UpdateItemResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UpdateItemResponse" type="m:UpdateItemResponseType"/>
+  <xs:complexType name="UpdateItemInRecoverableItemsResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UpdateItemInRecoverableItemsResponse" type="m:UpdateItemInRecoverableItemsResponseType"/>
+  <xs:complexType name="GetItemResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetItemResponse" type="m:GetItemResponseType"/>
+  <xs:complexType name="MoveItemResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CopyItemResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MoveItemResponse" type="m:MoveItemResponseType"/>
+  <xs:element name="CopyItemResponse" type="m:CopyItemResponseType"/>
+  
+  <!-- DeleteItem response -->
+  <xs:complexType name="DeleteItemResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DeleteItemResponse" type="m:DeleteItemResponseType"/>
+
+  <xs:complexType name="DeleteItemResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <!-- FindItem response type-->
+  <xs:complexType name="FindItemResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="RootFolder" type="t:FindItemParentType" minOccurs="0"/>
+          <xs:element name="HighlightTerms" type="t:ArrayOfHighlightTermsType" minOccurs="0" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="FindItemResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FindItemResponse" type="m:FindItemResponseType"/>
+
+  <xs:complexType name="ArchiveItemResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ArchiveItemResponse" type="m:ArchiveItemResponseType"/>
+    
+  <xs:complexType name="GetClientAccessTokenType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="TokenRequests" type="t:NonEmptyArrayOfClientAccessTokenRequestsType" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetClientAccessToken" type="m:GetClientAccessTokenType"/>
+
+  <xs:complexType name="GetClientAccessTokenResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="Token" type="t:ClientAccessTokenType" minOccurs="0" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetClientAccessTokenResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+    
+  <xs:element name="GetClientAccessTokenResponse" type="m:GetClientAccessTokenResponseType"/>
+
+  <!-- Util Service messages -->
+  <!-- ResolveNames request -->
+
+  <xs:complexType name="ResolveNamesType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ParentFolderIds" type="t:NonEmptyArrayOfBaseFolderIdsType" minOccurs="0"/>
+          <xs:element name="UnresolvedEntry" type="t:NonEmptyStringType" />
+        </xs:sequence>
+        <xs:attribute name="ReturnFullContactData" type="xs:boolean" use="required" />
+        <xs:attribute name="SearchScope" type="t:ResolveNamesSearchScopeType" default="ActiveDirectoryContacts" />
+        <xs:attribute name="ContactDataShape" type="t:DefaultShapeNamesType" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="ResolveNames" type="m:ResolveNamesType"/>
+
+  <!-- ResolveNames response -->
+
+  <xs:complexType name="ResolveNamesResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="ResolutionSet" type="t:ArrayOfResolutionType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ResolveNamesResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="ResolveNamesResponse" type="m:ResolveNamesResponseType"/>
+
+  <!-- GetPasswordExpirationDate -->
+
+  <xs:complexType name="GetPasswordExpirationDateType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="MailboxSmtpAddress" type="xs:string" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetPasswordExpirationDate" type="m:GetPasswordExpirationDateType"/>
+
+  <!-- GetPasswordExpirationDate response message -->
+
+  <xs:complexType name="GetPasswordExpirationDateResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="PasswordExpirationDate" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetPasswordExpirationDateResponse" type="m:GetPasswordExpirationDateResponseMessageType"/>
+
+  <!-- MailTips -->
+
+  <xs:complexType name="GetMailTipsType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="SendingAs" type="t:EmailAddressType" minOccurs="1" maxOccurs="1" />
+          <xs:element name="Recipients" type="t:ArrayOfRecipientsType" minOccurs="1" maxOccurs="1" />
+          <xs:element name="MailTipsRequested" type="t:MailTipTypes" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetMailTips" type="m:GetMailTipsType"/>
+
+  <xs:element name="GetMailTipsResponse" type="m:GetMailTipsResponseMessageType"/>
+
+  <xs:complexType name="GetMailTipsResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="ResponseMessages" type="m:ArrayOfMailTipsResponseMessageType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ArrayOfMailTipsResponseMessageType">
+    <xs:sequence>
+      <xs:element name="MailTipsResponseMessageType" type="m:MailTipsResponseMessageType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MailTipsResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="MailTips" type="t:MailTips" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- PlayOnPhone Request -->
+  <xs:complexType name="PlayOnPhoneType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ItemId" type="t:ItemIdType" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="DialString" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="PlayOnPhone" type="m:PlayOnPhoneType"/>
+
+  <!-- PlayOnPhone Response -->
+  <xs:complexType name="PlayOnPhoneResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="PhoneCallId" type="t:PhoneCallIdType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="PlayOnPhoneResponse" type="m:PlayOnPhoneResponseMessageType"/>
+
+  <!-- GetPhoneCallInformation Request -->
+  <xs:complexType name="GetPhoneCallInformationType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="PhoneCallId" type="t:PhoneCallIdType" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetPhoneCallInformation" type="m:GetPhoneCallInformationType"/>
+
+  <!-- GetPhoneCallInformation Response -->
+  <xs:complexType name="GetPhoneCallInformationResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="PhoneCallInformation" type="t:PhoneCallInformationType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetPhoneCallInformationResponse" type="m:GetPhoneCallInformationResponseMessageType"/>
+
+  <!-- DisconnectPhoneCall Request -->
+  <xs:complexType name="DisconnectPhoneCallType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="PhoneCallId" type="t:PhoneCallIdType" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="DisconnectPhoneCall" type="m:DisconnectPhoneCallType"/>
+
+  <!-- DisconnectPhoneCall Response -->
+  <xs:complexType name="DisconnectPhoneCallResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="DisconnectPhoneCallResponse" type="m:DisconnectPhoneCallResponseMessageType"/>
+
+  <!-- DeleteUMPrompts Request -->
+  <xs:complexType name="DeleteUMPromptsType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ConfigurationObject" type="t:GuidType" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="PromptNames" type="t:ArrayOfStringsType" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="DeleteUMPrompts" type="m:DeleteUMPromptsType"/>
+
+  <!-- DeleteUMPrompts Response -->
+  <xs:complexType name="DeleteUMPromptsResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="DeleteUMPromptsResponse" type="m:DeleteUMPromptsResponseMessageType"/>
+
+  <!-- CreateUMPrompt Request -->
+  <xs:complexType name="CreateUMPromptType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ConfigurationObject" type="t:GuidType" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="PromptName" type="xs:string"  minOccurs="1" maxOccurs="1"/>
+          <xs:element name="AudioData" type="xs:base64Binary" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="CreateUMPrompt" type="m:CreateUMPromptType"/>
+
+  <!-- CreateUMPrompt Response -->
+  <xs:complexType name="CreateUMPromptResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="CreateUMPromptResponse" type="m:CreateUMPromptResponseMessageType"/>
+  
+  <!-- GetUMPromptNames Request -->
+  <xs:complexType name="GetUMPromptNamesType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ConfigurationObject" type="t:GuidType" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="HoursElapsedSinceLastModified" type="xs:int"  minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetUMPromptNames" type="m:GetUMPromptNamesType"/>
+
+  <!-- GetUMPromptNames Response -->
+  <xs:complexType name="GetUMPromptNamesResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="PromptNames" type="t:ArrayOfStringsType" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetUMPromptNamesResponse" type="m:GetUMPromptNamesResponseMessageType"/>
+
+  <!-- GetUMPrompt Request -->
+  <xs:complexType name="GetUMPromptType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ConfigurationObject" type="t:GuidType" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="PromptName" type="xs:string"  minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetUMPrompt" type="m:GetUMPromptType"/>
+
+  <!-- GetUMPrompt Response -->
+  <xs:complexType name="GetUMPromptResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="AudioData" type="xs:base64Binary" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetUMPromptResponse" type="m:GetUMPromptResponseMessageType"/>
+
+  <!-- ExpandDL request -->
+
+  <xs:complexType name="ExpandDLType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="Mailbox" type="t:EmailAddressType"  />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="ExpandDL" type="m:ExpandDLType"/>
+
+  <!-- ExpandDL response -->
+
+  <xs:complexType name="ExpandDLResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="DLExpansion" type="t:ArrayOfDLExpansionType" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="t:FindResponsePagingAttributes" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ExpandDLResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="ExpandDLResponse" type="m:ExpandDLResponseType"/>
+
+  <!-- Get TimeZones -->
+
+  <xs:complexType name="GetServerTimeZonesType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="Ids" type="t:NonEmptyArrayOfTimeZoneIdType" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="ReturnFullTimeZoneData" type="xs:boolean" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetServerTimeZones" type="m:GetServerTimeZonesType"/>
+
+  <!-- TimeZones response -->
+
+  <xs:complexType name="GetServerTimeZonesResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="TimeZoneDefinitions" type="t:ArrayOfTimeZoneDefinitionType" minOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetServerTimeZonesResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetServerTimeZonesResponse" type="m:GetServerTimeZonesResponseType"/>
+
+  <!-- CreateManagedFolder request type. -->
+  <xs:complexType name="CreateManagedFolderRequestType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="FolderNames" type="t:NonEmptyArrayOfFolderNamesType"/>
+          <xs:element name="Mailbox" type="t:EmailAddressType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateManagedFolder" type="m:CreateManagedFolderRequestType"/>
+  <!-- CreateManagedFolder response type. -->
+  <xs:complexType name="CreateManagedFolderResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateManagedFolderResponse" type="m:CreateManagedFolderResponseType"/>
+  <!-- Subscribe request -->
+  <xs:complexType name="SubscribeType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:choice>
+          <xs:element name="PullSubscriptionRequest" type="t:PullSubscriptionRequestType"/>
+          <xs:element name="PushSubscriptionRequest" type="t:PushSubscriptionRequestType"/>
+          <xs:element name="StreamingSubscriptionRequest" type="t:StreamingSubscriptionRequestType"/>
+        </xs:choice>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="Subscribe" type="m:SubscribeType"/>
+  <!-- Subscribe response -->
+  <xs:complexType name="SubscribeResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="SubscriptionId" type="t:SubscriptionIdType"  minOccurs="0"/>
+          <xs:element name="Watermark" type="t:WatermarkType"  minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SubscribeResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="SubscribeResponse" type="m:SubscribeResponseType"/>
+  <!-- Unsubscribe request -->
+  <xs:complexType name="UnsubscribeType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="SubscriptionId" type="t:SubscriptionIdType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="Unsubscribe" type="m:UnsubscribeType"/>
+  <!-- Unsubscribe response -->
+  <xs:complexType name="UnsubscribeResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="UnsubscribeResponse" type="m:UnsubscribeResponseType"/>
+  <!-- GetEvents request -->
+  <xs:complexType name="GetEventsType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="SubscriptionId" type="t:SubscriptionIdType"/>
+          <xs:element name="Watermark" type="t:WatermarkType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetEvents" type="m:GetEventsType"/>
+  <!-- GetEvents response -->
+  <xs:complexType name="GetEventsResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="Notification" type="t:NotificationType"  minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GetEventsResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetEventsResponse" type="m:GetEventsResponseType"/>
+
+  <!-- GetStreamingEvents request -->
+  <xs:complexType name="GetStreamingEventsType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="SubscriptionIds"
+                      type="t:NonEmptyArrayOfSubscriptionIdsType"/>
+          <xs:element name="ConnectionTimeout"
+                      type="t:StreamingSubscriptionConnectionTimeoutType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetStreamingEvents" type="m:GetStreamingEventsType"/>
+  <!-- GetStreamingEvents response -->
+  <xs:complexType name="GetStreamingEventsResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="Notifications" type="t:NonEmptyArrayOfNotificationsType"
+                      minOccurs="0"/>
+          <xs:element name="ErrorSubscriptionIds"
+                      type="t:NonEmptyArrayOfSubscriptionIdsType" minOccurs="0"/>
+          <xs:element name="ConnectionStatus"
+                      type="t:ConnectionStatusType" minOccurs="0" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GetStreamingEventsResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetStreamingEventsResponse" type="m:GetStreamingEventsResponseType"/>
+
+
+
+  <!-- SendNotification request -->
+  <xs:complexType name="SendNotificationResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="Notification" type="t:NotificationType" minOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SendNotificationResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SendNotification" type="m:SendNotificationResponseType"/>
+
+  <!-- SendNotification response -->
+  <xs:complexType name="SendNotificationResultType">
+    <xs:sequence>
+      <xs:element name="SubscriptionStatus" type="t:SubscriptionStatusType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SendNotificationResult" type="m:SendNotificationResultType"/>
+
+  <!-- Sync Service messages. -->
+  <xs:complexType name="SyncFolderHierarchyType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="FolderShape" type="t:FolderResponseShapeType" minOccurs="1"/>
+          <xs:element name="SyncFolderId" type="t:TargetFolderIdType" minOccurs="0" />
+          <xs:element name="SyncState" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SyncFolderHierarchy" type="m:SyncFolderHierarchyType"/>
+
+  <xs:complexType name="SyncFolderHierarchyResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="SyncState" type="xs:string"  minOccurs="0"/>
+          <xs:element name="IncludesLastFolderInRange" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="Changes" type="t:SyncFolderHierarchyChangesType"  minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SyncFolderHierarchyResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SyncFolderHierarchyResponse" type="m:SyncFolderHierarchyResponseType"/>
+
+  <xs:complexType name="SyncFolderItemsType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ItemShape" type="t:ItemResponseShapeType" minOccurs="1"/>
+          <xs:element name="SyncFolderId" type="t:TargetFolderIdType" minOccurs="1"/>
+          <xs:element name="SyncState" type="xs:string" minOccurs="0"/>
+          <xs:element name="Ignore" type="t:ArrayOfBaseItemIdsType" minOccurs="0"/>
+          <xs:element name="MaxChangesReturned" type="t:MaxSyncChangesReturnedType" minOccurs="1"/>
+          <xs:element name="SyncScope" type="t:SyncFolderItemsScopeType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SyncFolderItems" type="m:SyncFolderItemsType"/>
+
+  <xs:complexType name="SyncFolderItemsResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="SyncState" type="xs:string"  minOccurs="0"/>
+          <xs:element name="IncludesLastItemInRange" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="Changes" type="t:SyncFolderItemsChangesType"  minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SyncFolderItemsResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SyncFolderItemsResponse" type="m:SyncFolderItemsResponseType"/>
+
+  <!-- Availability Service message definitions -->
+
+  <!-- GetUserAvailabilityRequest -->
+
+  <xs:complexType name="GetUserAvailabilityRequestType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" ref="t:TimeZone" />
+          <xs:element name="MailboxDataArray" type="t:ArrayOfMailboxData" />
+          <xs:element minOccurs="0" maxOccurs="1" ref="t:FreeBusyViewOptions" />
+          <xs:element minOccurs="0" maxOccurs="1" ref="t:SuggestionsViewOptions" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetUserAvailabilityRequest" type="m:GetUserAvailabilityRequestType" />
+
+  <!-- FreeBusyResponse -->
+
+  <xs:complexType name="FreeBusyResponseType">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="ResponseMessage" type="m:ResponseMessageType" />
+      <xs:element minOccurs="0" maxOccurs="1" name="FreeBusyView" type="t:FreeBusyView" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ArrayOfFreeBusyResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FreeBusyResponse" type="m:FreeBusyResponseType" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SuggestionsResponseType">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="ResponseMessage" type="m:ResponseMessageType" />
+      <xs:element minOccurs="0" maxOccurs="1" name="SuggestionDayResultArray" type="t:ArrayOfSuggestionDayResult" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- GetUserAvailabilityResponse -->
+
+  <xs:complexType name="GetUserAvailabilityResponseType">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="FreeBusyResponseArray" type="m:ArrayOfFreeBusyResponse" />
+      <xs:element minOccurs="0" maxOccurs="1" name="SuggestionsResponse" type="m:SuggestionsResponseType" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="GetUserAvailabilityResponse" type="m:GetUserAvailabilityResponseType" />
+
+  <!-- GetUserOofSettingsRequest -->
+
+  <xs:complexType name="GetUserOofSettingsRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" ref="t:Mailbox" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetUserOofSettingsRequest" type="tns:GetUserOofSettingsRequest" />
+
+  <!-- GetUserOofSettingsResponse -->
+
+  <xs:complexType name="GetUserOofSettingsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="ResponseMessage" type="m:ResponseMessageType" />
+      <xs:element minOccurs="0" maxOccurs="1" ref="t:OofSettings" />
+      <xs:element minOccurs="0" maxOccurs="1" name="AllowExternalOof" type="t:ExternalAudience" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GetUserOofSettingsResponse" type="tns:GetUserOofSettingsResponse" />
+
+  <!-- SetUserOofSettingsRequest -->
+
+  <xs:complexType name="SetUserOofSettingsRequest">
+    <xs:complexContent mixed="false">
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" ref="t:Mailbox" />
+          <xs:element minOccurs="1" maxOccurs="1" ref="t:UserOofSettings" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="SetUserOofSettingsRequest" type="tns:SetUserOofSettingsRequest" />
+
+  <!-- SetUserOofSettingsResponse -->
+
+  <xs:complexType name="SetUserOofSettingsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="ResponseMessage" type="m:ResponseMessageType" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="SetUserOofSettingsResponse" type="tns:SetUserOofSettingsResponse" />
+
+  <!-- ConvertId web method and response -->
+  <xs:complexType name="ConvertIdType">
+    <xs:annotation>
+      <xs:documentation>
+        Converts the passed source ids into the destination format.  Change keys are not
+        returned.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="SourceIds" type="t:NonEmptyArrayOfAlternateIdsType" minOccurs ="1" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="DestinationFormat" type="t:IdFormatType" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ConvertId" type="m:ConvertIdType"/>
+
+  <xs:complexType name="ConvertIdResponseType">
+    <xs:annotation>
+      <xs:documentation>Response type for the ConvertId web method</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ConvertIdResponse" type="m:ConvertIdResponseType"/>
+
+  <xs:complexType name="ConvertIdResponseMessageType">
+    <xs:annotation>
+      <xs:documentation>
+        Response Message for a single id conversion in the ConvertId web method.  Note
+        that the AlternateId element will be missing in the case of an error.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="AlternateId" type="t:AlternateIdBaseType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- GetDelegate web method and response -->
+  <xs:complexType name="GetDelegateType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseDelegateType">
+        <xs:sequence>
+          <xs:element    name="UserIds"  type="t:ArrayOfUserIdType" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="IncludePermissions" type="xs:boolean" use="required" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetDelegate" type="m:GetDelegateType"/>
+
+  <xs:complexType name="GetDelegateResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseDelegateResponseMessageType">
+        <xs:sequence>
+          <xs:element name="DeliverMeetingRequests" type="t:DeliverMeetingRequestsType" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ArrayOfDelegateUserResponseMessageType">
+    <xs:sequence>
+      <xs:element name="DelegateUserResponseMessageType" type="m:DelegateUserResponseMessageType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="DelegateUserResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="DelegateUser" type="t:DelegateUserType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetDelegateResponse" type="m:GetDelegateResponseMessageType"/>
+
+  <!-- AddDelegate web method and response -->
+  <xs:complexType name="AddDelegateType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseDelegateType">
+        <xs:sequence>
+          <xs:element name="DelegateUsers" type="t:ArrayOfDelegateUserType" />
+          <xs:element name="DeliverMeetingRequests" type="t:DeliverMeetingRequestsType" minOccurs="0" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="AddDelegate" type="m:AddDelegateType"/>
+
+  <!-- AddDelegate response -->
+  <xs:complexType name="BaseDelegateResponseMessageType" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="ResponseMessages" type="m:ArrayOfDelegateUserResponseMessageType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="BaseDelegateType" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="Mailbox" type="t:EmailAddressType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AddDelegateResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseDelegateResponseMessageType" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="AddDelegateResponse" type="m:AddDelegateResponseMessageType"/>
+
+  <!-- RemoveDelegate request -->
+  <xs:complexType name="RemoveDelegateType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseDelegateType">
+        <xs:sequence>
+          <xs:element    name="UserIds"  type="t:ArrayOfUserIdType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="RemoveDelegate" type="m:RemoveDelegateType"/>
+
+  <!-- RemoveDelegate response -->
+  <xs:complexType name="RemoveDelegateResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseDelegateResponseMessageType" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="RemoveDelegateResponse" type="m:RemoveDelegateResponseMessageType"/>
+
+  <!-- UpdateDelegate request -->
+  <xs:complexType name="UpdateDelegateType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseDelegateType">
+        <xs:sequence>
+          <xs:element name="DelegateUsers" type="t:ArrayOfDelegateUserType" minOccurs="0" />
+          <xs:element name="DeliverMeetingRequests" type="t:DeliverMeetingRequestsType" minOccurs="0" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="UpdateDelegate" type="m:UpdateDelegateType"/>
+
+  <!-- UpdateDelegate response -->
+  <xs:complexType name="UpdateDelegateResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseDelegateResponseMessageType" />
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <xs:element name="UpdateDelegateResponse" type="m:UpdateDelegateResponseMessageType"/>
+
+  <!-- GetSharingMetadata request -->
+  <xs:complexType name="GetSharingMetadataType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="IdOfFolderToShare" type="t:FolderIdType"/>
+          <xs:element name="SenderSmtpAddress" type="t:NonEmptyStringType"/>
+          <xs:element name="Recipients" type="t:ArrayOfSmtpAddressType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetSharingMetadata" type="m:GetSharingMetadataType"/>
+
+  <!-- GetSharingMetadata response -->
+  <xs:complexType name="GetSharingMetadataResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence minOccurs="0">
+          <xs:element name="EncryptedSharedFolderDataCollection" type="t:ArrayOfEncryptedSharedFolderDataType"/>
+          <xs:element name="InvalidRecipients" type="t:ArrayOfInvalidRecipientsType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetSharingMetadataResponse" type="m:GetSharingMetadataResponseMessageType"/>
+
+  <!-- RefreshSharingFolder request -->
+  <xs:complexType name="RefreshSharingFolderType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="SharingFolderId" type="t:FolderIdType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RefreshSharingFolder" type="m:RefreshSharingFolderType"/>
+
+  <!-- RefreshSharingFolder response -->
+  <xs:complexType name="RefreshSharingFolderResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RefreshSharingFolderResponse" type="m:RefreshSharingFolderResponseMessageType"/>
+
+  <!-- GetSharingFolder request -->
+  <xs:complexType name="GetSharingFolderType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="SmtpAddress" type="t:NonEmptyStringType"/>
+          <xs:element name="DataType" type="t:SharingDataType" minOccurs="0" maxOccurs="1" />
+          <xs:element name="SharedFolderId" type="t:NonEmptyStringType" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetSharingFolder" type="m:GetSharingFolderType"/>
+
+  <!-- GetSharingFolder response -->
+  <xs:complexType name="GetSharingFolderResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence minOccurs="0">
+          <xs:element name="SharingFolderId" type="t:FolderIdType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetSharingFolderResponse" type="m:GetSharingFolderResponseMessageType"/>
+
+  <!-- CreateUserConfiguration request -->
+  <xs:complexType name="CreateUserConfigurationType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="UserConfiguration" type="t:UserConfigurationType" minOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="CreateUserConfiguration" type="m:CreateUserConfigurationType"/>
+
+  <!-- CreateUserConfiguration response -->
+  <xs:complexType name="CreateUserConfigurationResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="CreateUserConfigurationResponse" type="m:CreateUserConfigurationResponseType"/>
+
+  <!-- DeleteUserConfiguration request -->
+  <xs:complexType name="DeleteUserConfigurationType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="UserConfigurationName" type="t:UserConfigurationNameType" minOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="DeleteUserConfiguration" type="m:DeleteUserConfigurationType"/>
+
+  <!-- DeleteUserConfiguration response -->
+  <xs:complexType name="DeleteUserConfigurationResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="DeleteUserConfigurationResponse" type="m:DeleteUserConfigurationResponseType"/>
+
+  <!-- GetUserConfiguration request -->
+  <xs:complexType name="GetUserConfigurationType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="UserConfigurationName" type="t:UserConfigurationNameType" minOccurs="1" />
+          <xs:element name="UserConfigurationProperties" type="t:UserConfigurationPropertyType" minOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetUserConfiguration" type="m:GetUserConfigurationType"/>
+
+  <!-- GetUserConfiguration response -->
+  <xs:complexType name="GetUserConfigurationResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="UserConfiguration" type="t:UserConfigurationType" minOccurs="0" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GetUserConfigurationResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetUserConfigurationResponse" type="m:GetUserConfigurationResponseType"/>
+
+  <!-- UpdateUserConfiguration request -->
+  <xs:complexType name="UpdateUserConfigurationType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="UserConfiguration" type="t:UserConfigurationType" minOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="UpdateUserConfiguration" type="m:UpdateUserConfigurationType"/>
+
+  <!-- UpdateUserConfiguration response -->
+  <xs:complexType name="UpdateUserConfigurationResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="UpdateUserConfigurationResponse" type="m:UpdateUserConfigurationResponseType"/>
+
+  <!-- TeamMailbox requests -->
+  <xs:complexType name="SetTeamMailboxRequestType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="EmailAddress" type="t:EmailAddressType" />
+          <xs:element name="SharePointSiteUrl" type="xs:string" />
+          <xs:element name="State" type="t:TeamMailboxLifecycleStateType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SetTeamMailbox" type="m:SetTeamMailboxRequestType" />
+
+  <xs:complexType name="UnpinTeamMailboxRequestType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="EmailAddress" type="t:EmailAddressType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UnpinTeamMailbox" type="m:UnpinTeamMailboxRequestType" />
+  
+  <!-- TeamMailbox responses -->
+  <xs:complexType name="SetTeamMailboxResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SetTeamMailboxResponse" type="m:SetTeamMailboxResponseMessageType" />
+  
+  <xs:complexType name="UnpinTeamMailboxResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UnpinTeamMailboxResponse" type="m:UnpinTeamMailboxResponseMessageType" />
+
+  <!-- Get Rooms Service Message Definitions -->
+
+  <!-- GetRoomLists Request -->
+  <xs:complexType name="GetRoomListsType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType" />
+      <!-- We Don't Need Input For GetRoomLists. -->
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetRoomLists" type="m:GetRoomListsType"/>
+
+  <!-- GetRoomLists Response -->
+  <xs:complexType name="GetRoomListsResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="RoomLists" type="t:ArrayOfEmailAddressesType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetRoomListsResponse" type="m:GetRoomListsResponseMessageType"/>
+
+  <!-- GetRoomsRequest -->
+  <xs:complexType name="GetRoomsType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <!--Input Will Be A Single RoomList of Type EmailAddressType-->
+          <xs:element name="RoomList" type="t:EmailAddressType" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetRooms" type="m:GetRoomsType" />
+
+  <!-- GetRoomsResponse -->
+  <xs:complexType name="GetRoomsResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <!--Output Should Be Rooms of Type ArrayOfRoomsType, Created In Types.xsd, Which Contains EmailAddress-->
+          <!--Keep In Mind, Availability Service Requests For ArrayOfMailboxData-->
+          <xs:element name="Rooms" type="t:ArrayOfRoomsType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetRoomsResponse" type="m:GetRoomsResponseMessageType" />
+
+  <!-- GetRemindersRequest -->
+  <xs:complexType name="GetRemindersType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="BeginTime" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="EndTime" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="MaxItems" minOccurs="0" maxOccurs="1">
+            <xs:simpleType>
+              <xs:restriction base="xs:int">
+                <xs:minInclusive value="0"/>
+                <xs:maxInclusive value="200"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="ReminderType" minOccurs="0" maxOccurs="1">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="All" />
+                <xs:enumeration value="Current" />
+                <xs:enumeration value="Old" />
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetReminders" type="m:GetRemindersType" />
+
+  <!-- GetRemindersResponse -->
+  <xs:complexType name="GetRemindersResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="Reminders" type="t:ArrayOfRemindersType" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetRemindersResponse" type="m:GetRemindersResponseMessageType" />
+
+  <!-- PerformReminderActionRequest -->
+  <xs:complexType name="PerformReminderActionType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ReminderItemActions" type="t:NonEmptyArrayOfReminderItemActionType" minOccurs="1" maxOccurs="1" />
+         </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="PerformReminderAction" type="m:PerformReminderActionType" />
+
+  <!-- PerformReminderActionResponse-->
+  <xs:complexType name="PerformReminderActionResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="UpdatedItemIds" type="t:NonEmptyArrayOfItemIdsType" minOccurs ="1" maxOccurs ="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="PerformReminderActionResponse" type="m:PerformReminderActionResponseMessageType" />
+  
+  <!-- GetServiceConfiguration -->
+
+  <xs:complexType name="ArrayOfServiceConfigurationType">
+    <xs:choice minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="ConfigurationName" type="t:ServiceConfigurationType"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="GetServiceConfigurationType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="ActingAs" type="t:EmailAddressType"/>
+          <xs:element minOccurs="1" maxOccurs="1" name="RequestedConfiguration" type="m:ArrayOfServiceConfigurationType"/>
+          <xs:element minOccurs="0" maxOccurs="1" name="ConfigurationRequestDetails" type="t:ConfigurationRequestDetailsType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetServiceConfiguration" type="m:GetServiceConfigurationType"/>
+
+  <xs:element name="GetServiceConfigurationResponse" type="m:GetServiceConfigurationResponseMessageType"/>
+
+  <xs:complexType name="GetServiceConfigurationResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="ResponseMessages" type="m:ArrayOfServiceConfigurationResponseMessageType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ArrayOfServiceConfigurationResponseMessageType">
+    <xs:sequence>
+      <xs:element name="ServiceConfigurationResponseMessageType" type="m:ServiceConfigurationResponseMessageType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ServiceConfigurationResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="MailTipsConfiguration" type="t:MailTipsServiceConfiguration" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="UnifiedMessagingConfiguration" type="t:UnifiedMessageServiceConfiguration" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="ProtectionRulesConfiguration" type="t:ProtectionRulesServiceConfiguration" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="PolicyNudgeRulesConfiguration" type="t:PolicyNudgeRulesServiceConfiguration" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- MessageTracking -->
+  <xs:complexType name="FindMessageTrackingReportRequestType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:all>
+          <xs:element name="Scope" type="t:NonEmptyStringType" />
+          <xs:element name="Domain" type="t:NonEmptyStringType" />
+          <xs:element name="Sender" type="t:EmailAddressType" minOccurs="0"/>
+          <xs:element name="PurportedSender" type="t:EmailAddressType" minOccurs="0" />
+          <xs:element name="Recipient" type="t:EmailAddressType" minOccurs="0"/>
+          <xs:element name="Subject" type="xs:string" minOccurs="0"/>
+          <xs:element name="StartDateTime" type="xs:dateTime" minOccurs="0"/>
+          <xs:element name="EndDateTime" type="xs:dateTime" minOccurs="0"/>
+          <xs:element name="MessageId" type="t:NonEmptyStringType" minOccurs="0"/>
+          <xs:element name="FederatedDeliveryMailbox" type="t:EmailAddressType" minOccurs="0" />
+          <xs:element name="DiagnosticsLevel" type="xs:string" minOccurs="0" />
+          <xs:element name="ServerHint" type="xs:string" minOccurs="0" />
+          <xs:element name="Properties" type="t:ArrayOfTrackingPropertiesType" minOccurs="0" />
+        </xs:all>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="FindMessageTrackingReport" type="m:FindMessageTrackingReportRequestType"/>
+
+  <xs:complexType name="FindMessageTrackingReportResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="Diagnostics" type="t:ArrayOfStringsType" minOccurs="0"/>
+          <xs:element name="MessageTrackingSearchResults" type="t:ArrayOfFindMessageTrackingSearchResultType" minOccurs="0" />
+          <xs:element name="ExecutedSearchScope" type="xs:string" minOccurs="0" />
+          <xs:element name="Errors" type="t:ArrayOfArraysOfTrackingPropertiesType" minOccurs="0" />
+          <xs:element name="Properties" type="t:ArrayOfTrackingPropertiesType" minOccurs="0" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="FindMessageTrackingReportResponse" type="m:FindMessageTrackingReportResponseMessageType" />
+
+  <xs:complexType name="GetMessageTrackingReportRequestType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:all>
+          <xs:element name="Scope" type="t:NonEmptyStringType" />
+          <xs:element name="ReportTemplate" type="t:MessageTrackingReportTemplateType" />
+          <xs:element name="RecipientFilter" type="t:EmailAddressType" minOccurs="0"/>
+          <xs:element name="MessageTrackingReportId" type="t:NonEmptyStringType" />
+          <xs:element name="ReturnQueueEvents" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="DiagnosticsLevel" type="xs:string" minOccurs="0" />
+          <xs:element name="Properties" type="t:ArrayOfTrackingPropertiesType" minOccurs="0" />
+        </xs:all>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetMessageTrackingReport" type="m:GetMessageTrackingReportRequestType" />
+
+  <xs:complexType name="GetMessageTrackingReportResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="MessageTrackingReport" type="t:MessageTrackingReportType" minOccurs="0" />
+          <xs:element name="Diagnostics" type="t:ArrayOfStringsType" minOccurs="0"/>
+          <xs:element name="Errors" type="t:ArrayOfArraysOfTrackingPropertiesType" minOccurs="0" />
+          <xs:element name="Properties" type="t:ArrayOfTrackingPropertiesType" minOccurs="0" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetMessageTrackingReportResponse" type="m:GetMessageTrackingReportResponseMessageType" />
+
+  <!-- Inbox Rules -->
+  <xs:complexType name="GetInboxRulesRequestType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="MailboxSmtpAddress" type="xs:string" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetInboxRules" type="m:GetInboxRulesRequestType" />
+
+  <xs:complexType name="GetInboxRulesResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="OutlookRuleBlobExists" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+          <xs:element name="InboxRules" type="t:ArrayOfRulesType" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetInboxRulesResponse" type="m:GetInboxRulesResponseType" />
+
+  <xs:complexType name="UpdateInboxRulesRequestType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="MailboxSmtpAddress" type="xs:string" minOccurs="0" maxOccurs="1" />
+          <xs:element name="RemoveOutlookRuleBlob" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+          <xs:element name="Operations" type="t:ArrayOfRuleOperationsType" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="UpdateInboxRules" type="m:UpdateInboxRulesRequestType" />
+
+  <xs:complexType name="UpdateInboxRulesResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="RuleOperationErrors" type="t:ArrayOfRuleOperationErrorsType" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="UpdateInboxRulesResponse" type="m:UpdateInboxRulesResponseType" />
+
+  <!-- FindMailboxStatisticsByKeywords web method and response -->
+  <xs:complexType name="FindMailboxStatisticsByKeywordsType">
+    <xs:annotation>
+      <xs:documentation>
+        Request type for the FindMailboxStatisticsByKeywords web method.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="Mailboxes" type="t:ArrayOfUserMailboxesType" minOccurs="1"/>
+          <xs:element name="Keywords" type="t:ArrayOfStringsType" minOccurs="1"/>
+          <xs:element name="Language" type="xs:string" minOccurs="0"/>
+          <xs:element name="Senders" type="t:ArrayOfSmtpAddressType" minOccurs="0"/>
+          <xs:element name="Recipients" type="t:ArrayOfSmtpAddressType" minOccurs="0"/>
+          <xs:element name="FromDate" type="xs:dateTime" minOccurs="0"/>
+          <xs:element name="ToDate" type="xs:dateTime" minOccurs="0"/>
+          <xs:element name="MessageTypes" type="t:ArrayOfSearchItemKindsType" minOccurs="0"/>
+          <xs:element name="SearchDumpster" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="IncludePersonalArchive" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="IncludeUnsearchableItems" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FindMailboxStatisticsByKeywords" type="m:FindMailboxStatisticsByKeywordsType"/>
+
+  <xs:complexType name="FindMailboxStatisticsByKeywordsResponseType">
+    <xs:annotation>
+      <xs:documentation>
+        Response type for the FindMailboxStatisticsByKeywords web method.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FindMailboxStatisticsByKeywordsResponse" type="m:FindMailboxStatisticsByKeywordsResponseType"/>
+
+  <xs:complexType name="FindMailboxStatisticsByKeywordsResponseMessageType">
+    <xs:annotation>
+      <xs:documentation>
+        Response message type for the FindMailboxStatisticsByKeywords web method.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="MailboxStatisticsSearchResult" type="t:MailboxStatisticsSearchResultType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- GetSearchableMailboxes web method and response -->
+  <xs:complexType name="GetSearchableMailboxesType">
+    <xs:annotation>
+      <xs:documentation>
+        Request type for the GetSearchableMailboxes web method.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="SearchFilter" type="xs:string" minOccurs="0"/>
+          <xs:element name="ExpandGroupMembership" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetSearchableMailboxes" type="m:GetSearchableMailboxesType"/>
+
+    <xs:complexType name="GetSearchableMailboxesResponseMessageType">
+      <xs:annotation>
+        <xs:documentation>
+          Response message type for the GetSearchableMailboxes web method.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+        <xs:extension base="m:ResponseMessageType">
+          <xs:sequence>
+            <xs:element name="SearchableMailboxes" type="t:ArrayOfSearchableMailboxesType"/>
+            <xs:element name="FailedMailboxes" type="t:ArrayOfFailedSearchMailboxesType" minOccurs="0"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="GetSearchableMailboxesResponse" type="m:GetSearchableMailboxesResponseMessageType"/>
+
+    <!-- SearchMailboxes web method and response -->
+    <xs:complexType name="SearchMailboxesType">
+      <xs:annotation>
+        <xs:documentation>
+          Request type for the SearchMailboxes web method.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+        <xs:extension base="m:BaseRequestType">
+          <xs:sequence>
+            <xs:element name="SearchQueries" type="t:NonEmptyArrayOfMailboxQueriesType" minOccurs="1"/>
+            <xs:element name="ResultType" type="t:SearchResultType" minOccurs="1"/>
+            <xs:element name="PreviewItemResponseShape" type="t:PreviewItemResponseShapeType" minOccurs="0"/>
+            <xs:element name="SortBy" type="t:FieldOrderType" minOccurs="0"/>
+            <xs:element name="Language" type="xs:string" minOccurs="0"/>
+            <xs:element name="Deduplication" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="PageSize" type="xs:int" minOccurs="0"/>
+            <xs:element name="PageItemReference" type="xs:string" minOccurs="0"/>
+            <xs:element name="PageDirection" type="t:SearchPageDirectionType" minOccurs="0"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="SearchMailboxes" type="m:SearchMailboxesType"/>
+
+  <xs:complexType name="SearchMailboxesResponseType">
+    <xs:annotation>
+      <xs:documentation>
+        Response type for the SearchMailboxes web method.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SearchMailboxesResponse" type="m:SearchMailboxesResponseType"/>
+
+  <xs:complexType name="SearchMailboxesResponseMessageType">
+    <xs:annotation>
+      <xs:documentation>
+        Response message type for the SearchMailboxes web method.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="SearchMailboxesResult" type="t:SearchMailboxesResultType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- GetDiscoverySearchConfiguration web method and response -->
+  <xs:complexType name="GetDiscoverySearchConfigurationType">
+    <xs:annotation>
+      <xs:documentation>
+        Request type for the GetDiscoverySearchConfiguration web method.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="SearchId" type="xs:string" minOccurs="0"/>
+          <xs:element name="ExpandGroupMembership" type="xs:boolean" minOccurs="0"/>
+          <xs:element name="InPlaceHoldConfigurationOnly" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetDiscoverySearchConfiguration" type="m:GetDiscoverySearchConfigurationType"/>
+
+    <xs:complexType name="GetDiscoverySearchConfigurationResponseMessageType">
+      <xs:annotation>
+        <xs:documentation>
+          Response message type for the GetDiscoverySearchConfiguration web method.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+        <xs:extension base="m:ResponseMessageType">
+          <xs:sequence>
+            <xs:element name="DiscoverySearchConfigurations" type="t:ArrayOfDiscoverySearchConfigurationType"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="GetDiscoverySearchConfigurationResponse" type="m:GetDiscoverySearchConfigurationResponseMessageType"/>
+
+  <!-- GetHoldOnMailboxes web method and response -->
+  <xs:complexType name="GetHoldOnMailboxesType">
+    <xs:annotation>
+      <xs:documentation>
+        Request type for the GetHoldOnMailboxes web method.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="HoldId" type="xs:string" minOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetHoldOnMailboxes" type="m:GetHoldOnMailboxesType"/>
+
+    <xs:complexType name="GetHoldOnMailboxesResponseMessageType">
+      <xs:annotation>
+        <xs:documentation>
+          Response message type for the GetHoldOnMailboxes web method.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+        <xs:extension base="m:ResponseMessageType">
+          <xs:sequence>
+            <xs:element name="MailboxHoldResult" type="t:MailboxHoldResultType" minOccurs="0"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="GetHoldOnMailboxesResponse" type="m:GetHoldOnMailboxesResponseMessageType"/>
+
+    <!-- SetHoldOnMailboxes web method and response -->
+    <xs:complexType name="SetHoldOnMailboxesType">
+      <xs:annotation>
+        <xs:documentation>
+          Request type for the SetHoldOnMailboxes web method.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+        <xs:extension base="m:BaseRequestType">
+          <xs:sequence>
+            <xs:element name="ActionType" type="t:HoldActionType" minOccurs="1"/>
+            <xs:element name="HoldId" type="xs:string" minOccurs="1"/>
+            <xs:element name="Query" type="xs:string" minOccurs="1"/>
+            <xs:element name="Mailboxes" type="t:ArrayOfStringsType" minOccurs="0"/>
+            <xs:element name="Language" type="xs:string" minOccurs="0"/>
+            <xs:element name="IncludeNonIndexableItems" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="Deduplication" type="xs:boolean" minOccurs="0"/>
+            <xs:element name="InPlaceHoldIdentity" type="xs:string" minOccurs="0"/>
+            <xs:element name="ItemHoldPeriod" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="SetHoldOnMailboxes" type="m:SetHoldOnMailboxesType"/>
+
+    <xs:complexType name="SetHoldOnMailboxesResponseMessageType">
+      <xs:annotation>
+        <xs:documentation>
+          Response message type for the SetHoldOnMailboxes web method.
+        </xs:documentation>
+      </xs:annotation>
+      <xs:complexContent>
+        <xs:extension base="m:ResponseMessageType">
+          <xs:sequence>
+            <xs:element name="MailboxHoldResult" type="t:MailboxHoldResultType" minOccurs="0"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="SetHoldOnMailboxesResponse" type="m:SetHoldOnMailboxesResponseMessageType"/>
+
+  <!-- GetNonIndexableItemStatistics web method and response -->
+  <xs:complexType name="GetNonIndexableItemStatisticsType">
+    <xs:annotation>
+      <xs:documentation>
+        Request type for the GetNonIndexableItemStatistics web method.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="Mailboxes" type="t:NonEmptyArrayOfLegacyDNsType" minOccurs="1"/>
+          <xs:element name="SearchArchiveOnly" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetNonIndexableItemStatistics" type="m:GetNonIndexableItemStatisticsType"/>
+
+  <xs:complexType name="GetNonIndexableItemStatisticsResponseMessageType">
+    <xs:annotation>
+      <xs:documentation>
+        Response message type for the GetNonIndexableItemStatistics web method.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="NonIndexableItemStatistics" type="t:ArrayOfNonIndexableItemStatisticsType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetNonIndexableItemStatisticsResponse" type="m:GetNonIndexableItemStatisticsResponseMessageType"/>
+
+  <!-- GetNonIndexableItemDetails web method and response -->
+  <xs:complexType name="GetNonIndexableItemDetailsType">
+    <xs:annotation>
+      <xs:documentation>
+        Request type for the GetNonIndexableItemDetails web method.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="Mailboxes" type="t:NonEmptyArrayOfLegacyDNsType" minOccurs="1"/>
+          <xs:element name="PageSize" type="xs:int" minOccurs="0"/>
+          <xs:element name="PageItemReference" type="xs:string" minOccurs="0"/>
+          <xs:element name="PageDirection" type="t:SearchPageDirectionType" minOccurs="0"/>
+          <xs:element name="SearchArchiveOnly" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetNonIndexableItemDetails" type="m:GetNonIndexableItemDetailsType"/>
+
+  <xs:complexType name="GetNonIndexableItemDetailsResponseMessageType">
+    <xs:annotation>
+      <xs:documentation>
+        Response message type for the GetNonIndexableItemDetails web method.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="NonIndexableItemDetailsResult" type="t:NonIndexableItemDetailResultType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetNonIndexableItemDetailsResponse" type="m:GetNonIndexableItemDetailsResponseMessageType"/>
+
+  <!-- MarkAllItemsAsRead request -->
+  <xs:complexType name="MarkAllItemsAsReadType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ReadFlag" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+          <xs:element name="SuppressReadReceipts" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+          <xs:element name="FolderIds" type="t:NonEmptyArrayOfBaseFolderIdsType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="MarkAllItemsAsRead" type="m:MarkAllItemsAsReadType"/>
+
+  <!-- MarkAllItemsAsRead response -->
+  <xs:complexType name="MarkAllItemsAsReadResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="MarkAllItemsAsReadResponse" type="m:MarkAllItemsAsReadResponseType"/>
+
+  <!-- GetConversationItems request -->
+  <xs:complexType name="GetConversationItemsType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ItemShape" type="t:ItemResponseShapeType" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="FoldersToIgnore" type="t:NonEmptyArrayOfBaseFolderIdsType" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="MaxItemsToReturn" type="xs:int" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="SortOrder" type="t:ConversationNodeSortOrder" minOccurs="0" maxOccurs="1" />
+          <xs:element name="MailboxScope" type="t:MailboxSearchLocationType" minOccurs="0" maxOccurs="1" />
+          <xs:element name="Conversations" type="t:ArrayOfConversationRequestsType" minOccurs="1"/>
+          </xs:sequence>
+        </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetConversationItems" type="m:GetConversationItemsType"/>
+
+  <!-- GetConversationItems response -->
+  <xs:complexType name="GetConversationItemsResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="Conversation" type="t:ConversationResponseType" minOccurs="0" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="GetConversationItemsResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:element name="GetConversationItemsResponse" type="m:GetConversationItemsResponseType"/>
+
+  <!-- GetClientExtension request -->
+  <xs:complexType name="GetClientExtensionType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="RequestedExtensionIds" type="t:ArrayOfStringsType" minOccurs="0" maxOccurs="1" />
+          <xs:element name="UserParameters" type="t:GetClientExtensionUserParametersType" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="IsDebug" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetClientExtension" type="m:GetClientExtensionType"/>
+
+  <!-- GetClientExtension response -->
+  <xs:complexType name="ClientExtensionResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="ClientExtensions" type="t:ArrayOfClientExtensionsType" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="RawMasterTableXml" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:element name="GetClientExtensionResponse" type="m:ClientExtensionResponseType"/>
+  
+  <!-- GetEncryptionConfiguration request -->
+  <xs:complexType name="GetEncryptionConfigurationType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType" />
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:element name="GetEncryptionConfiguration" type="m:GetEncryptionConfigurationType" />
+  
+  <!-- GetEncryptionConfiguration response -->
+  <xs:complexType name="EncryptionConfigurationResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="ImageBase64" type="xs:string" minOccurs="0" maxOccurs="1" />
+          <xs:element name="EmailText" type="xs:string" minOccurs="0" maxOccurs="1" />
+          <xs:element name="PortalText" type="xs:string" minOccurs="0" maxOccurs="1" />
+          <xs:element name="DisclaimerText" type="xs:string" minOccurs="0" maxOccurs="1" />
+		  <xs:element name="OTPEnabled" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:element name="GetEncryptionConfigurationResponse" type="m:EncryptionConfigurationResponseType"/>
+
+  <!-- SetClientExtension request -->
+  <xs:complexType name="SetClientExtensionType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="Actions" type="t:ArrayOfSetClientExtensionActionsType" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="SetClientExtension" type="m:SetClientExtensionType"/>
+
+  <!-- SetClientExtension response -->
+  <xs:complexType name="SetClientExtensionResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="SetClientExtensionResponse" type="m:SetClientExtensionResponseType"/>
+  
+  <!-- SetEncryptionConfiguration request -->
+  <xs:complexType name="SetEncryptionConfigurationType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ImageBase64" type="xs:string" minOccurs="0" maxOccurs="1" />
+          <xs:element name="EmailText" type="xs:string" minOccurs="0" maxOccurs="1" />
+          <xs:element name="PortalText" type="xs:string" minOccurs="0" maxOccurs="1" />
+          <xs:element name="DisclaimerText" type="xs:string" minOccurs="0" maxOccurs="1" />
+		  <xs:element name="OTPEnabled" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="SetEncryptionConfiguration" type="m:SetEncryptionConfigurationType"/>
+
+  <!-- SetEncryptionConfiguration response -->
+  <xs:complexType name="SetEncryptionConfigurationResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="SetEncryptionConfigurationResponse" type="m:SetEncryptionConfigurationResponseType"/>
+
+  <!-- GetAppManifests request -->
+  <xs:complexType name="GetAppManifestsType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetAppManifests" type="m:GetAppManifestsType"/>
+
+  <!-- GetAppManifests response -->
+  <xs:complexType name="GetAppManifestsResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="Manifests" type="m:ArrayOfAppManifestsType" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetAppManifestsResponse" type="m:GetAppManifestsResponseType"/>
+  <xs:complexType name="ArrayOfAppManifestsType">
+    <xs:sequence>
+      <xs:element name="Manifest" type="xs:base64Binary" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- GetAppMarketplaceUrl request -->
+  <xs:complexType name="GetAppMarketplaceUrlType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType" />
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetAppMarketplaceUrl" type="m:GetAppMarketplaceUrlType"/>
+
+  <!-- GetAppMarketplaceUrl response -->
+  <xs:complexType name="GetAppMarketplaceUrlResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="AppMarketplaceUrl" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetAppMarketplaceUrlResponse" type="m:GetAppMarketplaceUrlResponseMessageType"/>
+
+  <!-- MarkAsJunk request -->
+  <xs:complexType name="MarkAsJunkType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ItemIds" type="t:NonEmptyArrayOfBaseItemIdsType" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="IsJunk" type="xs:boolean" use="required" />        
+        <xs:attribute name="MoveItem" type="xs:boolean" use="required" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MarkAsJunk" type="m:MarkAsJunkType" />
+
+  <!-- MarkAsJunk response -->
+  <xs:complexType name="MarkAsJunkResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MarkAsJunkResponse" type="m:MarkAsJunkResponseType" />
+
+  <xs:complexType name="MarkAsJunkResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:sequence>
+            <xs:element name="MovedItemId" type="t:ItemIdType" minOccurs="0" maxOccurs="1"/>
+          </xs:sequence>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+    <!-- InstallApp request -->
+    <xs:complexType name="InstallAppType">
+        <xs:complexContent>
+            <xs:extension base="m:BaseRequestType">
+                <xs:sequence>
+                    <xs:element name="Manifest" type="xs:base64Binary" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="InstallApp" type="m:InstallAppType"/>
+    
+    <!-- InstallApp response -->
+    <xs:complexType name="InstallAppResponseType">
+        <xs:complexContent>
+            <xs:extension base="m:ResponseMessageType" />
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="InstallAppResponse" type="m:InstallAppResponseType"/>
+    
+    <!-- UninstallApp request -->
+    <xs:complexType name="UninstallAppType">
+        <xs:complexContent>
+            <xs:extension base="m:BaseRequestType">
+                <xs:sequence>
+                    <xs:element name="ID" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="UninstallApp" type="m:UninstallAppType"/>
+
+    <!-- UninstallApp response -->
+    <xs:complexType name="UninstallAppResponseType">
+        <xs:complexContent>
+            <xs:extension base="m:ResponseMessageType" />
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="UninstallAppResponse" type="m:UninstallAppResponseType"/>
+
+    <!-- DisableApp request -->
+    <xs:complexType name="DisableAppType">
+        <xs:complexContent>
+            <xs:extension base="m:BaseRequestType">
+                <xs:sequence>
+                    <xs:element name="ID" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="DisableReason" type="t:DisableReasonType" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="DisableApp" type="m:DisableAppType"/>
+
+    <!-- DisableApp response -->
+    <xs:complexType name="DisableAppResponseType">
+        <xs:complexContent>
+            <xs:extension base="m:ResponseMessageType" />
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="DisableAppResponse" type="m:DisableAppResponseType"/>
+
+  <!-- AddNewImContactToGroup request -->
+  <xs:complexType name="AddNewImContactToGroupType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ImAddress" type="t:NonEmptyStringType"/>
+          <xs:element name="DisplayName" type="t:NonEmptyStringType" minOccurs="0"/>
+          <xs:element name="GroupId" type="t:ItemIdType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="AddNewImContactToGroup" type="m:AddNewImContactToGroupType"/>
+
+  <!-- AddNewImContactToGroup response-->
+  <xs:complexType name="AddNewImContactToGroupResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="Persona" type="t:PersonaType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="AddNewImContactToGroupResponse" type="m:AddNewImContactToGroupResponseMessageType"/>
+
+  <!-- AddNewTelUriContactToGroup request -->
+  <xs:complexType name="AddNewTelUriContactToGroupType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="TelUriAddress" type="t:NonEmptyStringType"/>
+          <xs:element name="ImContactSipUriAddress" type="t:NonEmptyStringType"/>
+          <xs:element name="ImTelephoneNumber" type="t:NonEmptyStringType"/>
+          <xs:element name="GroupId" type="t:ItemIdType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="AddNewTelUriContactToGroup" type="m:AddNewTelUriContactToGroupType"/>
+
+  <!-- AddNewTelUriContactToGroup response-->
+  <xs:complexType name="AddNewTelUriContactToGroupResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="Persona" type="t:PersonaType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="AddNewTelUriContactToGroupResponse" type="m:AddNewTelUriContactToGroupResponseMessageType"/>
+
+  <!-- AddImContactToGroup request -->
+  <xs:complexType name="AddImContactToGroupType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ContactId" type="t:ItemIdType"/>
+          <xs:element name="GroupId" type="t:ItemIdType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="AddImContactToGroup" type="m:AddImContactToGroupType"/>
+
+  <!-- AddImContactToGroup response-->
+  <xs:complexType name="AddImContactToGroupResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="AddImContactToGroupResponse" type="m:AddImContactToGroupResponseMessageType"/>
+
+  <!-- RemoveImContactFromGroup request -->
+  <xs:complexType name="RemoveImContactFromGroupType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ContactId" type="t:ItemIdType"/>
+          <xs:element name="GroupId" type="t:ItemIdType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="RemoveImContactFromGroup" type="m:RemoveImContactFromGroupType"/>
+
+  <!-- RemoveImContactFromGroup response-->
+  <xs:complexType name="RemoveImContactFromGroupResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="RemoveImContactFromGroupResponse" type="m:RemoveImContactFromGroupResponseMessageType"/>
+
+  <!-- AddImGroup request -->
+  <xs:complexType name="AddImGroupType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="DisplayName" type="t:NonEmptyStringType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="AddImGroup" type="m:AddImGroupType"/>
+
+  <!-- AddImGroup response-->
+  <xs:complexType name="AddImGroupResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="ImGroup" type="t:ImGroupType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="AddImGroupResponse" type="m:AddImGroupResponseMessageType"/>
+
+  <!-- AddDistributionGroupToImList request -->
+  <xs:complexType name="AddDistributionGroupToImListType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="SmtpAddress" type="t:NonEmptyStringType"/>
+          <xs:element name="DisplayName" type="t:NonEmptyStringType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="AddDistributionGroupToImList" type="m:AddDistributionGroupToImListType"/>
+
+  <!-- AddDistributionGroupToImList response-->
+  <xs:complexType name="AddDistributionGroupToImListResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="ImGroup" type="t:ImGroupType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="AddDistributionGroupToImListResponse" type="m:AddDistributionGroupToImListResponseMessageType"/>
+
+  <!-- GetImItemList request -->
+  <xs:complexType name="GetImItemListType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ExtendedProperties" type="t:NonEmptyArrayOfExtendedFieldURIs" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetImItemList" type="m:GetImItemListType"/>
+
+  <!-- GetImItemList response-->
+  <xs:complexType name="GetImItemListResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="ImItemList" type="t:ImItemListType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetImItemListResponse" type="m:GetImItemListResponseMessageType"/>
+
+  <!-- GetImItems request -->
+  <xs:complexType name="GetImItemsType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ContactIds" type="t:NonEmptyArrayOfBaseItemIdsType" minOccurs="0"/>
+          <xs:element name="GroupIds" type="t:NonEmptyArrayOfBaseItemIdsType" minOccurs="0"/>
+          <xs:element name="ExtendedProperties" type="t:NonEmptyArrayOfExtendedFieldURIs" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetImItems" type="m:GetImItemsType"/>
+
+  <!-- GetImItems response-->
+  <xs:complexType name="GetImItemsResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="ImItemList" type="t:ImItemListType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="GetImItemsResponse" type="m:GetImItemsResponseMessageType"/>
+
+  <!-- RemoveContactFromImList request -->
+  <xs:complexType name="RemoveContactFromImListType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ContactId" type="t:ItemIdType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="RemoveContactFromImList" type="m:RemoveContactFromImListType"/>
+
+  <!-- RemoveContactFromImList response-->
+  <xs:complexType name="RemoveContactFromImListResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="RemoveContactFromImListResponse" type="m:RemoveContactFromImListResponseMessageType"/>
+
+  <!-- RemoveDistributionGroupFromImList request -->
+  <xs:complexType name="RemoveDistributionGroupFromImListType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="GroupId" type="t:ItemIdType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="RemoveDistributionGroupFromImList" type="m:RemoveDistributionGroupFromImListType"/>
+
+  <!-- RemoveDistributionGroupFromImList response-->
+  <xs:complexType name="RemoveDistributionGroupFromImListResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="RemoveDistributionGroupFromImListResponse" type="m:RemoveDistributionGroupFromImListResponseMessageType"/>
+
+  <!-- RemoveImGroup request -->
+  <xs:complexType name="RemoveImGroupType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="GroupId" type="t:ItemIdType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="RemoveImGroup" type="m:RemoveImGroupType"/>
+
+  <!-- RemoveImGroup response-->
+  <xs:complexType name="RemoveImGroupResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="RemoveImGroupResponse" type="m:RemoveImGroupResponseMessageType"/>
+
+  <!-- SetImGroup request -->
+  <xs:complexType name="SetImGroupType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="GroupId" type="t:ItemIdType"/>
+          <xs:element name="NewDisplayName" type="t:NonEmptyStringType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="SetImGroup" type="m:SetImGroupType"/>
+
+  <!-- SetImGroup response-->
+  <xs:complexType name="SetImGroupResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="SetImGroupResponse" type="m:SetImGroupResponseMessageType"/>
+
+  <!-- SetImListMigrationCompleted request -->
+  <xs:complexType name="SetImListMigrationCompletedType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="ImListMigrationCompleted" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="SetImListMigrationCompleted" type="m:SetImListMigrationCompletedType"/>
+
+  <!-- SetImListMigrationCompleted response-->
+  <xs:complexType name="SetImListMigrationCompletedResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="SetImListMigrationCompletedResponse" type="m:SetImListMigrationCompletedResponseMessageType"/>
+
+  <!-- GetUserRetentionPolicyTags web method and response -->
+  <xs:complexType name="GetUserRetentionPolicyTagsType">
+    <xs:annotation>
+      <xs:documentation>
+        Request type for the GetUserRetentionPolicyTags web method.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="m:BaseRequestType" />
+      <!-- We Don't Need Input For GetUserRetentionPolicyTags. -->
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetUserRetentionPolicyTags" type="m:GetUserRetentionPolicyTagsType" />
+
+  <xs:complexType name="GetUserRetentionPolicyTagsResponseMessageType">
+    <xs:annotation>
+      <xs:documentation>
+        Response message type for the GetUserRetentionPolicyTags web method.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="RetentionPolicyTags" type="t:ArrayOfRetentionPolicyTagsType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetUserRetentionPolicyTagsResponse" type="m:GetUserRetentionPolicyTagsResponseMessageType"/>
+
+  <!-- GetUserPhoto request -->
+  <xs:complexType name="GetUserPhotoType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="Email" type="xs:string" minOccurs="1" maxOccurs="1" />
+          <xs:element name="SizeRequested" type="t:UserPhotoSizeType" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetUserPhoto" type="m:GetUserPhotoType"/>
+
+  <!-- GetUserPhoto response -->
+  <xs:complexType name="GetUserPhotoResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="HasChanged" type="xs:boolean" minOccurs="1" maxOccurs="1"/> 
+          <xs:element name="PictureData" type="xs:base64Binary" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GetUserPhotoResponseType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseResponseMessageType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetUserPhotoResponse" type="m:GetUserPhotoResponseMessageType"/>
+  
+  <!-- StartFindInGALSpeechRecognition Request -->
+  <xs:complexType name="StartFindInGALSpeechRecognitionType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="Culture" type="t:NonEmptyStringType" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="TimeZone" type="t:NonEmptyStringType" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="UserObjectGuid" type="t:GuidType" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="TenantGuid" type="t:GuidType" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="StartFindInGALSpeechRecognition" type="m:StartFindInGALSpeechRecognitionType"/>
+
+  <!-- StartFindInGALSpeechRecognition Response -->
+  <xs:complexType name="StartFindInGALSpeechRecognitionResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="RecognitionId" type="t:RecognitionIdType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="StartFindInGALSpeechRecognitionResponse" type="m:StartFindInGALSpeechRecognitionResponseMessageType"/>
+
+  <!-- CompleteFindInGALSpeechRecognition Request -->
+  <xs:complexType name="CompleteFindInGALSpeechRecognitionType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="RecognitionId" type="t:RecognitionIdType" minOccurs="1" maxOccurs="1"/>
+          <xs:element name="AudioData" type="xs:base64Binary" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CompleteFindInGALSpeechRecognition" type="m:CompleteFindInGALSpeechRecognitionType"/>
+
+  <!-- CompleteFindInGALSpeechRecognition Response -->
+  <xs:complexType name="CompleteFindInGALSpeechRecognitionResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="RecognitionResult" type="t:RecognitionResultType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CompleteFindInGALSpeechRecognitionResponse" type="m:CompleteFindInGALSpeechRecognitionResponseMessageType"/>
+
+  <!-- CreateUMCallDataRecord Request -->
+  <xs:complexType name="CreateUMCallDataRecordType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="CDRData" type="t:CDRDataType" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateUMCallDataRecord" type="m:CreateUMCallDataRecordType" />
+  <!-- CreateUMCallDataRecord Response -->
+  <xs:complexType name="CreateUMCallDataRecordResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CreateUMCallDataRecordResponse" type="m:CreateUMCallDataRecordResponseMessageType" />
+
+  <!-- GetUMCallDataRecords Request -->
+  <xs:complexType name="GetUMCallDataRecordsType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="StartDateTime" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+          <xs:element name="EndDateTime" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+          <xs:element name="Offset" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:element name="NumberOfRecords" type="xs:int" minOccurs="0" maxOccurs="1" />
+          <xs:element name="UserLegacyExchangeDN" type="xs:string" minOccurs="0" maxOccurs="1" />
+          <xs:element name="FilterBy" type="t:UMCDRFilterByType" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetUMCallDataRecords" type="m:GetUMCallDataRecordsType" />
+  <!-- GetUMCallDataRecords Response -->
+  <xs:complexType name="GetUMCallDataRecordsResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="CallDataRecords" type="t:ArrayOfUMCallDataRecordsType" minOccurs="0" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetUMCallDataRecordsResponseMessage" type="m:GetUMCallDataRecordsResponseMessageType" />
+
+  <!-- GetUmCallSummary Request -->
+  <xs:complexType name="GetUMCallSummaryType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="DailPlanGuid" type="t:GuidType" minOccurs="1" maxOccurs="1" />
+          <xs:element name="GatewayGuid" type="t:GuidType" minOccurs="1" maxOccurs="1" />
+          <xs:element name="GroupRecordsBy" type="t:UMCDRGroupByType" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetUMCallSummary" type="m:GetUMCallSummaryType" />
+  <!-- GetUmCallSummary Response -->
+  <xs:complexType name="GetUMCallSummaryResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="UMReportRawCountersCollection" type="t:ArrayOfUMReportRawCountersType" minOccurs="0" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetUMCallSummaryResponseMessage" type="m:GetUMCallSummaryResponseMessageType" />
+
+  <!-- InitUMMailbox Request -->
+  <xs:complexType name="InitUMMailboxType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="InitUMMailbox" type="m:InitUMMailboxType" />
+  <!-- InitUMMailbox Response -->
+  <xs:complexType name="InitUMMailboxResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="InitUMMailboxResponseMessage" type="m:InitUMMailboxResponseMessageType" />
+
+  <!-- ResetUMMailbox Request -->
+  <xs:complexType name="ResetUMMailboxType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="KeepProperties" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ResetUMMailbox" type="m:ResetUMMailboxType" />
+  <!-- ResetUMMailbox Response -->
+  <xs:complexType name="ResetUMMailboxResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ResetUMMailboxResponseMessage" type="m:ResetUMMailboxResponseMessageType" />
+
+  <!-- ValidateUMPin Request -->
+  <xs:complexType name="ValidateUMPinType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="PinInfo" type="t:PinInfoType" minOccurs="0" maxOccurs="1" />
+          <xs:element name="UserUMMailboxPolicyGuid" type="t:GuidType" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ValidateUMPin" type="m:ValidateUMPinType" />
+  <!-- ValidateUMPin Response -->
+  <xs:complexType name="ValidateUMPinResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="PinInfo" type="t:PinInfoType" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ValidateUMPinResponseMessage" type="m:ValidateUMPinResponseMessageType" />
+
+  <!-- SaveUMPin Request -->
+  <xs:complexType name="SaveUMPinType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="PinInfo" type="t:PinInfoType" minOccurs="1" maxOccurs="1" />
+          <xs:element name="UserUMMailboxPolicyGuid" type="t:GuidType" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SaveUMPin" type="m:SaveUMPinType" />
+  <!-- SaveUMPin Response--> 
+  <xs:complexType name="SaveUMPinResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType" />
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SaveUMPinResponseMessage" type="m:SaveUMPinResponseMessageType" />
+
+  <!-- GetUMPin Request-->
+  <xs:complexType name="GetUMPinType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetUMPin" type="m:GetUMPinType" />
+  <!-- GetUMPin Response-->
+  <xs:complexType name="GetUMPinResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="PinInfo" type="t:PinInfoType" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetUMPinResponseMessage" type="m:GetUMPinResponseMessageType" />
+  
+  <!-- GetClientIntent request -->
+  <xs:complexType name="GetClientIntentType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="GlobalObjectId" type="xs:string" minOccurs="1" maxOccurs="1" />
+          <xs:element name="StateDefinition" type="t:NonEmptyStateDefinitionType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetClientIntent" type="m:GetClientIntentType"/>
+
+  <!-- GetClientIntent response -->
+  <xs:complexType name="GetClientIntentResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="ClientIntent" type="t:ClientIntentType" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetClientIntentResponseMessage" type="m:GetClientIntentResponseMessageType"/>
+
+  <!-- UMSubscriberCallAnsweringData Request-->
+  <xs:complexType name="GetUMSubscriberCallAnsweringDataType">
+    <xs:complexContent>
+      <xs:extension base="m:BaseRequestType">
+        <xs:sequence>
+          <xs:element name="Timeout" type="xs:duration" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetUMSubscriberCallAnsweringData" type="m:GetUMSubscriberCallAnsweringDataType" />
+  <!-- UMSubscriberCallAnsweringData Response-->
+  <xs:complexType name="GetUMSubscriberCallAnsweringDataResponseMessageType">
+    <xs:complexContent>
+      <xs:extension base="m:ResponseMessageType">
+        <xs:sequence>
+          <xs:element name="IsOOF" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+          <xs:element name="IsTranscriptionEnabledInMailboxConfig" type="t:UMMailboxTranscriptionEnabledSetting" minOccurs="1" maxOccurs="1" />
+          <xs:element name="IsMailboxQuotaExceeded" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+          <xs:element name="Greeting" type="xs:base64Binary" minOccurs="0" maxOccurs="1" />
+          <xs:element name="GreetingName" type="xs:string" minOccurs="0" maxOccurs="1" />
+          <xs:element name="TaskTimedOut" type="xs:boolean" minOccurs="1" maxOccurs="1" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetUMSubscriberCallAnsweringDataResponseMessage" type="m:GetUMSubscriberCallAnsweringDataResponseMessageType" />
+</xs:schema>

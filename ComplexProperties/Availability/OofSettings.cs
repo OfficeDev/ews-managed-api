@@ -1,0 +1,258 @@
+// ---------------------------------------------------------------------------
+// <copyright file="OofSettings.cs" company="Microsoft">
+//     Copyright (c) Microsoft Corporation.  All rights reserved.
+// </copyright>
+// ---------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------
+// <summary>Defines the OofSettings class.</summary>
+//-----------------------------------------------------------------------
+
+namespace Microsoft.Exchange.WebServices.Data
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
+    /// <summary>
+    /// Represents a user's Out of Office (OOF) settings.
+    /// </summary>
+    public sealed class OofSettings : ComplexProperty, ISelfValidate
+    {
+        private OofState state;
+        private OofExternalAudience externalAudience;
+        private OofExternalAudience allowExternalOof;
+        private TimeWindow duration;
+        private OofReply internalReply;
+        private OofReply externalReply;
+
+        /// <summary>
+        /// Serializes an OofReply. Emits an empty OofReply in case the one passed in is null.
+        /// </summary>
+        /// <param name="oofReply">The oof reply.</param>
+        /// <param name="writer">The writer.</param>
+        /// <param name="xmlElementName">Name of the XML element.</param>
+        private void SerializeOofReply(
+            OofReply oofReply,
+            EwsServiceXmlWriter writer,
+            string xmlElementName)
+        {
+            if (oofReply != null)
+            {
+                oofReply.WriteToXml(writer, xmlElementName);
+            }
+            else
+            {
+                OofReply.WriteEmptyReplyToXml(writer, xmlElementName);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of OofSettings.
+        /// </summary>
+        public OofSettings()
+            : base()
+        {
+        }
+
+        /// <summary>
+        /// Tries to read element from XML.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns>True if appropriate element was read.</returns>
+        internal override bool TryReadElementFromXml(EwsServiceXmlReader reader)
+        {
+            switch (reader.LocalName)
+            {
+                case XmlElementNames.OofState:
+                    this.state = reader.ReadValue<OofState>();
+                    return true;
+                case XmlElementNames.ExternalAudience:
+                    this.externalAudience = reader.ReadValue<OofExternalAudience>();
+                    return true;
+                case XmlElementNames.Duration:
+                    this.duration = new TimeWindow();
+                    this.duration.LoadFromXml(reader);
+                    return true;
+                case XmlElementNames.InternalReply:
+                    this.internalReply = new OofReply();
+                    this.internalReply.LoadFromXml(reader, reader.LocalName);
+                    return true;
+                case XmlElementNames.ExternalReply:
+                    this.externalReply = new OofReply();
+                    this.externalReply.LoadFromXml(reader, reader.LocalName);
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// Loads from json.
+        /// </summary>
+        /// <param name="jsonProperty">The json property.</param>
+        /// <param name="service"></param>
+        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
+        {
+            foreach (string key in jsonProperty.Keys)
+            {
+                switch (key)
+                {
+                    case XmlElementNames.OofState:
+                        this.state = jsonProperty.ReadEnumValue<OofState>(key);
+                        break;
+                    case XmlElementNames.ExternalAudience:
+                        this.externalAudience = jsonProperty.ReadEnumValue<OofExternalAudience>(key);
+                        break;
+                    case XmlElementNames.Duration:
+                        this.duration = new TimeWindow();
+                        this.duration.LoadFromJson(jsonProperty.ReadAsJsonObject(key), service);
+                        break;
+                    case XmlElementNames.InternalReply:
+                        this.internalReply = new OofReply();
+                        this.internalReply.LoadFromJson(jsonProperty.ReadAsJsonObject(key), service);
+                        break;
+                    case XmlElementNames.ExternalReply:
+                        this.externalReply = new OofReply();
+                        this.externalReply.LoadFromJson(jsonProperty.ReadAsJsonObject(key), service);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Writes elements to XML.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
+        internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
+        {
+            base.WriteElementsToXml(writer);
+
+            writer.WriteElementValue(
+                XmlNamespace.Types,
+                XmlElementNames.OofState,
+                this.State);
+
+            writer.WriteElementValue(
+                XmlNamespace.Types,
+                XmlElementNames.ExternalAudience,
+                this.ExternalAudience);
+
+            if (this.Duration != null && this.State == OofState.Scheduled)
+            {
+                this.Duration.WriteToXml(writer, XmlElementNames.Duration);
+            }
+
+            this.SerializeOofReply(
+                this.InternalReply,
+                writer,
+                XmlElementNames.InternalReply);
+            this.SerializeOofReply(
+                this.ExternalReply,
+                writer,
+                XmlElementNames.ExternalReply);
+        }
+
+        internal override object InternalToJson(ExchangeService service)
+        {
+            JsonObject jsonProperty = new JsonObject();
+
+            jsonProperty.Add(XmlElementNames.OofState, this.State);
+            jsonProperty.Add(XmlElementNames.ExternalAudience, this.ExternalAudience);
+
+            if (this.Duration != null && this.State == OofState.Scheduled)
+            {
+                jsonProperty.Add(XmlElementNames.Duration, this.Duration.InternalToJson(service));
+            }
+
+            if (this.InternalReply != null)
+            {
+                jsonProperty.Add(XmlElementNames.InternalReply, this.InternalReply.InternalToJson(service));
+            }
+
+            if (this.ExternalReply != null)
+            {
+                jsonProperty.Add(XmlElementNames.ExternalReply, this.ExternalReply.InternalToJson(service));
+            }
+
+            return jsonProperty;
+        }
+
+        /// <summary>
+        /// Gets or sets the user's OOF state.
+        /// </summary>
+        /// <value>The user's OOF state.</value>
+        public OofState State
+        {
+            get { return this.state; }
+            set { this.state = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating who should receive external OOF messages.
+        /// </summary>
+        public OofExternalAudience ExternalAudience
+        {
+            get { return this.externalAudience; }
+            set { this.externalAudience = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the duration of the OOF status when State is set to OofState.Scheduled.
+        /// </summary>
+        public TimeWindow Duration
+        {
+            get { return this.duration; }
+            set { this.duration = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the OOF response sent other users in the user's domain or trusted domain.
+        /// </summary>
+        public OofReply InternalReply
+        {
+            get { return this.internalReply; }
+            set { this.internalReply = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the OOF response sent to addresses outside the user's domain or trusted domain.
+        /// </summary>
+        public OofReply ExternalReply
+        {
+            get { return this.externalReply; }
+            set { this.externalReply = value; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating the authorized external OOF notifications.
+        /// </summary>
+        public OofExternalAudience AllowExternalOof
+        {
+            get { return this.allowExternalOof; }
+            internal set { this.allowExternalOof = value; }
+        }
+
+        #region ISelfValidate Members
+
+        /// <summary>
+        /// Validates this instance.
+        /// </summary>
+        void ISelfValidate.Validate()
+        {
+            if (this.State == OofState.Scheduled)
+            {
+                if (this.Duration == null)
+                {
+                    throw new ArgumentException(Strings.DurationMustBeSpecifiedWhenScheduled);
+                }
+
+                EwsUtilities.ValidateParam(this.Duration, "Duration");
+            }
+        }
+
+        #endregion
+    }
+}
