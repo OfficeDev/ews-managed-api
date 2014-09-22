@@ -611,6 +611,7 @@ namespace Microsoft.Exchange.WebServices.Data
         public const string VotingInformation = "VotingInformation";
         public const string UserOptions = "UserOptions";
         public const string VotingResponse = "VotingResponse";
+        public const string NumberOfDays = "NumberOfDays";
 
         public const string NlgEntityExtractionResult = "EntityExtractionResult";
         public const string NlgAddresses = "Addresses";

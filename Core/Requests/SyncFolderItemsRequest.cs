@@ -25,6 +25,7 @@ namespace Microsoft.Exchange.WebServices.Data
         private string syncState;
         private ItemIdWrapperList ignoredItemIds = new ItemIdWrapperList();
         private int maxChangesReturned = 100;
+        private int numberOfDays = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SyncFolderItemsRequest"/> class.
@@ -105,6 +106,17 @@ namespace Microsoft.Exchange.WebServices.Data
                                   ExchangeVersion.Exchange2010));
             }
 
+            // NumberOfDays was introduced with Exchange 2013.
+            if (this.Service.RequestedServerVersion < ExchangeVersion.Exchange2013 &&
+                this.NumberOfDays != 0)
+            {
+                throw new ServiceVersionException(
+                    string.Format(
+                                  Strings.ParameterIncompatibleWithRequestVersion,
+                                  "numberOfDays",
+                                  ExchangeVersion.Exchange2013));
+            }
+
             // SyncFolderItems can only handle summary properties
             this.PropertySet.ValidateForRequest(this, true /*summaryPropertiesOnly*/);
         }
@@ -143,6 +155,14 @@ namespace Microsoft.Exchange.WebServices.Data
                     XmlElementNames.SyncScope,
                     this.syncScope);
             }
+
+            if (this.NumberOfDays != 0)
+            {
+                writer.WriteElementValue(
+                    XmlNamespace.Messages,
+                    XmlElementNames.NumberOfDays,
+                    this.numberOfDays);
+            }
         }
 
         /// <summary>
@@ -174,6 +194,11 @@ namespace Microsoft.Exchange.WebServices.Data
             if (this.Service.RequestedServerVersion >= ExchangeVersion.Exchange2010)
             {
                 jsonRequest.Add(XmlElementNames.SyncScope, this.SyncScope);
+            }
+
+            if (this.Service.RequestedServerVersion >= ExchangeVersion.Exchange2013)
+            {
+                jsonRequest.Add(XmlElementNames.NumberOfDays, this.NumberOfDays);
             }
 
             return jsonRequest;
@@ -258,6 +283,31 @@ namespace Microsoft.Exchange.WebServices.Data
                 else
                 {
                     throw new ArgumentException(Strings.MaxChangesMustBeBetween1And512);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the number of days of content returned by SyncFolderItems.
+        /// Zero means return all content.
+        /// Default is zero.
+        /// </summary>
+        public int NumberOfDays
+        {
+            get
+            {
+                return this.numberOfDays;
+            }
+
+            set
+            {
+                if (value >= 0)
+                {
+                    this.numberOfDays = value;
+                }
+                else
+                {
+                    throw new ArgumentException(Strings.NumberOfDaysMustBePositive);
                 }
             }
         }

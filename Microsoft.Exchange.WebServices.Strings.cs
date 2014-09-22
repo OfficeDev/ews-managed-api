@@ -20,7 +20,7 @@ namespace Microsoft.Exchange.WebServices
 		/// IDS available on this class that do not require parameters.
 		/// Using this array is faster than calling enum.ToString.
 		/// </summary>
-		private static Dictionary<uint,string> stringIDs = new Dictionary<uint,string>(192);
+		private static Dictionary<uint,string> stringIDs = new Dictionary<uint,string>(193);
 
 		static Strings()
 		{
@@ -87,6 +87,7 @@ namespace Microsoft.Exchange.WebServices
 			stringIDs.Add(0x8D818B6A, "CannotAddSubscriptionToLiveConnection");
 			stringIDs.Add(0xEDC75E63, "MaxChangesMustBeBetween1And512");
 			stringIDs.Add(0xDF3C4E63, "AttributeValueCannotBeSerialized");
+			stringIDs.Add(0x4A26582E, "NumberOfDaysMustBePositive");
 			stringIDs.Add(0x821DC6E4, "SearchFilterMustBeSet");
 			stringIDs.Add(0xA0BFD764, "EndDateMustBeGreaterThanStartDate");
 			stringIDs.Add(0xCB4CD6AC, "InvalidDateTime");
@@ -476,6 +477,10 @@ namespace Microsoft.Exchange.WebServices
 			/// Values of type '{0}' can't be used for the '{1}' attribute.
 			/// </summary>
 			AttributeValueCannotBeSerialized = 0xDF3C4E63, 
+			/// <summary>
+			/// NumberOfDays must be zero or greater. Zero indicates no limit.
+			/// </summary>
+			NumberOfDaysMustBePositive = 0x4A26582E, 
 			/// <summary>
 			/// The SearchFilter property must be set.
 			/// </summary>
@@ -1434,6 +1439,13 @@ namespace Microsoft.Exchange.WebServices
 		public static LocalizedString AttributeValueCannotBeSerialized
 		{
 			get { return new LocalizedString("AttributeValueCannotBeSerialized", ResourceManager); }
+		}
+		/// <summary>
+		/// NumberOfDays must be zero or greater. Zero indicates no limit.
+		/// </summary>
+		public static LocalizedString NumberOfDaysMustBePositive
+		{
+			get { return new LocalizedString("NumberOfDaysMustBePositive", ResourceManager); }
 		}
 		/// <summary>
 		/// The SearchFilter property must be set.

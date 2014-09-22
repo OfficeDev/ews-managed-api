@@ -2511,11 +2511,42 @@ namespace Microsoft.Exchange.WebServices.Data
             SyncFolderItemsScope syncScope,
             string syncState)
         {
+            return this.SyncFolderItems(
+                syncFolderId,
+                propertySet,
+                ignoredItemIds,
+                maxChangesReturned,
+                0, // numberOfDays
+                syncScope,
+                syncState);
+        }
+
+        /// <summary>
+        /// Synchronizes the items of a specific folder. Calling this method results in a call to EWS.
+        /// </summary>
+        /// <param name="syncFolderId">The Id of the folder containing the items to synchronize with.</param>
+        /// <param name="propertySet">The set of properties to retrieve for synchronized items.</param>
+        /// <param name="ignoredItemIds">The optional list of item Ids that should be ignored.</param>
+        /// <param name="maxChangesReturned">The maximum number of changes that should be returned.</param>
+        /// <param name="numberOfDays">Limit the changes returned to this many days ago; 0 means no limit.</param>
+        /// <param name="syncScope">The sync scope identifying items to include in the ChangeCollection.</param>
+        /// <param name="syncState">The optional sync state representing the point in time when to start the synchronization.</param>
+        /// <returns>A ChangeCollection containing a list of changes that occurred in the specified folder.</returns>
+        public ChangeCollection<ItemChange> SyncFolderItems(
+            FolderId syncFolderId,
+            PropertySet propertySet,
+            IEnumerable<ItemId> ignoredItemIds,
+            int maxChangesReturned,
+            int numberOfDays,
+            SyncFolderItemsScope syncScope,
+            string syncState)
+        {
             return this.BuildSyncFolderItemsRequest(
                 syncFolderId,
                 propertySet,
                 ignoredItemIds,
                 maxChangesReturned,
+                numberOfDays,
                 syncScope,
                 syncState).Execute()[0].Changes;
         }
@@ -2542,11 +2573,48 @@ namespace Microsoft.Exchange.WebServices.Data
             SyncFolderItemsScope syncScope,
             string syncState)
         {
+            return this.BeginSyncFolderItems(
+                callback,
+                state,
+                syncFolderId,
+                propertySet,
+                ignoredItemIds,
+                maxChangesReturned,
+                0, // numberOfDays
+                syncScope,
+                syncState);
+        }
+
+        /// <summary>
+        /// Begins an asynchronous request to synchronize the items of a specific folder. Calling this method results in a call to EWS.
+        /// </summary>
+        /// <param name="callback">The AsyncCallback delegate.</param>
+        /// <param name="state">An object that contains state information for this request.</param>
+        /// <param name="syncFolderId">The Id of the folder containing the items to synchronize with.</param>
+        /// <param name="propertySet">The set of properties to retrieve for synchronized items.</param>
+        /// <param name="ignoredItemIds">The optional list of item Ids that should be ignored.</param>
+        /// <param name="maxChangesReturned">The maximum number of changes that should be returned.</param>
+        /// <param name="numberOfDays">Limit the changes returned to this many days ago; 0 means no limit.</param>
+        /// <param name="syncScope">The sync scope identifying items to include in the ChangeCollection.</param>
+        /// <param name="syncState">The optional sync state representing the point in time when to start the synchronization.</param>
+        /// <returns>An IAsyncResult that references the asynchronous request.</returns>
+        public IAsyncResult BeginSyncFolderItems(
+            AsyncCallback callback,
+            object state,
+            FolderId syncFolderId,
+            PropertySet propertySet,
+            IEnumerable<ItemId> ignoredItemIds,
+            int maxChangesReturned,
+            int numberOfDays,
+            SyncFolderItemsScope syncScope,
+            string syncState)
+        {
             return this.BuildSyncFolderItemsRequest(
                 syncFolderId,
                 propertySet,
                 ignoredItemIds,
                 maxChangesReturned,
+                numberOfDays,
                 syncScope,
                 syncState).BeginExecute(callback, state);
         }
@@ -2570,6 +2638,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="propertySet">The set of properties to retrieve for synchronized items.</param>
         /// <param name="ignoredItemIds">The optional list of item Ids that should be ignored.</param>
         /// <param name="maxChangesReturned">The maximum number of changes that should be returned.</param>
+        /// <param name="numberOfDays">Limit the changes returned to this many days ago; 0 means no limit.</param>
         /// <param name="syncScope">The sync scope identifying items to include in the ChangeCollection.</param>
         /// <param name="syncState">The optional sync state representing the point in time when to start the synchronization.</param>
         /// <returns>A request to synchronize the items of a specific folder.</returns>
@@ -2578,6 +2647,7 @@ namespace Microsoft.Exchange.WebServices.Data
             PropertySet propertySet,
             IEnumerable<ItemId> ignoredItemIds,
             int maxChangesReturned,
+            int numberOfDays,
             SyncFolderItemsScope syncScope,
             string syncState)
         {
@@ -2593,6 +2663,7 @@ namespace Microsoft.Exchange.WebServices.Data
                 request.IgnoredItemIds.AddRange(ignoredItemIds);
             }
             request.MaxChangesReturned = maxChangesReturned;
+            request.NumberOfDays = numberOfDays;
             request.SyncScope = syncScope;
             request.SyncState = syncState;
 
