@@ -252,6 +252,13 @@ namespace Microsoft.Exchange.WebServices.Data
         [EwsEnum("todosearch")]
         ToDoSearch,
 
+        [RequiredServerVersion(ExchangeVersion.Exchange2013)]
+        [EwsEnum("imcontactlist")]
+        IMContactList,
+        
+        [RequiredServerVersion(ExchangeVersion.Exchange2013)]
+        [EwsEnum("workingset")]
+        WorkingSet,
         //// Note when you adding new folder id here, please update sources\test\Services\src\ComponentTests\GlobalVersioningControl.cs
         //// IsExchange2013Folder method accordingly.
     }
