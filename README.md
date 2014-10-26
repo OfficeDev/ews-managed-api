@@ -1,4 +1,5 @@
 # Getting Started with the EWS Managed API
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/OfficeDev/ews-managed-api?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 The Exchange Web Services (EWS) Managed API provides a managed interface for developing .NET client applications that use EWS.
 By using the EWS Managed API, you can access almost all the information stored in an Office 365, Exchange Online, or Exchange Server mailbox.
