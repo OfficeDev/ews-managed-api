@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ZeroLengthArrayInvalid" xml:space="preserve">
+    <value>The array must contain at least one element.</value>
+  </data>
+  <data name="AttachmentCannotBeUpdated" xml:space="preserve">
+    <value>Attachments can't be updated.</value>
+  </data>
+  <data name="NewMessagesWithAttachmentsCannotBeSentDirectly" xml:space="preserve">
+    <value>New messages with attachments can't be sent directly. You must first save the message and then send it.</value>
+  </data>
+  <data name="AttributeValueCannotBeSerialized" xml:space="preserve">
+    <value>Values of type '{0}' can't be used for the '{1}' attribute.</value>
+  </data>
+  <data name="DayOfMonthMustBeBetween1And31" xml:space="preserve">
+    <value>DayOfMonth must be between 1 and 31.</value>
+  </data>
+  <data name="UnsupportedTimeZonePeriodTransitionTarget" xml:space="preserve">
+    <value>The time zone transition target isn't supported.</value>
+  </data>
+  <data name="ValueMustBeGreaterThanZero" xml:space="preserve">
+    <value>The value must be greater than 0.</value>
+  </data>
+  <data name="ServerVersionNotSupported" xml:space="preserve">
+    <value>Exchange Server doesn't support the requested version.</value>
+  </data>
+  <data name="MaximumRedirectionHopsExceeded" xml:space="preserve">
+    <value>The maximum redirection hop count has been reached.</value>
+  </data>
+  <data name="NoSubscriptionsOnConnection" xml:space="preserve">
+    <value>You must add at least one subscription to this connection before it can be opened.</value>
+  </data>
+  <data name="ElementValueCannotBeSerialized" xml:space="preserve">
+    <value>Values of type '{0}' can't be used for the '{1}' element.</value>
+  </data>
+  <data name="EqualityComparisonFilterIsInvalid" xml:space="preserve">
+    <value>Either the OtherPropertyDefinition or the Value properties must be set.</value>
+  </data>
+  <data name="MaxChangesMustBeBetween1And512" xml:space="preserve">
+    <value>MaxChangesReturned must be between 1 and 512.</value>
+  </data>
+  <data name="UnexpectedElement" xml:space="preserve">
+    <value>An element node '{0}:{1}' of the type {2} was expected, but node '{3}' of type {4} was found.</value>
+  </data>
+  <data name="XsDurationCouldNotBeParsed" xml:space="preserve">
+    <value>The specified xsDuration argument couldn't be parsed.</value>
+  </data>
+  <data name="ValidationFailed" xml:space="preserve">
+    <value>Validation failed.</value>
+  </data>
+  <data name="UnknownTimeZonePeriodTransitionType" xml:space="preserve">
+    <value>Unknown time zone transition type: {0}</value>
+  </data>
+  <data name="MaxScpHopsExceeded" xml:space="preserve">
+    <value>The number of SCP URL hops exceeded the limit.</value>
+  </data>
+  <data name="InvalidAutodiscoverDomain" xml:space="preserve">
+    <value>The domain name must be specified.</value>
+  </data>
+  <data name="CollectionIsEmpty" xml:space="preserve">
+    <value>The collection is empty.</value>
+  </data>
+  <data name="DelegateUserHasInvalidUserId" xml:space="preserve">
+    <value>The UserId in the DelegateUser is invalid. The StandardUser, PrimarySmtpAddress or SID property must be set.</value>
+  </data>
+  <data name="CannotUpdateNewUserConfiguration" xml:space="preserve">
+    <value>This user configuration can't be updated because it's never been saved.</value>
+  </data>
+  <data name="InvalidElementStringValue" xml:space="preserve">
+    <value>The invalid value '{0}' was specified for the '{1}' element.</value>
+  </data>
+  <data name="SearchParametersRootFolderIdsEmpty" xml:space="preserve">
+    <value>SearchParameters must contain at least one folder id.</value>
+  </data>
+  <data name="PermissionLevelInvalidForNonCalendarFolder" xml:space="preserve">
+    <value>The Permission level value {0} can't be used with a non-calendar folder.</value>
+  </data>
+  <data name="MustLoadOrAssignPropertyBeforeAccess" xml:space="preserve">
+    <value>You must load or assign this property before you can read its value.</value>
+  </data>
+  <data name="SearchFilterComparisonValueTypeIsNotSupported" xml:space="preserve">
+    <value>Values of type '{0}' can't be used as comparison values in search filters.</value>
+  </data>
+  <data name="MethodIncompatibleWithRequestVersion" xml:space="preserve">
+    <value>Method {0} is only valid for Exchange Server version {1} or later.</value>
+  </data>
+  <data name="BothSearchFilterAndQueryStringCannotBeSpecified" xml:space="preserve">
+    <value>Both search filter and query string can't be specified. One of them must be null.</value>
+  </data>
+  <data name="PercentCompleteMustBeBetween0And100" xml:space="preserve">
+    <value>PercentComplete must be between 0 and 100.</value>
+  </data>
+  <data name="NonSummaryPropertyCannotBeUsed" xml:space="preserve">
+    <value>The property {0} can't be used in {1} requests.</value>
+  </data>
+  <data name="TransitionGroupNotFound" xml:space="preserve">
+    <value>Invalid transition. A transition group with the specified ID couldn't be found: {0}</value>
+  </data>
+  <data name="PeriodNotFound" xml:space="preserve">
+    <value>Invalid transition. A period with the specified Id couldn't be found: {0}</value>
+  </data>
+  <data name="EndDateMustBeGreaterThanStartDate" xml:space="preserve">
+    <value>EndDate must be greater than StartDate.</value>
+  </data>
+  <data name="ArrayMustHaveSingleDimension" xml:space="preserve">
+    <value>The array value must have a single dimension.</value>
+  </data>
+  <data name="CannotCallDisconnectWithNoLiveConnection" xml:space="preserve">
+    <value>The connection is already closed.</value>
+  </data>
+  <data name="ObjectDoesNotHaveId" xml:space="preserve">
+    <value>This service object doesn't have an ID.</value>
+  </data>
+  <data name="MailboxesParameterIsNotSpecified" xml:space="preserve">
+    <value>The array of mailboxes (in legacy DN) is not specified.</value>
+  </data>
+  <data name="ParentFolderDoesNotHaveId" xml:space="preserve">
+    <value>parentFolder doesn't have an Id.</value>
+  </data>
+  <data name="UnsupportedWebProtocol" xml:space="preserve">
+    <value>Protocol {0} isn't supported for service requests.</value>
+  </data>
+  <data name="CannotSetPermissionLevelToCustom" xml:space="preserve">
+    <value>The PermissionLevel property can't be set to FolderPermissionLevel.Custom. To define a custom permission, set its individual properties to the values you want.</value>
+  </data>
+  <data name="CannotSubscribeToStatusEvents" xml:space="preserve">
+    <value>Status events can't be subscribed to.</value>
+  </data>
+  <data name="InvalidRedirectionResponseReturned" xml:space="preserve">
+    <value>The service returned an invalid redirection response.</value>
+  </data>
+  <data name="IdPropertyMustBeSet" xml:space="preserve">
+    <value>The Id property must be set.</value>
+  </data>
+  <data name="SearchFilterAtIndexIsInvalid" xml:space="preserve">
+    <value>The search filter at index {0} is invalid.</value>
+  </data>
+  <data name="NoError" xml:space="preserve">
+    <value>No error.</value>
+  </data>
+  <data name="HttpsIsRequired" xml:space="preserve">
+    <value>Https is required when partner token is expected.</value>
+  </data>
+  <data name="InvalidAuthScheme" xml:space="preserve">
+    <value>The token auth scheme should be bearer.</value>
+  </data>
+  <data name="NoSoapOrWsSecurityEndpointAvailable" xml:space="preserve">
+    <value>No appropriate Autodiscover SOAP or WS-Security endpoint is available.</value>
+  </data>
+  <data name="OffsetMustBeGreaterThanZero" xml:space="preserve">
+    <value>The offset must be greater than 0.</value>
+  </data>
+  <data name="ServerErrorAndStackTraceDetails" xml:space="preserve">
+    <value>{0} -- Server Error: {1}: {2} {3}</value>
+  </data>
+  <data name="FolderTypeNotCompatible" xml:space="preserve">
+    <value>The folder type returned by the service ({0}) isn't compatible with the requested folder type ({1}).</value>
+  </data>
+  <data name="AutodiscoverServiceIncompatibleWithRequestVersion" xml:space="preserve">
+    <value>The Autodiscover service only supports {0} or a later version.</value>
+  </data>
+  <data name="InvalidRecurrencePattern" xml:space="preserve">
+    <value>Invalid recurrence pattern: ({0}).</value>
+  </data>
+  <data name="AutodiscoverInvalidSettingForOutlookProvider" xml:space="preserve">
+    <value>The requested setting, '{0}', isn't supported by this Autodiscover endpoint.</value>
+  </data>
+  <data name="OperationNotSupportedForPropertyDefinitionType" xml:space="preserve">
+    <value>This operation isn't supported for property definition type {0}.</value>
+  </data>
+  <data name="NullStringArrayElementInvalid" xml:space="preserve">
+    <value>The array contains at least one null element.</value>
+  </data>
+  <data name="RecurrencePatternMustHaveStartDate" xml:space="preserve">
+    <value>The recurrence pattern's StartDate property must be specified.</value>
+  </data>
+  <data name="ParameterIncompatibleWithRequestVersion" xml:space="preserve">
+    <value>The parameter {0} is only valid for Exchange Server version {1} or a later version.</value>
+  </data>
+  <data name="InvalidUser" xml:space="preserve">
+    <value>Invalid user: '{0}'</value>
+  </data>
+  <data name="IntervalMustBeGreaterOrEqualToOne" xml:space="preserve">
+    <value>The interval must be greater than or equal to 1.</value>
+  </data>
+  <data name="PropertyTypeIncompatibleWhenUpdatingCollection" xml:space="preserve">
+    <value>Can not update the existing collection item since the item in the response has a different type.</value>
+  </data>
+  <data name="PropertyCannotBeUpdated" xml:space="preserve">
+    <value>This property can't be updated.</value>
+  </data>
+  <data name="InvalidAsyncResult" xml:space="preserve">
+    <value>The IAsyncResult object was not returned from the corresponding asynchronous method of the original ExchangeService object.  </value>
+  </data>
+  <data name="AdditionalPropertyIsNull" xml:space="preserve">
+    <value>The additional property at index {0} is null.</value>
+  </data>
+  <data name="MergedFreeBusyIntervalMustBeSmallerThanTimeWindow" xml:space="preserve">
+    <value>MergedFreeBusyInterval must be smaller than the specified time window.</value>
+  </data>
+  <data name="PropertyIsReadOnly" xml:space="preserve">
+    <value>This property is read-only and can't be set.</value>
+  </data>
+  <data name="AutodiscoverServiceRequestRequiresDomainOrUrl" xml:space="preserve">
+    <value>This Autodiscover request requires that either the Domain or Url be specified.</value>
+  </data>
+  <data name="ReadAccessInvalidForNonCalendarFolder" xml:space="preserve">
+    <value>The Permission read access value {0} can't be used with a non-calendar folder.</value>
+  </data>
+  <data name="ServiceResponseDoesNotContainXml" xml:space="preserve">
+    <value>The response received from the service didn't contain valid XML.</value>
+  </data>
+  <data name="MinuteMustBeBetween0And59" xml:space="preserve">
+    <value>Minute must be between 0 and 59.</value>
+  </data>
+  <data name="AttachmentCollectionNotLoaded" xml:space="preserve">
+    <value>The attachment collection must be loaded.</value>
+  </data>
+  <data name="ItemIsOutOfDate" xml:space="preserve">
+    <value>The operation can't be performed because the item is out of date. Reload the item and try again.</value>
+  </data>
+  <data name="CurrentPositionNotElementStart" xml:space="preserve">
+    <value>The current position is not the start of an element.</value>
+  </data>
+  <data name="ServiceObjectDoesNotHaveId" xml:space="preserve">
+    <value>This operation can't be performed because this service object doesn't have an Id.</value>
+  </data>
+  <data name="InvalidAutodiscoverServiceResponse" xml:space="preserve">
+    <value>The Autodiscover service response was invalid.</value>
+  </data>
+  <data name="CredentialsRequired" xml:space="preserve">
+    <value>Credentials are required to make a service request.</value>
+  </data>
+  <data name="LoadingThisObjectTypeNotSupported" xml:space="preserve">
+    <value>Loading this type of object is not supported.</value>
+  </data>
+  <data name="CannotSaveNotNewUserConfiguration" xml:space="preserve">
+    <value>Calling Save isn't allowed because this user configuration isn't new. To apply local changes to this user configuration, call Update instead.</value>
+  </data>
+  <data name="PropertyCollectionSizeMismatch" xml:space="preserve">
+    <value>The collection returned by the service has a different size from the current one.</value>
+  </data>
+  <data name="InvalidAutodiscoverDomainsCount" xml:space="preserve">
+    <value>At least one domain name must be requested.</value>
+  </data>
+  <data name="InvalidAutodiscoverSettingsCount" xml:space="preserve">
+    <value>At least one setting must be requested.</value>
+  </data>
+  <data name="InvalidDateTime" xml:space="preserve">
+    <value>Invalid date and time: {0}.</value>
+  </data>
+  <data name="TooFewServiceReponsesReturned" xml:space="preserve">
+    <value>The service was expected to return {1} responses of type '{0}', but {2} responses were received.</value>
+  </data>
+  <data name="AccountIsLocked" xml:space="preserve">
+    <value>This account is locked. Visit {0} to unlock it.</value>
+  </data>
+  <data name="InvalidAttributeValue" xml:space="preserve">
+    <value>The invalid value '{0}' was specified for the '{1}' attribute.</value>
+  </data>
+  <data name="PartnerTokenIncompatibleWithRequestVersion" xml:space="preserve">
+    <value>TryGetPartnerAccess only supports {0} or a later version in Microsoft-hosted data center.</value>
+  </data>
+  <data name="CannotAddRequestHeader" xml:space="preserve">
+    <value>HTTP header '{0}' isn't permitted. Only HTTP headers with the 'X-' prefix are permitted.</value>
+  </data>
+  <data name="CreateItemsDoesNotHandleExistingItems" xml:space="preserve">
+    <value>This operation can't be performed because at least one item already has an ID.</value>
+  </data>
+  <data name="ItemAttachmentCannotBeUpdated" xml:space="preserve">
+    <value>Item attachments can't be updated.</value>
+  </data>
+  <data name="FolderToUpdateCannotBeNullOrNew" xml:space="preserve">
+    <value>Folders[{0}] is either null or does not have an Id.</value>
+  </data>
+  <data name="InvalidFrequencyValue" xml:space="preserve">
+    <value>{0} is not a valid frequency value. Valid values range from 1 to 1440.</value>
+  </data>
+  <data name="MonthMustBeSpecifiedForRecurrencePattern" xml:space="preserve">
+    <value>The recurrence pattern's Month property must be specified.</value>
+  </data>
+  <data name="UnexpectedElementType" xml:space="preserve">
+    <value>The expected XML node type was {0}, but the actual type is {1}.</value>
+  </data>
+  <data name="CreateItemsDoesNotAllowAttachments" xml:space="preserve">
+    <value>This operation doesn't support items that have attachments.</value>
+  </data>
+  <data name="CannotAddSubscriptionToLiveConnection" xml:space="preserve">
+    <value>Subscriptions can't be added to an open connection.</value>
+  </data>
+  <data name="FrequencyMustBeBetween1And1440" xml:space="preserve">
+    <value>The frequency must be a value between 1 and 1440.</value>
+  </data>
+  <data name="HourMustBeBetween0And23" xml:space="preserve">
+    <value>Hour must be between 0 and 23.</value>
+  </data>
+  <data name="ArrayMustHaveAtLeastOneElement" xml:space="preserve">
+    <value>The Array value must have at least one element.</value>
+  </data>
+  <data name="WLIDCredentialsCannotBeUsedWithLegacyAutodiscover" xml:space="preserve">
+    <value>This type of credentials can't be used with this AutodiscoverService.</value>
+  </data>
+  <data name="OperationDoesNotSupportAttachments" xml:space="preserve">
+    <value>This operation isn't supported on attachments.</value>
+  </data>
+  <data name="PropertyValueMustBeSpecifiedForRecurrencePattern" xml:space="preserve">
+    <value>The recurrence pattern's {0} property must be specified.</value>
+  </data>
+  <data name="CannotCallConnectDuringLiveConnection" xml:space="preserve">
+    <value>The connection has already opened.</value>
+  </data>
+  <data name="MailboxQueriesParameterIsNotSpecified" xml:space="preserve">
+    <value>The collection of query and mailboxes parameter is not specified.</value>
+  </data>
+  <data name="AutodiscoverCouldNotBeLocated" xml:space="preserve">
+    <value>The Autodiscover service couldn't be located.</value>
+  </data>
+  <data name="AutodiscoverRedirectBlocked" xml:space="preserve">
+    <value>Autodiscover blocked a potentially insecure redirection to {0}. To allow Autodiscover to follow the redirection, use the AutodiscoverUrl(string, AutodiscoverRedirectionUrlValidationCallback) overload.</value>
+  </data>
+  <data name="HoldMailboxesParameterIsNotSpecified" xml:space="preserve">
+    <value>The hold mailboxes parameter is not specified.</value>
+  </data>
+  <data name="InvalidAutodiscoverRequest" xml:space="preserve">
+    <value>Invalid Autodiscover request: '{0}'</value>
+  </data>
+  <data name="ServiceObjectAlreadyHasId" xml:space="preserve">
+    <value>This operation can't be performed because this service object already has an ID. To update this service object, use the Update() method instead.</value>
+  </data>
+  <data name="ArgumentIsBlankString" xml:space="preserve">
+    <value>The string argument contains only white space characters.</value>
+  </data>
+  <data name="InvalidAutodiscoverSmtpAddressesCount" xml:space="preserve">
+    <value>At least one SMTP address must be requested.</value>
+  </data>
+  <data name="InvalidOAuthToken" xml:space="preserve">
+    <value>The given token is invalid.</value>
+  </data>
+  <data name="TimeoutMustBeBetween1And1440" xml:space="preserve">
+    <value>Timeout must be a value between 1 and 1440.</value>
+  </data>
+  <data name="ItemAttachmentMustBeNamed" xml:space="preserve">
+    <value>The name of the item attachment at index {0} must be set.</value>
+  </data>
+  <data name="PropertySetCannotBeModified" xml:space="preserve">
+    <value>This PropertySet is read-only and can't be modified.</value>
+  </data>
+  <data name="ObjectTypeNotSupported" xml:space="preserve">
+    <value>Objects of type {0} can't be added to the dictionary. The following types are supported: string array, byte array, boolean, byte, DateTime, integer, long, string, unsigned integer, and unsigned long.</value>
+  </data>
+  <data name="UnexpectedEndOfXmlDocument" xml:space="preserve">
+    <value>The XML document ended unexpectedly.</value>
+  </data>
+  <data name="InvalidPropertyValueNotInRange" xml:space="preserve">
+    <value>{0} must be between {1} and {2}.</value>
+  </data>
+  <data name="OccurrenceIndexMustBeGreaterThanZero" xml:space="preserve">
+    <value>OccurrenceIndex must be greater than 0.</value>
+  </data>
+  <data name="ItemTypeNotCompatible" xml:space="preserve">
+    <value>The item type returned by the service ({0}) isn't compatible with the requested item type ({1}).</value>
+  </data>
+  <data name="MinutesMustBeBetween0And1439" xml:space="preserve">
+    <value>minutes must be between 0 and 1439, inclusive.</value>
+  </data>
+  <data name="PhoneCallAlreadyDisconnected" xml:space="preserve">
+    <value>The phone call has already been disconnected.</value>
+  </data>
+  <data name="ExpectedStartElement" xml:space="preserve">
+    <value>The start element was expected, but node '{0}' of type {1} was found.</value>
+  </data>
+  <data name="InvalidEmailAddress" xml:space="preserve">
+    <value>The e-mail address is formed incorrectly.</value>
+  </data>
+  <data name="InvalidOrderBy" xml:space="preserve">
+    <value>At least one of the property definitions in the OrderBy clause is null.</value>
+  </data>
+  <data name="NoAppropriateConstructorForItemClass" xml:space="preserve">
+    <value>No appropriate constructor could be found for this item class.</value>
+  </data>
+  <data name="IdAlreadyInList" xml:space="preserve">
+    <value>The ID is already in the list.</value>
+  </data>
+  <data name="RequestIncompatibleWithRequestVersion" xml:space="preserve">
+    <value>The service request {0} is only valid for Exchange version {1} or later.</value>
+  </data>
+  <data name="IncompatibleTypeForArray" xml:space="preserve">
+    <value>Type {0} can't be used as an array of type {1}.</value>
+  </data>
+  <data name="ServiceUrlMustBeSet" xml:space="preserve">
+    <value>The Url property on the ExchangeService object must be set.</value>
+  </data>
+  <data name="SearchFilterMustBeSet" xml:space="preserve">
+    <value>The SearchFilter property must be set.</value>
+  </data>
+  <data name="CertificateHasNoPrivateKey" xml:space="preserve">
+    <value>The given certificate does not have the private key. The private key is necessary to sign part of the request message.</value>
+  </data>
+  <data name="InvalidRecurrenceRange" xml:space="preserve">
+    <value>Invalid recurrence range: ({0}).</value>
+  </data>
+  <data name="MultipleContactPhotosInAttachment" xml:space="preserve">
+    <value>This operation only allows at most 1 file attachment with IsContactPhoto set.</value>
+  </data>
+  <data name="InvalidAutodiscoverSmtpAddress" xml:space="preserve">
+    <value>A valid SMTP address must be specified.</value>
+  </data>
+  <data name="CannotRemoveSubscriptionFromLiveConnection" xml:space="preserve">
+    <value>Subscriptions can't be removed from an open connection.</value>
+  </data>
+  <data name="DaysOfTheWeekNotSpecified" xml:space="preserve">
+    <value>The recurrence pattern's property DaysOfTheWeek must contain at least one day of the week.</value>
+  </data>
+  <data name="InvalidDomainName" xml:space="preserve">
+    <value>'{0}' is not a valid domain name.</value>
+  </data>
+  <data name="HoldIdParameterIsNotSpecified" xml:space="preserve">
+    <value>The hold id parameter is not specified.</value>
+  </data>
+  <data name="CannotSetBothImpersonatedAndPrivilegedUser" xml:space="preserve">
+    <value>Can't set both impersonated user and privileged user in the ExchangeService object.</value>
+  </data>
+  <data name="ValuePropertyNotAssigned" xml:space="preserve">
+    <value>You must assign this property before you can read its value.</value>
+  </data>
+  <data name="ValuePropertyMustBeSet" xml:space="preserve">
+    <value>The Value property must be set.</value>
+  </data>
+  <data name="IndexIsOutOfRange" xml:space="preserve">
+    <value>index is out of range.</value>
+  </data>
+  <data name="AutodiscoverError" xml:space="preserve">
+    <value>The Autodiscover service returned an error.</value>
+  </data>
+  <data name="PropertyAlreadyExistsInOrderByCollection" xml:space="preserve">
+    <value>Property {0} already exists in OrderByCollection.</value>
+  </data>
+  <data name="FolderPermissionHasInvalidUserId" xml:space="preserve">
+    <value>The UserId in the folder permission at index {0} is invalid. The StandardUser, PrimarySmtpAddress, or SID property must be set.</value>
+  </data>
+  <data name="InvalidTimeoutValue" xml:space="preserve">
+    <value>{0} is not a valid timeout value. Valid values range from 1 to 1440.</value>
+  </data>
+  <data name="RegenerationPatternsOnlyValidForTasks" xml:space="preserve">
+    <value>Regeneration patterns can only be used with Task items.</value>
+  </data>
+  <data name="PropertyDefinitionTypeMismatch" xml:space="preserve">
+    <value>Property definition type '{0}' and type parameter '{1}' aren't compatible.</value>
+  </data>
+  <data name="PropertyDefinitionPropertyMustBeSet" xml:space="preserve">
+    <value>The PropertyDefinition property must be set.</value>
+  </data>
+  <data name="UpdateItemsDoesNotAllowAttachments" xml:space="preserve">
+    <value>This operation can't be performed because attachments have been added or deleted for one or more items.</value>
+  </data>
+  <data name="ElementNotFound" xml:space="preserve">
+    <value>The element '{0}' in namespace '{1}' wasn't found at the current position.</value>
+  </data>
+  <data name="ValueCannotBeConverted" xml:space="preserve">
+    <value>The value '{0}' couldn't be converted to type {1}.</value>
+  </data>
+  <data name="SecondMustBeBetween0And59" xml:space="preserve">
+    <value>Second must be between 0 and 59.</value>
+  </data>
+  <data name="UserIdForDelegateUserNotSpecified" xml:space="preserve">
+    <value>The UserId in the DelegateUser hasn't been specified.</value>
+  </data>
+  <data name="UpdateItemsDoesNotSupportNewOrUnchangedItems" xml:space="preserve">
+    <value>This operation can't be performed because one or more items are new or unmodified.</value>
+  </data>
+  <data name="InvalidSortByPropertyForMailboxSearch" xml:space="preserve">
+    <value>Specified SortBy property '{0}' is invalid.</value>
+  </data>
+  <data name="DayOfMonthMustBeSpecifiedForRecurrencePattern" xml:space="preserve">
+    <value>The recurrence pattern's DayOfMonth property must be specified.</value>
+  </data>
+  <data name="DeletingThisObjectTypeNotAuthorized" xml:space="preserve">
+    <value>Deleting this type of object isn't authorized.</value>
+  </data>
+  <data name="DayOfWeekIndexMustBeSpecifiedForRecurrencePattern" xml:space="preserve">
+    <value>The recurrence pattern's DayOfWeekIndex property must be specified.</value>
+  </data>
+  <data name="ValueOfTypeCannotBeConverted" xml:space="preserve">
+    <value>The value '{0}' of type {1} can't be converted to a value of type {2}.</value>
+  </data>
+  <data name="AttachmentCreationFailed" xml:space="preserve">
+    <value>At least one attachment couldn't be created.</value>
+  </data>
+  <data name="TimeoutMustBeGreaterThanZero" xml:space="preserve">
+    <value>Timeout must be greater than zero.</value>
+  </data>
+  <data name="ClassIncompatibleWithRequestVersion" xml:space="preserve">
+    <value>Class {0} is only valid for Exchange version {1} or later.</value>
+  </data>
+  <data name="InvalidOrUnsupportedTimeZoneDefinition" xml:space="preserve">
+    <value>The time zone definition is invalid or unsupported.</value>
+  </data>
+  <data name="CannotSetDelegateFolderPermissionLevelToCustom" xml:space="preserve">
+    <value>This operation can't be performed because one or more folder permission levels were set to Custom.</value>
+  </data>
+  <data name="DeleteInvalidForUnsavedUserConfiguration" xml:space="preserve">
+    <value>This user configuration object can't be deleted because it's never been saved.</value>
+  </data>
+  <data name="JsonDeserializationNotImplemented" xml:space="preserve">
+    <value>JSON Deserialization is not implemented for this request. Please retry the request with the XML rendering method.</value>
+  </data>
+  <data name="StartTimeZoneRequired" xml:space="preserve">
+    <value>StartTimeZone required when setting the Start, End, IsAllDayEvent, or Recurrence properties.  You must load or assign this property before attempting to update the appointment.</value>
+  </data>
+  <data name="AutodiscoverDidNotReturnEwsUrl" xml:space="preserve">
+    <value>The Autodiscover service didn't return an appropriate URL that can be used for the ExchangeService Autodiscover URL.</value>
+  </data>
+  <data name="InvalidMailboxType" xml:space="preserve">
+    <value>The mailbox type isn't valid.</value>
+  </data>
+  <data name="JsonSerializationNotImplemented" xml:space="preserve">
+    <value>JSON Serialization is not implemented for this request. Please retry the request with the XML rendering method.</value>
+  </data>
+  <data name="ValuePropertyNotLoaded" xml:space="preserve">
+    <value>This property was requested, but it wasn't returned by the server.</value>
+  </data>
+  <data name="DurationMustBeSpecifiedWhenScheduled" xml:space="preserve">
+    <value>Duration must be specified when State is equal to Scheduled.</value>
+  </data>
+  <data name="ObjectTypeIncompatibleWithRequestVersion" xml:space="preserve">
+    <value>The object type {0} is only valid for Exchange Server version {1} or later versions.</value>
+  </data>
+  <data name="ItemToUpdateCannotBeNullOrNew" xml:space="preserve">
+    <value>Items[{0}] is either null or does not have an Id.</value>
+  </data>
+  <data name="AtLeastOneAttachmentCouldNotBeDeleted" xml:space="preserve">
+    <value>At least one attachment couldn't be deleted.</value>
+  </data>
+  <data name="FolderPermissionLevelMustBeSet" xml:space="preserve">
+    <value>The permission level of the folder permission at index {0} must be set.</value>
+  </data>
+  <data name="NumberOfOccurrencesMustBeGreaterThanZero" xml:space="preserve">
+    <value>NumberOfOccurrences must be greater than 0.</value>
+  </data>
+  <data name="TimeWindowStartTimeMustBeGreaterThanEndTime" xml:space="preserve">
+    <value>The time window's end time must be greater than its start time.</value>
+  </data>
+  <data name="CannotConvertBetweenTimeZones" xml:space="preserve">
+    <value>Unable to convert {0} from {1} to {2}.</value>
+  </data>
+  <data name="DayOfTheWeekMustBeSpecifiedForRecurrencePattern" xml:space="preserve">
+    <value>The recurrence pattern's property DayOfTheWeek must be specified.</value>
+  </data>
+  <data name="ServiceRequestFailed" xml:space="preserve">
+    <value>The request failed. {0}</value>
+  </data>
+  <data name="ContactGroupMemberCannotBeUpdatedWithoutBeingLoadedFirst" xml:space="preserve">
+    <value>The contact group's Members property must be reloaded before newly-added members can be updated.</value>
+  </data>
+  <data name="PartnerTokenRequestRequiresUrl" xml:space="preserve">
+    <value>TryGetPartnerAccess request requires the Url be set with the partner's autodiscover url first.</value>
+  </data>
+  <data name="AttachmentItemTypeMismatch" xml:space="preserve">
+    <value>Can not update this attachment item since the item in the response has a different type.</value>
+  </data>
+  <data name="IEnumerableDoesNotContainThatManyObject" xml:space="preserve">
+    <value>The IEnumerable doesn't contain that many objects.</value>
+  </data>
+  <data name="PropertyIncompatibleWithRequestVersion" xml:space="preserve">
+    <value>The property {0} is valid only for Exchange {1} or later versions.</value>
+  </data>
+  <data name="EnumValueIncompatibleWithRequestVersion" xml:space="preserve">
+    <value>Enumeration value {0} in enumeration type {1} is only valid for Exchange version {2} or later.</value>
+  </data>
+  <data name="TagValueIsOutOfRange" xml:space="preserve">
+    <value>The extended property tag value must be in the range of 0 to 65,535.</value>
+  </data>
+  <data name="FileAttachmentContentIsNotSet" xml:space="preserve">
+    <value>The content of the file attachment at index {0} must be set.</value>
+  </data>
+  <data name="PropertyCannotBeDeleted" xml:space="preserve">
+    <value>This property can't be deleted.</value>
+  </data>
+</root>
