@@ -1530,6 +1530,14 @@ namespace Microsoft.Exchange.WebServices.Data
             return request.Execute();
         }
 
+        public ServiceResponseCollection<ExportItemsResponse> ExportItems(IEnumerable<ItemId> itemIds)
+        {
+            ExportItemsRequest request = new ExportItemsRequest(this, ServiceErrorHandling.ReturnErrors);
+            request.ItemIds.AddRange(itemIds);
+            return request.Execute();
+        }
+
+
         #endregion
 
         #region People operations
@@ -5840,5 +5848,14 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         #endregion
+
+        public UploadItemsResponse UploadItem(UploadItem item)
+        {
+            UploadItemsRequest request = new UploadItemsRequest(this, ServiceErrorHandling.ReturnErrors);
+
+            request.Items = new UploadItem[] { item };
+            
+            return request.Execute()[0];
+        }
     }
 }
