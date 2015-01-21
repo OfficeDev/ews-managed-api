@@ -234,8 +234,8 @@ namespace Microsoft.Exchange.WebServices.Data
                         {
                             TimeZonePeriod period = new TimeZonePeriod();
                             period.LoadFromXml(reader);
-
-                            this.periods.Add(period.Id, period);
+                            if (!this.periods.ContainsKey(period.Id))
+                                this.periods.Add(period.Id, period);
                         }
                     }
                     while (!reader.IsEndElement(XmlNamespace.Types, XmlElementNames.Periods));
@@ -251,8 +251,8 @@ namespace Microsoft.Exchange.WebServices.Data
                             TimeZoneTransitionGroup transitionGroup = new TimeZoneTransitionGroup(this);
 
                             transitionGroup.LoadFromXml(reader);
-
-                            this.transitionGroups.Add(transitionGroup.Id, transitionGroup);
+                            if (!this.transitionGroups.ContainsKey(transitionGroup.Id))
+                                this.transitionGroups.Add(transitionGroup.Id, transitionGroup);
                         }
                     }
                     while (!reader.IsEndElement(XmlNamespace.Types, XmlElementNames.TransitionsGroups));
