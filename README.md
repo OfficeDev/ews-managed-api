@@ -6,8 +6,7 @@ By using the EWS Managed API, you can access almost all the information stored i
 
 ## Download options
 
-The EWS Managed API is available as an open-source project on GitHub, or as a Microsoft Windows Installer on the [Microsoft Download Center](http://go.microsoft.com/fwlink/?LinkID=255472). 
-The project available on GitHub is based on the EWS Managed API 2.2, and includes any updates made since the release of that version. 
+Download EWS Managed API via [nuget](http://www.nuget.org/packages/Microsoft.Exchange.WebServices/).
 
 ## Getting started resources
 
