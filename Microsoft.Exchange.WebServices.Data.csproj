@@ -816,7 +816,9 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\resources.resx" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Core\ServiceObjects\Schemas\Xsd\messages.xsd">
       <SubType>Designer</SubType>

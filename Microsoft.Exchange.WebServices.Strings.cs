@@ -2362,6 +2362,6 @@ namespace Microsoft.Exchange.WebServices
 		/// <summary>
 		/// Resource Manager
 		/// </summary>
-		private static ExchangeResourceManager ResourceManager = ExchangeResourceManager.GetResourceManager("Microsoft.Exchange.WebServices.Strings", typeof(Microsoft.Exchange.WebServices.Strings).Assembly);
+        private static ExchangeResourceManager ResourceManager = ExchangeResourceManager.GetResourceManager("Microsoft.Exchange.WebServices.Data.Properties.resources", typeof(Strings).Assembly);
 	}
 }
