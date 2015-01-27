@@ -118,8 +118,15 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="culture">The culture to use.</param>
         /// <returns>The corresponding string if the id was located in the table, null otherwise.</returns>
         public override string GetString(string name, System.Globalization.CultureInfo culture)
-        {
-            return base.GetString(name, culture);
+        { 
+            try
+            {
+                return base.GetString(name, culture);
+            }
+            catch(Exception)//A little bit hacky, but the resource file seems to be missing on github
+            {
+                return name;
+            }
         }
     }
 }
