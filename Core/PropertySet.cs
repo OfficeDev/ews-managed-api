@@ -241,6 +241,8 @@ namespace Microsoft.Exchange.WebServices.Data
                     return XmlElementNames.FolderShape;
                 case ServiceObjectType.Conversation:
                     return XmlElementNames.ConversationShape;
+                case ServiceObjectType.Persona:
+                    return XmlElementNames.PersonaShape;
                 default:
                     EwsUtilities.Assert(
                         false,

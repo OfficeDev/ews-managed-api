@@ -694,7 +694,7 @@ namespace Microsoft.Exchange.WebServices.Autodiscover
                                 this.DisableScpLookupIfDuplicateRedirection(settings.RedirectTarget, redirectionEmailAddresses);
 
                                 settings = this.InternalGetLegacyUserSettings<TSettings>(
-                                    emailAddress,
+                                    settings.RedirectTarget,
                                     redirectionEmailAddresses,
                                     ref currentHop);
                                 return true;

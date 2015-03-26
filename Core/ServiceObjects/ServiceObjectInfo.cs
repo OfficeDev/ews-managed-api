@@ -141,6 +141,13 @@ namespace Microsoft.Exchange.WebServices.Data
                 delegate(ExchangeService srv) { return new MeetingResponse(srv); },
                 delegate(ItemAttachment itemAttachment, bool isNew) { return new MeetingResponse(itemAttachment); });
 
+            // Persona
+            this.AddServiceObjectType(
+                XmlElementNames.Persona,
+                typeof(Persona),
+                delegate(ExchangeService srv) { return new Persona(srv); },
+                null);
+
             // PostItem
             this.AddServiceObjectType(
                 XmlElementNames.PostItem,

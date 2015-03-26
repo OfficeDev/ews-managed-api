@@ -46,8 +46,17 @@ namespace Microsoft.Exchange.WebServices.Data
         private static LazyMember<string> buildVersion = new LazyMember<string>(
             delegate()
             {
-                FileVersionInfo fileInfo = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
-                return fileInfo.FileVersion;
+                try
+                {
+                    FileVersionInfo fileInfo = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
+                    return fileInfo.FileVersion;
+                }
+                catch
+                {
+                    // OM:2026839 When run in an environment with partial trust, fetching the build version blows up.
+                    // Just return a hardcoded value on failure.
+                    return "0.0";
+                }
             });
 
         /// <summary>

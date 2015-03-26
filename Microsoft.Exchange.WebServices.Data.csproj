@@ -61,12 +61,32 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Requests\GetOMEConfigurationRequest.cs" />
+    <Compile Include="Core\Requests\GetUserPhotoRequest.cs" />
+    <Compile Include="Core\Requests\SetOMEConfigurationRequest.cs" />
+    <Compile Include="Core\Responses\GetOMEConfigurationResponse.cs" />
+    <Compile Include="Core\Responses\GetUserPhotoResponse.cs" />
+    <Compile Include="Core\Responses\SetOMEConfigurationResponse.cs" />
+    <Compile Include="Core\Responses\RegisterConsentResponse.cs" />
+    <Compile Include="Enumerations\ConsentState.cs" />
+    <Compile Include="Enumerations\GetUserPhotoStatus.cs" />
+    <Compile Include="Enumerations\UserPhotoSize.cs" />
+    <Compile Include="Enumerations\UnifiedGroupEnumTypes.cs" />
+    <Compile Include="Groups\Requests\GetUnifiedGroupUnseenCountRequest.cs" />
+    <Compile Include="Groups\Requests\GetUserUnifiedGroupsRequest.cs" />
+    <Compile Include="Groups\ComplexProperties\RequestedUnifiedGroupsSet.cs" />
+    <Compile Include="Groups\ComplexProperties\UnifiedGroupIdentity.cs" />
+    <Compile Include="Groups\Responses\GetUnifiedGroupUnseenCountResponse.cs" />
+    <Compile Include="Groups\Responses\GetUserUnifiedGroupsResponse.cs" />
+    <Compile Include="Groups\ComplexProperties\UnifiedGroup.cs" />
+    <Compile Include="Groups\ComplexProperties\UnifiedGroupsSet.cs" />
     <Compile Include="Properties\AssemblyInfoMicrosoft.cs" />
     <Compile Include="Properties\AssemblyInfoOpenSource.cs" />
     <Compile Include="Attributes\AttachableAttribute.cs" />
@@ -100,6 +120,10 @@
     <Compile Include="Autodiscover\WebClientUrlCollection.cs" />
     <Compile Include="ComplexProperties\ApprovalRequestData.cs" />
     <Compile Include="ComplexProperties\ArchiveTag.cs" />
+    <Compile Include="ComplexProperties\AttributedString.cs" />
+    <Compile Include="ComplexProperties\AttributedStringCollection.cs" />
+    <Compile Include="ComplexProperties\Attribution.cs" />
+    <Compile Include="ComplexProperties\AttributionCollection.cs" />
     <Compile Include="ComplexProperties\Availability\CalendarEventDetails.cs" />
     <Compile Include="ComplexProperties\Availability\Suggestion.cs" />
     <Compile Include="ComplexProperties\ByteArrayArray.cs" />
@@ -141,6 +165,7 @@
     <Compile Include="ComplexProperties\MeetingSuggestionCollection.cs" />
     <Compile Include="ComplexProperties\NormalizedBody.cs" />
     <Compile Include="ComplexProperties\TextBody.cs" />
+    <Compile Include="ComplexProperties\PersonaId.cs" />
     <Compile Include="ComplexProperties\PersonaPostalAddress.cs" />
     <Compile Include="ComplexProperties\PhoneEntity.cs" />
     <Compile Include="ComplexProperties\PhoneEntityCollection.cs" />
@@ -214,6 +239,7 @@
     <Compile Include="Core\Requests\GetServerTimeZonesRequest.cs" />
     <Compile Include="Core\Requests\InstallAppRequest.cs" />
     <Compile Include="Core\Requests\MarkAsJunkRequest.cs" />
+    <Compile Include="Core\Requests\RegisterConsentRequest.cs" />
     <Compile Include="Core\Requests\SearchMailboxesRequest.cs" />
     <Compile Include="Core\Requests\SetClientExtensionRequest.cs" />
     <Compile Include="Core\Requests\SetEncryptionConfigurationRequest.cs" />
@@ -262,6 +288,7 @@
     <Compile Include="Core\Responses\GetStreamingEventsResponse.cs" />
     <Compile Include="Core\ServiceObjects\Items\ContactGroup.cs" />
     <Compile Include="Core\ServiceObjects\Items\Conversation.cs" />
+    <Compile Include="Core\ServiceObjects\Items\Persona.cs" />
     <Compile Include="Core\ServiceObjects\ResponseObjects\CalendarResponseMessageBase.cs" />
     <Compile Include="Core\ServiceObjects\Schemas\ContactGroupSchema.cs" />
     <Compile Include="Core\ServiceObjects\Schemas\ConversationSchema.cs" />
@@ -354,7 +381,6 @@
     <Compile Include="MailboxSearch\SearchMailboxesResult.cs" />
     <Compile Include="MailboxSearch\SearchPreviewItem.cs" />
     <Compile Include="MailboxSearch\SetHoldOnMailboxesParameters.cs" />
-    <Compile Include="Microsoft.Exchange.WebServices.Strings.cs" />
     <Compile Include="Misc\CalendarActionResults.cs" />
     <Compile Include="Misc\ConversationAction.cs" />
     <Compile Include="Misc\ManagementRole.cs" />
@@ -386,17 +412,19 @@
     <Compile Include="PropertyDefinitions\StartTimeZonePropertyDefinition.cs" />
     <Compile Include="PropertyDefinitions\TimeZonePropertyDefinition.cs" />
     <Compile Include="Exceptions\AutodiscoverResponseException.cs" />
-    <Compile Include="ResourceManager\ExchangeResourceManager.cs" />
     <Compile Include="Search\ConversationIndexedItemView.cs" />
     <Compile Include="Search\FindConversationResults.cs" />
     <Compile Include="Search\FolderView.cs" />
+    <Compile Include="Search\GetUserPhotoResults.cs" />
     <Compile Include="Search\ItemView.cs" />
+    <Compile Include="Search\PeopleIndexedItemView.cs" />
     <Compile Include="Search\OrderByCollection.cs" />
     <Compile Include="Search\SeekToConditionItemView.cs" />
     <Compile Include="Security\SafeXmlDocument.cs" />
     <Compile Include="Security\SafeXmlFactory.cs" />
     <Compile Include="Security\SafeXmlSchema.cs" />
     <Compile Include="Security\XmlDtdException.cs" />
+    <Compile Include="Strings.cs" />
     <Compile Include="UnifiedMessaging\PhoneCallId.cs" />
     <Compile Include="Core\EwsServiceXmlReader.cs" />
     <Compile Include="Core\EwsServiceXmlWriter.cs" />
@@ -499,6 +527,7 @@
     <Compile Include="Core\ServiceObjects\Schemas\ItemSchema.cs" />
     <Compile Include="Core\ServiceObjects\Schemas\MeetingMessageSchema.cs" />
     <Compile Include="Core\ServiceObjects\Schemas\MeetingRequestSchema.cs" />
+    <Compile Include="Core\ServiceObjects\Schemas\PersonaSchema.cs" />
     <Compile Include="Core\ServiceObjects\Schemas\PostItemSchema.cs" />
     <Compile Include="Core\ServiceObjects\Schemas\PostReplySchema.cs" />
     <Compile Include="Core\ServiceObjects\Schemas\ResponseMessageSchema.cs" />
@@ -571,6 +600,8 @@
     <Compile Include="ComplexProperties\Recurrence\Patterns\Recurrence.cs" />
     <Compile Include="ComplexProperties\OccurrenceInfo.cs" />
     <Compile Include="ComplexProperties\OccurrenceInfoCollection.cs" />
+    <Compile Include="ComplexProperties\PersonaEmailAddress.cs" />
+    <Compile Include="ComplexProperties\PersonaEmailAddressCollection.cs" />
     <Compile Include="ComplexProperties\Recurrence\Ranges\RecurrenceRange.cs" />
     <Compile Include="ComplexProperties\StringList.cs" />
     <Compile Include="ComplexProperties\TimeChange.cs" />
@@ -658,7 +689,6 @@
     <Compile Include="PropertyDefinitions\PermissionCollectionPropertyDefinition.cs" />
     <Compile Include="PropertyDefinitions\ServiceObjectPropertyDefinition.cs" />
     <Compile Include="PropertyDefinitions\TaskDelegationStatePropertyDefinition.cs" />
-    <Compile Include="ResourceManager\LocalizedString.cs" />
     <Compile Include="Search\Filters\SearchFilter.ContainsSubstring.cs" />
     <Compile Include="Search\Filters\SearchFilter.ExcludesBitmask.cs" />
     <Compile Include="Search\Filters\SearchFilter.Exists.cs" />
@@ -675,6 +705,7 @@
     <Compile Include="Search\Filters\SearchFilter.SearchFilterCollection.cs" />
     <Compile Include="Search\FindFoldersResults.cs" />
     <Compile Include="Search\FindItemsResults.cs" />
+    <Compile Include="Search\FindPeopleResults.cs" />
     <Compile Include="Search\GroupedFindItemsResults.cs" />
     <Compile Include="Search\Grouping.cs" />
     <Compile Include="Search\ItemGroup.cs" />
@@ -771,12 +802,14 @@
     <Compile Include="PropertyDefinitions\TypedPropertyDefinition.cs" />
     <Compile Include="Core\Requests\FindFolderRequest.cs" />
     <Compile Include="Core\Requests\FindItemRequest.cs" />
+    <Compile Include="Core\Requests\FindPeopleRequest.cs" />
     <Compile Include="Core\Requests\FindRequest.cs" />
     <Compile Include="Core\Requests\GetItemRequest.cs" />
     <Compile Include="Core\Requests\MultiResponseServiceRequest.cs" />
     <Compile Include="Core\Requests\GetRequest.cs" />
     <Compile Include="Core\Responses\FindFolderResponse.cs" />
     <Compile Include="Core\Responses\FindItemResponse.cs" />
+    <Compile Include="Core\Responses\FindPeopleResponse.cs" />
     <Compile Include="Core\Responses\GetItemResponse.cs" />
     <Compile Include="Core\Responses\ServiceResponse.cs" />
     <Compile Include="Core\Responses\ServiceResponseCollection.cs" />
@@ -817,14 +850,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <None Include="Core\ServiceObjects\Schemas\Xsd\messages.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Core\ServiceObjects\Schemas\Xsd\types.xsd">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

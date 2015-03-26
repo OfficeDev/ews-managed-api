@@ -503,5 +503,15 @@ namespace Microsoft.Exchange.WebServices.Autodiscover
         /// The grouping hint for certain clients.
         /// </summary>
         GroupingInformation = 96,
+
+        /// <summary>
+        /// Internal OutlookService URL
+        /// </summary>
+        InternalOutlookServiceUrl = 98,
+
+        /// <summary>
+        /// External OutlookService URL
+        /// </summary>
+        ExternalOutlookServiceUrl = 99
     }
 }

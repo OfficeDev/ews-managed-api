@@ -84,15 +84,15 @@ namespace Microsoft.Exchange.WebServices.Data
             standardPeriod.Id = TimeZonePeriod.StandardPeriodId;
             standardPeriod.Name = TimeZonePeriod.StandardPeriodName;
             standardPeriod.Bias = -timeZoneInfo.BaseUtcOffset;
-
-            this.periods.Add(standardPeriod.Id, standardPeriod);
-
+            
             TimeZoneInfo.AdjustmentRule[] adjustmentRules = timeZoneInfo.GetAdjustmentRules();
 
             TimeZoneTransition transitionToStandardPeriod = new TimeZoneTransition(this, standardPeriod);
 
             if (adjustmentRules.Length == 0)
             {
+                this.periods.Add(standardPeriod.Id, standardPeriod);
+
                 // If the time zone info doesn't support Daylight Saving Time, we just need to
                 // create one transition to one group with one transition to the standard period.
                 TimeZoneTransitionGroup transitionGroup = new TimeZoneTransitionGroup(this, "0");
@@ -132,6 +132,7 @@ namespace Microsoft.Exchange.WebServices.Data
                             absoluteDateTransition.DateTime = adjustmentRules[i].DateStart;
 
                             transition = absoluteDateTransition;
+                            this.periods.Add(standardPeriod.Id, standardPeriod);
                         }
                         else
                         {
@@ -235,7 +236,24 @@ namespace Microsoft.Exchange.WebServices.Data
                             TimeZonePeriod period = new TimeZonePeriod();
                             period.LoadFromXml(reader);
 
-                            this.periods.Add(period.Id, period);
+                            // OM:1648848 Bad timezone data from clients can include duplicate rules
+                            // for one year, with duplicate ID. In that case, let the first one win.
+                            if (!this.periods.ContainsKey(period.Id))
+                            {
+                                this.periods.Add(period.Id, period);
+                            }
+                            else
+                            {
+                                reader.Service.TraceMessage(
+                                    TraceFlags.EwsTimeZones,
+                                    string.Format(
+                                        "An entry with the same key (Id) '{0}' already exists in Periods. Cannot add another one. Existing entry: [Name='{1}', Bias='{2}']. Entry to skip: [Name='{3}', Bias='{4}'].",
+                                        period.Id,
+                                        this.Periods[period.Id].Name,
+                                        this.Periods[period.Id].Bias,
+                                        period.Name,
+                                        period.Bias));
+                            }
                         }
                     }
                     while (!reader.IsEndElement(XmlNamespace.Types, XmlElementNames.Periods));
@@ -316,7 +334,24 @@ namespace Microsoft.Exchange.WebServices.Data
                             TimeZonePeriod period = new TimeZonePeriod();
                             period.LoadFromJson(jsonPeriod as JsonObject, service);
 
-                            this.periods.Add(period.Id, period);
+                            // OM:1648848 Bad timezone data from clients can include duplicate rules
+                            // for one year, with duplicate ID. In that case, let the first one win.
+                            if (!this.periods.ContainsKey(period.Id))
+                            {
+                                this.periods.Add(period.Id, period);
+                            }
+                            else
+                            {
+                                service.TraceMessage(
+                                    TraceFlags.EwsTimeZones,
+                                    string.Format(
+                                        "An entry with the same key (Id) '{0}' already exists in Periods. Cannot add another one. Existing entry: [Name='{1}', Bias='{2}']. Entry to skip: [Name='{3}', Bias='{4}'].",
+                                        period.Id,
+                                        this.Periods[period.Id].Name,
+                                        this.Periods[period.Id].Bias,
+                                        period.Name,
+                                        period.Bias));
+                            }
                         }
 
                         break;
@@ -524,8 +559,9 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <summary>
         /// Converts this time zone definition into a TimeZoneInfo structure.
         /// </summary>
+        /// <param name="service">The service.</param>
         /// <returns>A TimeZoneInfo representing the same time zone as this definition.</returns>
-        internal TimeZoneInfo ToTimeZoneInfo()
+        internal TimeZoneInfo ToTimeZoneInfo(ExchangeService service)
         {
             this.Validate();
 
@@ -556,14 +592,28 @@ namespace Microsoft.Exchange.WebServices.Data
                     effectiveEndDate = endDate;
                 }
 
-                TimeZoneInfo.AdjustmentRule adjustmentRule = this.transitions[i].TargetGroup.CreateAdjustmentRule(startDate, effectiveEndDate);
-
-                if (adjustmentRule != null)
+                // OM:1648848 Due to bad timezone data from clients the 
+                // startDate may not always come before the effectiveEndDate
+                if (startDate < effectiveEndDate)
                 {
-                    adjustmentRules.Add(adjustmentRule);
-                }
+                    TimeZoneInfo.AdjustmentRule adjustmentRule = this.transitions[i].TargetGroup.CreateAdjustmentRule(startDate, effectiveEndDate);
 
-                startDate = endDate;
+                    if (adjustmentRule != null)
+                    {
+                        adjustmentRules.Add(adjustmentRule);
+                    }
+
+                    startDate = endDate;
+                }
+                else
+                {
+                    service.TraceMessage(
+                        TraceFlags.EwsTimeZones,
+                            string.Format(
+                                "The startDate '{0}' is not before the effectiveEndDate '{1}'. Will skip creating adjustment rule.",
+                                startDate,
+                                effectiveEndDate));
+                }
             }
 
             if (adjustmentRules.Count == 0)

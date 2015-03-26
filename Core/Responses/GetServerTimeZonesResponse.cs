@@ -49,7 +49,7 @@ namespace Microsoft.Exchange.WebServices.Data
                         TimeZoneDefinition timeZoneDefinition = new TimeZoneDefinition();
                         timeZoneDefinition.LoadFromXml(reader);
 
-                        this.timeZones.Add(timeZoneDefinition.ToTimeZoneInfo());
+                        this.timeZones.Add(timeZoneDefinition.ToTimeZoneInfo(reader.Service));
                     }
                 }
                 while (!reader.IsEndElement(XmlNamespace.Messages, XmlElementNames.TimeZoneDefinitions));

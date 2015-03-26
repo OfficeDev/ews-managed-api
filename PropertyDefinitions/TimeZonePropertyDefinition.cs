@@ -47,7 +47,7 @@ namespace Microsoft.Exchange.WebServices.Data
             TimeZoneDefinition timeZoneDefinition = new TimeZoneDefinition();
             timeZoneDefinition.LoadFromXml(reader, this.XmlElementName);
 
-            propertyBag[this] = timeZoneDefinition.ToTimeZoneInfo();
+            propertyBag[this] = timeZoneDefinition.ToTimeZoneInfo(reader.Service);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Microsoft.Exchange.WebServices.Data
                 timeZoneDefinition.LoadFromJson(jsonTimeZoneProperty, service);
             }
 
-            propertyBag[this] = timeZoneDefinition.ToTimeZoneInfo();
+            propertyBag[this] = timeZoneDefinition.ToTimeZoneInfo(service);
         }
 
         /// <summary>

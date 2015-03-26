@@ -159,7 +159,7 @@ namespace Microsoft.Exchange.WebServices.Data
             new GenericPropertyDefinition<WellKnownFolderName>(
                 XmlElementNames.DistinguishedFolderId,
                 FieldUris.DistinguishedFolderId,
-                PropertyDefinitionFlags.CanFind,
+                PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanFind,
                 ExchangeVersion.Exchange2013,
                 true);
 

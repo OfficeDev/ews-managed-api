@@ -100,16 +100,7 @@ namespace Microsoft.Exchange.WebServices.Data
             this.emailText = reader.ReadElementValue<string>(XmlNamespace.Messages, XmlElementNames.EncryptionConfigurationEmailText);
             this.portalText = reader.ReadElementValue<string>(XmlNamespace.Messages, XmlElementNames.EncryptionConfigurationPortalText);
             this.disclaimerText = reader.ReadElementValue<string>(XmlNamespace.Messages, XmlElementNames.EncryptionConfigurationDisclaimerText);
-
-            // TODO: Remove the try/catch after both client & server have been deployed to all machines
-            try
-            {
-                this.otpEnabled = reader.ReadElementValue<bool>(XmlNamespace.Messages, XmlElementNames.EncryptionConfigurationOTPEnabled);
-            }
-            catch (ServiceXmlDeserializationException)
-            {
-                this.otpEnabled = true;
-            }
+            this.otpEnabled = reader.ReadElementValue<bool>(XmlNamespace.Messages, XmlElementNames.EncryptionConfigurationOTPEnabled);
         }
     }
 }

@@ -74,6 +74,11 @@ namespace Microsoft.Exchange.WebServices.Data
         AutodiscoverRequestHttpHeaders = 512,
 
         /// <summary>
+        /// Trace EWS timezone related logic.
+        /// </summary>
+        EwsTimeZones = 1024,
+
+        /// <summary>
         /// All trace types enabled.
         /// </summary>
         All = Int64.MaxValue,

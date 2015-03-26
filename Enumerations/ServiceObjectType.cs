@@ -32,6 +32,11 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <summary>
         /// Data represents a conversation
         /// </summary>
-        Conversation
+        Conversation,
+
+        /// <summary>
+        /// Data represents a persona
+        /// </summary>
+        Persona
     }
 }

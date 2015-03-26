@@ -19,6 +19,8 @@ namespace Microsoft.Exchange.WebServices.Data
     using System.Net;
     using System.Xml;
     using Microsoft.Exchange.WebServices.Autodiscover;
+    using Microsoft.Exchange.WebServices.Data.Enumerations;
+    using Microsoft.Exchange.WebServices.Data.Groups;
 
     /// <summary>
     /// Represents a binding to the Exchange Web Services.
@@ -28,6 +30,18 @@ namespace Microsoft.Exchange.WebServices.Data
         #region Constants
 
         private const string TargetServerVersionHeaderName = "X-EWS-TargetVersion";
+
+        /// <summary>
+        /// The two contants below are used to set the AnchorMailbox and ExplicitLogonUser values
+        /// in the request header.
+        /// </summary>
+        /// <remarks>
+        /// Note: Setting this values will route the request directly to the backend hosting the 
+        /// AnchorMailbox. These headers should be used primarily for UnifiedGroup scenario where
+        /// a request needs to be routed directly to the group mailbox versus the user mailbox.
+        /// </remarks>
+        private const string AnchorMailboxHeaderName = "X-AnchorMailbox";
+        private const string ExplicitLogonUserHeaderName = "X-OWA-ExplicitLogonUser";
 
         #endregion
 
@@ -45,6 +59,7 @@ namespace Microsoft.Exchange.WebServices.Data
         private ExchangeService.RenderingMode renderingMode = RenderingMode.Xml;
         private bool traceEnablePrettyPrinting = true;
         private string targetServerVersion = null;
+        private string anchorMailbox = null;
 
         #endregion
 
@@ -1441,6 +1456,152 @@ namespace Microsoft.Exchange.WebServices.Data
             request.IsJunk = isJunk;
             request.MoveItem = moveItem;
             return request.Execute();
+        }
+
+        #endregion
+
+        #region People operations
+
+        /// <summary>
+        /// This method is for search scenarios. Retrieves a set of personas satisfying the specified search conditions.
+        /// </summary>
+        /// <param name="folderId">Id of the folder being searched</param>
+        /// <param name="searchFilter">The search filter. Available search filter classes
+        /// include SearchFilter.IsEqualTo, SearchFilter.ContainsSubstring and 
+        /// SearchFilter.SearchFilterCollection</param>
+        /// <param name="view">The view which defines the number of persona being returned</param>
+        /// <param name="queryString">The query string for which the search is being performed</param>
+        /// <returns>A collection of personas matching the search conditions</returns>
+        public ICollection<Persona> FindPeople(FolderId folderId, SearchFilter searchFilter, ViewBase view, string queryString)
+        {
+            EwsUtilities.ValidateParamAllowNull(folderId, "folderId");
+            EwsUtilities.ValidateParamAllowNull(searchFilter, "searchFilter");
+            EwsUtilities.ValidateParam(view, "view");
+            EwsUtilities.ValidateParam(queryString, "queryString");
+            EwsUtilities.ValidateMethodVersion(this, ExchangeVersion.Exchange2013_SP1, "FindPeople");
+
+            FindPeopleRequest request = new FindPeopleRequest(this);
+
+            request.FolderId = folderId;
+            request.SearchFilter = searchFilter;
+            request.View = view;
+            request.QueryString = queryString;
+
+            return request.Execute().Personas;
+        }
+
+        /// <summary>
+        /// This method is for search scenarios. Retrieves a set of personas satisfying the specified search conditions.
+        /// </summary>
+        /// <param name="folderName">Name of the folder being searched</param>
+        /// <param name="searchFilter">The search filter. Available search filter classes
+        /// include SearchFilter.IsEqualTo, SearchFilter.ContainsSubstring and 
+        /// SearchFilter.SearchFilterCollection</param>
+        /// <param name="view">The view which defines the number of persona being returned</param>
+        /// <param name="queryString">The query string for which the search is being performed</param>
+        /// <returns>A collection of personas matching the search conditions</returns>
+        public ICollection<Persona> FindPeople(WellKnownFolderName folderName, SearchFilter searchFilter, ViewBase view, string queryString)
+        {
+            return this.FindPeople(new FolderId(folderName), searchFilter, view, queryString);
+        }
+
+        /// <summary>
+        /// This method is for browse scenarios. Retrieves a set of personas satisfying the specified browse conditions.
+        /// Browse scenariosdon't require query string.
+        /// </summary>
+        /// <param name="folderId">Id of the folder being browsed</param>
+        /// <param name="searchFilter">Search filter</param>
+        /// <param name="view">The view which defines paging and the number of persona being returned</param>
+        /// <returns>A result object containing resultset for browsing</returns>
+        public FindPeopleResults FindPeople(FolderId folderId, SearchFilter searchFilter, ViewBase view)
+        {
+            EwsUtilities.ValidateParamAllowNull(folderId, "folderId");
+            EwsUtilities.ValidateParamAllowNull(searchFilter, "searchFilter");
+            EwsUtilities.ValidateParamAllowNull(view, "view");
+            EwsUtilities.ValidateMethodVersion(this, ExchangeVersion.Exchange2013_SP1, "FindPeople");
+
+            FindPeopleRequest request = new FindPeopleRequest(this);
+
+            request.FolderId = folderId;
+            request.SearchFilter = searchFilter;
+            request.View = view;
+
+            return request.Execute().Results;
+        }
+
+        /// <summary>
+        /// This method is for browse scenarios. Retrieves a set of personas satisfying the specified browse conditions.
+        /// Browse scenarios don't require query string.
+        /// </summary>
+        /// <param name="folderName">Name of the folder being browsed</param>
+        /// <param name="searchFilter">Search filter</param>
+        /// <param name="view">The view which defines paging and the number of persona being returned</param>
+        /// <returns>A result object containing resultset for browsing</returns>
+        public FindPeopleResults FindPeople(WellKnownFolderName folderName, SearchFilter searchFilter, ViewBase view)
+        {
+            return this.FindPeople(new FolderId(folderName), searchFilter, view);
+        }
+
+        /// <summary>
+        /// Get a user's photo.
+        /// </summary>
+        /// <param name="emailAddress">The user's email address</param>
+        /// <param name="userPhotoSize">The desired size of the returned photo. Valid photo sizes are in UserPhotoSize</param>
+        /// <param name="entityTag">A photo's cache ID which will allow the caller to ensure their cached photo is up to date</param>
+        /// <returns>A result object containing the photo state</returns>
+        public GetUserPhotoResults GetUserPhoto(string emailAddress, string userPhotoSize, string entityTag)
+        {
+            EwsUtilities.ValidateParam(emailAddress, "emailAddress");
+            EwsUtilities.ValidateParam(userPhotoSize, "userPhotoSize");
+            EwsUtilities.ValidateParamAllowNull(entityTag, "entityTag");
+
+            GetUserPhotoRequest request = new GetUserPhotoRequest(this);
+
+            request.EmailAddress = emailAddress;
+            request.UserPhotoSize = userPhotoSize;
+            request.EntityTag = entityTag;
+
+            return request.Execute().Results;
+        }
+
+        /// <summary>
+        /// Begins an async request for a user photo
+        /// </summary>
+        /// <param name="callback">An AsyncCallback delegate</param>
+        /// <param name="state">An object that contains state information for this request</param>
+        /// <param name="emailAddress">The user's email address</param>
+        /// <param name="userPhotoSize">The desired size of the returned photo. Valid photo sizes are in UserPhotoSize</param>
+        /// <param name="entityTag">A photo's cache ID which will allow the caller to ensure their cached photo is up to date</param>
+        /// <returns>An IAsyncResult that references the asynchronous request.</returns>
+        public IAsyncResult BeginGetUserPhoto(
+            AsyncCallback callback,
+            object state, 
+            string emailAddress,
+            string userPhotoSize,
+            string entityTag)
+        {
+            EwsUtilities.ValidateParam(emailAddress, "emailAddress");
+            EwsUtilities.ValidateParam(userPhotoSize, "userPhotoSize");
+            EwsUtilities.ValidateParamAllowNull(entityTag, "entityTag");
+
+            GetUserPhotoRequest request = new GetUserPhotoRequest(this);
+
+            request.EmailAddress = emailAddress;
+            request.UserPhotoSize = userPhotoSize;
+            request.EntityTag = entityTag;
+
+            return request.BeginExecute(callback, state);
+        }
+
+        /// <summary>
+        /// Ends an async request for a user's photo
+        /// </summary>
+        /// <param name="asyncResult">An IAsyncResult that references the asynchronous request.</param>
+        /// <returns>A result object containing the photo state</returns>
+        public GetUserPhotoResults EndGetUserPhoto(IAsyncResult asyncResult)
+        {
+            GetUserPhotoRequest request = AsyncRequestResult.ExtractServiceRequest<GetUserPhotoRequest>(this, asyncResult);
+            return request.EndExecute(asyncResult).Results;
         }
 
         #endregion
@@ -4697,6 +4858,22 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
+        /// Sets the consent state of an extension.
+        /// </summary>
+        /// <param name="id">Extension id.</param>
+        /// <param name="state">Sets the consent state of an extension.</param>
+        /// <remarks>Exception will be thrown for errors. </remarks>
+        public void RegisterConsent(string id, ConsentState state)
+        {
+            EwsUtilities.ValidateParam(id, "id");
+            EwsUtilities.ValidateParam(state, "state");
+
+            RegisterConsentRequest request = new RegisterConsentRequest(this, id, state);
+
+            request.Execute();
+        }
+
+        /// <summary>
         /// Get App Marketplace Url.
         /// </summary>
         /// <remarks>Exception will be thrown for errors. </remarks>
@@ -4791,6 +4968,28 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
+        /// Get the OME (i.e. Office Message Encryption) configuration data. This method is used in server-to-server calls to retrieve OME configuration
+        /// </summary>
+        /// <returns>OME Configuration response object</returns>
+        public GetOMEConfigurationResponse GetOMEConfiguration()
+        {
+            GetOMEConfigurationRequest request = new GetOMEConfigurationRequest(this);
+
+            return request.Execute();
+        }
+
+        /// <summary>
+        /// Set the OME (i.e. Office Message Encryption) configuration data. This method is used in server-to-server calls to set encryption configuration
+        /// </summary>
+        /// <param name="xml">The xml</param>
+        public void SetOMEConfiguration(string xml)
+        {
+            SetOMEConfigurationRequest request = new SetOMEConfigurationRequest(this, xml);
+
+            request.Execute();
+        }
+
+        /// <summary>
         /// Set the client extension data. This method is used in server-to-server calls to install/uninstall/configure ORG
         /// extensions to support admin's management of ORG extensions via powershell/UMC.
         /// </summary>
@@ -4800,6 +4999,79 @@ namespace Microsoft.Exchange.WebServices.Data
             SetClientExtensionRequest request = new SetClientExtensionRequest(this, actions);
 
             request.Execute();
+        }
+
+        #endregion
+
+        #region Groups
+        /// <summary>
+        /// Gets the list of unified groups associated with the user
+        /// </summary>
+        /// <param name="requestedUnifiedGroupsSets">The Requested Unified Groups Sets</param>
+        /// <param name="userSmtpAddress">The smtp address of accessing user.</param>
+        /// <returns>UserUnified groups.</returns>
+        public Collection<UnifiedGroupsSet> GetUserUnifiedGroups(
+                            IEnumerable<RequestedUnifiedGroupsSet> requestedUnifiedGroupsSets,
+                            string userSmtpAddress)
+        {
+            EwsUtilities.ValidateParam(requestedUnifiedGroupsSets, "requestedUnifiedGroupsSets");
+            EwsUtilities.ValidateParam(userSmtpAddress, "userSmtpAddress");
+
+            return this.GetUserUnifiedGroupsInternal(requestedUnifiedGroupsSets, userSmtpAddress);
+        }
+
+        /// <summary>
+        /// Gets the list of unified groups associated with the user
+        /// </summary>
+        /// <param name="requestedUnifiedGroupsSets">The Requested Unified Groups Sets</param>
+        /// <returns>UserUnified groups.</returns>
+        public Collection<UnifiedGroupsSet> GetUserUnifiedGroups(IEnumerable<RequestedUnifiedGroupsSet> requestedUnifiedGroupsSets)
+        {
+            EwsUtilities.ValidateParam(requestedUnifiedGroupsSets, "requestedUnifiedGroupsSets");
+            return this.GetUserUnifiedGroupsInternal(requestedUnifiedGroupsSets, null);
+        }
+
+        /// <summary>
+        /// Gets the list of unified groups associated with the user
+        /// </summary>
+        /// <param name="requestedUnifiedGroupsSets">The Requested Unified Groups Sets</param>
+        /// <param name="userSmtpAddress">The smtp address of accessing user.</param>
+        /// <returns>UserUnified groups.</returns>
+        private Collection<UnifiedGroupsSet> GetUserUnifiedGroupsInternal(
+                            IEnumerable<RequestedUnifiedGroupsSet> requestedUnifiedGroupsSets,
+                            string userSmtpAddress)
+        {
+            GetUserUnifiedGroupsRequest request = new GetUserUnifiedGroupsRequest(this);
+
+            if (!string.IsNullOrEmpty(userSmtpAddress))
+            {
+                request.UserSmtpAddress = userSmtpAddress;
+            }
+
+            if (requestedUnifiedGroupsSets != null)
+            {
+                request.RequestedUnifiedGroupsSets = requestedUnifiedGroupsSets;
+            }
+
+            return request.Execute().GroupsSets;
+        }
+
+        /// <summary>
+        /// Gets the UnifiedGroupsUnseenCount for the group specfied 
+        /// </summary>
+        /// <param name="groupMailboxSmtpAddress">The smtpaddress of group for which unseendata is desired</param>
+        /// <param name="lastVisitedTimeUtc">The LastVisitedTimeUtc of group for which unseendata is desired</param>
+        /// <returns>UnifiedGroupsUnseenCount</returns>
+        public int GetUnifiedGroupUnseenCount(string groupMailboxSmtpAddress, DateTime lastVisitedTimeUtc)
+        {
+            EwsUtilities.ValidateParam(groupMailboxSmtpAddress, "groupMailboxSmtpAddress");
+
+            // Set the AnchorMailbox value for this request so that the necessary headers are set to route the request to the group mailbox.
+            this.anchorMailbox = groupMailboxSmtpAddress;
+
+            GetUnifiedGroupUnseenCountRequest request = new GetUnifiedGroupUnseenCountRequest(this, lastVisitedTimeUtc, UnifiedGroupIdentityType.SmtpAddress, groupMailboxSmtpAddress);
+
+            return request.Execute().UnseenCount;
         }
 
         #endregion
@@ -5052,6 +5324,13 @@ namespace Microsoft.Exchange.WebServices.Data
             if (!String.IsNullOrEmpty(this.TargetServerVersion))
             {
                 request.Headers.Set(ExchangeService.TargetServerVersionHeaderName, this.TargetServerVersion);
+            }
+
+            // If the anchorMailboxField is set, then add the necessary headers for it.
+            if (!string.IsNullOrEmpty(anchorMailbox))
+            {
+                request.Headers.Set(ExchangeService.AnchorMailboxHeaderName, this.anchorMailbox);
+                request.Headers.Set(ExchangeService.ExplicitLogonUserHeaderName, this.anchorMailbox);
             }
 
             return request;
