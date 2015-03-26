@@ -354,6 +354,7 @@
     <Compile Include="MailboxSearch\SearchMailboxesResult.cs" />
     <Compile Include="MailboxSearch\SearchPreviewItem.cs" />
     <Compile Include="MailboxSearch\SetHoldOnMailboxesParameters.cs" />
+    <Compile Include="Microsoft.Exchange.WebServices.Strings.cs" />
     <Compile Include="Misc\CalendarActionResults.cs" />
     <Compile Include="Misc\ConversationAction.cs" />
     <Compile Include="Misc\ManagementRole.cs" />
@@ -385,6 +386,7 @@
     <Compile Include="PropertyDefinitions\StartTimeZonePropertyDefinition.cs" />
     <Compile Include="PropertyDefinitions\TimeZonePropertyDefinition.cs" />
     <Compile Include="Exceptions\AutodiscoverResponseException.cs" />
+    <Compile Include="ResourceManager\ExchangeResourceManager.cs" />
     <Compile Include="Search\ConversationIndexedItemView.cs" />
     <Compile Include="Search\FindConversationResults.cs" />
     <Compile Include="Search\FolderView.cs" />
@@ -395,7 +397,6 @@
     <Compile Include="Security\SafeXmlFactory.cs" />
     <Compile Include="Security\SafeXmlSchema.cs" />
     <Compile Include="Security\XmlDtdException.cs" />
-    <Compile Include="Strings.cs" />
     <Compile Include="UnifiedMessaging\PhoneCallId.cs" />
     <Compile Include="Core\EwsServiceXmlReader.cs" />
     <Compile Include="Core\EwsServiceXmlWriter.cs" />
@@ -657,6 +658,7 @@
     <Compile Include="PropertyDefinitions\PermissionCollectionPropertyDefinition.cs" />
     <Compile Include="PropertyDefinitions\ServiceObjectPropertyDefinition.cs" />
     <Compile Include="PropertyDefinitions\TaskDelegationStatePropertyDefinition.cs" />
+    <Compile Include="ResourceManager\LocalizedString.cs" />
     <Compile Include="Search\Filters\SearchFilter.ContainsSubstring.cs" />
     <Compile Include="Search\Filters\SearchFilter.ExcludesBitmask.cs" />
     <Compile Include="Search\Filters\SearchFilter.Exists.cs" />
