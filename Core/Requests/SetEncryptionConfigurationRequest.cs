@@ -124,9 +124,7 @@ namespace Microsoft.Exchange.WebServices.Data
             writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.EncryptionConfigurationEmailText, this.EmailText);
             writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.EncryptionConfigurationPortalText, this.PortalText);
             writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.EncryptionConfigurationDisclaimerText, this.disclaimerText);
-
-            // TODO: Uncomment after server schema change have been deployed to all machines
-            // writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.EncryptionConfigurationOTPEnabled, this.otpEnabled);
+            writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.EncryptionConfigurationOTPEnabled, this.otpEnabled);
         }
 
         /// <summary>

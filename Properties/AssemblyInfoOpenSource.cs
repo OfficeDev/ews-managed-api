@@ -7,10 +7,10 @@
 using System.Reflection;
 
 // Assembly information
-[assembly: AssemblyTitle("Microsoft Exchange Managed API")]
-[assembly: AssemblyDescription("Microsoft Exchange Web Services (EWS Managed API")]
+[assembly: AssemblyTitle("EWS Managed API")]
+[assembly: AssemblyDescription("Microsoft Exchange Web Services Managed API (EWS Managed API")]
 [assembly: AssemblyCompany("Microsoft Corporation")]
-[assembly: AssemblyProduct("Microsoft Exchange Managed API")]
+[assembly: AssemblyProduct("Microsoft Exchange")]
 [assembly: AssemblyCopyright("© Microsoft Corporation.  All rights reserved.")]
 
 // Master branch will have version as 0.0.0.0, when a stable branch is created

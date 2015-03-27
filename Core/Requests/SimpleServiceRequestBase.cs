@@ -128,7 +128,7 @@ namespace Microsoft.Exchange.WebServices.Data
                         {
                             this.TraceResponseXml(response, memoryStream);
 
-                            serviceResponse = this.ReadResponseXml(memoryStream);
+                            serviceResponse = this.ReadResponseXml(memoryStream, response.Headers);
                         }
                         else if (this.Service.RenderingMethod == ExchangeService.RenderingMode.JSON)
                         {
@@ -148,7 +148,7 @@ namespace Microsoft.Exchange.WebServices.Data
                     {
                         if (this.Service.RenderingMethod == ExchangeService.RenderingMode.Xml)
                         {
-                            serviceResponse = this.ReadResponseXml(responseStream);
+                            serviceResponse = this.ReadResponseXml(responseStream, response.Headers);
                         }
                         else if (this.Service.RenderingMethod == ExchangeService.RenderingMode.JSON)
                         {
@@ -205,9 +205,20 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <returns></returns>
         private object ReadResponseXml(Stream responseStream)
         {
+            return this.ReadResponseXml(responseStream, null);
+        }
+
+        /// <summary>
+        /// Reads the response XML.
+        /// </summary>
+        /// <param name="responseStream">The response stream.</param>
+        /// <param name="responseHeaders">The HTTP response headers</param>
+        /// <returns></returns>
+        private object ReadResponseXml(Stream responseStream, WebHeaderCollection responseHeaders)
+        {
             object serviceResponse;
             EwsServiceXmlReader ewsXmlReader = new EwsServiceXmlReader(responseStream, this.Service);
-            serviceResponse = this.ReadResponse(ewsXmlReader);
+            serviceResponse = this.ReadResponse(ewsXmlReader, responseHeaders);
             return serviceResponse;
         }
     }

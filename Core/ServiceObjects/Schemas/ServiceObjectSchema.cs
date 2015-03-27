@@ -52,6 +52,7 @@ namespace Microsoft.Exchange.WebServices.Data
                 typeList.Add(typeof(MeetingRequestSchema));
                 typeList.Add(typeof(MeetingCancellationSchema));
                 typeList.Add(typeof(MeetingResponseSchema));
+                typeList.Add(typeof(PersonaSchema));
                 typeList.Add(typeof(PostItemSchema));
                 typeList.Add(typeof(PostReplySchema));
                 typeList.Add(typeof(ResponseMessageSchema));

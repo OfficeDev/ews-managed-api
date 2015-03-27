@@ -14,6 +14,7 @@ namespace Microsoft.Exchange.WebServices.Data
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.Net;
 
     /// <summary>
     /// Represents the standard response to an Exchange Web Services operation.
@@ -225,6 +226,14 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         /// <param name="reader">The reader.</param>
         internal virtual void ReadElementsFromXml(EwsServiceXmlReader reader)
+        {
+        }
+
+        /// <summary>
+        /// Reads the headers from a HTTP response
+        /// </summary>
+        /// <param name="responseHeaders">a collection of response headers</param>
+        internal virtual void ReadHeader(WebHeaderCollection responseHeaders)
         {
         }
 

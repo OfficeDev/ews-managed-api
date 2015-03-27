@@ -146,6 +146,13 @@ namespace Microsoft.Exchange.WebServices.Data
         [RequiredServerVersion(ExchangeVersion.Exchange2010_SP1)]
         [EwsEnum("recoverableitemspurges")]
         RecoverableItemsPurges,
+        
+        /// <summary>
+        /// The Dumpster 2.0 discovery hold folder
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2013_SP1)]
+        [EwsEnum("recoverableitemsdiscoveryholds")]
+        RecoverableItemsDiscoveryHolds,
 
         /// <summary>
         /// The root of the archive mailbox.
@@ -154,10 +161,17 @@ namespace Microsoft.Exchange.WebServices.Data
         [EwsEnum("archiveroot")]
         ArchiveRoot,
 
-        /// <summary>
-        /// The message folder root in the archive mailbox.
-        /// </summary>
-        [RequiredServerVersion(ExchangeVersion.Exchange2010_SP1)]
+		/// <summary>
+		/// The root of the archive mailbox.
+		/// </summary>
+		[RequiredServerVersion(ExchangeVersion.Exchange2013_SP1)]
+		[EwsEnum("archiveinbox")]
+		ArchiveInbox,
+
+		/// <summary>
+		/// The message folder root in the archive mailbox.
+		/// </summary>
+		[RequiredServerVersion(ExchangeVersion.Exchange2010_SP1)]
         [EwsEnum("archivemsgfolderroot")]
         ArchiveMsgFolderRoot,
 
@@ -195,6 +209,13 @@ namespace Microsoft.Exchange.WebServices.Data
         [RequiredServerVersion(ExchangeVersion.Exchange2010_SP1)]
         [EwsEnum("archiverecoverableitemspurges")]
         ArchiveRecoverableItemsPurges,
+
+        /// <summary>
+        /// The Dumpster 2.0 discovery hold folder in the archive mailbox.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2013_SP1)]
+        [EwsEnum("archiverecoverableitemsdiscoveryholds")]
+        ArchiveRecoverableItemsDiscoveryHolds,
 
         /// <summary>
         /// The Sync Issues folder.
@@ -245,14 +266,57 @@ namespace Microsoft.Exchange.WebServices.Data
         [EwsEnum("conversationhistory")]
         ConversationHistory,
 
-        /// <summary>
-        /// ToDo search folder
-        /// </summary>
-        [RequiredServerVersion(ExchangeVersion.Exchange2013)]
+		/// <summary>
+		/// AdminAuditLogs folder
+		/// </summary>
+		[RequiredServerVersion(ExchangeVersion.Exchange2013)]
+		[EwsEnum("adminauditlogs")]
+		AdminAuditLogs,
+
+		/// <summary>
+		/// ToDo search folder
+		/// </summary>
+		[RequiredServerVersion(ExchangeVersion.Exchange2013)]
         [EwsEnum("todosearch")]
         ToDoSearch,
 
-        //// Note when you adding new folder id here, please update sources\test\Services\src\ComponentTests\GlobalVersioningControl.cs
-        //// IsExchange2013Folder method accordingly.
-    }
+		/// <summary>
+		/// MyContacts folder
+		/// </summary>
+		[RequiredServerVersion(ExchangeVersion.Exchange2013)]
+		[EwsEnum("mycontacts")]
+		MyContacts,
+
+		/// <summary>
+		/// Directory (GAL)
+		/// It is not a mailbox folder. It only indicates any GAL operation.
+		/// </summary>
+		[RequiredServerVersion(ExchangeVersion.Exchange2013_SP1)]
+        [EwsEnum("directory")]
+        Directory,
+
+		/// <summary>
+		/// IMContactList folder
+		/// </summary>
+		[RequiredServerVersion(ExchangeVersion.Exchange2013)]
+		[EwsEnum("imcontactlist")]
+		IMContactList,
+
+		/// <summary>
+		/// PeopleConnect folder
+		/// </summary>
+		[RequiredServerVersion(ExchangeVersion.Exchange2013)]
+		[EwsEnum("peopleconnect")]
+		PeopleConnect,
+
+		/// <summary>
+		/// Favorites folder
+		/// </summary>
+		[RequiredServerVersion(ExchangeVersion.Exchange2013)]
+		[EwsEnum("favorites")]
+		Favorites,
+
+		//// Note when you adding new folder id here, please update sources\test\Services\src\ComponentTests\GlobalVersioningControl.cs
+		//// IsExchange2013Folder method accordingly.
+	}
 }

@@ -113,7 +113,22 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <returns>Response object.</returns>
-        internal abstract object ParseResponse(EwsServiceXmlReader reader);
+        internal virtual object ParseResponse(EwsServiceXmlReader reader)
+        {
+            throw new NotImplementedException("you must override either this or the 2-parameter version");
+        }
+
+        /// <summary>
+        /// Parses the response.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <param name="responseHeaders">Response headers</param>
+        /// <returns>Response object.</returns>
+        /// <remarks>If this is overriden instead of the 1-parameter version, you can read response headers</remarks>
+        internal virtual object ParseResponse(EwsServiceXmlReader reader, WebHeaderCollection responseHeaders)
+        {
+            return this.ParseResponse(reader);
+        }
 
         /// <summary>
         /// Parses the response.
@@ -172,11 +187,24 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
+        /// Allows the subclasses to add their own header information
+        /// </summary>
+        /// <param name="webHeaderCollection">The HTTP request headers</param>
+        internal virtual void AddHeaders(WebHeaderCollection webHeaderCollection)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ServiceRequestBase"/> class.
         /// </summary>
         /// <param name="service">The service.</param>
         internal ServiceRequestBase(ExchangeService service)
         {
+            if (service == null)
+            {
+                throw new ArgumentNullException("service");
+            }
+
             this.service = service;
             this.ThrowIfNotSupportedByRequestedServerVersion();
         }
@@ -498,8 +526,9 @@ namespace Microsoft.Exchange.WebServices.Data
         /// Reads the response.
         /// </summary>
         /// <param name="ewsXmlReader">The XML reader.</param>
+        /// <param name="responseHeaders">HTTP response headers</param>
         /// <returns>Service response.</returns>
-        protected object ReadResponse(EwsServiceXmlReader ewsXmlReader)
+        protected object ReadResponse(EwsServiceXmlReader ewsXmlReader, WebHeaderCollection responseHeaders)
         {
             object serviceResponse;
 
@@ -510,7 +539,14 @@ namespace Microsoft.Exchange.WebServices.Data
 
             ewsXmlReader.ReadStartElement(XmlNamespace.Messages, this.GetResponseXmlElementName());
 
-            serviceResponse = this.ParseResponse(ewsXmlReader);
+            if (responseHeaders != null)
+            {
+                serviceResponse = this.ParseResponse(ewsXmlReader, responseHeaders);
+            }
+            else
+            {
+                serviceResponse = this.ParseResponse(ewsXmlReader);
+            }
 
             ewsXmlReader.ReadEndElementIfNecessary(XmlNamespace.Messages, this.GetResponseXmlElementName());
 
@@ -777,6 +813,9 @@ namespace Microsoft.Exchange.WebServices.Data
 
                 bool needSignature = this.Service.Credentials != null && this.Service.Credentials.NeedSignature;
                 bool needTrace = this.Service.IsTraceEnabledFor(TraceFlags.EwsRequest);
+
+                // The request might need to add additional headers
+                this.AddHeaders(request.Headers);
 
                 // If tracing is enabled, we generate the request in-memory so that we
                 // can pass it along to the ITraceListener. Then we copy the stream to

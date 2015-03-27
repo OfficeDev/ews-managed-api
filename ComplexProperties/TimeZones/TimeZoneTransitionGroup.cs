@@ -177,9 +177,18 @@ namespace Microsoft.Exchange.WebServices.Data
                 daylightPeriod,
                 adjustmentRule.DaylightTransitionStart);
 
+            TimeZonePeriod standardPeriodToSet = new TimeZonePeriod();
+            standardPeriodToSet.Id = string.Format(
+                "{0}/{1}",
+                standardPeriod.Id,
+                adjustmentRule.DateStart.Year);
+            standardPeriodToSet.Name = standardPeriod.Name;
+            standardPeriodToSet.Bias = standardPeriod.Bias;
+            this.timeZoneDefinition.Periods.Add(standardPeriodToSet.Id, standardPeriodToSet);
+
             this.transitionToStandard = TimeZoneTransition.CreateTimeZoneTransition(
                 this.timeZoneDefinition,
-                standardPeriod,
+                standardPeriodToSet,
                 adjustmentRule.DaylightTransitionEnd);
 
             this.transitions.Add(this.transitionToDaylight);

@@ -194,7 +194,7 @@ namespace Microsoft.Exchange.WebServices.Data
                             {
                                 try
                                 {
-                                    responseObject = this.ReadResponse(ewsXmlReader);
+                                    responseObject = this.ReadResponse(ewsXmlReader, this.response.Headers);
                                 }
                                 finally
                                 {
@@ -208,7 +208,7 @@ namespace Microsoft.Exchange.WebServices.Data
                             }
                             else
                             {
-                                responseObject = this.ReadResponse(ewsXmlReader);
+                                responseObject = this.ReadResponse(ewsXmlReader, this.response.Headers);
                             }
 
                             this.responseHandler(responseObject);

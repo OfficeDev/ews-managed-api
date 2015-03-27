@@ -2287,6 +2287,41 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <summary>
         /// Receive quota message per folder is exceeded.
         /// </summary>
-        ErrorMessagePerFolderCountReceiveQuotaExceeded
+        ErrorMessagePerFolderCountReceiveQuotaExceeded,
+
+        /// <summary>
+        /// Unified group was not found.
+        /// </summary>
+        ErrorUnifiedGroupMailboxNotFound,
+
+        /// <summary>
+        /// Invalid channel id.
+        /// </summary>
+        ErrorInvalidChannelId,
+
+        /// <summary>
+        /// Another connection is opened on the same channel.
+        /// </summary>
+        ErrorNewChannelConnectionOpened,
+
+        /// <summary>
+        /// The channel subscription cannot be found.
+        /// </summary>
+        ErrorChannelSubscriptionNotFound,
+
+        /// <summary>
+        /// The channel contains too many subscriptions.
+        /// </summary>
+        ErrorExceededChannelSubscriptionCount,
+
+        /// <summary>
+        /// The channel subscription already exists.
+        /// </summary>
+        ErrorChannelSubscriptionAlreadyExists,
+
+        /// <summary>
+        /// The given channel subscription id is invalid.
+        /// </summary>
+        ErrorInvalidChannelSubscriptionId,
     }
 }
