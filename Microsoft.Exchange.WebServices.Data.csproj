@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComplexProperties\ReferenceAttachment.cs" />
     <Compile Include="Core\Requests\GetOMEConfigurationRequest.cs" />
     <Compile Include="Core\Requests\GetUserPhotoRequest.cs" />
     <Compile Include="Core\Requests\SetOMEConfigurationRequest.cs" />

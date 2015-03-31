@@ -210,6 +210,8 @@ namespace Microsoft.Exchange.WebServices.Data
                     return new FileAttachment(this.owner);
                 case XmlElementNames.ItemAttachment:
                     return new ItemAttachment(this.owner);
+                case XmlElementNames.ReferenceAttachment:
+                    return new ReferenceAttachment(this.owner);
                 default:
                     return null;
             }
