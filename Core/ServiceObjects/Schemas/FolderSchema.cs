@@ -166,17 +166,16 @@ namespace Microsoft.Exchange.WebServices.Data
                 PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete | PropertyDefinitionFlags.MustBeExplicitlyLoaded,
                 ExchangeVersion.Exchange2007_SP1);
 
-        /// <summary>
-        /// Defines the WellKnownFolderName property.
-        /// </summary>
-        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Immutable type")]
-        public static readonly PropertyDefinition WellKnownFolderName =
-            new GenericPropertyDefinition<WellKnownFolderName>(
-                XmlElementNames.DistinguishedFolderId,
-                FieldUris.DistinguishedFolderId,
-                PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanFind,
-                ExchangeVersion.Exchange2013,
-                true);
+		/// <summary>
+		/// Defines the WellKnownFolderName property.
+		/// </summary>
+		[SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Immutable type")]
+		public static readonly PropertyDefinition WellKnownFolderName =
+			new StringPropertyDefinition(
+				XmlElementNames.DistinguishedFolderId,
+				FieldUris.DistinguishedFolderId,
+				PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanFind,
+				ExchangeVersion.Exchange2013);
 
         /// <summary>
         /// Defines the PolicyTag property.

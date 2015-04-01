@@ -666,9 +666,9 @@ namespace Microsoft.Exchange.WebServices.Data
         /// Gets the name of the well known folder.
         /// </summary>
         /// <value>The name of the well known folder.</value>
-        public WellKnownFolderName? WellKnownFolderName
+        public string WellKnownFolderName
         {
-            get { return (WellKnownFolderName?)this.PropertyBag[FolderSchema.WellKnownFolderName]; }
+            get { return (string)this.PropertyBag[FolderSchema.WellKnownFolderName]; }
         }
 
         #endregion
