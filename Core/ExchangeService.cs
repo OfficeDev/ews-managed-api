@@ -46,18 +46,6 @@ namespace Microsoft.Exchange.WebServices.Data
 
         private const string TargetServerVersionHeaderName = "X-EWS-TargetVersion";
 
-        /// <summary>
-        /// The two contants below are used to set the AnchorMailbox and ExplicitLogonUser values
-        /// in the request header.
-        /// </summary>
-        /// <remarks>
-        /// Note: Setting this values will route the request directly to the backend hosting the 
-        /// AnchorMailbox. These headers should be used primarily for UnifiedGroup scenario where
-        /// a request needs to be routed directly to the group mailbox versus the user mailbox.
-        /// </remarks>
-        private const string AnchorMailboxHeaderName = "X-AnchorMailbox";
-        private const string ExplicitLogonUserHeaderName = "X-OWA-ExplicitLogonUser";
-
         #endregion
 
         #region Fields
@@ -74,7 +62,6 @@ namespace Microsoft.Exchange.WebServices.Data
         private ExchangeService.RenderingMode renderingMode = RenderingMode.Xml;
         private bool traceEnablePrettyPrinting = true;
         private string targetServerVersion = null;
-        private string anchorMailbox = null;
 
         #endregion
 
@@ -1265,17 +1252,20 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         /// <param name="itemIds">The Ids of the items to bind to.</param>
         /// <param name="propertySet">The set of properties to load.</param>
+        /// <param name="anchorMailbox">The SmtpAddress of mailbox that hosts all items we need to bind to</param>
         /// <param name="errorHandling">Type of error handling to perform.</param>
         /// <returns>A ServiceResponseCollection providing results for each of the specified item Ids.</returns>
         private ServiceResponseCollection<GetItemResponse> InternalBindToItems(
             IEnumerable<ItemId> itemIds,
             PropertySet propertySet,
+            string anchorMailbox,
             ServiceErrorHandling errorHandling)
         {
             GetItemRequest request = new GetItemRequest(this, errorHandling);
 
             request.ItemIds.AddRange(itemIds);
             request.PropertySet = propertySet;
+            request.AnchorMailbox = anchorMailbox;
 
             return request.Execute();
         }
@@ -1294,6 +1284,34 @@ namespace Microsoft.Exchange.WebServices.Data
             return this.InternalBindToItems(
                 itemIds,
                 propertySet,
+                null, /* anchorMailbox */
+                ServiceErrorHandling.ReturnErrors);
+        }
+
+        /// <summary>
+        /// Binds to multiple items in a single call to EWS.
+        /// </summary>
+        /// <param name="itemIds">The Ids of the items to bind to.</param>
+        /// <param name="propertySet">The set of properties to load.</param>
+        /// <param name="anchorMailbox">The SmtpAddress of mailbox that hosts all items we need to bind to</param>
+        /// <returns>A ServiceResponseCollection providing results for each of the specified item Ids.</returns>
+        /// <remarks>
+        /// This API designed to be used primarily in groups scenarios where we want to set the
+        /// anchor mailbox header so that request is routed directly to the group mailbox backend server.
+        /// </remarks>
+        public ServiceResponseCollection<GetItemResponse> BindToGroupItems(
+            IEnumerable<ItemId> itemIds,
+            PropertySet propertySet,
+            string anchorMailbox)
+        {
+            EwsUtilities.ValidateParamCollection(itemIds, "itemIds");
+            EwsUtilities.ValidateParam(propertySet, "propertySet");
+            EwsUtilities.ValidateParam(propertySet, "anchorMailbox");
+
+            return this.InternalBindToItems(
+                itemIds,
+                propertySet,
+                anchorMailbox,
                 ServiceErrorHandling.ReturnErrors);
         }
 
@@ -1311,6 +1329,7 @@ namespace Microsoft.Exchange.WebServices.Data
             ServiceResponseCollection<GetItemResponse> responses = this.InternalBindToItems(
                 new ItemId[] { itemId },
                 propertySet,
+                null, /* anchorMailbox */
                 ServiceErrorHandling.ThrowOnError);
 
             return responses[0].Item;
@@ -1621,6 +1640,22 @@ namespace Microsoft.Exchange.WebServices.Data
 
         #endregion
 
+        #region PeopleInsights operations
+
+        /// <summary>
+        /// This method is for retreiving people insight for given email addresses
+        /// </summary>
+        /// <param name="emailAddresses">Specified eamiladdresses to retrieve</param>
+        /// <returns>The collection of Person objects containing the insight info</returns>
+        public Collection<Person> GetPeopleInsights(IEnumerable<string> emailAddresses)
+        {
+            GetPeopleInsightsRequest request = new GetPeopleInsightsRequest(this);
+            request.Emailaddresses.AddRange(emailAddresses);
+
+            return request.Execute().People;
+        }
+
+        #endregion
         #region Attachment operations
 
         /// <summary>
@@ -3108,6 +3143,39 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         /// <param name="view">The view controlling the number of conversations returned.</param>
         /// <param name="folderId">The Id of the folder in which to search for conversations.</param>
+        /// <param name="anchorMailbox">The anchorMailbox Smtp address to route the request directly to group mailbox.</param>
+        /// <returns>Collection of conversations.</returns>
+        /// <remarks>
+        /// This API designed to be used primarily in groups scenarios where we want to set the
+        /// anchor mailbox header so that request is routed directly to the group mailbox backend server.
+        /// </remarks>
+        public Collection<Conversation> FindGroupConversation(
+            ViewBase view,
+            FolderId folderId,
+            string anchorMailbox)
+        {
+            EwsUtilities.ValidateParam(view, "view");
+            EwsUtilities.ValidateParam(folderId, "folderId");
+            EwsUtilities.ValidateParam(anchorMailbox, "anchorMailbox");
+            EwsUtilities.ValidateMethodVersion(
+                                            this,
+                                            ExchangeVersion.Exchange2015,
+                                            "FindConversation");
+
+            FindConversationRequest request = new FindConversationRequest(this);
+
+            request.View = view;
+            request.FolderId = new FolderIdWrapper(folderId);
+            request.AnchorMailbox = anchorMailbox;
+
+            return request.Execute().Conversations;
+        }
+
+        /// <summary>
+        /// Retrieves a collection of all Conversations in the specified Folder.
+        /// </summary>
+        /// <param name="view">The view controlling the number of conversations returned.</param>
+        /// <param name="folderId">The Id of the folder in which to search for conversations.</param>
         /// <param name="queryString">The query string for which the search is being performed</param>
         /// <returns>Collection of conversations.</returns>
         public ICollection<Conversation> FindConversation(ViewBase view, FolderId folderId, string queryString)
@@ -3200,6 +3268,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="foldersToIgnore">The folders to ignore.</param>
         /// <param name="sortOrder">Sort order of conversation tree nodes.</param>
         /// <param name="mailboxScope">The mailbox scope to reference.</param>
+        /// <param name="anchorMailbox">The smtpaddress of the mailbox that hosts the conversations</param>
         /// <param name="maxItemsToReturn">Maximum number of items to return.</param>
         /// <param name="errorHandling">What type of error handling should be performed.</param>
         /// <returns>GetConversationItems response.</returns>
@@ -3210,6 +3279,7 @@ namespace Microsoft.Exchange.WebServices.Data
                             ConversationSortOrder? sortOrder,
                             MailboxSearchLocation? mailboxScope,
                             int? maxItemsToReturn,
+                            string anchorMailbox,
                             ServiceErrorHandling errorHandling)
         {
             EwsUtilities.ValidateParam(conversations, "conversations");
@@ -3226,6 +3296,7 @@ namespace Microsoft.Exchange.WebServices.Data
             request.SortOrder = sortOrder;
             request.MailboxScope = mailboxScope;
             request.MaxItemsToReturn = maxItemsToReturn;
+            request.AnchorMailbox = anchorMailbox;
             request.Conversations = conversations.ToList();
 
             return request.Execute();
@@ -3252,6 +3323,7 @@ namespace Microsoft.Exchange.WebServices.Data
                                 null,               /* sortOrder */
                                 null,               /* mailboxScope */
                                 null,               /* maxItemsToReturn*/
+                                null, /* anchorMailbox */
                                 ServiceErrorHandling.ReturnErrors);
         }
 
@@ -3281,6 +3353,45 @@ namespace Microsoft.Exchange.WebServices.Data
                                 sortOrder,
                                 null,           /* mailboxScope */
                                 null,           /* maxItemsToReturn */
+                                null, /* anchorMailbox */
+                                ServiceErrorHandling.ThrowOnError)[0].Conversation;
+        }
+
+        /// <summary>
+        /// Gets the items for a conversation.
+        /// </summary>
+        /// <param name="conversationId">The conversation id.</param>
+        /// <param name="propertySet">The set of properties to load.</param>
+        /// <param name="syncState">The optional sync state representing the point in time when to start the synchronization.</param>
+        /// <param name="foldersToIgnore">The folders to ignore.</param>
+        /// <param name="sortOrder">Conversation item sort order.</param>
+        /// <param name="anchorMailbox">The smtp address of the mailbox hosting the conversations</param>
+        /// <returns>ConversationResponseType response.</returns>
+        /// <remarks>
+        /// This API designed to be used primarily in groups scenarios where we want to set the
+        /// anchor mailbox header so that request is routed directly to the group mailbox backend server.
+        /// </remarks>
+        public ConversationResponse GetGroupConversationItems(
+                                                ConversationId conversationId,
+                                                PropertySet propertySet,
+                                                string syncState,
+                                                IEnumerable<FolderId> foldersToIgnore,
+                                                ConversationSortOrder? sortOrder,
+                                                string anchorMailbox)
+        {
+            EwsUtilities.ValidateParam(anchorMailbox, "anchorMailbox");
+
+            List<ConversationRequest> conversations = new List<ConversationRequest>();
+            conversations.Add(new ConversationRequest(conversationId, syncState));
+
+            return this.InternalGetConversationItems(
+                                conversations,
+                                propertySet,
+                                foldersToIgnore,
+                                sortOrder,
+                                null,           /* mailboxScope */
+                                null,           /* maxItemsToReturn */
+                                anchorMailbox, /* anchorMailbox */
                                 ServiceErrorHandling.ThrowOnError)[0].Conversation;
         }
 
@@ -3307,6 +3418,7 @@ namespace Microsoft.Exchange.WebServices.Data
                                 null,               /* sortOrder */
                                 mailboxScope,
                                 null,               /* maxItemsToReturn*/
+                                null, /* anchorMailbox */
                                 ServiceErrorHandling.ReturnErrors);
         }
 
@@ -5081,12 +5193,26 @@ namespace Microsoft.Exchange.WebServices.Data
         {
             EwsUtilities.ValidateParam(groupMailboxSmtpAddress, "groupMailboxSmtpAddress");
 
-            // Set the AnchorMailbox value for this request so that the necessary headers are set to route the request to the group mailbox.
-            this.anchorMailbox = groupMailboxSmtpAddress;
-
-            GetUnifiedGroupUnseenCountRequest request = new GetUnifiedGroupUnseenCountRequest(this, lastVisitedTimeUtc, UnifiedGroupIdentityType.SmtpAddress, groupMailboxSmtpAddress);
+            GetUnifiedGroupUnseenCountRequest request = new GetUnifiedGroupUnseenCountRequest(
+                this, lastVisitedTimeUtc, UnifiedGroupIdentityType.SmtpAddress, groupMailboxSmtpAddress);
+            
+            request.AnchorMailbox = groupMailboxSmtpAddress;
 
             return request.Execute().UnseenCount;
+        }
+
+        /// <summary>
+        /// Sets the LastVisitedTime for the group specfied 
+        /// </summary>
+        /// <param name="groupMailboxSmtpAddress">The smtpaddress of group for which unseendata is desired</param>
+        /// <param name="lastVisitedTimeUtc">The LastVisitedTimeUtc of group for which unseendata is desired</param>
+        public void SetUnifiedGroupLastVisitedTime(string groupMailboxSmtpAddress, DateTime lastVisitedTimeUtc)
+        {
+            EwsUtilities.ValidateParam(groupMailboxSmtpAddress, "groupMailboxSmtpAddress");
+
+            SetUnifiedGroupLastVisitedTimeRequest request = new SetUnifiedGroupLastVisitedTimeRequest(this, lastVisitedTimeUtc, UnifiedGroupIdentityType.SmtpAddress, groupMailboxSmtpAddress);
+
+            request.Execute();
         }
 
         #endregion
@@ -5339,13 +5465,6 @@ namespace Microsoft.Exchange.WebServices.Data
             if (!String.IsNullOrEmpty(this.TargetServerVersion))
             {
                 request.Headers.Set(ExchangeService.TargetServerVersionHeaderName, this.TargetServerVersion);
-            }
-
-            // If the anchorMailboxField is set, then add the necessary headers for it.
-            if (!string.IsNullOrEmpty(anchorMailbox))
-            {
-                request.Headers.Set(ExchangeService.AnchorMailboxHeaderName, this.anchorMailbox);
-                request.Headers.Set(ExchangeService.ExplicitLogonUserHeaderName, this.anchorMailbox);
             }
 
             return request;

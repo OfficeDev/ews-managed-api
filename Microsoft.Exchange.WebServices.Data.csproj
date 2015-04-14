@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.Exchange.WebServices.Data</RootNamespace>
-    <AssemblyName>Microsoft.Exchange.WebServices.Data</AssemblyName>
+    <AssemblyName>Microsoft.Exchange.WebServices</AssemblyName>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>4.0</OldToolsVersion>
@@ -42,7 +42,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Microsoft.Exchange.WebServices.Data.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Microsoft.Exchange.WebServices.xml</DocumentationFile>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -68,17 +68,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComplexProperties\PeopleInsights\CompanyInsightValue.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\DelveDoc.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\EducationInsightValue.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\InsightValue.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\InsightValueCollection.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\JobInsightValue.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\MultiValueInsightContent.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\Person.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\PersonInsight.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\PersonInsightCollection.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\ProfileInsightValue.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\SingleValueInsightContent.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\SkillInsightValue.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\StringInsightValue.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\UserProfilePicture.cs" />
     <Compile Include="Core\Requests\GetOMEConfigurationRequest.cs" />
+    <Compile Include="Core\Requests\GetPeopleInsightsRequest.cs" />
     <Compile Include="Core\Requests\GetUserPhotoRequest.cs" />
     <Compile Include="Core\Requests\SetOMEConfigurationRequest.cs" />
     <Compile Include="Core\Responses\GetOMEConfigurationResponse.cs" />
+    <Compile Include="Core\Responses\GetPeopleInsightsResponse.cs" />
     <Compile Include="Core\Responses\GetUserPhotoResponse.cs" />
     <Compile Include="Core\Responses\SetOMEConfigurationResponse.cs" />
     <Compile Include="Core\Responses\RegisterConsentResponse.cs" />
     <Compile Include="Enumerations\ConsentState.cs" />
+    <Compile Include="Enumerations\InsightGroupType.cs" />
+    <Compile Include="Enumerations\InsightSourceType.cs" />
+    <Compile Include="Enumerations\InsightType.cs" />
     <Compile Include="Enumerations\GetUserPhotoStatus.cs" />
     <Compile Include="Enumerations\UserPhotoSize.cs" />
     <Compile Include="Enumerations\UnifiedGroupEnumTypes.cs" />
+    <Compile Include="Groups\Requests\SetUnifiedGroupLastVisitedTimeRequest.cs" />
     <Compile Include="Groups\Requests\GetUnifiedGroupUnseenCountRequest.cs" />
     <Compile Include="Groups\Requests\GetUserUnifiedGroupsRequest.cs" />
     <Compile Include="Groups\ComplexProperties\RequestedUnifiedGroupsSet.cs" />
@@ -826,6 +847,9 @@
     <Compile Include="Core\PropertyBag.cs" />
     <Compile Include="PropertyDefinitions\PropertyDefinition.cs" />
     <Compile Include="Core\EwsUtilities.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sources" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">

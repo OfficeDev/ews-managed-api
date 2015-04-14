@@ -774,6 +774,57 @@ namespace Microsoft.Exchange.WebServices.Data
 
         #endregion
 
+        #region People Insights
+        public const string Person = "Person";
+        public const string Insights = "Insights";
+        public const string Insight = "Insight";
+        public const string InsightGroupType = "InsightGroupType";
+        public const string InsightType = "InsightType";
+        public const string InsightSourceType = "InsightSourceType";
+        public const string InsightValue = "InsightValue";
+        public const string InsightSource = "InsightSource";
+        public const string UpdatedUtcTicks = "UpdatedUtcTicks";
+        public const string StringInsightValue = "StringInsightValue";
+        public const string ProfileInsightValue = "ProfileInsightValue";
+        public const string JobInsightValue = "JobInsightValue";
+        public const string UserProfilePicture = "UserProfilePicture";
+        public const string EducationInsightValue = "EducationInsightValue";
+        public const string SkillInsightValue = "SkillInsightValue";
+        public const string DelveDoc = "DelveDoc";
+        public const string CompanyInsightValue = "CompanyInsightValue";
+        public const string ArrayOfInsightValue = "ArrayOfInsightValue";
+        public const string InsightContent = "InsightContent";
+        public const string SingleValueInsightContent = "SingleValueInsightContent";
+        public const string MultiValueInsightContent = "MultiValueInsightContent";
+        public const string ArrayOfInsight = "ArrayOfInsight";
+        public const string PersonType = "PersonType";
+        public const string SatoriId = "SatoriId";
+        public const string DescriptionAttribution = "DescriptionAttribution";
+        public const string ImageUrl = "ImageUrl";
+        public const string ImageUrlAttribution = "ImageUrlAttribution";
+        public const string YearFound = "YearFound";
+        public const string FinanceSymbol = "FinanceSymbol";
+        public const string WebsiteUrl = "WebsiteUrl";
+        public const string Rank = "Rank";
+        public const string Author = "Author";
+        public const string Created = "Created";
+        public const string DefaultEncodingURL = "DefaultEncodingURL";
+        public const string FileType = "FileType";
+        public const string Data = "Data";
+        public const string ItemList = "ItemList";
+        public const string Avatar = "Avatar";
+        public const string JoinedUtcTicks = "JoinedUtcTicks";
+        public const string Company = "Company";
+        public const string StartUtcTicks = "StartUtcTicks";
+        public const string EndUtcTicks = "EndUtcTicks";
+        public const string Blob = "Blob";
+        public const string PhotoSize = "PhotoSize";
+        public const string Institute = "Institute";
+        public const string Degree = "Degree";
+        public const string Strength = "Strength";
+        
+        #endregion
+
         #region Conversations
 
         public const string Conversations = "Conversations";
@@ -1202,6 +1253,11 @@ namespace Microsoft.Exchange.WebServices.Data
         public const string FindPeopleResponse = "FindPeopleResponse";
         public const string FindPeopleResponseMessage = "FindPeopleResponseMessage";
 
+        // GetPeopleInsights
+        public const string GetPeopleInsights = "GetPeopleInsights";
+        public const string GetPeopleInsightsResponse = "GetPeopleInsightsResponse";
+        public const string GetPeopleInsightsResponseMessage = "GetPeopleInsightsResponseMessage";
+
         // GetUserPhoto
         public const string GetUserPhoto = "GetUserPhoto";
         public const string GetUserPhotoResponse = "GetUserPhotoResponse";
@@ -1599,6 +1655,10 @@ namespace Microsoft.Exchange.WebServices.Data
 
         public const string GetUnifiedGroupUnseenCountResponseMessage = "GetUnifiedGroupUnseenCountResponseMessage";
         public const string UnseenCount = "UnseenCount";
+
+        // SetUnifiedGroupLastVisitedTimeRequest
+        public const string SetUnifiedGroupLastVisitedTime = "SetUnifiedGroupLastVisitedTime";
+        public const string SetUnifiedGroupLastVisitedTimeResponseMessage = "SetUnifiedGroupLastVisitedTimeResponseMessage";
         #endregion
 
         #region SOAP element names
