@@ -13,6 +13,7 @@ using System.Text;
         private String attachLongPathName;
         private String providerType;
         private Int32 permissionType;
+        private bool attachmentIsFolder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ReferenceAttachment"/> class.
@@ -72,6 +73,9 @@ using System.Text;
                     case XmlElementNames.PermissionType:
                         this.permissionType = reader.ReadElementValue<Int32>();
                         break;
+                    case XmlElementNames.AttachmentIsFolder:
+                        this.attachmentIsFolder = reader.ReadElementValue<bool>();
+                        break;
                 }
 
             }
@@ -111,6 +115,9 @@ using System.Text;
                     case XmlElementNames.PermissionType:
                         this.PermissionType = jsonProperty.ReadAsInt(key);
                         break;  
+                    case XmlElementNames.AttachmentIsFolder:
+                        this.AttachmentIsFolder = jsonProperty.ReadAsBool(key);
+                        break;
                     default:
                         break;
                 }
@@ -175,6 +182,12 @@ using System.Text;
             get { return this.permissionType; }
             set { //this.permissionType = value; 
             }
+        }
+
+        public bool AttachmentIsFolder
+        {
+            get { return this.attachmentIsFolder; }
+            set { }
         }
     
     }

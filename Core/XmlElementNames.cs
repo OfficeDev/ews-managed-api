@@ -115,6 +115,7 @@ namespace Microsoft.Exchange.WebServices.Data
         public const string ReferenceAttachment = "ReferenceAttachment";
         public const string ProviderType = "ProviderType";
         public const string PermissionType = "PermissionType";
+        public const string AttachmentIsFolder = "AttachmentIsFolder";
         public const string SavedItemFolderId = "SavedItemFolderId";
         public const string MessageText = "MessageText";
         public const string DescriptiveLinkKey = "DescriptiveLinkKey";
