@@ -39,13 +39,38 @@ namespace Microsoft.Exchange.WebServices.Data
     internal abstract class ServiceRequestBase
     {
         #region Private Constants
-
+        /// <summary>
+        /// The two contants below are used to set the AnchorMailbox and ExplicitLogonUser values
+        /// in the request header.
+        /// </summary>
+        /// <remarks>
+        /// Note: Setting this values will route the request directly to the backend hosting the 
+        /// AnchorMailbox. These headers should be used primarily for UnifiedGroup scenario where
+        /// a request needs to be routed directly to the group mailbox versus the user mailbox.
+        /// </remarks>
+        private const string AnchorMailboxHeaderName = "X-AnchorMailbox";
+        private const string ExplicitLogonUserHeaderName = "X-OWA-ExplicitLogonUser";
+       
         private static readonly string[] RequestIdResponseHeaders = new[] { "RequestId", "request-id", };
         private const string XMLSchemaNamespace = "http://www.w3.org/2001/XMLSchema";
         private const string XMLSchemaInstanceNamespace = "http://www.w3.org/2001/XMLSchema-instance";
         private const string ClientStatisticsRequestHeader = "X-ClientStatistics";
 
         #endregion
+
+        /// <summary>
+        /// Gets or sets the anchor mailbox associated with the request
+        /// </summary>
+        /// <remarks>
+        /// Setting this value will add special headers to the request which in turn
+        /// will route the request directly to the mailbox server against which the request
+        /// is to be executed.
+        /// </remarks>
+        internal string AnchorMailbox
+        {
+           get;
+           set;
+        }
 
         /// <summary>
         /// Maintains the collection of client side statistics for requests already completed
@@ -207,6 +232,11 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="webHeaderCollection">The HTTP request headers</param>
         internal virtual void AddHeaders(WebHeaderCollection webHeaderCollection)
         {
+            if (!string.IsNullOrEmpty(this.AnchorMailbox))
+            {
+                webHeaderCollection.Set(AnchorMailboxHeaderName, this.AnchorMailbox);
+                webHeaderCollection.Set(ExplicitLogonUserHeaderName, this.AnchorMailbox);
+            }
         }
 
         /// <summary>
