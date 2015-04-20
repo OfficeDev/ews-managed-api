@@ -212,6 +212,7 @@ namespace Microsoft.Exchange.WebServices.Data
                 entry.OnChange -= this.EntryChanged;
 
                 this.entries.Remove(key);
+				this.modifiedEntries.Remove (key);
                 this.removedEntries.Add(key, entry);
 
                 this.Changed();
