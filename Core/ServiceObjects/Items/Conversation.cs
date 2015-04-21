@@ -138,16 +138,6 @@ namespace Microsoft.Exchange.WebServices.Data
             throw new NotSupportedException();
         }
 
-        /// <summary>
-        /// This method is not supported in this object.
-        /// Gets the extended properties collection.
-        /// </summary>
-        /// <returns>Extended properties collection.</returns>
-        internal override ExtendedPropertyCollection GetExtendedProperties()
-        {
-            throw new NotSupportedException();
-        }
-
         #endregion
 
         #region Conversation Action Methods

@@ -343,11 +343,6 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="headers">The response headers</param>
         private void SaveHttpResponseHeaders(WebHeaderCollection headers)
         {
-            EwsUtilities.Assert(
-                this.httpResponseHeaders.Count == 0,
-                "ExchangeServiceBase.SaveHttpResponseHeaders",
-                "expect no headers in the dictionary yet.");
-            
             this.httpResponseHeaders.Clear();
 
             foreach (string key in headers.AllKeys)
