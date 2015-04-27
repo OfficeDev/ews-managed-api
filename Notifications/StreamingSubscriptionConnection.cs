@@ -262,12 +262,12 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="ex">The exception that caused the disconnection. May be null.</param>
         private void InternalOnDisconnect(Exception ex)
         {
+            this.currentHangingRequest = null;
+
             if (this.OnDisconnect != null)
             {
                 this.OnDisconnect(this, new SubscriptionErrorEventArgs(null, ex));
             }
-
-            this.currentHangingRequest = null;
         }
 
         /// <summary>

@@ -218,7 +218,7 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             this.addedEntries.Remove(key);
-            this.modifiedEntries.Remove (key);
+            this.modifiedEntries.Remove(key);
         }
 
         /// <summary>

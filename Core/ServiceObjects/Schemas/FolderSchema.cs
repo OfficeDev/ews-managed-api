@@ -171,12 +171,11 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Immutable type")]
         public static readonly PropertyDefinition WellKnownFolderName =
-            new GenericPropertyDefinition<WellKnownFolderName>(
+            new StringPropertyDefinition(
                 XmlElementNames.DistinguishedFolderId,
                 FieldUris.DistinguishedFolderId,
                 PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanFind,
-                ExchangeVersion.Exchange2013,
-                true);
+                ExchangeVersion.Exchange2013);
 
         /// <summary>
         /// Defines the PolicyTag property.

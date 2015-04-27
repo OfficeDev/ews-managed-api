@@ -78,7 +78,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// Dictionary of enum type to ExchangeVersion maps. 
         /// </summary>
         private static LazyMember<Dictionary<Type, Dictionary<Enum, ExchangeVersion>>> enumVersionDictionaries = new LazyMember<Dictionary<Type, Dictionary<Enum, ExchangeVersion>>>(
-            () => new Dictionary<Type, Dictionary<Enum, ExchangeVersion>>() 
+            () => new Dictionary<Type, Dictionary<Enum, ExchangeVersion>>()
             {
                 { typeof(WellKnownFolderName), BuildEnumDict(typeof(WellKnownFolderName)) },
                 { typeof(ItemTraversal), BuildEnumDict(typeof(ItemTraversal)) },
@@ -93,7 +93,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// Dictionary of enum type to schema-name-to-enum-value maps.
         /// </summary>
         private static LazyMember<Dictionary<Type, Dictionary<string, Enum>>> schemaToEnumDictionaries = new LazyMember<Dictionary<Type, Dictionary<string, Enum>>>(
-            () => new Dictionary<Type, Dictionary<string, Enum>> 
+            () => new Dictionary<Type, Dictionary<string, Enum>>
             {
                 { typeof(EventType), BuildSchemaToEnumDict(typeof(EventType)) },
                 { typeof(MailboxType), BuildSchemaToEnumDict(typeof(MailboxType)) },
@@ -106,7 +106,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// Dictionary of enum type to enum-value-to-schema-name maps.
         /// </summary>
         private static LazyMember<Dictionary<Type, Dictionary<Enum, string>>> enumToSchemaDictionaries = new LazyMember<Dictionary<Type, Dictionary<Enum, string>>>(
-            () => new Dictionary<Type, Dictionary<Enum, string>> 
+            () => new Dictionary<Type, Dictionary<Enum, string>>
             {
                 { typeof(EventType), BuildEnumToSchemaDict(typeof(EventType)) },
                 { typeof(MailboxType), BuildEnumToSchemaDict(typeof(MailboxType)) },
@@ -119,7 +119,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// Dictionary to map from special CLR type names to their "short" names.
         /// </summary>
         private static LazyMember<Dictionary<string, string>> typeNameToShortNameMap = new LazyMember<Dictionary<string, string>>(
-            () => new Dictionary<string, string> 
+            () => new Dictionary<string, string>
             {
                 { "Boolean", "bool" },
                 { "Int16", "short" },
@@ -717,6 +717,30 @@ namespace Microsoft.Exchange.WebServices.Data
             else
             {
                 return (T)Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
+            }
+        }
+
+        /// <summary>
+        /// Tries to parses the specified value to the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type into which to cast the provided value.</typeparam>
+        /// <param name="value">The value to parse.</param>
+        /// <param name="result">The value cast to the specified type, if TryParse succeeds. Otherwise, the value of result is indeterminate.</param>
+        /// <returns>True if value could be parsed; otherwise, false.</returns>
+        internal static bool TryParse<T>(string value, out T result)
+        {
+            try
+            {
+                result = EwsUtilities.Parse<T>(value);
+
+                return true;
+            }
+            //// Catch all exceptions here, we're not interested in the reason why TryParse failed.
+            catch (Exception)
+            {
+                result = default(T);
+
+                return false;
             }
         }
 

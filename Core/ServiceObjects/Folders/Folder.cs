@@ -663,12 +663,33 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Gets the name of the well known folder.
+        /// Gets the well known name of this folder, if any, as a string.
         /// </summary>
-        /// <value>The name of the well known folder.</value>
+        /// <value>The well known name of this folder as a string, or null if this folder isn't a well known folder.</value>
+        public string WellKnownFolderNameAsString
+        {
+            get { return (string)this.PropertyBag[FolderSchema.WellKnownFolderName]; }
+        }
+
+        /// <summary>
+        /// Gets the well known name of this folder, if any.
+        /// </summary>
+        /// <value>The well known name of this folder, or null if this folder isn't a well known folder.</value>
         public WellKnownFolderName? WellKnownFolderName
         {
-            get { return (WellKnownFolderName?)this.PropertyBag[FolderSchema.WellKnownFolderName]; }
+            get
+            {
+                WellKnownFolderName result;
+
+                if (EwsUtilities.TryParse<WellKnownFolderName>(this.WellKnownFolderNameAsString, out result))
+                {
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
         }
 
         #endregion
