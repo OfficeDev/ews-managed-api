@@ -55,13 +55,6 @@ namespace Microsoft.Exchange.WebServices.Data
             this.results.LoadFromXml(reader);
         }
 
-        internal override void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            base.ReadElementsFromJson(responseObject, service);
-
-            this.results.LoadFromJson(responseObject.ReadAsJsonObject(XmlElementNames.Notification), service);
-        }
-
         /// <summary>
         /// Gets event results from subscription.
         /// </summary>

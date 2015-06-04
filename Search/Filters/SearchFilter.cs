@@ -65,24 +65,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        /// <param name="service">The service.</param>
-        /// <returns></returns>
-        internal static SearchFilter LoadSearchFilterFromJson(JsonObject jsonObject, ExchangeService service)
-        {
-            SearchFilter searchFilter = GetSearchFilterInstance(jsonObject.ReadTypeString());
-
-            if (searchFilter != null)
-            {
-                searchFilter.LoadFromJson(jsonObject, service);
-            }
-
-            return searchFilter;
-        }
-
-        /// <summary>
         /// Gets the search filter instance.
         /// </summary>
         /// <param name="localName">Name of the local.</param>
@@ -140,14 +122,6 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         /// <returns>XML element name.</returns>
         internal abstract string GetXmlElementName();
-
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonFilter = new JsonObject();
-            jsonFilter.AddTypeParameter(this.GetXmlElementName());
-
-            return jsonFilter;
-        }
 
         /// <summary>
         /// Writes to XML.

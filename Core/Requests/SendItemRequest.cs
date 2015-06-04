@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a SendItem request.
     /// </summary>
-    internal sealed class SendItemRequest : MultiResponseServiceRequest<ServiceResponse>, IJsonSerializable
+    internal sealed class SendItemRequest : MultiResponseServiceRequest<ServiceResponse>
     {
         private IEnumerable<Item> items;
         private FolderId savedCopyDestinationFolderId;
@@ -132,36 +132,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 this.SavedCopyDestinationFolderId.WriteToXml(writer);
                 writer.WriteEndElement();
             }
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-
-            jsonRequest.Add(XmlAttributeNames.SaveItemToFolder, this.SavedCopyDestinationFolderId != null);
-            if (this.SavedCopyDestinationFolderId != null)
-            {
-                JsonObject targetFolderId = new JsonObject();
-                targetFolderId.Add(XmlElementNames.BaseFolderId, this.SavedCopyDestinationFolderId.InternalToJson(service));
-                jsonRequest.Add(XmlElementNames.SavedItemFolderId, targetFolderId);
-            }
-
-            List<object> idList = new List<object>();
-            foreach (Item item in this.Items)
-            {
-                idList.Add(item.Id.InternalToJson(service));
-            }
-
-            jsonRequest.Add(XmlElementNames.ItemIds, idList.ToArray());
-
-            return jsonRequest;
         }
 
         /// <summary>

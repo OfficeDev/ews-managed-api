@@ -63,29 +63,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.VotingOptionDisplayName:
-                        this.displayName = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.SendPrompt:
-                        this.sendPrompt = jsonProperty.ReadEnumValue<SendPrompt>(key);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets the display name for the voting option.
         /// </summary>
         public string DisplayName

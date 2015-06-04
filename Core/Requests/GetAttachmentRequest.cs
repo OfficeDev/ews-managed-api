@@ -31,7 +31,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a GetAttachment request.
     /// </summary>
-    internal sealed class GetAttachmentRequest : MultiResponseServiceRequest<GetAttachmentResponse>, IJsonSerializable
+    internal sealed class GetAttachmentRequest : MultiResponseServiceRequest<GetAttachmentResponse>
     {
         private List<Attachment> attachments = new List<Attachment>();
         private List<string> attachmentIds = new List<string>();
@@ -163,51 +163,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-
-            if (this.BodyType.HasValue || this.AdditionalProperties.Count > 0)
-            {
-                JsonObject jsonAttachmentShape = new JsonObject();
-
-                if (this.BodyType.HasValue)
-                {
-                    jsonAttachmentShape.Add(XmlElementNames.BodyType, this.BodyType.Value);
-                }
-
-                if (this.AdditionalProperties.Count > 0)
-                {
-                    PropertySet.WriteAdditionalPropertiesToJson(jsonAttachmentShape, service, this.AdditionalProperties);
-                }
-
-                jsonRequest.Add(XmlElementNames.AttachmentShape, jsonAttachmentShape);
-            }
-
-            List<object> attachmentIds = new List<object>();
-
-            foreach (Attachment attachment in this.Attachments)
-            {
-                this.AddJsonAttachmentIdToList(attachmentIds, attachment.Id);
-            }
-
-            foreach (string attachmentId in this.AttachmentIds)
-            {
-                this.AddJsonAttachmentIdToList(attachmentIds, attachmentId);
-            }
-
-            jsonRequest.Add(XmlElementNames.AttachmentIds, attachmentIds.ToArray());
-
-            return jsonRequest;
-        }
-
-        /// <summary>
         /// Gets the request version.
         /// </summary>
         /// <returns>Earliest Exchange version in which this request is supported.</returns>
@@ -279,18 +234,6 @@ namespace Microsoft.Exchange.WebServices.Data
             writer.WriteStartElement(XmlNamespace.Types, XmlElementNames.AttachmentId);
             writer.WriteAttributeValue(XmlAttributeNames.Id, attachmentId);
             writer.WriteEndElement();
-        }
-
-        /// <summary>
-        /// Add json attachment id to list
-        /// </summary>
-        /// <param name="attachmentIds">The attachment id object list.</param>
-        /// <param name="attachmentId">The attachment id.</param>
-        private void AddJsonAttachmentIdToList(List<object> attachmentIds, string attachmentId)
-        {
-            JsonObject jsonAttachmentId = new JsonObject();
-            jsonAttachmentId.Add(XmlAttributeNames.Id, attachmentId);
-            attachmentIds.Add(jsonAttachmentId);
         }
     }
 }

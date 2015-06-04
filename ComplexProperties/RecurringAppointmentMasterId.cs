@@ -57,23 +57,5 @@ namespace Microsoft.Exchange.WebServices.Data
             writer.WriteAttributeValue(XmlAttributeNames.OccurrenceId, this.UniqueId);
             writer.WriteAttributeValue(XmlAttributeNames.ChangeKey, this.ChangeKey);
         }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service"></param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            jsonProperty.AddTypeParameter(this.GetXmlElementName());
-            jsonProperty.Add(XmlAttributeNames.OccurrenceId, this.UniqueId);
-            jsonProperty.Add(XmlAttributeNames.ChangeKey, this.ChangeKey);
-
-            return jsonProperty;
-        }
     }
 }

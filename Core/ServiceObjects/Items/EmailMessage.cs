@@ -292,6 +292,14 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
+        /// Gets the Likers associated with the message.
+        /// </summary>
+        public EmailAddressCollection Likers
+        {
+            get { return (EmailAddressCollection)this.PropertyBag[EmailMessageSchema.Likers]; }
+        }
+
+        /// <summary>
         /// Gets the list of Cc recipients for the e-mail message.
         /// </summary>
         public EmailAddressCollection CcRecipients

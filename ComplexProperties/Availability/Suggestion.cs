@@ -100,26 +100,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            this.date = DateTime.Parse(jsonProperty.ReadAsString(XmlElementNames.Date));
-            this.quality = jsonProperty.ReadEnumValue<SuggestionQuality>(XmlElementNames.DayQuality);
-
-            foreach (object jsonSuggestion in jsonProperty.ReadAsArray(XmlElementNames.SuggestionArray))
-            {
-                TimeSuggestion timeSuggestion = new TimeSuggestion();
-
-                timeSuggestion.LoadFromJson(jsonSuggestion as JsonObject, service);
-
-                this.timeSuggestions.Add(timeSuggestion);
-            }
-        }
-        
-        /// <summary>
         /// Gets the date and time of the suggestion.
         /// </summary>
         public DateTime Date

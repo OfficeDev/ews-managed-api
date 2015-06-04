@@ -106,34 +106,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service"></param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.LocationDisplayName:
-                        this.displayName = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.LocationAnnotation:
-                        this.annotation = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.PersonaPostalAddress:
-                        this.personaPostalAddress = new PersonaPostalAddress();
-                        this.personaPostalAddress.LoadFromJson(jsonProperty.ReadAsJsonObject(key), service);
-                        this.personaPostalAddress.OnChange += new ComplexPropertyChangedDelegate(PersonaPostalAddress_OnChange);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the Location DisplayName.
         /// </summary>
         public string DisplayName
@@ -182,27 +154,6 @@ namespace Microsoft.Exchange.WebServices.Data
             writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.LocationDisplayName, this.displayName);
             writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.LocationAnnotation, this.annotation);
             this.personaPostalAddress.WriteToXml(writer);
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            jsonProperty.Add(XmlElementNames.LocationDisplayName, this.displayName);
-            jsonProperty.Add(XmlElementNames.LocationAnnotation, this.annotation);
-            if (this.personaPostalAddress != null)
-            {
-                jsonProperty.Add(XmlElementNames.PersonaPostalAddress, this.personaPostalAddress.InternalToJson(service));
-            }
-
-            return jsonProperty;
         }
 
         /// <summary>

@@ -107,20 +107,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        /// <param name="service">The service.</param>
-        internal void LoadFromJson(JsonObject jsonObject, ExchangeService service)
-        {
-            if (jsonObject.ContainsKey("xml:lang"))
-            {
-                this.culture = jsonObject.ReadAsString("xml:lang");
-            }
-            this.message = jsonObject.ReadAsString(XmlElementNames.Message);
-        }
-
-        /// <summary>
         /// Writes to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -143,27 +129,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 this.Message);
 
             writer.WriteEndElement(); // xmlElementName
-        }
-
-        /// <summary>
-        /// Serializes to json.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns></returns>
-        internal JsonObject InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            if (this.Culture != null)
-            {
-                jsonProperty.Add(
-                    "xml:lang",
-                    this.Culture);
-            }
-
-            jsonProperty.Add(XmlElementNames.Message, this.Message);
-
-            return jsonProperty;
         }
 
         /// <summary>

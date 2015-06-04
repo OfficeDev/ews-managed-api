@@ -66,15 +66,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates the default complex property.
-        /// </summary>
-        /// <returns>FolderId.</returns>
-        internal override FolderId CreateDefaultComplexProperty()
-        {
-            return new FolderId();
-        }
-
-        /// <summary>
         /// Gets the name of the collection item XML element.
         /// </summary>
         /// <param name="complexProperty">The complex property.</param>

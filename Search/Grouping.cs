@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents grouping options in item search operations.
     /// </summary>
-    public sealed class Grouping : ISelfValidate, IJsonSerializable
+    public sealed class Grouping : ISelfValidate
     {
         private SortDirection sortDirection = SortDirection.Ascending;
         private PropertyDefinitionBase groupOn;
@@ -97,24 +97,6 @@ namespace Microsoft.Exchange.WebServices.Data
             writer.WriteEndElement(); // AggregateOn
 
             writer.WriteEndElement(); // GroupBy
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonGrouping = new JsonObject();
-
-            jsonGrouping.Add(XmlAttributeNames.Order, this.SortDirection);
-
-            throw new NotImplementedException();
-
-            ////return jsonGrouping;
         }
 
         /// <summary>

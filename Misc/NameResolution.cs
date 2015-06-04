@@ -84,30 +84,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.Mailbox:
-                        this.mailbox.LoadFromJson(jsonProperty.ReadAsJsonObject(key), service);
-                        break;
-                    case XmlElementNames.Contact:
-                        this.contact = new Contact(this.owner.Session);
-                        this.contact.LoadFromJson(jsonProperty.ReadAsJsonObject(key), service, true, PropertySet.FirstClassProperties, false);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets the mailbox of the suggested resolved name.
         /// </summary>
         public EmailAddress Mailbox

@@ -89,26 +89,5 @@ namespace Microsoft.Exchange.WebServices.Data
                     return false;
             }
         }
-
-        /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            this.ConversationId = new ConversationId();
-            this.ConversationId.LoadFromJson(jsonProperty.ReadAsJsonObject(XmlElementNames.ConversationId), service);
-
-            if (jsonProperty.ContainsKey(XmlElementNames.SyncState))
-            {
-                this.SyncState = jsonProperty.ReadAsString(XmlElementNames.SyncState);
-            }
-
-            this.ConversationNodes = new ConversationNodeCollection(this.propertySet);
-            ((IJsonCollectionDeserializer)this.ConversationNodes).CreateFromJsonCollection(
-                                                                        jsonProperty.ReadAsArray(XmlElementNames.ConversationNodes),
-                                                                        service);
-        }
     }
 }

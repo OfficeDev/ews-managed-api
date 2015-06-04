@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a request to a Apply Conversation Action operation
     /// </summary>
-    internal sealed class ApplyConversationActionRequest : MultiResponseServiceRequest<ServiceResponse>, IJsonSerializable
+    internal sealed class ApplyConversationActionRequest : MultiResponseServiceRequest<ServiceResponse>
     {
         private List<ConversationAction> conversationActions = new List<ConversationAction>();
 
@@ -98,28 +98,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 this.ConversationActions[iAction].WriteElementsToXml(writer);
             }
             writer.WriteEndElement();
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-            List<object> actions = new List<object>();
-
-            foreach (ConversationAction action in this.conversationActions)
-            {
-                actions.Add(((IJsonSerializable)action).ToJson(service));
-            }
-
-            jsonRequest.Add(XmlElementNames.ConversationActions, actions.ToArray());
-
-            return jsonRequest;
         }
 
         /// <summary>

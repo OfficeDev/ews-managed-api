@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents the abstraction of a folder Id.
     /// </summary>
-    internal abstract class AbstractFolderIdWrapper : IJsonSerializable
+    internal abstract class AbstractFolderIdWrapper
     {
         /// <summary>
         /// Obtains the Folder object associated with the wrapper.
@@ -63,26 +63,5 @@ namespace Microsoft.Exchange.WebServices.Data
         internal virtual void Validate(ExchangeVersion version)
         {
         }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            return this.InternalToJson(service);
-        }
-        
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal abstract object InternalToJson(ExchangeService service);
     }
 }

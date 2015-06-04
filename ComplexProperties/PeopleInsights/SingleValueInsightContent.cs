@@ -71,12 +71,20 @@ namespace Microsoft.Exchange.WebServices.Data
                     this.Item = new SkillInsightValue();
                     this.Item.LoadFromXml(reader, reader.LocalName);
                     break;
-                case XmlElementNames.DelveDoc:
-                    this.Item = new DelveDoc();
+                case XmlElementNames.DelveDocument:
+                    this.Item = new DelveDocument();
                     this.Item.LoadFromXml(reader, reader.LocalName);
                     break;
                 case XmlElementNames.CompanyInsightValue:
                     this.Item = new CompanyInsightValue();
+                    this.Item.LoadFromXml(reader, reader.LocalName);
+                    break;
+                case XmlElementNames.ComputedInsightValue:
+                    this.Item = new ComputedInsightValue();
+                    this.Item.LoadFromXml(reader, reader.LocalName);
+                    break;
+                case XmlElementNames.OutOfOfficeInsightValue:
+                    this.Item = new OutOfOfficeInsightValue();
                     this.Item.LoadFromXml(reader, reader.LocalName);
                     break;
                 default:

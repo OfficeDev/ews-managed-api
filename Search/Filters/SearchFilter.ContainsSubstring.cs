@@ -150,20 +150,6 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             /// <summary>
-            /// Loads from json.
-            /// </summary>
-            /// <param name="jsonProperty">The json property.</param>
-            /// <param name="service">The service.</param>
-            internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-            {
-                base.LoadFromJson(jsonProperty, service);
-
-                this.value = jsonProperty.ReadAsJsonObject(XmlElementNames.Constant).ReadAsString(XmlElementNames.Value);
-                this.containmentMode = jsonProperty.ReadEnumValue<ContainmentMode>(XmlAttributeNames.ContainmentMode);
-                this.comparisonMode = jsonProperty.ReadEnumValue<ComparisonMode>(XmlAttributeNames.ContainmentComparison);
-            }
-
-            /// <summary>
             /// Writes the attributes to XML.
             /// </summary>
             /// <param name="writer">The writer.</param>
@@ -186,26 +172,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 writer.WriteStartElement(XmlNamespace.Types, XmlElementNames.Constant);
                 writer.WriteAttributeValue(XmlAttributeNames.Value, this.Value);
                 writer.WriteEndElement(); // Constant
-            }
-
-            /// <summary>
-            /// Internals to json.
-            /// </summary>
-            /// <param name="service">The service.</param>
-            /// <returns></returns>
-            internal override object InternalToJson(ExchangeService service)
-            {
-                JsonObject jsonFilter = base.InternalToJson(service) as JsonObject;
-
-                jsonFilter.Add(XmlAttributeNames.ContainmentMode, this.ContainmentMode);
-                jsonFilter.Add(XmlAttributeNames.ContainmentComparison, this.ComparisonMode);
-
-                JsonObject jsonConstant = new JsonObject();
-                jsonConstant.Add(XmlElementNames.Value, this.Value);
-
-                jsonFilter.Add(XmlElementNames.Constant, jsonConstant);
-
-                return jsonFilter;
             }
 
             /// <summary>

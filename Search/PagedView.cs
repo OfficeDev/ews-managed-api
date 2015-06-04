@@ -53,19 +53,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Internals the write paging to json.
-        /// </summary>
-        /// <param name="jsonView">The json view.</param>
-        /// <param name="service">The service.</param>
-        internal override void InternalWritePagingToJson(JsonObject jsonView, ExchangeService service)
-        {
-            base.InternalWritePagingToJson(jsonView, service);
-
-            jsonView.Add(XmlAttributeNames.Offset, this.Offset);
-            jsonView.Add(XmlAttributeNames.BasePoint, this.OffsetBasePoint);
-        }
-
-        /// <summary>
         /// Gets the maximum number of items or folders the search operation should return.
         /// </summary>
         /// <returns>The maximum number of items or folders that should be returned by the search operation.</returns>
@@ -84,24 +71,6 @@ namespace Microsoft.Exchange.WebServices.Data
             if (groupBy != null)
             {
                 groupBy.WriteToXml(writer);
-            }
-        }
-
-        /// <summary>
-        /// Writes the grouping to json.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="groupBy"></param>
-        /// <returns></returns>
-        internal override object WriteGroupingToJson(ExchangeService service, Grouping groupBy)
-        {
-            if (groupBy != null)
-            {
-                return ((IJsonSerializable)groupBy).ToJson(service);
-            }
-            else
-            {
-                return null;
             }
         }
 

@@ -84,34 +84,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.BaseFolderIds:
-                        this.RootFolderIds.InternalClear();
-                        ((IJsonCollectionDeserializer)this.RootFolderIds).CreateFromJsonCollection(jsonProperty.ReadAsArray(key), service);
-                        break;
-                    case XmlElementNames.Restriction:
-                        JsonObject restriction = jsonProperty.ReadAsJsonObject(key);
-                        this.searchFilter = SearchFilter.LoadSearchFilterFromJson(restriction.ReadAsJsonObject(XmlElementNames.Item), service);
-                        break;
-                    case XmlAttributeNames.Traversal:
-                        this.Traversal = jsonProperty.ReadEnumValue<SearchFolderTraversal>(key);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes the attributes to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -134,30 +106,6 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             this.RootFolderIds.WriteToXml(writer, XmlElementNames.BaseFolderIds);
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            jsonProperty.Add(XmlAttributeNames.Traversal, this.Traversal);
-            jsonProperty.Add(XmlElementNames.BaseFolderIds, this.RootFolderIds.InternalToJson(service));
-
-            if (this.SearchFilter != null)
-            {
-                JsonObject restriction = new JsonObject();
-                restriction.Add(XmlElementNames.Item, this.SearchFilter.InternalToJson(service));
-                jsonProperty.Add(XmlElementNames.Restriction, restriction);
-            }
-
-            return jsonProperty;
         }
 
         /// <summary>

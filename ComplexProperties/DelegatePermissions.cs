@@ -135,24 +135,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service"></param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                DelegateFolderPermission delegateFolderPermission = null;
-
-                if (this.delegateFolderPermissions.TryGetValue(key, out delegateFolderPermission))
-                {
-                    delegateFolderPermission.Initialize(jsonProperty.ReadEnumValue<DelegateFolderPermissionLevel>(key));
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes elements to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -181,61 +163,6 @@ namespace Microsoft.Exchange.WebServices.Data
             this.WritePermissionToXml(
                 writer,
                 XmlElementNames.JournalFolderPermissionLevel);
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service"></param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            this.WritePermissionToJson(
-                jsonProperty,
-                XmlElementNames.CalendarFolderPermissionLevel);
-
-            this.WritePermissionToJson(
-                jsonProperty,
-                XmlElementNames.TasksFolderPermissionLevel);
-
-            this.WritePermissionToJson(
-                jsonProperty,
-                XmlElementNames.InboxFolderPermissionLevel);
-
-            this.WritePermissionToJson(
-                jsonProperty,
-                XmlElementNames.ContactsFolderPermissionLevel);
-
-            this.WritePermissionToJson(
-                jsonProperty,
-                XmlElementNames.NotesFolderPermissionLevel);
-
-            this.WritePermissionToJson(
-                jsonProperty,
-                XmlElementNames.JournalFolderPermissionLevel);
-
-            return jsonProperty;
-        }
-
-        /// <summary>
-        /// Writes the permission to json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="elementName">Name of the element.</param>
-        private void WritePermissionToJson(JsonObject jsonProperty, string elementName)
-        {
-            DelegateFolderPermissionLevel delegateFolderPermissionLevel = this.delegateFolderPermissions[elementName].PermissionLevel;
-
-            // UpdateDelegate fails if Custom permission level is round tripped
-            //
-            if (delegateFolderPermissionLevel != DelegateFolderPermissionLevel.Custom)
-            {
-                jsonProperty.Add(elementName, delegateFolderPermissionLevel);
-            }
         }
 
         /// <summary>

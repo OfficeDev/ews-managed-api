@@ -79,41 +79,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.HasLocationChanged:
-                        this.hasLocationChanged = jsonProperty.ReadAsBool(key);
-                        break;
-                    case XmlElementNames.Location:
-                        this.location = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.HasStartTimeChanged:
-                        this.hasStartTimeChanged = jsonProperty.ReadAsBool(key);
-                        break;
-                    case XmlElementNames.Start:
-                        this.start = service.ConvertUniversalDateTimeStringToLocalDateTime(jsonProperty.ReadAsString(key)).Value;
-                        break;
-                    case XmlElementNames.HasEndTimeChanged:
-                        this.hasEndTimeChanged = jsonProperty.ReadAsBool(key);
-                        break;
-                    case XmlElementNames.End:
-                        this.end = service.ConvertUniversalDateTimeStringToLocalDateTime(jsonProperty.ReadAsString(key)).Value;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets a value indicating whether the location has changed.
         /// </summary>
         public bool HasLocationChanged

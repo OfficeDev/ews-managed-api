@@ -91,21 +91,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonResponse">The json response.</param>
-        /// <param name="service">The service.</param>
-        internal virtual void LoadFromJson(JsonObject jsonResponse, ExchangeService service)
-        {
-            this.id = jsonResponse.ReadAsString(XmlElementNames.SubscriptionId);
-
-            if (this.UsesWatermark)
-            {
-                this.watermark = jsonResponse.ReadAsString(XmlElementNames.Watermark);
-            }
-        }
-
-        /// <summary>
         /// Gets the session.
         /// </summary>
         /// <value>The session.</value>

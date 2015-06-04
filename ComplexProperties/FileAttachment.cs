@@ -143,57 +143,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service"></param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            base.LoadFromJson(jsonProperty, service);
-
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.IsContactPhoto:
-                        this.isContactPhoto = jsonProperty.ReadAsBool(key);
-                        break;
-                    case XmlElementNames.Content:
-                        if (this.loadToStream != null)
-                        {
-                            jsonProperty.ReadAsBase64Content(key, this.loadToStream);
-                        }
-                        else
-                        {
-                            // If there's a file attachment content handler, use it. Otherwise
-                            // load the content into a byte array.
-                            // TODO: Should we mark the attachment to indicate that content is stored elsewhere?
-                            if (service.FileAttachmentContentHandler != null)
-                            {
-                                Stream outputStream = service.FileAttachmentContentHandler.GetOutputStream(this.Id);
-
-                                if (outputStream != null)
-                                {
-                                    jsonProperty.ReadAsBase64Content(key, outputStream);
-                                }
-                                else
-                                {
-                                    this.content = jsonProperty.ReadAsBase64Content(key);
-                                }
-                            }
-                            else
-                            {
-                                this.content = jsonProperty.ReadAsBase64Content(key);
-                            }
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes elements and content to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -232,48 +181,6 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             writer.WriteEndElement();
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service"></param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonAttachment = base.InternalToJson(service) as JsonObject;
-
-            if (service.RequestedServerVersion > ExchangeVersion.Exchange2007_SP1)
-            {
-                jsonAttachment.Add(XmlElementNames.IsContactPhoto, this.isContactPhoto);
-            }
-            
-            if (!string.IsNullOrEmpty(this.FileName))
-            {
-                using (FileStream fileStream = new FileStream(this.FileName, FileMode.Open, FileAccess.Read))
-                {
-                    jsonAttachment.AddBase64(XmlElementNames.Content, fileStream);
-                }
-            }
-            else if (this.ContentStream != null)
-            {
-                jsonAttachment.AddBase64(XmlElementNames.Content, this.ContentStream);
-            }
-            else if (this.Content != null)
-            {
-                jsonAttachment.AddBase64(XmlElementNames.Content, this.Content);
-            }
-            else
-            {
-                EwsUtilities.Assert(
-                    false,
-                    "FileAttachment.WriteElementsToXml",
-                    "The attachment's content is not set.");
-            }
-
-            return jsonAttachment;
         }
 
         /// <summary>

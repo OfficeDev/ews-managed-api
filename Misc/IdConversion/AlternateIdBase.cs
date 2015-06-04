@@ -28,7 +28,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents the base class for Id expressed in a specific format.
     /// </summary>
-    public abstract class AlternateIdBase : ISelfValidate, IJsonSerializable
+    public abstract class AlternateIdBase : ISelfValidate
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AlternateIdBase"/> class.
@@ -80,15 +80,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads the attributes from json.
-        /// </summary>
-        /// <param name="responseObject">The response object.</param>
-        internal virtual void LoadAttributesFromJson(JsonObject responseObject)
-        {
-            this.Format = responseObject.ReadEnumValue<IdFormat>(XmlAttributeNames.Format);
-        }
-
-        /// <summary>
         /// Writes to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -99,32 +90,6 @@ namespace Microsoft.Exchange.WebServices.Data
             this.WriteAttributesToXml(writer);
 
             writer.WriteEndElement(); // this.GetXmlElementName()
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonObject = new JsonObject();
-
-            this.InternalToJson(jsonObject);
-
-            return jsonObject;
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object..
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        internal virtual void InternalToJson(JsonObject jsonObject)
-        {
-            jsonObject.Add(XmlAttributeNames.Format, this.Format);
-            jsonObject.AddTypeParameter(this.GetXmlElementName());
         }
 
         /// <summary>

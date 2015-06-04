@@ -97,17 +97,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates a JSON representation of this object..
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        internal override void InternalToJson(JsonObject jsonObject)
-        {
-            base.InternalToJson(jsonObject);
-
-            jsonObject.Add(XmlAttributeNames.ItemId, this.ItemId);
-        }
-
-        /// <summary>
         /// Loads the attributes from XML.
         /// </summary>
         /// <param name="reader">The reader.</param>
@@ -116,17 +105,6 @@ namespace Microsoft.Exchange.WebServices.Data
             base.LoadAttributesFromXml(reader);
 
             this.itemId = reader.ReadAttributeValue(XmlAttributeNames.ItemId);
-        }
-
-        /// <summary>
-        /// Loads the attributes from json.
-        /// </summary>
-        /// <param name="responseObject">The response object.</param>
-        internal override void LoadAttributesFromJson(JsonObject responseObject)
-        {
-            base.LoadAttributesFromJson(responseObject);
-
-            this.itemId = responseObject.ReadAsString(XmlAttributeNames.ItemId);
         }
     }
 }

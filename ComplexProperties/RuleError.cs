@@ -127,33 +127,5 @@ namespace Microsoft.Exchange.WebServices.Data
                     return false;
             }
         }
-
-        /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            if (jsonProperty.ContainsKey(XmlElementNames.FieldURI))
-            {
-                this.ruleProperty = jsonProperty.ReadEnumValue<RuleProperty>(XmlElementNames.FieldURI);
-            }
-
-            if (jsonProperty.ContainsKey(XmlElementNames.ErrorCode))
-            {
-                this.errorCode = jsonProperty.ReadEnumValue<RuleErrorCode>(XmlElementNames.ErrorCode);
-            }
-
-            if (jsonProperty.ContainsKey(XmlElementNames.ErrorMessage))
-            {
-                this.errorMessage = jsonProperty.ReadAsString(XmlElementNames.ErrorMessage);
-            }
-
-            if (jsonProperty.ContainsKey(XmlElementNames.FieldValue))
-            {
-                this.value = jsonProperty.ReadAsString(XmlElementNames.FieldValue);
-            }
-        }
     }
 }

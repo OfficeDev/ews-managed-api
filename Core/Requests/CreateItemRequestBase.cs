@@ -148,26 +148,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Adds the json properties.
-        /// </summary>
-        /// <param name="jsonRequest">The json request.</param>
-        /// <param name="service">The service.</param>
-        internal override void AddJsonProperties(JsonObject jsonRequest, ExchangeService service)
-        {
-            base.AddJsonProperties(jsonRequest, service);
-            
-            if (this.MessageDisposition.HasValue)
-            {
-                jsonRequest.Add(XmlAttributeNames.MessageDisposition, this.MessageDisposition.Value);
-            }
-
-            if (this.SendInvitationsMode.HasValue)
-            {
-                jsonRequest.Add(XmlAttributeNames.SendMeetingInvitations, this.SendInvitationsMode.Value);
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the message disposition.
         /// </summary>
         /// <value>The message disposition.</value>

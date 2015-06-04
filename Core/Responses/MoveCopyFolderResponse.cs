@@ -75,26 +75,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Reads response elements from Json.
-        /// </summary>
-        /// <param name="responseObject">The response object.</param>
-        /// <param name="service">The service.</param>
-        internal override void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            EwsServiceJsonReader jsonReader = new EwsServiceJsonReader(service);
-
-            List<Folder> folders = jsonReader.ReadServiceObjectsCollectionFromJson<Folder>(
-                responseObject,
-                XmlElementNames.Folders,
-                this.GetObjectInstance,
-                false,  /* clearPropertyBag */
-                null,   /* requestedPropertySet */
-                false); /* summaryPropertiesOnly */
-
-            this.folder = folders[0];
-        }
-
-        /// <summary>
         /// Gets the new (moved or copied) folder.
         /// </summary>
         public Folder Folder

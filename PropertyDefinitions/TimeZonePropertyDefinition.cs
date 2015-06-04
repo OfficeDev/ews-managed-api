@@ -66,25 +66,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads the property value from json.
-        /// </summary>
-        /// <param name="value">The JSON value.  Can be a JsonObject, string, number, bool, array, or null.</param>
-        /// <param name="service">The service.</param>
-        /// <param name="propertyBag">The property bag.</param>
-        internal override void LoadPropertyValueFromJson(object value, ExchangeService service, PropertyBag propertyBag)
-        {
-            TimeZoneDefinition timeZoneDefinition = new TimeZoneDefinition();
-            JsonObject jsonTimeZoneProperty = value as JsonObject;
-
-            if (jsonTimeZoneProperty != null)
-            {
-                timeZoneDefinition.LoadFromJson(jsonTimeZoneProperty, service);
-            }
-
-            propertyBag[this] = timeZoneDefinition.ToTimeZoneInfo(service);
-        }
-
-        /// <summary>
         /// Writes to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -108,26 +89,6 @@ namespace Microsoft.Exchange.WebServices.Data
 
                     timeZoneDefinition.WriteToXml(writer, this.XmlElementName);
                 }
-            }
-        }
-
-        /// <summary>
-        /// Writes the json value.
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        /// <param name="propertyBag">The property bag.</param>
-        /// <param name="service">The service.</param>
-        /// <param name="isUpdateOperation">if set to <c>true</c> [is update operation].</param>
-        internal override void WriteJsonValue(JsonObject jsonObject, PropertyBag propertyBag, ExchangeService service, bool isUpdateOperation)
-        {
-            TimeZoneInfo value = propertyBag[this] as TimeZoneInfo;
-
-            if (value != null &&
-                value != service.TimeZone)
-            {
-                TimeZoneDefinition timeZoneDefinition = new TimeZoneDefinition(value);
-
-                jsonObject.Add(this.XmlElementName, timeZoneDefinition.InternalToJson(service));
             }
         }
 

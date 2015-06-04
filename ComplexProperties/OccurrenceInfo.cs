@@ -72,36 +72,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.ItemId:
-                        this.itemId = new ItemId();
-                        this.itemId.LoadFromJson(jsonProperty.ReadAsJsonObject(key), service);
-                        break;
-                    case XmlElementNames.Start:
-                        this.start = service.ConvertUniversalDateTimeStringToLocalDateTime(jsonProperty.ReadAsString(key)).Value;
-                        break;
-                    case XmlElementNames.End:
-                        this.end = service.ConvertUniversalDateTimeStringToLocalDateTime(jsonProperty.ReadAsString(key)).Value;
-                        break;
-                    case XmlElementNames.OriginalStart:
-                        this.originalStart = service.ConvertUniversalDateTimeStringToLocalDateTime(jsonProperty.ReadAsString(key)).Value;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets the Id of the occurrence.
         /// </summary>
         public ItemId ItemId

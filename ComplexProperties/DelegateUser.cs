@@ -135,37 +135,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service"></param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.UserId:
-                        this.userId = new UserId();
-                        this.userId.LoadFromJson(jsonProperty.ReadAsJsonObject(key), service);
-                        break;
-                    case XmlElementNames.DelegatePermissions:
-                        this.permissions.Reset();
-                        this.permissions.LoadFromJson(jsonProperty.ReadAsJsonObject(key), service);
-                        break;
-                    case XmlElementNames.ReceiveCopiesOfMeetingMessages:
-                        this.receiveCopiesOfMeetingMessages = jsonProperty.ReadAsBool(key);
-                        break;
-                    case XmlElementNames.ViewPrivateItems:
-                        this.viewPrivateItems = jsonProperty.ReadAsBool(key);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes elements to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -183,26 +152,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 XmlNamespace.Types,
                 XmlElementNames.ViewPrivateItems,
                 this.ViewPrivateItems);
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service"></param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            jsonProperty.Add(XmlElementNames.UserId, this.UserId.InternalToJson(service));
-            jsonProperty.Add(XmlElementNames.DelegatePermissions, this.Permissions.InternalToJson(service));
-
-            jsonProperty.Add(XmlElementNames.ReceiveCopiesOfMeetingMessages, this.ReceiveCopiesOfMeetingMessages);
-            jsonProperty.Add(XmlElementNames.ViewPrivateItems, this.ViewPrivateItems);
-
-            return jsonProperty;
         }
 
         /// <summary>

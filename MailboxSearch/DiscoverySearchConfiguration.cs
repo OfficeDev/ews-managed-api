@@ -136,55 +136,5 @@ namespace Microsoft.Exchange.WebServices.Data
 
             return configuration;
         }
-
-        /// <summary>
-        /// Load from json
-        /// </summary>
-        /// <param name="jsonObject">The json object</param>
-        /// <returns>Discovery search configuration object</returns>
-        internal static DiscoverySearchConfiguration LoadFromJson(JsonObject jsonObject)
-        {
-            List<SearchableMailbox> mailboxes = new List<SearchableMailbox>();
-            DiscoverySearchConfiguration configuration = new DiscoverySearchConfiguration();
-
-            if (jsonObject.ContainsKey(XmlElementNames.SearchId))
-            {
-                configuration.SearchId = jsonObject.ReadAsString(XmlElementNames.SearchId);
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.InPlaceHoldIdentity))
-            {
-                configuration.InPlaceHoldIdentity = jsonObject.ReadAsString(XmlElementNames.InPlaceHoldIdentity);
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.ManagedByOrganization))
-            {
-                configuration.ManagedByOrganization = jsonObject.ReadAsString(XmlElementNames.ManagedByOrganization);
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.SearchQuery))
-            {
-                configuration.SearchQuery = jsonObject.ReadAsString(XmlElementNames.SearchQuery);
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.SearchableMailboxes))
-            {
-                foreach (object searchableMailboxObject in jsonObject.ReadAsArray(XmlElementNames.SearchableMailboxes))
-                {
-                    JsonObject jsonSearchableMailbox = searchableMailboxObject as JsonObject;
-
-                    mailboxes.Add(SearchableMailbox.LoadFromJson(jsonSearchableMailbox));
-                }
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.Language))
-            {
-                configuration.Language = jsonObject.ReadAsString(XmlElementNames.Language);
-            }
-
-            configuration.SearchableMailboxes = mailboxes.Count == 0 ? null : mailboxes.ToArray();
-
-            return configuration;
-        }
     }
 }

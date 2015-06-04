@@ -47,7 +47,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         /// <param name="separator">The separator.</param>
         /// <returns>String representation of collection.</returns>
-        private string ToString(string separator)
+        internal string ToString(string separator)
         {
             if (this.Count == 0)
             {
@@ -82,29 +82,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service"></param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            // DayOfTheWeekCollection is implemented as a Json primitive, rather than as a Json object.
-            throw new InvalidOperationException();
-        }
-
-        /// <summary>
-        /// Loads from json value.
-        /// </summary>
-        /// <param name="jsonValue">The json value.</param>
-        internal void LoadFromJsonValue(string jsonValue)
-        {
-            EwsUtilities.ParseEnumValueList<DayOfTheWeek>(
-                this.items,
-                jsonValue,
-                ' ');
-        }
-
-        /// <summary>
         /// Writes to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -120,18 +97,6 @@ namespace Microsoft.Exchange.WebServices.Data
                     XmlElementNames.DaysOfWeek,
                     daysOfWeekAsString);
             }
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            return this.ToString(" ");
         }
 
         /// <summary>

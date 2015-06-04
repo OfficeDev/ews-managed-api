@@ -118,57 +118,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Load from json
-        /// </summary>
-        /// <param name="jsonObject">The json object</param>
-        /// <returns>Mailbox hold object</returns>
-        internal static MailboxHoldResult LoadFromJson(JsonObject jsonObject)
-        {
-            List<MailboxHoldStatus> statuses = new List<MailboxHoldStatus>();
-            MailboxHoldResult holdResult = new MailboxHoldResult();
-
-            if (jsonObject.ContainsKey(XmlElementNames.HoldId))
-            {
-                holdResult.HoldId = jsonObject.ReadAsString(XmlElementNames.HoldId);
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.Query))
-            {
-                holdResult.Query = jsonObject.ReadAsString(XmlElementNames.Query);
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.Statuses))
-            {
-                foreach (object statusObject in jsonObject.ReadAsArray(XmlElementNames.Statuses))
-                {
-                    MailboxHoldStatus status = new MailboxHoldStatus();
-                    JsonObject jsonStatus = statusObject as JsonObject;
-
-                    if (jsonStatus.ContainsKey(XmlElementNames.Mailbox))
-                    {
-                        status.Mailbox = jsonStatus.ReadAsString(XmlElementNames.Mailbox);
-                    }
-
-                    if (jsonStatus.ContainsKey(XmlElementNames.Status))
-                    {
-                        status.Status = (HoldStatus)Enum.Parse(typeof(HoldStatus), jsonStatus.ReadAsString(XmlElementNames.Status));
-                    }
-
-                    if (jsonStatus.ContainsKey(XmlElementNames.AdditionalInfo))
-                    {
-                        status.AdditionalInfo = jsonStatus.ReadAsString(XmlElementNames.AdditionalInfo);
-                    }
-
-                    statuses.Add(status);
-                }
-            }
-
-            holdResult.Statuses = statuses.Count == 0 ? null : statuses.ToArray();
-
-            return holdResult;
-        }
-
-        /// <summary>
         /// Hold id
         /// </summary>
         public string HoldId { get; set; }

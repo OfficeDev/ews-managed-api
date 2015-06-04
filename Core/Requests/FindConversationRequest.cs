@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a request to a Find Conversation operation
     /// </summary>
-    internal sealed class FindConversationRequest : SimpleServiceRequestBase, IJsonSerializable
+    internal sealed class FindConversationRequest : SimpleServiceRequestBase
     {
         private ViewBase view;
         private FolderIdWrapper folderId;
@@ -250,52 +250,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-
-            jsonRequest.Add("Paging", this.View.WritePagingToJson(service));
-            this.View.AddJsonProperties(jsonRequest, service);
-
-            JsonObject jsonTargetFolderId = new JsonObject();
-            jsonTargetFolderId.Add(XmlElementNames.BaseFolderId, this.FolderId.InternalToJson(service));
-            jsonRequest.Add(XmlElementNames.ParentFolderId, jsonTargetFolderId);
-
-            if (this.MailboxScope.HasValue)
-            {
-                jsonRequest.Add(XmlElementNames.MailboxScope, this.MailboxScope.Value);
-            }
-
-            if (!string.IsNullOrEmpty(this.queryString))
-            {
-                JsonObject jsonQueryString = new JsonObject();
-                jsonQueryString.Add(XmlAttributeNames.Value, this.QueryString);
-
-                if (this.ReturnHighlightTerms)
-                {
-                    jsonQueryString.Add(XmlAttributeNames.ReturnHighlightTerms, this.ReturnHighlightTerms.ToString().ToLowerInvariant());
-                }
-
-                jsonRequest.Add(XmlElementNames.QueryString, jsonQueryString);
-            }
-
-            if (this.Service.RequestedServerVersion >= ExchangeVersion.Exchange2013)
-            {
-                if (this.View.PropertySet != null)
-                {
-                    this.View.PropertySet.WriteGetShapeToJson(jsonRequest, service, ServiceObjectType.Conversation);
-                }
-            }
-            return jsonRequest;
-        }
-
-        /// <summary>
         /// Parses the response.
         /// </summary>
         /// <param name="reader">The reader.</param>
@@ -305,18 +259,6 @@ namespace Microsoft.Exchange.WebServices.Data
             FindConversationResponse response = new FindConversationResponse();
             response.LoadFromXml(reader, XmlElementNames.FindConversationResponse);
             return response;
-        }
-
-        /// <summary>
-        /// Parses the response.
-        /// </summary>
-        /// <param name="jsonBody">The json body.</param>
-        /// <returns>Response object.</returns>
-        internal override object ParseResponse(JsonObject jsonBody)
-        {
-            FindConversationResponse serviceResponse = new FindConversationResponse();
-            serviceResponse.LoadFromJson(jsonBody, this.Service);
-            return serviceResponse;
         }
 
         /// <summary>

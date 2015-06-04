@@ -54,16 +54,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Reads response elements from Json.
-        /// </summary>
-        /// <param name="responseObject">The response object.</param>
-        /// <param name="service">The service.</param>
-        internal override void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            throw new NotImplementedException("GetNonIndexableItemStatistics doesn't support JSON.");
-        }
-
-        /// <summary>
         /// List of non indexable statistic
         /// </summary>
         public List<NonIndexableItemStatistic> NonIndexableStatistics

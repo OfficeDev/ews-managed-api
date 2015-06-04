@@ -134,15 +134,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates the default complex property.
-        /// </summary>
-        /// <returns></returns>
-        internal override Attendee CreateDefaultComplexProperty()
-        {
-            return new Attendee();
-        }
-
-        /// <summary>
         /// Retrieves the XML element name corresponding to the provided Attendee object.
         /// </summary>
         /// <param name="attendee">The Attendee object from which to determine the XML element name.</param>

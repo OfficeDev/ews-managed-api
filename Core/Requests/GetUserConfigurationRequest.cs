@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a GetUserConfiguration request.
     /// </summary>
-    internal class GetUserConfigurationRequest : MultiResponseServiceRequest<GetUserConfigurationResponse>, IJsonSerializable
+    internal class GetUserConfigurationRequest : MultiResponseServiceRequest<GetUserConfigurationResponse>
     {
         private const string EnumDelimiter = ",";
         private string name;
@@ -134,23 +134,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 XmlNamespace.Messages,
                 XmlElementNames.UserConfigurationProperties,
                 this.properties.ToString().Replace(EnumDelimiter, string.Empty));
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonObject = new JsonObject();
-
-            jsonObject.Add(XmlElementNames.UserConfigurationName, UserConfiguration.GetJsonUserConfigName(service, this.parentFolderId, this.name));
-            jsonObject.Add(XmlElementNames.UserConfigurationProperties, this.properties.ToString().Replace(EnumDelimiter, string.Empty));
-
-            return jsonObject;
         }
 
         /// <summary>

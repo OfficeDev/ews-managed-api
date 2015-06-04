@@ -33,7 +33,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a CreateAttachment request.
     /// </summary>
-    internal sealed class CreateAttachmentRequest : MultiResponseServiceRequest<CreateAttachmentResponse>, IJsonSerializable
+    internal sealed class CreateAttachmentRequest : MultiResponseServiceRequest<CreateAttachmentResponse>
     {
         private string parentItemId;
         private List<Attachment> attachments = new List<Attachment>();
@@ -120,30 +120,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 attachment.WriteToXml(writer, attachment.GetXmlElementName());
             }
             writer.WriteEndElement();
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-
-            jsonRequest.Add(XmlElementNames.ParentItemId, new ItemId(this.ParentItemId).InternalToJson(service));
-
-            List<object> attachmentArray = new List<object>();
-            foreach (Attachment attachment in this.Attachments)
-            {
-                attachmentArray.Add(attachment.InternalToJson(service));
-            }
-
-            jsonRequest.Add(XmlElementNames.Attachments, attachmentArray.ToArray());
-
-            return jsonRequest;
         }
 
         /// <summary>

@@ -283,67 +283,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service"></param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.AttachmentId:
-                        this.LoadAttachmentIdFromJson(jsonProperty.ReadAsJsonObject(key));
-                        break;
-                    case XmlElementNames.Name:
-                        this.name = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.ContentType:
-                        this.contentType = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.ContentId:
-                        this.contentId = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.ContentLocation:
-                        this.contentLocation = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.Size:
-                        this.size = jsonProperty.ReadAsInt(key);
-                        break;
-                    case XmlElementNames.LastModifiedTime:
-                        this.lastModifiedTime = service.ConvertUniversalDateTimeStringToLocalDateTime(jsonProperty.ReadAsString(key)).Value;
-                        break;
-                    case XmlElementNames.IsInline:
-                        this.isInline = jsonProperty.ReadAsBool(key);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Loads the attachment id from json.
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        private void LoadAttachmentIdFromJson(JsonObject jsonObject)
-        {
-            this.id = jsonObject.ReadAsString(XmlAttributeNames.Id);
-
-            if (this.Owner != null &&
-                jsonObject.ContainsKey(XmlAttributeNames.RootItemChangeKey))
-            {
-                string rootItemChangeKey = jsonObject.ReadAsString(XmlAttributeNames.RootItemChangeKey);
-
-                if (!string.IsNullOrEmpty(rootItemChangeKey))
-                {
-                    this.Owner.RootItemId.ChangeKey = rootItemChangeKey;
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes elements to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -357,30 +296,6 @@ namespace Microsoft.Exchange.WebServices.Data
             {
                 writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.IsInline, this.IsInline);
             }
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service"></param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            jsonProperty.AddTypeParameter(this.GetXmlElementName());
-            jsonProperty.Add(XmlElementNames.Name, this.Name);
-            jsonProperty.Add(XmlElementNames.ContentType, this.ContentType);
-            jsonProperty.Add(XmlElementNames.ContentId, this.ContentId);
-            jsonProperty.Add(XmlElementNames.ContentLocation, this.ContentLocation);
-            if (service.RequestedServerVersion > ExchangeVersion.Exchange2007_SP1)
-            {
-                jsonProperty.Add(XmlElementNames.IsInline, this.IsInline);
-            }
-
-            return jsonProperty;
         }
 
         /// <summary>

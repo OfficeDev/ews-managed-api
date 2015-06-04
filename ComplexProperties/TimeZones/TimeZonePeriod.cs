@@ -66,56 +66,12 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonTimeZonePeriod = new JsonObject();
-
-            jsonTimeZonePeriod.Add(XmlAttributeNames.Bias, EwsUtilities.TimeSpanToXSDuration(this.bias));
-            jsonTimeZonePeriod.Add(XmlAttributeNames.Name, this.name);
-            jsonTimeZonePeriod.Add(XmlAttributeNames.Id, this.id);
-
-            return jsonTimeZonePeriod;
-        }
-
-        /// <summary>
         /// Loads from XML.
         /// </summary>
         /// <param name="reader">The reader.</param>
         internal void LoadFromXml(EwsServiceXmlReader reader)
         {
             this.LoadFromXml(reader, XmlElementNames.Period);
-        }
-
-        /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            base.LoadFromJson(jsonProperty, service);
-
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlAttributeNames.Id:
-                        this.id = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlAttributeNames.Name:
-                        this.name = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlAttributeNames.Bias:
-                        this.bias = EwsUtilities.XSDurationToTimeSpan(jsonProperty.ReadAsString(key));
-                        break;
-                }
-            }
         }
 
         /// <summary>

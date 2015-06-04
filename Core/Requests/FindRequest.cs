@@ -33,7 +33,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// Represents an abstract Find request.
     /// </summary>
     /// <typeparam name="TResponse">The type of the response.</typeparam>
-    internal abstract class FindRequest<TResponse> : MultiResponseServiceRequest<TResponse>, IJsonSerializable
+    internal abstract class FindRequest<TResponse> : MultiResponseServiceRequest<TResponse>
         where TResponse : ServiceResponse
     {
         private FolderIdWrapperList parentFolderIds = new FolderIdWrapperList();
@@ -169,55 +169,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 writer.WriteValue(this.queryString, XmlElementNames.QueryString);
                 writer.WriteEndElement();
             }
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-
-            this.View.WriteShapeToJson(jsonRequest, service);
-            jsonRequest.Add("Paging", this.View.WritePagingToJson(service));
-
-            object jsonGrouping = this.View.WriteGroupingToJson(service, this.GetGroupBy());
-            if (jsonGrouping != null)
-            {
-                jsonRequest.Add("Grouping", jsonGrouping);
-            }
-
-            // Traversal and OrderBy
-            this.View.AddJsonProperties(jsonRequest, service);
-
-            if (this.SearchFilter != null)
-            {
-                JsonObject jsonSearchFilter = new JsonObject();
-                jsonSearchFilter.Add(XmlElementNames.Item, this.SearchFilter.InternalToJson(service));
-
-                jsonRequest.Add(XmlElementNames.Restriction, jsonSearchFilter);
-            }
-
-            jsonRequest.Add(XmlElementNames.ParentFolderIds, this.ParentFolderIds.InternalToJson(service));
-
-            if (!string.IsNullOrEmpty(this.queryString))
-            {
-                JsonObject jsonQueryString = new JsonObject();
-                jsonQueryString.Add(XmlAttributeNames.Value, this.QueryString);
-
-                if (this.ReturnHighlightTerms)
-                {
-                    jsonQueryString.Add(XmlAttributeNames.ReturnHighlightTerms, this.ReturnHighlightTerms.ToString().ToLowerInvariant());
-                }
-
-                jsonRequest.Add(XmlElementNames.QueryString, jsonQueryString);
-            }
-
-            return jsonRequest;
         }
 
         /// <summary>

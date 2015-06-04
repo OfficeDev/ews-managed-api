@@ -28,7 +28,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents an MarkAllItemsAsRead request.
     /// </summary>
-    internal sealed class MarkAllItemsAsReadRequest : MultiResponseServiceRequest<ServiceResponse>, IJsonSerializable
+    internal sealed class MarkAllItemsAsReadRequest : MultiResponseServiceRequest<ServiceResponse>
     {
         private FolderIdWrapperList folderIds = new FolderIdWrapperList();
 
@@ -112,24 +112,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 writer,
                 XmlNamespace.Messages,
                 XmlElementNames.FolderIds);
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject body = new JsonObject();
-
-            body.Add(XmlElementNames.ReadFlag, this.ReadFlag);
-            body.Add(XmlElementNames.SuppressReadReceipts, this.SuppressReadReceipts);
-            body.Add(XmlElementNames.FolderIds, this.FolderIds.InternalToJson(this.Service));
-
-            return body;
         }
 
         /// <summary>

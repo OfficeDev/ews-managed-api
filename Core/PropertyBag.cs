@@ -102,70 +102,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates the json set update.
-        /// </summary>
-        /// <param name="propertyDefinition">The property definition.</param>
-        /// <param name="service">The service.</param>
-        /// <param name="serviceObject">The service object.</param>
-        /// <param name="propertyBag">The property bag.</param>
-        /// <returns></returns>
-        internal static JsonObject CreateJsonSetUpdate(PropertyDefinition propertyDefinition, ExchangeService service, ServiceObject serviceObject, PropertyBag propertyBag)
-        {
-            JsonObject jsonUpdate = new JsonObject();
-
-            jsonUpdate.AddTypeParameter(serviceObject.GetSetFieldXmlElementName());
-
-            jsonUpdate.Add(JsonNames.Path, (propertyDefinition as IJsonSerializable).ToJson(service));
-
-            JsonObject jsonServiceObject = new JsonObject();
-            jsonServiceObject.AddTypeParameter(serviceObject.GetXmlElementName());
-            propertyDefinition.WriteJsonValue(jsonServiceObject, propertyBag, service, true);
-
-            jsonUpdate.Add(GetPropertyUpdateItemName(serviceObject), jsonServiceObject);
-            return jsonUpdate;
-        }
-
-        /// <summary>
-        /// Creates the json set update.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="service">The service.</param>
-        /// <param name="serviceObject">The service object.</param>
-        /// <returns></returns>
-        internal static JsonObject CreateJsonSetUpdate(ExtendedProperty value, ExchangeService service, ServiceObject serviceObject)
-        {
-            JsonObject jsonUpdate = new JsonObject();
-
-            jsonUpdate.AddTypeParameter(serviceObject.GetSetFieldXmlElementName());
-
-            jsonUpdate.Add(JsonNames.Path, (value.PropertyDefinition as IJsonSerializable).ToJson(service));
-
-            JsonObject jsonServiceObject = new JsonObject();
-            jsonServiceObject.AddTypeParameter(serviceObject.GetXmlElementName());
-            jsonServiceObject.Add(XmlElementNames.ExtendedProperty, new object[] { value.InternalToJson(service) });
-
-            jsonUpdate.Add(GetPropertyUpdateItemName(serviceObject), jsonServiceObject);
-            return jsonUpdate;
-        }
-
-        /// <summary>
-        /// Creates the json delete update.
-        /// </summary>
-        /// <param name="propertyDefinition">The property definition.</param>
-        /// <param name="service">The service.</param>
-        /// <param name="serviceObject">The service object.</param>
-        /// <returns></returns>
-        internal static JsonObject CreateJsonDeleteUpdate(PropertyDefinitionBase propertyDefinition, ExchangeService service, ServiceObject serviceObject)
-        {
-            JsonObject jsonUpdate = new JsonObject();
-
-            jsonUpdate.AddTypeParameter(serviceObject.GetDeleteFieldXmlElementName());
-
-            jsonUpdate.Add("PropertyPath", (propertyDefinition as IJsonSerializable).ToJson(service));
-            return jsonUpdate;
-        }
-
-        /// <summary>
         /// Gets the name of the property update item.
         /// </summary>
         /// <param name="serviceObject">The service object.</param>
@@ -644,55 +580,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonServiceObject">The json service object.</param>
-        /// <param name="service">The service.</param>
-        /// <param name="clear">Indicates whether the bag should be cleared before properties are loaded.</param>
-        /// <param name="requestedPropertySet">The requested property set.</param>
-        /// <param name="onlySummaryPropertiesRequested">Indicates whether summary or full properties were requested.</param>
-        internal void LoadFromJson(
-            JsonObject jsonServiceObject,
-            ExchangeService service,
-            bool clear, 
-            PropertySet requestedPropertySet,
-            bool onlySummaryPropertiesRequested)
-        {
-            if (clear)
-            {
-                this.Clear();
-            }
-
-            // Put the property bag in "loading" mode. When in loading mode, no checking is done
-            // when setting property values.
-            this.loading = true;
-
-            this.requestedPropertySet = requestedPropertySet;
-            this.onlySummaryPropertiesRequested = onlySummaryPropertiesRequested;
-
-            try
-            {
-                foreach (string propertyName in jsonServiceObject.Keys)
-                {
-                    PropertyDefinition propertyDefinition;
-
-                    if (this.Owner.Schema.TryGetPropertyDefinition(propertyName, out propertyDefinition))
-                    {
-                        propertyDefinition.LoadPropertyValueFromJson(jsonServiceObject[propertyName], service, this);
-
-                        this.loadedProperties.Add(propertyDefinition);
-                    }
-                }
-
-                this.ClearChangeLog();
-            }
-            finally
-            {
-                this.loading = false;
-            }
-        }
-
-        /// <summary>
         /// Writes the bag's properties to XML.
         /// </summary>
         /// <param name="writer">The writer to write the properties to.</param>
@@ -714,88 +601,6 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             writer.WriteEndElement();
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="isUpdateOperation">if set to <c>true</c> [is update operation].</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal object ToJson(ExchangeService service, bool isUpdateOperation)
-        {
-            JsonObject jsonObject = new JsonObject();
-
-            if (!isUpdateOperation)
-            {
-                this.ToJsonForCreate(service, jsonObject);
-            }
-            else
-            {
-                this.ToJsonForUpdate(service, jsonObject);
-            }
-
-            return jsonObject;
-        }
-
-        /// <summary>
-        /// Creates the json for update.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="jsonObject">The json object.</param>
-        private void ToJsonForUpdate(ExchangeService service, JsonObject jsonObject)
-        {
-            jsonObject.AddTypeParameter(this.Owner.GetChangeXmlElementName());
-
-            jsonObject.Add(this.Owner.GetId().GetJsonTypeName(), this.Owner.GetId().InternalToJson(service));
-
-            List<JsonObject> jsonUpdates = new List<JsonObject>();
-
-            foreach (PropertyDefinition propertyDefinition in this.addedProperties)
-            {
-                this.WriteSetUpdateToJson(jsonUpdates, propertyDefinition, service);
-            }
-
-            foreach (PropertyDefinition propertyDefinition in this.modifiedProperties)
-            {
-                this.WriteSetUpdateToJson(jsonUpdates, propertyDefinition, service);
-            }
-
-            foreach (KeyValuePair<PropertyDefinition, object> property in this.deletedProperties)
-            {
-                this.WriteDeleteUpdateToJson(
-                    jsonUpdates,
-                    property.Key,
-                    property.Value, 
-                    service);
-            }
-
-            jsonObject.Add(XmlElementNames.Updates, jsonUpdates.ToArray());
-        }
-
-        /// <summary>
-        /// Creates the json for create.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="jsonObject">The json object.</param>
-        private void ToJsonForCreate(ExchangeService service, JsonObject jsonObject)
-        {
-            jsonObject.AddTypeParameter(this.Owner.GetXmlElementName());
-
-            foreach (PropertyDefinition propertyDefinition in this.Owner.Schema)
-            {
-                // The following test should not be necessary since the property bag prevents
-                // properties to be set if they don't have the CanSet flag, but it doesn't hurt...
-                if (propertyDefinition.HasFlag(PropertyDefinitionFlags.CanSet, service.RequestedServerVersion))
-                {
-                    if (this.Contains(propertyDefinition))
-                    {
-                        propertyDefinition.WriteJsonValue(jsonObject, this, service, false);
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -917,42 +722,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Writes the set update to json.
-        /// </summary>
-        /// <param name="jsonUpdates">The json updates.</param>
-        /// <param name="propertyDefinition">The property definition.</param>
-        /// <param name="service">The service.</param>
-        private void WriteSetUpdateToJson(List<JsonObject> jsonUpdates, PropertyDefinition propertyDefinition, ExchangeService service)
-        {
-            // The following test should not be necessary since the property bag prevents
-            // properties to be updated if they don't have the CanUpdate flag, but it
-            // doesn't hurt...
-            if (propertyDefinition.HasFlag(PropertyDefinitionFlags.CanUpdate))
-            {
-                object propertyValue = this[propertyDefinition];
-
-                bool handled = false;
-                ICustomUpdateSerializer updateSerializer = propertyValue as ICustomUpdateSerializer;
-
-                if (updateSerializer != null)
-                {
-                    handled = updateSerializer.WriteSetUpdateToJson(
-                        service,
-                        this.Owner,
-                        propertyDefinition,
-                        jsonUpdates);
-                }
-
-                if (!handled)
-                {
-                    JsonObject jsonUpdate = CreateJsonSetUpdate(propertyDefinition, service, this.Owner, this);
-
-                    jsonUpdates.Add(jsonUpdate);
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes an EWS DeleteUpdate opeartion for the specified property.
         /// </summary>
         /// <param name="writer">The writer to write the update to.</param>
@@ -981,37 +750,6 @@ namespace Microsoft.Exchange.WebServices.Data
                     writer.WriteStartElement(XmlNamespace.Types, this.Owner.GetDeleteFieldXmlElementName());
                     propertyDefinition.WriteToXml(writer);
                     writer.WriteEndElement();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Writes the delete update to json.
-        /// </summary>
-        /// <param name="jsonUpdates">The json updates.</param>
-        /// <param name="propertyDefinition">The property definition.</param>
-        /// <param name="propertyValue">The property value.</param>
-        /// <param name="service">The service.</param>
-        private void WriteDeleteUpdateToJson(List<JsonObject> jsonUpdates, PropertyDefinition propertyDefinition, object propertyValue, ExchangeService service)
-        {
-            // The following test should not be necessary since the property bag prevents
-            // properties to be deleted (set to null) if they don't have the CanDelete flag,
-            // but it doesn't hurt...
-            if (propertyDefinition.HasFlag(PropertyDefinitionFlags.CanDelete))
-            {
-                bool handled = false;
-                ICustomUpdateSerializer updateSerializer = propertyValue as ICustomUpdateSerializer;
-
-                if (updateSerializer != null)
-                {
-                    handled = updateSerializer.WriteDeleteUpdateToJson(service, this.Owner, jsonUpdates);
-                }
-
-                if (!handled)
-                {
-                    JsonObject jsonUpdate = CreateJsonDeleteUpdate(propertyDefinition, service, this.Owner);
-
-                    jsonUpdates.Add(jsonUpdate);
                 }
             }
         }

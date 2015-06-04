@@ -86,13 +86,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonEvent">The json event.</param>
-        /// <param name="service">The service.</param>
-        internal abstract void LoadFromJson(JsonObject jsonEvent, ExchangeService service);
-
-        /// <summary>
         /// Gets the type of this event.
         /// </summary>
         public EventType EventType

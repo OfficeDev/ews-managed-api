@@ -74,17 +74,5 @@ namespace Microsoft.Exchange.WebServices.Data
         {
             this.folder.Id.WriteToXml(writer);
         }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            return this.folder.Id.InternalToJson(service);
-        }
     }
 }

@@ -87,44 +87,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Reads response elements from Json.
-        /// </summary>
-        /// <param name="responseObject">The response object.</param>
-        /// <param name="service">The service.</param>
-        internal override void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            JsonObject rootFolder = responseObject.ReadAsJsonObject(XmlElementNames.RootFolder);
-            this.results.TotalCount = rootFolder.ReadAsInt(XmlAttributeNames.TotalItemsInView);
-            this.results.MoreAvailable = rootFolder.ReadAsBool(XmlAttributeNames.IncludesLastItemInRange);
-
-            // Ignore IndexedPagingOffset attribute if MoreAvailable is false.
-            if (results.MoreAvailable)
-            {
-                if (rootFolder.ContainsKey(XmlAttributeNames.IndexedPagingOffset))
-                {
-                    this.results.NextPageOffset = rootFolder.ReadAsInt(XmlAttributeNames.IndexedPagingOffset);
-                }
-                else
-                {
-                    this.results.NextPageOffset = null;
-                }
-            }
-
-            if (rootFolder.ContainsKey(XmlElementNames.Folders))
-            {
-                List<Folder> folders = new EwsServiceJsonReader(service).ReadServiceObjectsCollectionFromJson<Folder>(
-                    rootFolder,
-                    XmlElementNames.Folders,
-                    this.CreateFolderInstance,
-                    true,               /* clearPropertyBag */
-                    this.propertySet,   /* requestedPropertySet */
-                    true);              /* summaryPropertiesOnly */
-
-                folders.ForEach((folder) => this.results.Folders.Add(folder));
-            }
-        }
-
-        /// <summary>
         /// Creates a folder instance.
         /// </summary>
         /// <param name="service">The service.</param>

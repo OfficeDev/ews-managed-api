@@ -68,39 +68,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            base.LoadFromJson(jsonProperty, service);
-
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlAttributeNames.Id:
-                        this.id = jsonProperty.ReadAsString(key);
-                        break;
-
-                    case XmlElementNames.Transition:
-
-                        foreach (object uncastJsonTransition in jsonProperty.ReadAsArray(key))
-                        {
-                            JsonObject jsonTransition = uncastJsonTransition as JsonObject;
-                            TimeZoneTransition transition = TimeZoneTransition.Create(this.timeZoneDefinition, jsonTransition.ReadTypeString());
-
-                            transition.LoadFromJson(jsonTransition, service);
-
-                            this.transitions.Add(transition);
-                        }
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes the attributes to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -142,30 +109,6 @@ namespace Microsoft.Exchange.WebServices.Data
             {
                 transition.WriteToXml(writer);
             }
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonTimeZoneTransitionGroup = new JsonObject();
-
-            jsonTimeZoneTransitionGroup.Add(XmlAttributeNames.Id, this.id);
-
-            List<object> jsonTransitions = new List<object>();
-            foreach (TimeZoneTransition transition in this.transitions)
-            {
-                jsonTransitions.Add(transition.InternalToJson(service));
-            }
-
-            jsonTimeZoneTransitionGroup.Add(XmlElementNames.Transitions, jsonTransitions.ToArray());
-
-            return jsonTimeZoneTransitionGroup;
         }
 
         /// <summary>

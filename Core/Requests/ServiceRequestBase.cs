@@ -171,18 +171,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Parses the response.
-        /// </summary>
-        /// <param name="jsonBody">The json body.</param>
-        /// <returns>Response object.</returns>
-        internal virtual object ParseResponse(JsonObject jsonBody)
-        {
-            ServiceResponse serviceResponse = new ServiceResponse();
-            serviceResponse.LoadFromJson(jsonBody, this.Service);
-            return serviceResponse;
-        }
-
-        /// <summary>
         /// Gets a value indicating whether the TimeZoneContext SOAP header should be eimitted.
         /// </summary>
         /// <value><c>true</c> if the time zone should be emitted; otherwise, <c>false</c>.</value>
@@ -380,84 +368,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates the json request.
-        /// </summary>
-        /// <returns></returns>
-        internal JsonObject CreateJsonRequest()
-        {
-            IJsonSerializable serializableRequest = this as IJsonSerializable;
-
-            if (serializableRequest == null)
-            {
-                throw new JsonSerializationNotImplementedException();
-            }
-
-            JsonObject jsonRequest = new JsonObject();
-
-            jsonRequest.Add("Header", this.CreateJsonHeaders());
-            jsonRequest.Add("Body", serializableRequest.ToJson(service));
-
-            return jsonRequest;
-        }
-
-        /// <summary>
-        /// Creates the json headers.
-        /// </summary>
-        /// <returns></returns>
-        private JsonObject CreateJsonHeaders()
-        {
-            JsonObject headers = new JsonObject();
-
-            headers.Add(XmlElementNames.RequestServerVersion, this.GetRequestedServiceVersionString());
-
-            // Against Exchange 2007 SP1, we always emit the simplified time zone header. It adds very little to
-            // the request, so bandwidth consumption is not an issue. Against Exchange 2010 and above, we emit
-            // the full time zone header but only when the request actually needs it.
-            //
-            // The exception to this is if we are in Exchange2007 Compat Mode, in which case we should never emit 
-            // the header.  (Note: Exchange2007 Compat Mode is enabled for testability purposes only.)
-            //
-            if ((this.Service.RequestedServerVersion == ExchangeVersion.Exchange2007_SP1 || this.EmitTimeZoneHeader) &&
-                (!this.Service.Exchange2007CompatibilityMode))
-            {
-                JsonObject jsonTimeZoneDefinition = new JsonObject();
-                jsonTimeZoneDefinition.Add(XmlElementNames.TimeZoneDefinition, this.Service.TimeZoneDefinition.InternalToJson(this.Service));
-                headers.Add(XmlElementNames.TimeZoneContext, jsonTimeZoneDefinition);
-            }
-
-            if (this.Service.PreferredCulture != null)
-            {
-                headers.Add(XmlElementNames.MailboxCulture, this.Service.PreferredCulture.Name);
-            }
-
-            // Emit the DateTimePrecision header
-            if (this.Service.DateTimePrecision != DateTimePrecision.Default)
-            {
-                headers.Add(XmlElementNames.DateTimePrecision, this.Service.DateTimePrecision.ToString());
-            }
-
-            // TODO: JSON-ify the ImpersonatedUserId
-            ////// Emit the ExchangeImpersonation header
-            ////if (this.Service.ImpersonatedUserId != null)
-            ////{
-            ////    this.Service.ImpersonatedUserId.WriteToXml(writer);
-            ////}
-
-            // TODO: JSON-ify the Credentials
-            ////if (this.Service.Credentials != null)
-            ////{
-            ////    this.Service.Credentials.SerializeExtraSoapHeaders(writer.InternalWriter, this.GetXmlElementName());
-            ////}
-
-            if (this.Service.ManagementRoles != null)
-            {
-                headers.Add(XmlElementNames.ManagementRole, this.Service.ManagementRoles.ToJsonObject());
-            }
-
-            return headers;
-        }
-
-        /// <summary>
         /// Gets string representation of requested server version.
         /// </summary>
         /// <remarks>
@@ -483,23 +393,11 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="request">The request.</param>
         private void EmitRequest(IEwsHttpWebRequest request)
         {
-            if (this.Service.RenderingMethod == ExchangeService.RenderingMode.Xml)
+            using (Stream requestStream = this.GetWebRequestStream(request))
             {
-                using (Stream requestStream = this.GetWebRequestStream(request))
+                using (EwsServiceXmlWriter writer = new EwsServiceXmlWriter(this.Service, requestStream))
                 {
-                    using (EwsServiceXmlWriter writer = new EwsServiceXmlWriter(this.Service, requestStream))
-                    {
-                        this.WriteToXml(writer);
-                    }
-                }
-            }
-            else if (this.Service.RenderingMethod == ExchangeService.RenderingMode.JSON)
-            {
-                JsonObject requestObject = this.CreateJsonRequest();
-
-                using (Stream serviceRequestStream = this.GetWebRequestStream(request))
-                {
-                    requestObject.SerializeToJson(serviceRequestStream);
+                    this.WriteToXml(writer);
                 }
             }
         }
@@ -512,41 +410,27 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="needTrace"></param>
         private void TraceAndEmitRequest(IEwsHttpWebRequest request, bool needSignature, bool needTrace)
         {
-            if (this.service.RenderingMethod == ExchangeService.RenderingMode.Xml)
+            using (MemoryStream memoryStream = new MemoryStream())
             {
-                using (MemoryStream memoryStream = new MemoryStream())
+                using (EwsServiceXmlWriter writer = new EwsServiceXmlWriter(this.Service, memoryStream))
                 {
-                    using (EwsServiceXmlWriter writer = new EwsServiceXmlWriter(this.Service, memoryStream))
-                    {
-                        writer.RequireWSSecurityUtilityNamespace = needSignature;
-                        this.WriteToXml(writer);
-                    }
-
-                    if (needSignature)
-                    {
-                        this.service.Credentials.Sign(memoryStream);
-                    }
-
-                    if (needTrace)
-                    {
-                        this.TraceXmlRequest(memoryStream);
-                    }
-
-                    using (Stream serviceRequestStream = this.GetWebRequestStream(request))
-                    {
-                        EwsUtilities.CopyStream(memoryStream, serviceRequestStream);
-                    }
+                    writer.RequireWSSecurityUtilityNamespace = needSignature;
+                    this.WriteToXml(writer);
                 }
-            }
-            else if (this.service.RenderingMethod == ExchangeService.RenderingMode.JSON)
-            {
-                JsonObject requestObject = this.CreateJsonRequest();
 
-                this.TraceJsonRequest(requestObject);
+                if (needSignature)
+                {
+                    this.service.Credentials.Sign(memoryStream);
+                }
+
+                if (needTrace)
+                {
+                    this.TraceXmlRequest(memoryStream);
+                }
 
                 using (Stream serviceRequestStream = this.GetWebRequestStream(request))
                 {
-                    requestObject.SerializeToJson(serviceRequestStream);
+                    EwsUtilities.CopyStream(memoryStream, serviceRequestStream);
                 }
             }
         }
@@ -601,21 +485,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Builds the response object from json.
-        /// </summary>
-        /// <param name="jsonResponse">The json response.</param>
-        /// <returns></returns>
-        protected object BuildResponseObjectFromJson(JsonObject jsonResponse)
-        {
-            if (jsonResponse.ContainsKey("Header"))
-            {
-                this.ReadSoapHeader(jsonResponse.ReadAsJsonObject("Header"));
-            }
-
-            return this.ParseResponse(jsonResponse.ReadAsJsonObject(XmlElementNames.SOAPBodyElementName));
-        }
-
-        /// <summary>
         /// Reads any preamble data not part of the core response.
         /// </summary>
         /// <param name="ewsXmlReader">The EwsServiceXmlReader.</param>
@@ -644,18 +513,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 // Ignore anything else inside the SOAP header
             }
             while (!reader.IsEndElement(XmlNamespace.Soap, XmlElementNames.SOAPHeaderElementName));
-        }
-
-        /// <summary>
-        /// Read SOAP header and extract server version
-        /// </summary>
-        /// <param name="jsonHeader">The json header.</param>
-        private void ReadSoapHeader(JsonObject jsonHeader)
-        {
-            if (jsonHeader.ContainsKey(XmlElementNames.ServerVersionInfo))
-            {
-                this.Service.ServerInfo = ExchangeServerInfo.Parse(jsonHeader.ReadAsJsonObject(XmlElementNames.ServerVersionInfo));
-            }
         }
 
         /// <summary>
@@ -729,28 +586,6 @@ namespace Microsoft.Exchange.WebServices.Data
             {
                 // If response doesn't contain a valid SOAP fault, just ignore exception and
                 // return null for SOAP fault details.
-            }
-
-            return soapFaultDetails;
-        }
-
-        /// <summary>
-        /// Reads the SOAP fault.
-        /// </summary>
-        /// <param name="jsonSoapFault">The json SOAP fault.</param>
-        /// <returns></returns>
-        private SoapFaultDetails ReadSoapFault(JsonObject jsonSoapFault)
-        {
-            SoapFaultDetails soapFaultDetails = null;
-
-            if (jsonSoapFault.ContainsKey("Header"))
-            {
-                this.ReadSoapHeader(jsonSoapFault.ReadAsJsonObject("Header"));
-            }
-
-            if (jsonSoapFault.ContainsKey("Body"))
-            {
-                soapFaultDetails = SoapFaultDetails.Parse(jsonSoapFault.ReadAsJsonObject("Body"));
             }
 
             return soapFaultDetails;
@@ -981,58 +816,18 @@ namespace Microsoft.Exchange.WebServices.Data
                                 memoryStream.Position = 0;
                             }
 
-                            if (this.Service.RenderingMethod == ExchangeService.RenderingMode.Xml)
-                            {
-                                this.TraceResponseXml(httpWebResponse, memoryStream);
+                            this.TraceResponseXml(httpWebResponse, memoryStream);
 
-                                EwsServiceXmlReader reader = new EwsServiceXmlReader(memoryStream, this.Service);
-                                soapFaultDetails = this.ReadSoapFault(reader);
-                            }
-                            else if (this.Service.RenderingMethod == ExchangeService.RenderingMode.JSON)
-                            {
-                                this.TraceResponseJson(httpWebResponse, memoryStream);
-
-                                try
-                                {
-                                    JsonObject jsonSoapFault = new JsonParser(memoryStream).Parse();
-                                    soapFaultDetails = this.ReadSoapFault(jsonSoapFault);
-                                }
-                                catch (ServiceJsonDeserializationException)
-                                {
-                                    // If no valid JSON response was returned, just return null SoapFault details
-                                }
-                            }
-                            else
-                            {
-                                throw new InvalidOperationException();
-                            }
+                            EwsServiceXmlReader reader = new EwsServiceXmlReader(memoryStream, this.Service);
+                            soapFaultDetails = this.ReadSoapFault(reader);
                         }
                     }
                     else
                     {
                         using (Stream stream = ServiceRequestBase.GetResponseStream(httpWebResponse))
                         {
-                            if (this.Service.RenderingMethod == ExchangeService.RenderingMode.Xml)
-                            {
-                                EwsServiceXmlReader reader = new EwsServiceXmlReader(stream, this.Service);
-                                soapFaultDetails = this.ReadSoapFault(reader);
-                            }
-                            else if (this.Service.RenderingMethod == ExchangeService.RenderingMode.JSON)
-                            {
-                                try
-                                {
-                                    JsonObject jsonSoapFault = new JsonParser(stream).Parse();
-                                    soapFaultDetails = this.ReadSoapFault(jsonSoapFault);
-                                }
-                                catch (ServiceJsonDeserializationException)
-                                {
-                                    // If no valid JSON response was returned, just return null SoapFault details
-                                }
-                            }
-                            else
-                            {
-                                throw new InvalidOperationException();
-                            }
+                            EwsServiceXmlReader reader = new EwsServiceXmlReader(stream, this.Service);
+                            soapFaultDetails = this.ReadSoapFault(reader);
                         }
                     }
 
@@ -1092,26 +887,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Traces a JSON request. This should only be used for synchronous requests, or synchronous situations
-        /// (such as a WebException on an asynchrounous request).
-        /// </summary>
-        /// <param name="requestObject">The JSON request object.</param>
-        protected void TraceJsonRequest(JsonObject requestObject)
-        {
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                requestObject.SerializeToJson(memoryStream, this.Service.TraceEnablePrettyPrinting);
-
-                memoryStream.Position = 0;
-
-                using (StreamReader reader = new StreamReader(memoryStream))
-                {
-                    this.Service.TraceMessage(TraceFlags.EwsRequest, reader.ReadToEnd());
-                }
-            }
-        }
-
-        /// <summary>
         /// Traces the response.  This should only be used for synchronous requests, or synchronous situations
         /// (such as a WebException on an asynchrounous request).
         /// </summary>
@@ -1129,31 +904,6 @@ namespace Microsoft.Exchange.WebServices.Data
             {
                 this.Service.TraceMessage(TraceFlags.EwsResponse, "Non-textual response");
             }
-        }
-
-        /// <summary>
-        /// Traces the response.  This should only be used for synchronous requests, or synchronous situations
-        /// (such as a WebException on an asynchrounous request).
-        /// </summary>
-        /// <param name="response">The response.</param>
-        /// <param name="memoryStream">The response content in a MemoryStream.</param>
-        protected void TraceResponseJson(IEwsHttpWebResponse response, MemoryStream memoryStream)
-        {
-            JsonObject jsonResponse = new JsonParser(memoryStream).Parse();
-
-            using (MemoryStream responseStream = new MemoryStream())
-            {
-                jsonResponse.SerializeToJson(responseStream, this.Service.TraceEnablePrettyPrinting);
-
-                responseStream.Position = 0;
-
-                using (StreamReader responseReader = new StreamReader(responseStream))
-                {
-                    this.Service.TraceMessage(TraceFlags.EwsResponse, responseReader.ReadToEnd());
-                }
-            }
-
-            memoryStream.Seek(0, SeekOrigin.Begin);
         }
 
         /// <summary>

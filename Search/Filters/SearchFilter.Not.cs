@@ -100,11 +100,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 return true;
             }
 
-            internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-            {
-                this.searchFilter = SearchFilter.LoadSearchFilterFromJson(jsonProperty.ReadAsJsonObject(XmlElementNames.Item), service);
-            }
-
             /// <summary>
             /// Writes the elements to XML.
             /// </summary>
@@ -112,15 +107,6 @@ namespace Microsoft.Exchange.WebServices.Data
             internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
             {
                 this.SearchFilter.WriteToXml(writer);
-            }
-
-            internal override object InternalToJson(ExchangeService service)
-            {
-                JsonObject jsonFilter = base.InternalToJson(service) as JsonObject;
-
-                jsonFilter.Add(XmlElementNames.Item, this.SearchFilter.InternalToJson(service));
-
-                return jsonFilter;
             }
 
             /// <summary>

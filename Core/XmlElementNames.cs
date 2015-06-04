@@ -787,10 +787,18 @@ namespace Microsoft.Exchange.WebServices.Data
         public const string StringInsightValue = "StringInsightValue";
         public const string ProfileInsightValue = "ProfileInsightValue";
         public const string JobInsightValue = "JobInsightValue";
+        public const string OutOfOfficeInsightValue = "OutOfOfficeInsightValue";
         public const string UserProfilePicture = "UserProfilePicture";
         public const string EducationInsightValue = "EducationInsightValue";
         public const string SkillInsightValue = "SkillInsightValue";
-        public const string DelveDoc = "DelveDoc";
+        public const string MeetingInsightValue = "MeetingInsightValue";
+        public const string Attendees = "Attendees";
+        public const string EmailInsightValue = "EmailInsightValue";
+        public const string ThreadId = "ThreadId";
+        public const string LastEmailDateUtcTicks = "LastEmailDateUtcTicks";
+        public const string LastEmailSender = "LastEmailSender";
+        public const string EmailsCount = "EmailsCount";
+        public const string DelveDocument = "DelveDocument";
         public const string CompanyInsightValue = "CompanyInsightValue";
         public const string ArrayOfInsightValue = "ArrayOfInsightValue";
         public const string InsightContent = "InsightContent";
@@ -822,7 +830,35 @@ namespace Microsoft.Exchange.WebServices.Data
         public const string Institute = "Institute";
         public const string Degree = "Degree";
         public const string Strength = "Strength";
-        
+        public const string ComputedInsightValueProperty = "ComputedInsightValueProperty";
+        public const string ComputedInsightValue = "ComputedInsightValue";
+        public const string Properties = "Properties";
+        public const string Property = "Property";
+        public const string Key = "Key";
+        public const string SMSNumber = "SMSNumber";
+        public const string FacebookProfileLink = "FacebookProfileLink";
+        public const string LinkedInProfileLink = "LinkedInProfileLink";
+        public const string ProfessionalBiography = "ProfessionalBiography";
+        public const string TeamSize = "TeamSize";
+        public const string Hometown = "Hometown";
+        public const string CurrentLocation = "CurrentLocation";
+        public const string Office = "Office";
+        public const string Headline = "Headline";
+        public const string ManagementChain = "ManagementChain";
+        public const string Peers = "Peers";
+        public const string MutualConnections = "MutualConnections";
+        public const string MutualManager = "MutualManager";
+        public const string Skills = "Skills";
+        public const string JobInsight = "JobInsight";
+        public const string CurrentJob = "CurrentJob";
+        public const string CompanyProfile = "CompanyProfile";
+        public const string CompanyInsight = "CompanyInsight";
+        public const string Text = "Text";
+        public const string ImageType = "ImageType";
+        public const string DocumentId = "DocumentId";
+        public const string PreviewURL = "PreviewURL";
+        public const string LastEditor = "LastEditor";
+
         #endregion
 
         #region Conversations
@@ -1625,6 +1661,9 @@ namespace Microsoft.Exchange.WebServices.Data
         #endregion
 
         #region Groups
+
+        // Like
+        public const string Likers = "Likers";
 
         // GetUserUnifiedGroups
         public const string GetUserUnifiedGroups = "GetUserUnifiedGroups";

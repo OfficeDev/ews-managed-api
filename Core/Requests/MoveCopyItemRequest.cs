@@ -78,23 +78,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Adds the ids to json.
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        /// <param name="service">The service.</param>
-        internal override void AddIdsToJson(JsonObject jsonObject, ExchangeService service)
-        {
-            jsonObject.Add(XmlElementNames.ItemIds, this.ItemIds.InternalToJson(service));
-
-            if (this.ReturnNewItemIds.HasValue)
-            {
-                jsonObject.Add(
-                    XmlElementNames.ReturnNewItemIds,
-                    this.ReturnNewItemIds.Value);
-            }
-        }
-
-        /// <summary>
         /// Gets the expected response message count.
         /// </summary>
         /// <returns>Number of expected response messages.</returns>

@@ -36,6 +36,7 @@ namespace Microsoft.Exchange.WebServices.Data
         private string blob;
         private string photoSize;
         private string url;
+        private string imageType;
 
         /// <summary>
         /// Gets the Blob
@@ -86,6 +87,22 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
+        /// Gets the ImageType
+        /// </summary>
+        public string ImageType
+        {
+            get
+            {
+                return this.imageType;   
+            }
+
+            set
+            {
+                this.SetFieldValue<string>(ref this.imageType, value);
+            }
+        }
+
+        /// <summary>
         /// Tries to read element from XML.
         /// </summary>
         /// <param name="reader">XML reader</param>
@@ -108,6 +125,9 @@ namespace Microsoft.Exchange.WebServices.Data
                     break;
                 case XmlElementNames.Url:
                     this.Url = reader.ReadElementValue();
+                    break;
+                case XmlElementNames.ImageType:
+                    this.ImageType = reader.ReadElementValue();
                     break;
                 default:
                     return false;

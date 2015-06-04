@@ -83,29 +83,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads the property value from json.
-        /// </summary>
-        /// <param name="value">The JSON value.  Can be a JsonObject, string, number, bool, array, or null.</param>
-        /// <param name="service">The service.</param>
-        /// <param name="propertyBag">The property bag.</param>
-        internal override void LoadPropertyValueFromJson(object value, ExchangeService service, PropertyBag propertyBag)
-        {
-            JsonObject jsonRecurrence = value as JsonObject;
-
-            JsonObject jsonPattern = jsonRecurrence.ReadAsJsonObject(JsonNames.RecurrencePattern);            
-            Recurrence recurrence = GetRecurrenceFromString(jsonPattern.ReadTypeString());
-            recurrence.LoadFromJson(jsonPattern, service);
-
-            JsonObject jsonRange = jsonRecurrence.ReadAsJsonObject(JsonNames.RecurrenceRange);
-            RecurrenceRange range = GetRecurrenceRange(jsonRange.ReadTypeString());
-            range.LoadFromJson(jsonRange, service);
-
-            range.SetupRecurrence(recurrence);
-
-            propertyBag[this] = recurrence;
-        }
-
-        /// <summary>
         /// Gets the recurrence range.
         /// </summary>
         /// <param name="recurrenceRangeString">The recurrence range string.</param>
@@ -194,23 +171,6 @@ namespace Microsoft.Exchange.WebServices.Data
             if (value != null)
             {
                 value.WriteToXml(writer, XmlElementNames.Recurrence);
-            }
-        }
-
-        /// <summary>
-        /// Writes the json value.
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        /// <param name="propertyBag">The property bag.</param>
-        /// <param name="service">The service.</param>
-        /// <param name="isUpdateOperation">if set to <c>true</c> [is update operation].</param>
-        internal override void WriteJsonValue(JsonObject jsonObject, PropertyBag propertyBag, ExchangeService service, bool isUpdateOperation)
-        {
-            Recurrence value = propertyBag[this] as Recurrence;
-
-            if (value != null)
-            {
-                jsonObject.Add(this.XmlElementName, value.InternalToJson(service));
             }
         }
 

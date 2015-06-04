@@ -31,7 +31,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// Represents the base class for all property definitions.
     /// </summary>
     [Serializable]
-    public abstract class PropertyDefinitionBase : IJsonSerializable
+    public abstract class PropertyDefinitionBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyDefinitionBase"/> class.
@@ -70,40 +70,10 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Tries to load from XML.
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        /// <returns>True if property was loaded.</returns>
-        internal static PropertyDefinitionBase TryLoadFromJson(JsonObject jsonObject)
-        {
-            switch (jsonObject.ReadTypeString())
-            {
-                case JsonNames.PathToUnindexedFieldType:
-                    return ServiceObjectSchema.FindPropertyDefinition(jsonObject.ReadAsString(XmlAttributeNames.FieldURI));
-                case JsonNames.PathToIndexedFieldType:
-                    return new IndexedPropertyDefinition(
-                        jsonObject.ReadAsString(XmlAttributeNames.FieldURI),
-                        jsonObject.ReadAsString(XmlAttributeNames.FieldIndex));
-                case JsonNames.PathToExtendedFieldType:
-                    ExtendedPropertyDefinition propertyDefinition = new ExtendedPropertyDefinition();
-                    propertyDefinition.LoadFromJson(jsonObject);
-                    return propertyDefinition;
-                default:
-                    return null;
-            }
-        }
-
-        /// <summary>
         /// Gets the name of the XML element.
         /// </summary>
         /// <returns>XML element name.</returns>
         internal abstract string GetXmlElementName();
-
-        /// <summary>
-        /// Gets the type for json.
-        /// </summary>
-        /// <returns></returns>
-        protected abstract string GetJsonType();
 
         /// <summary>
         /// Writes the attributes to XML.
@@ -138,30 +108,6 @@ namespace Microsoft.Exchange.WebServices.Data
             this.WriteAttributesToXml(writer);
             writer.WriteEndElement();
         }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonPropertyDefinition = new JsonObject();
-
-            jsonPropertyDefinition.AddTypeParameter(this.GetJsonType());
-            this.AddJsonProperties(jsonPropertyDefinition, service);
-
-            return jsonPropertyDefinition;
-        }
-
-        /// <summary>
-        /// Adds the json properties.
-        /// </summary>
-        /// <param name="jsonPropertyDefinition">The json property definition.</param>
-        /// <param name="service">The service.</param>
-        internal abstract void AddJsonProperties(JsonObject jsonPropertyDefinition, ExchangeService service);
 
         /// <summary>
         /// Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.

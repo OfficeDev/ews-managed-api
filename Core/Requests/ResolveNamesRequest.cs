@@ -30,7 +30,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a ResolveNames request.
     /// </summary>
-    internal sealed class ResolveNamesRequest : MultiResponseServiceRequest<ResolveNamesResponse>, IJsonSerializable
+    internal sealed class ResolveNamesRequest : MultiResponseServiceRequest<ResolveNamesResponse>
     {
         private static LazyMember<Dictionary<ResolveNameSearchLocation, string>> searchScopeMap = new LazyMember<Dictionary<ResolveNameSearchLocation, string>>(
             delegate
@@ -166,50 +166,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 XmlNamespace.Messages,
                 XmlElementNames.UnresolvedEntry,
                 this.NameToResolve);
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-
-            if (this.ParentFolderIds.Count > 0)
-            {
-                jsonRequest.Add(XmlElementNames.ParentFolderIds, this.ParentFolderIds.InternalToJson(service));
-            }
-            jsonRequest.Add(XmlElementNames.UnresolvedEntry, this.NameToResolve);
-            jsonRequest.Add(XmlAttributeNames.ReturnFullContactData, this.ReturnFullContactData);
-
-            string searchScope = null;
-
-            searchScopeMap.Member.TryGetValue(this.SearchLocation, out searchScope);
-
-            EwsUtilities.Assert(
-                !string.IsNullOrEmpty(searchScope),
-                "ResolveNameRequest.ToJson",
-                "The specified search location cannot be mapped to an EWS search scope.");
-
-            string propertySet = null;
-            if (this.contactDataPropertySet != null)
-            {
-                PropertySet.DefaultPropertySetMap.Member.TryGetValue(this.contactDataPropertySet.BasePropertySet, out propertySet);
-            }
-            if (!this.Service.Exchange2007CompatibilityMode)
-            {
-                jsonRequest.Add(XmlAttributeNames.SearchScope, searchScope);
-            }
-            if (!string.IsNullOrEmpty(propertySet))
-            {
-                jsonRequest.Add(XmlAttributeNames.ContactDataShape, propertySet);
-            }
-
-            return jsonRequest;
         }
 
         /// <summary>

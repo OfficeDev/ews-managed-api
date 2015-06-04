@@ -35,7 +35,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// Represents a property that can be sent to or retrieved from EWS.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public abstract class ComplexProperty : ISelfValidate, IJsonSerializable
+    public abstract class ComplexProperty : ISelfValidate
     {
         private XmlNamespace xmlNamespace = XmlNamespace.Types;
 
@@ -262,16 +262,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal virtual void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Writes to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -299,31 +289,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 writer,
                 this.Namespace,
                 xmlElementName);
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            return this.InternalToJson(service);
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        ////internal abstract object InternalToJson(ExchangeService service);
-        internal virtual object InternalToJson(ExchangeService service)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>

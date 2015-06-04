@@ -132,21 +132,6 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             /// <summary>
-            /// Loads from json.
-            /// </summary>
-            /// <param name="jsonProperty">The json property.</param>
-            /// <param name="service">The service.</param>
-            internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-            {
-                object[] filterArray = jsonProperty.ReadAsArray(XmlElementNames.Item);
-
-                foreach (object filter in filterArray)
-                {
-                    this.Add(SearchFilter.LoadSearchFilterFromJson(filter as JsonObject, service));
-                }
-            }
-
-            /// <summary>
             /// Writes the elements to XML.
             /// </summary>
             /// <param name="writer">The writer.</param>
@@ -176,29 +161,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 {
                     base.WriteToXml(writer);
                 }
-            }
-
-            /// <summary>
-            /// Serializes the property to a Json value.
-            /// </summary>
-            /// <param name="service">The service.</param>
-            /// <returns>
-            /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-            /// </returns>
-            internal override object InternalToJson(ExchangeService service)
-            {
-                JsonObject jsonSearchExpression = base.InternalToJson(service) as JsonObject;
-
-                List<object> jsonExpressionArray = new List<object>();
-
-                foreach (SearchFilter filter in this)
-                {
-                    jsonExpressionArray.Add(filter.InternalToJson(service));
-                }
-
-                jsonSearchExpression.Add(XmlElementNames.Items, jsonExpressionArray.ToArray());
-
-                return jsonSearchExpression;
             }
 
             /// <summary>

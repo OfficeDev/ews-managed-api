@@ -56,15 +56,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates the default complex property.
-        /// </summary>
-        /// <returns>A RuleError object.</returns>
-        internal override RuleError CreateDefaultComplexProperty()
-        {
-            return new RuleError();
-        }
-
-        /// <summary>
         /// Retrieves the XML element name corresponding to the provided RuleError object.
         /// </summary>
         /// <param name="ruleValidationError">The RuleError object from which to determine the XML element name.</param>

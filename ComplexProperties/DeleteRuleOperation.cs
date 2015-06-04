@@ -79,22 +79,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            jsonProperty.Add(XmlElementNames.RuleId, this.RuleId);
-
-            return jsonProperty;
-        }
-
-        /// <summary>
         ///  Validates this instance.
         /// </summary>
         internal override void InternalValidate()

@@ -60,21 +60,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Reads response elements from Json.
-        /// </summary>
-        /// <param name="responseObject">Json response object</param>
-        /// <param name="service">Exchange service</param>
-        internal override void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            base.ReadElementsFromJson(responseObject, service);
-            if (responseObject.ContainsKey(XmlElementNames.Token))
-            {
-                this.MovedItemId = new ItemId();
-                this.MovedItemId.LoadFromJson(responseObject.ReadAsJsonObject(XmlElementNames.MovedItemId), service);
-            }
-        }
-
-        /// <summary>
         /// Gets the moved item id.
         /// </summary>
         public ItemId MovedItemId { get; private set; }

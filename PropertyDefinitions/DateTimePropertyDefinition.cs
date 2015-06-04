@@ -104,22 +104,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads the property value from json.
-        /// </summary>
-        /// <param name="value">The JSON value.  Can be a JsonObject, string, number, bool, array, or null.</param>
-        /// <param name="service">The service.</param>
-        /// <param name="propertyBag">The property bag.</param>
-        internal override void LoadPropertyValueFromJson(object value, ExchangeService service, PropertyBag propertyBag)
-        {
-            string stringValue = value as string;
-
-            if (!String.IsNullOrEmpty(stringValue))
-            {
-                propertyBag[this] = service.ConvertUniversalDateTimeStringToLocalDateTime(stringValue);
-            }
-        }
-
-        /// <summary>
         /// Scopes the date time property to the appropriate time zone, if necessary.
         /// </summary>
         /// <param name="service">The service emitting the request.</param>
@@ -173,26 +157,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 writer.WriteValue(EwsUtilities.DateTimeToXSDateTime(convertedDateTime), this.Name);
 
                 writer.WriteEndElement();
-            }
-        }
-
-        /// <summary>
-        /// Writes the json value.
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        /// <param name="propertyBag">The property bag.</param>
-        /// <param name="service">The service.</param>
-        /// 
-        /// <param name="isUpdateOperation">if set to <c>true</c> [is update operation].</param>
-        internal override void WriteJsonValue(JsonObject jsonObject, PropertyBag propertyBag, ExchangeService service, bool isUpdateOperation)
-        {
-            object value = propertyBag[this];
-
-            if (value != null)
-            {
-                DateTime convertedDateTime = GetConvertedDateTime(service, propertyBag, isUpdateOperation, value);
-
-                jsonObject.Add(this.XmlElementName, EwsUtilities.DateTimeToXSDateTime(convertedDateTime));
             }
         }
 

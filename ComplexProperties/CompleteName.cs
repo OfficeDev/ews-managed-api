@@ -175,53 +175,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service"></param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.Title:
-                        this.title = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.FirstName:
-                        this.givenName = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.MiddleName:
-                        this.middleName = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.LastName:
-                        this.surname = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.Suffix:
-                        this.suffix = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.Initials:
-                        this.initials = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.FullName:
-                        this.fullName = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.NickName:
-                        this.nickname = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.YomiFirstName:
-                        this.yomiGivenName = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.YomiLastName:
-                        this.yomiSurname = jsonProperty.ReadAsString(key);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes the elements to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -237,31 +190,6 @@ namespace Microsoft.Exchange.WebServices.Data
             writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.NickName, this.NickName);
             writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.YomiFirstName, this.YomiGivenName);
             writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.YomiLastName, this.YomiSurname);
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service"></param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            jsonProperty.Add(XmlElementNames.Title, this.Title);
-            jsonProperty.Add(XmlElementNames.FirstName, this.GivenName);
-            jsonProperty.Add(XmlElementNames.MiddleName, this.MiddleName);
-            jsonProperty.Add(XmlElementNames.LastName, this.Surname);
-            jsonProperty.Add(XmlElementNames.Suffix, this.Suffix);
-            jsonProperty.Add(XmlElementNames.Initials, this.Initials);
-            jsonProperty.Add(XmlElementNames.FullName, this.FullName);
-            jsonProperty.Add(XmlElementNames.NickName, this.NickName);
-            jsonProperty.Add(XmlElementNames.YomiFirstName, this.YomiGivenName);
-            jsonProperty.Add(XmlElementNames.YomiLastName, this.YomiSurname);
-
-            return jsonProperty;
         }
     }
 }

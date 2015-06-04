@@ -55,15 +55,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates the default complex property.
-        /// </summary>
-        /// <returns>InternetMessageHeader instance.</returns>
-        internal override InternetMessageHeader CreateDefaultComplexProperty()
-        {
-            return new InternetMessageHeader();
-        }
-
-        /// <summary>
         /// Gets the name of the collection item XML element.
         /// </summary>
         /// <param name="complexProperty">The complex property.</param>

@@ -98,61 +98,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service"></param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.CanDelete:
-                        this.canDelete = jsonProperty.ReadAsBool(key);
-                        break;
-                    case XmlElementNames.CanRenameOrMove:
-                        this.canRenameOrMove = jsonProperty.ReadAsBool(key);
-                        break;
-                    case XmlElementNames.MustDisplayComment:
-                        this.mustDisplayComment = jsonProperty.ReadAsBool(key);
-                        break;
-                    case XmlElementNames.HasQuota:
-                        this.hasQuota = jsonProperty.ReadAsBool(key);
-                        break;
-                    case XmlElementNames.IsManagedFoldersRoot:
-                        this.isManagedFoldersRoot = jsonProperty.ReadAsBool(key);
-                        break;
-                    case XmlElementNames.ManagedFolderId:
-                        this.managedFolderId = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.Comment:
-                        string commentValue = jsonProperty.ReadAsString(key);
-                        if (commentValue != null)
-                        {
-                            this.comment = commentValue;
-                        }
-                        break;
-                    case XmlElementNames.StorageQuota:
-                        this.storageQuota = jsonProperty.ReadAsInt(key);
-                        break;
-                    case XmlElementNames.FolderSize:
-                        this.folderSize = jsonProperty.ReadAsInt(key);
-                        break;
-                    case XmlElementNames.HomePage:
-                        string homePageValue = jsonProperty.ReadAsString(key);
-                        if (homePageValue != null)
-                        {
-                            this.homePage = homePageValue;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets a value indicating whether the user can delete objects in the folder.
         /// </summary>
         public bool? CanDelete

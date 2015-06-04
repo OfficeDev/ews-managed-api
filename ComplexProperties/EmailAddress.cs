@@ -282,39 +282,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.Name:
-                        this.name = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.EmailAddress:
-                        this.address = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.RoutingType:
-                        this.routingType = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.MailboxType:
-                        this.mailboxType = jsonProperty.ReadEnumValue<MailboxType>(key);
-                        break;
-                    case XmlElementNames.ItemId:
-                        this.id = new ItemId();
-                        this.id.LoadFromJson(jsonProperty.ReadAsJsonObject(key), service);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes elements to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -329,30 +296,6 @@ namespace Microsoft.Exchange.WebServices.Data
             {
                 this.Id.WriteToXml(writer, XmlElementNames.ItemId);
             }
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            jsonProperty.Add(XmlElementNames.Name, this.Name);
-            jsonProperty.Add(XmlElementNames.EmailAddress, this.Address);
-            jsonProperty.Add(XmlElementNames.RoutingType, this.RoutingType);
-            jsonProperty.Add(XmlElementNames.MailboxType, this.MailboxType);
-
-            if (this.Id != null)
-            {
-                jsonProperty.Add(XmlElementNames.ItemId, this.Id.InternalToJson(service));
-            }
-
-            return jsonProperty;
         }
 
         #region ISearchStringProvider methods

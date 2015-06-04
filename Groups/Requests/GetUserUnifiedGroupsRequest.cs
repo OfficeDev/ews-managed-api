@@ -33,7 +33,7 @@ namespace Microsoft.Exchange.WebServices.Data.Groups
     /// <summary>
     /// Represents a request to a GetUserUnifiedGroupsRequest operation
     /// </summary>
-    internal sealed class GetUserUnifiedGroupsRequest : SimpleServiceRequestBase, IJsonSerializable
+    internal sealed class GetUserUnifiedGroupsRequest : SimpleServiceRequestBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetUserUnifiedGroupsRequest"/> class.
@@ -110,7 +110,7 @@ namespace Microsoft.Exchange.WebServices.Data.Groups
         /// <returns>Earliest Exchange version in which this request is supported.</returns>
         internal override ExchangeVersion GetMinimumRequiredServerVersion()
         {
-            return ExchangeVersion.Exchange2013_SP1;
+            return ExchangeVersion.Exchange2015;
         }
 
         /// <summary>
@@ -120,32 +120,6 @@ namespace Microsoft.Exchange.WebServices.Data.Groups
         internal GetUserUnifiedGroupsResponse Execute()
         {
             return (GetUserUnifiedGroupsResponse)this.InternalExecute();
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-
-            List<object> jsonPropertyCollection = new List<object>();
-            if (this.RequestedUnifiedGroupsSets != null)
-            {
-                this.RequestedUnifiedGroupsSets.ForEach((unifiedGroupsSet) => jsonPropertyCollection.Add(unifiedGroupsSet.InternalToJson(service)));
-                jsonRequest.Add(XmlElementNames.RequestedGroupsSets, jsonPropertyCollection.ToArray());
-            }
-
-            if (!string.IsNullOrEmpty(this.UserSmtpAddress))
-            {
-                jsonRequest.Add(XmlElementNames.SmtpAddress, this.UserSmtpAddress);
-            }
-
-            return jsonRequest;
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a GetPasswordExpirationDate request.
     /// </summary>
-    internal sealed class GetPasswordExpirationDateRequest : SimpleServiceRequestBase, IJsonSerializable
+    internal sealed class GetPasswordExpirationDateRequest : SimpleServiceRequestBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetPasswordExpirationDateRequest"/> class.
@@ -61,21 +61,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-
-            jsonRequest.Add(XmlElementNames.MailboxSmtpAddress, this.MailboxSmtpAddress);
-            return jsonRequest;
-        }
-
-        /// <summary>
         /// Gets the name of the response XML element.
         /// </summary>
         /// <returns>XML element name.</returns>
@@ -94,18 +79,6 @@ namespace Microsoft.Exchange.WebServices.Data
             GetPasswordExpirationDateResponse response = new GetPasswordExpirationDateResponse();
             response.LoadFromXml(reader, XmlElementNames.GetPasswordExpirationDateResponse);
             return response;
-        }
-
-        /// <summary>
-        /// Parses the response.
-        /// </summary>
-        /// <param name="jsonBody">The json body.</param>
-        /// <returns>Response object.</returns>
-        internal override object ParseResponse(JsonObject jsonBody)
-        {
-            GetPasswordExpirationDateResponse serviceResponse = new GetPasswordExpirationDateResponse();
-            serviceResponse.LoadFromJson(jsonBody, this.Service);
-            return serviceResponse;
         }
 
         /// <summary>

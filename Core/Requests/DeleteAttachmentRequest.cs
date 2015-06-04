@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a DeleteAttachment request.
     /// </summary>
-    internal sealed class DeleteAttachmentRequest : MultiResponseServiceRequest<DeleteAttachmentResponse>, IJsonSerializable
+    internal sealed class DeleteAttachmentRequest : MultiResponseServiceRequest<DeleteAttachmentResponse>
     {
         private List<Attachment> attachments = new List<Attachment>();
 
@@ -122,32 +122,6 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             writer.WriteEndElement();
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-            List<object> attachmentIds = new List<object>();
-            
-            foreach (Attachment attachment in this.Attachments)
-            {
-                JsonObject jsonAttachmentId = new JsonObject();
-                jsonAttachmentId.AddTypeParameter("AttachmentId");
-                jsonAttachmentId.Add(XmlAttributeNames.Id, attachment.Id);
-
-                attachmentIds.Add(jsonAttachmentId);
-            }
-
-            jsonRequest.Add(XmlElementNames.AttachmentIds, attachmentIds.ToArray());
-
-            return jsonRequest;
         }
 
         /// <summary>

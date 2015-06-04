@@ -259,40 +259,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonServiceObject">The json service object.</param>
-        /// <param name="service">The service.</param>
-        /// <param name="clearPropertyBag">if set to <c>true</c> [clear property bag].</param>
-        /// <param name="requestedPropertySet">The requested property set.</param>
-        /// <param name="summaryPropertiesOnly">if set to <c>true</c> [summary properties only].</param>
-        internal void LoadFromJson(JsonObject jsonServiceObject, ExchangeService service, bool clearPropertyBag, PropertySet requestedPropertySet, bool summaryPropertiesOnly)
-        {
-            this.PropertyBag.LoadFromJson(
-                                jsonServiceObject,
-                                service,
-                                clearPropertyBag,
-                                requestedPropertySet,
-                                summaryPropertiesOnly);
-        }
-
-        /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        /// <param name="service">The service.</param>
-        /// <param name="clearPropertyBag">if set to <c>true</c> [clear property bag].</param>
-        internal void LoadFromJson(JsonObject jsonObject, ExchangeService service, bool clearPropertyBag)
-        {
-            this.PropertyBag.LoadFromJson(
-                                jsonObject,
-                                service,
-                                clearPropertyBag,
-                                null,       /* propertySet */
-                                false);     /* summaryPropertiesOnly */
-        }
-
-        /// <summary>
         /// Clears the object's change log.
         /// </summary>
         internal void ClearChangeLog()
@@ -310,35 +276,12 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="isUpdateOperation">if set to <c>true</c> [is update operation].</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal object ToJson(ExchangeService service, bool isUpdateOperation)
-        {
-            return this.PropertyBag.ToJson(service, isUpdateOperation);
-        }
-
-        /// <summary>
         /// Writes service object for update as XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
         internal void WriteToXmlForUpdate(EwsServiceXmlWriter writer)
         {
             this.PropertyBag.WriteToXmlForUpdate(writer);
-        }
-
-        /// <summary>
-        /// Writes service object for update as Json.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns></returns>
-        internal object WriteToJsonForUpdate(ExchangeService service)
-        {
-            return this.PropertyBag.ToJson(service, true);
         }
 
         /// <summary>

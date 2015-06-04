@@ -154,37 +154,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Internals to json.
-        /// </summary>
-        /// <param name="body">The body.</param>
-        protected override void InternalToJson(JsonObject body)
-        {
-            if (this.AffectedTaskOccurrences.HasValue)
-            {
-                body.Add(
-                    XmlAttributeNames.AffectedTaskOccurrences,
-                    this.AffectedTaskOccurrences.Value);
-            }
-
-            if (this.SendCancellationsMode.HasValue)
-            {
-                body.Add(
-                    XmlAttributeNames.SendMeetingCancellations,
-                    this.SendCancellationsMode.Value);
-            }
-
-            if (this.SuppressReadReceipts)
-            {
-                body.Add(XmlAttributeNames.SuppressReadReceipts, true);
-            }
-
-            if (this.ItemIds.Count > 0)
-            {
-                body.Add(XmlElementNames.ItemIds, this.ItemIds.InternalToJson(this.Service));
-            }
-        }
-
-        /// <summary>
         /// Gets the request version.
         /// </summary>
         /// <returns>Earliest Exchange version in which this request is supported.</returns>

@@ -79,18 +79,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Load from json
-        /// </summary>
-        /// <param name="jsonObject">The json object</param>
-        /// <returns>Non indexable item details result object</returns>
-        internal static NonIndexableItemDetailsResult LoadFromJson(JsonObject jsonObject)
-        {
-            NonIndexableItemDetailsResult nonIndexableItemDetailsResult = new NonIndexableItemDetailsResult();
-
-            return nonIndexableItemDetailsResult;
-        }
-
-        /// <summary>
         /// Collection of items
         /// </summary>
         public NonIndexableItem[] Items { get; set; }

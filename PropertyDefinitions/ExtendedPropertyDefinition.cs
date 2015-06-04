@@ -189,15 +189,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Gets the type for json.
-        /// </summary>
-        /// <returns></returns>
-        protected override string GetJsonType()
-        {
-            return JsonNames.PathToExtendedFieldType;
-        }
-
-        /// <summary>
         /// Gets the minimum Exchange version that supports this extended property.
         /// </summary>
         /// <value>The version.</value>
@@ -236,36 +227,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Adds the json properties.
-        /// </summary>
-        /// <param name="jsonPropertyDefinition">The json property definition.</param>
-        /// <param name="service">The service.</param>
-        internal override void AddJsonProperties(JsonObject jsonPropertyDefinition, ExchangeService service)
-        {
-            if (this.propertySet.HasValue)
-            {
-                jsonPropertyDefinition.Add(XmlAttributeNames.DistinguishedPropertySetId, this.propertySet.Value);
-            }
-            if (this.propertySetId.HasValue)
-            {
-                jsonPropertyDefinition.Add(XmlAttributeNames.PropertySetId, this.propertySetId.Value.ToString());
-            }
-            if (this.tag.HasValue)
-            {
-                jsonPropertyDefinition.Add(XmlAttributeNames.PropertyTag, this.tag.Value);
-            }
-            if (!string.IsNullOrEmpty(this.name))
-            {
-                jsonPropertyDefinition.Add(XmlAttributeNames.PropertyName, this.name);
-            }
-            if (this.id.HasValue)
-            {
-                jsonPropertyDefinition.Add(XmlAttributeNames.PropertyId, this.id.Value);
-            }
-            jsonPropertyDefinition.Add(XmlAttributeNames.PropertyType, this.mapiType);
-        }
-
-        /// <summary>
         /// Loads from XML.
         /// </summary>
         /// <param name="reader">The reader.</param>
@@ -300,40 +261,6 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             this.mapiType = reader.ReadAttributeValue<MapiPropertyType>(XmlAttributeNames.PropertyType);
-        }
-
-        /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        internal void LoadFromJson(JsonObject jsonObject)
-        {
-            foreach (string key in jsonObject.Keys)
-            {
-                switch (key)
-                {
-                    case XmlAttributeNames.DistinguishedPropertySetId:
-                        this.propertySet = jsonObject.ReadEnumValue<DefaultExtendedPropertySet>(key);
-                        break;
-                    case XmlAttributeNames.PropertySetId:
-                        this.propertySetId = new Guid(jsonObject.ReadAsString(key));
-                        break;
-                    case XmlAttributeNames.PropertyTag:
-                        this.tag = Convert.ToUInt16(jsonObject.ReadAsString(key), 16);
-                        break;
-                    case XmlAttributeNames.PropertyName:
-                        this.name = jsonObject.ReadAsString(key);
-                        break;
-                    case XmlAttributeNames.PropertyId:
-                        this.id = jsonObject.ReadAsInt(key);
-                        break;
-                    case XmlAttributeNames.PropertyType:
-                        this.mapiType = jsonObject.ReadEnumValue<MapiPropertyType>(key);
-                        break;
-                    default:
-                        break;
-                }
-            }
         }
 
         /// <summary>

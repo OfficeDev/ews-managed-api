@@ -71,29 +71,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Reads response elements from Json.
-        /// </summary>
-        /// <param name="responseObject">The response object.</param>
-        /// <param name="service">The service.</param>
-        internal override void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            base.ReadElementsFromJson(responseObject, service);
-
-            if (responseObject.ContainsKey(XmlElementNames.RootItemId))
-            {
-                JsonObject jsonRootItemId = responseObject.ReadAsJsonObject(XmlElementNames.RootItemId);
-                string changeKey;
-
-                if (jsonRootItemId.ContainsKey(XmlAttributeNames.RootItemChangeKey) &&
-                    !String.IsNullOrEmpty(changeKey = jsonRootItemId.ReadAsString(XmlAttributeNames.RootItemChangeKey)) &&
-                    this.attachment.Owner != null)
-                {
-                    this.attachment.Owner.RootItemId.ChangeKey = changeKey;
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets the attachment that was deleted.
         /// </summary>
         internal Attachment Attachment

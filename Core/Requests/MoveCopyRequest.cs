@@ -34,7 +34,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// </summary>
     /// <typeparam name="TServiceObject">The type of the service object.</typeparam>
     /// <typeparam name="TResponse">The type of the response.</typeparam>
-    internal abstract class MoveCopyRequest<TServiceObject, TResponse> : MultiResponseServiceRequest<TResponse>, IJsonSerializable
+    internal abstract class MoveCopyRequest<TServiceObject, TResponse> : MultiResponseServiceRequest<TResponse>
         where TServiceObject : ServiceObject
         where TResponse : ServiceResponse
     {
@@ -87,33 +87,5 @@ namespace Microsoft.Exchange.WebServices.Data
             get { return this.destinationFolderId; }
             set { this.destinationFolderId = value; }
         }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonObject = new JsonObject();
-
-            JsonObject jsonToFolderId = new JsonObject();
-            jsonToFolderId.Add(XmlElementNames.BaseFolderId, this.DestinationFolderId.InternalToJson(service));
-
-            jsonObject.Add(XmlElementNames.ToFolderId, jsonToFolderId);
-
-            this.AddIdsToJson(jsonObject, service);
-
-            return jsonObject;
-        }
-
-        /// <summary>
-        /// Adds the ids to json.
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        /// <param name="service">The service.</param>
-        internal abstract void AddIdsToJson(JsonObject jsonObject, ExchangeService service);
     }
 }

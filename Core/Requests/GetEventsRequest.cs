@@ -28,7 +28,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// GetEvents request
     /// </summary>
-    internal class GetEventsRequest : MultiResponseServiceRequest<GetEventsResponse>, IJsonSerializable
+    internal class GetEventsRequest : MultiResponseServiceRequest<GetEventsResponse>
     {
         private string subscriptionId;
         private string watermark;
@@ -114,23 +114,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 XmlNamespace.Messages,
                 XmlElementNames.Watermark,
                 this.Watermark);
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-
-            jsonRequest.Add(XmlElementNames.SubscriptionId, this.SubscriptionId);
-            jsonRequest.Add(XmlElementNames.Watermark, this.Watermark);
-
-            return jsonRequest;
         }
 
         /// <summary>

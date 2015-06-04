@@ -107,15 +107,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates the default complex property.
-        /// </summary>
-        /// <returns></returns>
-        internal override Attribution CreateDefaultComplexProperty()
-        {
-            return new Attribution();
-        }
-
-        /// <summary>
         /// Retrieves the XML element name corresponding to the provided attribution object.
         /// </summary>
         /// <param name="attribution">The attribution object from which to determine the XML element name.</param>

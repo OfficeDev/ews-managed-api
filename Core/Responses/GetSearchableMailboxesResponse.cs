@@ -76,27 +76,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Reads response elements from Json.
-        /// </summary>
-        /// <param name="responseObject">The response object.</param>
-        /// <param name="service">The service.</param>
-        internal override void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            this.searchableMailboxes.Clear();
-
-            base.ReadElementsFromJson(responseObject, service);
-
-            if (responseObject.ContainsKey(XmlElementNames.SearchMailboxes))
-            {
-                foreach (object searchableMailboxObject in responseObject.ReadAsArray(XmlElementNames.SearchableMailboxes))
-                {
-                    JsonObject jsonSearchableMailbox = searchableMailboxObject as JsonObject;
-                    this.searchableMailboxes.Add(SearchableMailbox.LoadFromJson(jsonSearchableMailbox));
-                }
-            }
-        }
-
-        /// <summary>
         /// Searchable mailboxes result
         /// </summary>
         public SearchableMailbox[] SearchableMailboxes

@@ -146,35 +146,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="responseObject">The response object.</param>
-        /// <param name="service">The service.</param>
-        internal void LoadFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            this.result = (ServiceResult)Enum.Parse(typeof(ServiceResult), responseObject.ReadAsString(XmlAttributeNames.ResponseClass));
-            this.errorCode = (ServiceError)Enum.Parse(typeof(ServiceError), responseObject.ReadAsString(XmlElementNames.ResponseCode));
-            
-            // TODO: Deal with a JSON version of "LoadExtraDetailsFromXml"
-            if (this.result == ServiceResult.Warning || this.result == ServiceResult.Error)
-            {
-                this.errorMessage = responseObject.ReadAsString(XmlElementNames.MessageText);
-            }
-
-            if (this.result == ServiceResult.Success || this.result == ServiceResult.Warning)
-            {
-                if (!this.BatchProcessingStopped)
-                {
-                    this.ReadElementsFromJson(responseObject, service);
-                }
-            }
-
-            this.MapErrorCodeToErrorMessage();
-
-            this.Loaded();
-        }
-
-        /// <summary>
         /// Parses the message XML.
         /// </summary>
         /// <param name="reader">The reader.</param>
@@ -249,15 +220,6 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         /// <param name="responseHeaders">a collection of response headers</param>
         internal virtual void ReadHeader(WebHeaderCollection responseHeaders)
-        {
-        }
-
-        /// <summary>
-        /// Reads response elements from Json.
-        /// </summary>
-        /// <param name="responseObject">The response object.</param>
-        /// <param name="service">The service.</param>
-        internal virtual void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
         {
         }
 

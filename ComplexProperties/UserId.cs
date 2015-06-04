@@ -160,35 +160,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.SID:
-                        this.sID = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.PrimarySmtpAddress:
-                        this.primarySmtpAddress = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.DisplayName:
-                        this.displayName = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.DistinguishedUser:
-                        this.standardUser = jsonProperty.ReadEnumValue<StandardUser>(key);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes elements to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -213,29 +184,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 XmlNamespace.Types,
                 XmlElementNames.DistinguishedUser,
                 this.StandardUser);
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            jsonProperty.Add(XmlElementNames.SID, this.SID);
-            jsonProperty.Add(XmlElementNames.PrimarySmtpAddress, this.PrimarySmtpAddress);
-            jsonProperty.Add(XmlElementNames.DisplayName, this.DisplayName);
-
-            if (this.StandardUser.HasValue)
-            {
-                jsonProperty.Add(XmlElementNames.DistinguishedUser, this.StandardUser.Value);
-            }
-
-            return jsonProperty;
         }
     }
 }

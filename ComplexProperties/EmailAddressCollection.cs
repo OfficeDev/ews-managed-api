@@ -173,15 +173,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates the default complex property.
-        /// </summary>
-        /// <returns></returns>
-        internal override EmailAddress CreateDefaultComplexProperty()
-        {
-            return new EmailAddress();
-        }
-
-        /// <summary>
         /// Retrieves the XML element name corresponding to the provided EmailAddress object.
         /// </summary>
         /// <param name="emailAddress">The EmailAddress object from which to determine the XML element name.</param>

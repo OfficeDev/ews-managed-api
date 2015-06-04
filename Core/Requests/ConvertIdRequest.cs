@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a ConvertId request.
     /// </summary>
-    internal sealed class ConvertIdRequest : MultiResponseServiceRequest<ConvertIdResponse>, IJsonSerializable
+    internal sealed class ConvertIdRequest : MultiResponseServiceRequest<ConvertIdResponse>
     {
         private IdFormat destinationFormat = IdFormat.EwsId;
         private List<AlternateIdBase> ids = new List<AlternateIdBase>();
@@ -147,29 +147,6 @@ namespace Microsoft.Exchange.WebServices.Data
         public List<AlternateIdBase> Ids
         {
             get { return this.ids; }
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonObject = new JsonObject();
-
-            jsonObject.Add(XmlAttributeNames.DestinationFormat, this.DestinationFormat);
-
-            List<object> sourceIds = new List<object>();
-            foreach (AlternateIdBase id in this.Ids)
-            {
-                sourceIds.Add(((IJsonSerializable)id).ToJson(service));
-            }
-            jsonObject.Add(XmlElementNames.SourceIds, sourceIds.ToArray());
-
-            return jsonObject;
         }
     }
 }

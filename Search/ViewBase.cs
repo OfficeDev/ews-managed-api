@@ -90,15 +90,6 @@ namespace Microsoft.Exchange.WebServices.Data
         internal abstract string GetViewXmlElementName();
 
         /// <summary>
-        /// Gets the name of the view json type.
-        /// </summary>
-        /// <returns></returns>
-        internal virtual string GetViewJsonTypeName()
-        {
-            return this.GetViewXmlElementName();
-        }
-
-        /// <summary>
         /// Gets the maximum number of items or folders the search operation should return.
         /// </summary>
         /// <returns>The maximum number of items or folders that should be returned by the search operation.</returns>
@@ -117,13 +108,6 @@ namespace Microsoft.Exchange.WebServices.Data
         internal abstract void WriteAttributesToXml(EwsServiceXmlWriter writer);
 
         /// <summary>
-        /// Adds the json properties.
-        /// </summary>
-        /// <param name="jsonRequest">The json request.</param>
-        /// <param name="service">The service.</param>
-        internal abstract void AddJsonProperties(JsonObject jsonRequest, ExchangeService service);
-
-        /// <summary>
         /// Writes to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -140,57 +124,6 @@ namespace Microsoft.Exchange.WebServices.Data
 
             this.InternalWriteSearchSettingsToXml(writer, groupBy);
         }
-
-        /// <summary>
-        /// Writes the shape to json.
-        /// </summary>
-        /// <param name="jsonRequest">The json request.</param>
-        /// <param name="service">The service.</param>
-        internal void WriteShapeToJson(JsonObject jsonRequest, ExchangeService service)
-        {
-            this.GetPropertySetOrDefault().WriteGetShapeToJson(jsonRequest, service, this.GetServiceObjectType());
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal object WritePagingToJson(ExchangeService service)
-        {
-            JsonObject jsonView = new JsonObject();
-
-            jsonView.AddTypeParameter(this.GetViewJsonTypeName());
-
-            this.InternalWritePagingToJson(jsonView, service);
-
-            return jsonView;
-        }
-
-        /// <summary>
-        /// Internals the write paging to json.
-        /// </summary>
-        /// <param name="jsonView">The json view.</param>
-        /// <param name="service">The service.</param>
-        internal virtual void InternalWritePagingToJson(JsonObject jsonView, ExchangeService service)
-        {
-            int? maxEntriesReturned = this.GetMaxEntriesReturned();
-
-            if (maxEntriesReturned.HasValue)
-            {
-                jsonView.Add(XmlAttributeNames.MaxEntriesReturned, maxEntriesReturned.Value);
-            }
-        }
-
-        /// <summary>
-        /// Writes the grouping to json.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="groupBy">The group by.</param>
-        /// <returns></returns>
-        internal abstract object WriteGroupingToJson(ExchangeService service, Grouping groupBy);
 
         /// <summary>
         /// Gets the property set or the default.

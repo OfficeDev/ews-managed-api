@@ -67,22 +67,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Parses the specified json object.
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        /// <returns></returns>
-        internal static ExchangeServerInfo Parse(JsonObject jsonObject)
-        {
-            ExchangeServerInfo info = new ExchangeServerInfo();
-            info.MajorVersion = jsonObject.ReadAsInt("MajorVersion");
-            info.MinorVersion = jsonObject.ReadAsInt("MinorVersion");
-            info.MajorBuildNumber = jsonObject.ReadAsInt("MajorBuildNumber");
-            info.MinorBuildNumber = jsonObject.ReadAsInt("MinorBuildNumber");
-            info.VersionString = jsonObject.ReadAsString("Version");
-            return info;
-        }
-
-        /// <summary>
         /// Gets the Major Exchange server version number
         /// </summary>
         public int MajorVersion

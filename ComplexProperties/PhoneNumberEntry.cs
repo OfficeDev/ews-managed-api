@@ -76,34 +76,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            jsonProperty.Add(XmlAttributeNames.Key, this.Key);
-            jsonProperty.Add(XmlElementNames.PhoneNumber, this.PhoneNumber);
-
-            return jsonProperty;
-        }
-
-        /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            this.Key = jsonProperty.ReadEnumValue<PhoneNumberKey>(XmlAttributeNames.Key);
-            this.PhoneNumber = jsonProperty.ReadAsString(XmlElementNames.PhoneNumber);
-        }
-
-        /// <summary>
         /// Gets or sets the phone number of the entry.
         /// </summary>
         public string PhoneNumber

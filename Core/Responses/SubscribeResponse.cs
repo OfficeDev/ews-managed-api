@@ -64,13 +64,6 @@ namespace Microsoft.Exchange.WebServices.Data
             this.subscription.LoadFromXml(reader);
         }
 
-        internal override void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            base.ReadElementsFromJson(responseObject, service);
-
-            this.subscription.LoadFromJson(responseObject, service);
-        }
-
         /// <summary>
         /// Gets the subscription that was created.
         /// </summary>

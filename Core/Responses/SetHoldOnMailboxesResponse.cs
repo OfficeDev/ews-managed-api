@@ -56,23 +56,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Reads response elements from Json.
-        /// </summary>
-        /// <param name="responseObject">The response object.</param>
-        /// <param name="service">The service.</param>
-        internal override void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            base.ReadElementsFromJson(responseObject, service);
-
-            if (responseObject.ContainsKey(XmlElementNames.MailboxHoldResult))
-            {
-                JsonObject jsonMailboxHold = responseObject.ReadAsJsonObject(XmlElementNames.MailboxHoldResult);
-
-                this.holdResult = MailboxHoldResult.LoadFromJson(jsonMailboxHold);
-            }
-        }
-
-        /// <summary>
         /// Mailbox hold result
         /// </summary>
         public MailboxHoldResult HoldResult

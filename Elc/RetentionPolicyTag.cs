@@ -103,63 +103,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Load from json.
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        /// <returns>Retention policy tag object.</returns>
-        internal static RetentionPolicyTag LoadFromJson(JsonObject jsonObject)
-        {
-            RetentionPolicyTag retentionPolicyTag = new RetentionPolicyTag();
-
-            if (jsonObject.ContainsKey(XmlElementNames.DisplayName))
-            {
-                retentionPolicyTag.DisplayName = jsonObject.ReadAsString(XmlElementNames.DisplayName);
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.RetentionId))
-            {
-                retentionPolicyTag.RetentionId = new Guid(jsonObject.ReadAsString(XmlElementNames.RetentionId));
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.RetentionPeriod))
-            {
-                retentionPolicyTag.RetentionPeriod = jsonObject.ReadAsInt(XmlElementNames.RetentionPeriod);
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.Type))
-            {
-                retentionPolicyTag.Type = jsonObject.ReadEnumValue<ElcFolderType>(XmlElementNames.Type);
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.RetentionAction))
-            {
-                retentionPolicyTag.RetentionAction = jsonObject.ReadEnumValue<RetentionActionType>(XmlElementNames.RetentionAction);
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.Description))
-            {
-                retentionPolicyTag.Description = jsonObject.ReadAsString(XmlElementNames.Description);
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.IsVisible))
-            {
-                retentionPolicyTag.IsVisible = jsonObject.ReadAsBool(XmlElementNames.IsVisible);
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.OptedInto))
-            {
-                retentionPolicyTag.OptedInto = jsonObject.ReadAsBool(XmlElementNames.OptedInto);
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.IsArchive))
-            {
-                retentionPolicyTag.IsArchive = jsonObject.ReadAsBool(XmlElementNames.IsArchive);
-            }
-
-            return retentionPolicyTag;
-        }
-
-        /// <summary>
         /// Retention policy tag display name.
         /// </summary>
         public string DisplayName { get; set; }

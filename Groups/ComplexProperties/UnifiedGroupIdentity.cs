@@ -33,7 +33,7 @@ namespace Microsoft.Exchange.WebServices.Data.Groups
     /// <summary>
     /// Defines the UnifiedGroupIdentity class.
     /// </summary>
-    internal sealed class UnifiedGroupIdentity : ComplexProperty, ISelfValidate, IJsonSerializable
+    internal sealed class UnifiedGroupIdentity : ComplexProperty, ISelfValidate
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UnifiedGroupIdentity"/>  class
@@ -67,22 +67,6 @@ namespace Microsoft.Exchange.WebServices.Data.Groups
             writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.GroupIdentityType, this.IdentityType.ToString());
             writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.GroupIdentityValue, this.Value);
             writer.WriteEndElement();
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-            jsonProperty.Add(XmlElementNames.GroupIdentityType, this.IdentityType.ToString());
-            jsonProperty.Add(XmlElementNames.GroupIdentityValue, this.Value);
-
-            return jsonProperty;
         }
     }
 }

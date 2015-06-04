@@ -56,6 +56,7 @@ namespace Microsoft.Exchange.WebServices.Data
             public const string ReceivedRepresenting = "message:ReceivedRepresenting";
             public const string ApprovalRequestData = "message:ApprovalRequestData";
             public const string VotingInformation = "message:VotingInformation";
+            public const string Likers = "message:Likers";
         }
 
         /// <summary>
@@ -269,6 +270,18 @@ namespace Microsoft.Exchange.WebServices.Data
                 ExchangeVersion.Exchange2013,
                 delegate() { return new VotingInformation(); });
 
+        /// <summary>
+        /// Defines the Likers property
+        /// </summary>
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Immutable type")]
+        public static readonly PropertyDefinition Likers =
+            new ComplexPropertyDefinition<EmailAddressCollection>(
+                XmlElementNames.Likers,
+                FieldUris.Likers,
+                PropertyDefinitionFlags.AutoInstantiateOnRead,
+                ExchangeVersion.Exchange2015,
+                delegate() { return new EmailAddressCollection(); });
+
         // This must be after the declaration of property definitions
         internal static new readonly EmailMessageSchema Instance = new EmailMessageSchema();
 
@@ -300,6 +313,7 @@ namespace Microsoft.Exchange.WebServices.Data
             this.RegisterProperty(ReceivedRepresenting);
             this.RegisterProperty(ApprovalRequestData);
             this.RegisterProperty(VotingInformation);
+            this.RegisterProperty(Likers);
         }
 
         /// <summary>

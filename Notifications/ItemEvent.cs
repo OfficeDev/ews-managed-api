@@ -91,36 +91,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonEvent">The json event.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonEvent, ExchangeService service)
-        {
-            this.itemId = new ItemId();
-            this.itemId.LoadFromJson(jsonEvent.ReadAsJsonObject(XmlElementNames.ItemId), service);
-
-            this.ParentFolderId = new FolderId();
-            this.ParentFolderId.LoadFromJson(jsonEvent.ReadAsJsonObject(XmlElementNames.ParentFolderId), service);
-
-            switch (this.EventType)
-            {
-                case EventType.Moved:
-                case EventType.Copied:
-
-                    this.oldItemId = new ItemId();
-                    this.oldItemId.LoadFromJson(jsonEvent.ReadAsJsonObject(JsonNames.OldItemId), service);
-
-                    this.OldParentFolderId = new FolderId();
-                    this.OldParentFolderId.LoadFromJson(jsonEvent.ReadAsJsonObject(XmlElementNames.OldParentFolderId), service);
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        /// <summary>
         /// Gets the Id of the item this event applies to.
         /// </summary>
         public ItemId ItemId

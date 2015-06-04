@@ -78,40 +78,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.UserOptions:
-                        Object[] votingOptionObjects = jsonProperty.ReadAsArray(XmlElementNames.UserOptions);
-                        if (votingOptionObjects != null)
-                        {
-                            foreach (object votingOptionObject in votingOptionObjects)
-                            {
-                                JsonObject jsonObject = votingOptionObject as JsonObject;
-                                VotingOptionData option = new VotingOptionData();
-
-                                option.LoadFromJson(jsonObject, service);
-                                this.userOptions.Add(option);
-                            }
-                        }
-                        break;
-                    case XmlElementNames.VotingResponse:
-                        this.votingResponse = jsonProperty.ReadAsString(key);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets the list of user options.
         /// </summary>
         public Collection<VotingOptionData> UserOptions

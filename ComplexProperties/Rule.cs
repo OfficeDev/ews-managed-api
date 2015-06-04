@@ -263,50 +263,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.DisplayName:
-                        this.displayName = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.RuleId:
-                        this.ruleId = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.Priority:
-                        this.priority = jsonProperty.ReadAsInt(key);
-                        break;
-                    case XmlElementNames.IsEnabled:
-                        this.isEnabled = jsonProperty.ReadAsBool(key);
-                        break;
-                    case XmlElementNames.IsNotSupported:
-                        this.isNotSupported = jsonProperty.ReadAsBool(key);
-                        break;
-                    case XmlElementNames.IsInError:
-                        this.isInError = jsonProperty.ReadAsBool(key);
-                        break;
-                    case XmlElementNames.Conditions:
-                        this.conditions.LoadFromJson(jsonProperty, service);
-                        break;
-                    case XmlElementNames.Actions:
-                        this.actions.LoadFromJson(jsonProperty, service);
-                        break;
-                    case XmlElementNames.Exceptions:
-                        this.exceptions.LoadFromJson(jsonProperty, service);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes elements to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -339,34 +295,6 @@ namespace Microsoft.Exchange.WebServices.Data
             this.Conditions.WriteToXml(writer, XmlElementNames.Conditions);
             this.Exceptions.WriteToXml(writer, XmlElementNames.Exceptions);
             this.Actions.WriteToXml(writer, XmlElementNames.Actions);
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            if (!string.IsNullOrEmpty(this.Id))
-            {
-                jsonProperty.Add(XmlElementNames.RuleId, this.Id);
-            }
-
-            jsonProperty.Add(XmlElementNames.DisplayName, this.DisplayName);
-            jsonProperty.Add(XmlElementNames.Priority, this.Priority);
-            jsonProperty.Add(XmlElementNames.IsEnabled, this.IsEnabled);
-            jsonProperty.Add(XmlElementNames.IsInError, this.IsInError);
-
-            jsonProperty.Add(XmlElementNames.Conditions, this.Conditions.InternalToJson(service));
-            jsonProperty.Add(XmlElementNames.Exceptions, this.Exceptions.InternalToJson(service));
-            jsonProperty.Add(XmlElementNames.Actions, this.Actions.InternalToJson(service));
-
-            return jsonProperty;
         }
 
         /// <summary>

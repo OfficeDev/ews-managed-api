@@ -91,16 +91,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Adds the ids to request.
-        /// </summary>
-        /// <param name="jsonRequest">The json request.</param>
-        /// <param name="service">The service.</param>
-        internal override void AddIdsToRequest(JsonObject jsonRequest, ExchangeService service)
-        {
-            jsonRequest.Add(XmlElementNames.FolderIds, this.FolderIds.InternalToJson(service));
-        }
-
-        /// <summary>
         /// Gets the name of the XML element.
         /// </summary>
         /// <returns>XML element name,</returns>

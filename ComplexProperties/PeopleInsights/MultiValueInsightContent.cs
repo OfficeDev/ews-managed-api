@@ -93,6 +93,26 @@ namespace Microsoft.Exchange.WebServices.Data
                             item.LoadFromXml(reader, reader.LocalName);
                             this.ItemList.InternalAdd(item);
                             break;
+                        case XmlElementNames.ComputedInsightValue:
+                            item = new ComputedInsightValue();
+                            item.LoadFromXml(reader, reader.LocalName);
+                            this.ItemList.InternalAdd(item);
+                            break;
+                        case XmlElementNames.MeetingInsightValue:
+                            item = new MeetingInsightValue();
+                            item.LoadFromXml(reader, reader.LocalName);
+                            this.ItemList.InternalAdd(item);
+                            break;
+                        case XmlElementNames.EmailInsightValue:
+                            item = new EmailInsightValue();
+                            item.LoadFromXml(reader, reader.LocalName);
+                            this.ItemList.InternalAdd(item);
+                            break;
+                        case XmlElementNames.DelveDocument:
+                            item = new DelveDocument();
+                            item.LoadFromXml(reader, reader.LocalName);
+                            this.ItemList.InternalAdd(item);
+                            break;
                         default:
                             return false;
                     }

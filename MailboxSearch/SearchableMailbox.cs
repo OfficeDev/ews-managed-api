@@ -95,53 +95,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Load from json
-        /// </summary>
-        /// <param name="jsonObject">The json object</param>
-        /// <returns>Searchable mailbox object</returns>
-        internal static SearchableMailbox LoadFromJson(JsonObject jsonObject)
-        {
-            SearchableMailbox searchableMailbox = new SearchableMailbox();
-
-            if (jsonObject.ContainsKey(XmlElementNames.Guid))
-            {
-                searchableMailbox.Guid = new Guid(jsonObject.ReadAsString(XmlElementNames.Guid));
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.DisplayName))
-            {
-                searchableMailbox.DisplayName = jsonObject.ReadAsString(XmlElementNames.DisplayName);
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.PrimarySmtpAddress))
-            {
-                searchableMailbox.SmtpAddress = jsonObject.ReadAsString(XmlElementNames.PrimarySmtpAddress);
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.IsExternalMailbox))
-            {
-                searchableMailbox.IsExternalMailbox = jsonObject.ReadAsBool(XmlElementNames.IsExternalMailbox);
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.ExternalEmailAddress))
-            {
-                searchableMailbox.ExternalEmailAddress = jsonObject.ReadAsString(XmlElementNames.ExternalEmailAddress);
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.IsMembershipGroup))
-            {
-                searchableMailbox.IsMembershipGroup = jsonObject.ReadAsBool(XmlElementNames.IsMembershipGroup);
-            }
-
-            if (jsonObject.ContainsKey(XmlElementNames.ReferenceId))
-            {
-                searchableMailbox.ReferenceId = jsonObject.ReadAsString(XmlElementNames.ReferenceId);
-            }
-
-            return searchableMailbox;
-        }
-
-        /// <summary>
         /// Guid
         /// </summary>
         public Guid Guid { get; set; }

@@ -148,15 +148,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates the default complex property.
-        /// </summary>
-        /// <returns></returns>
-        internal override AttributedString CreateDefaultComplexProperty()
-        {
-            return new AttributedString();
-        }
-
-        /// <summary>
         /// Retrieves the XML element name corresponding to the provided AttributedString object.
         /// </summary>
         /// <param name="attributedString">The AttributedString object from which to determine the XML element name.</param>

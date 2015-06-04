@@ -76,50 +76,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json array.
-        /// </summary>
-        /// <param name="jsonProperty">The p.</param>
-        /// <param name="service">The service.</param>
-        internal void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            int totalItemsInView;
-            object[] resolutions;
-
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlAttributeNames.TotalItemsInView:
-                        totalItemsInView = jsonProperty.ReadAsInt(key);
-                        break;
-                    case XmlAttributeNames.IncludesLastItemInRange:
-                        this.includesAllResolutions = jsonProperty.ReadAsBool(key);
-                        break;
-                   
-                    // This label only exists for Json objects.  The XML doesn't have a "Resolutions"
-                    // element.  
-                    // This was necessary becaue of the lack of attributes in JSON
-                    //
-                    case "Resolutions":
-                        resolutions = jsonProperty.ReadAsArray(key);
-                        foreach (object resolution in resolutions)
-                        {
-                            JsonObject resolutionProperty = resolution as JsonObject;
-                            if (resolutionProperty != null)
-                            {
-                                NameResolution nameResolution = new NameResolution(this);
-                                nameResolution.LoadFromJson(resolutionProperty, service);
-                                this.items.Add(nameResolution);
-                            }
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets the session.
         /// </summary>
         /// <value>The session.</value>
