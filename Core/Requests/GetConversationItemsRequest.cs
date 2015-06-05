@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a request to a GetConversationItems operation
     /// </summary>
-    internal sealed class GetConversationItemsRequest : MultiResponseServiceRequest<GetConversationItemsResponse>, IJsonSerializable
+    internal sealed class GetConversationItemsRequest : MultiResponseServiceRequest<GetConversationItemsResponse>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetConversationItemsRequest"/> class.
@@ -128,48 +128,6 @@ namespace Microsoft.Exchange.WebServices.Data
             writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.Conversations);
             this.Conversations.ForEach((conversation) => conversation.WriteToXml(writer, XmlElementNames.Conversation));
             writer.WriteEndElement();
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-
-            this.ItemProperties.WriteGetShapeToJson(jsonRequest, service, ServiceObjectType.Item);
-
-            if (this.FoldersToIgnore.Count > 0)
-            {
-                jsonRequest.Add(XmlElementNames.FoldersToIgnore, this.FoldersToIgnore.InternalToJson(service));
-            }
-
-            if (this.MaxItemsToReturn.HasValue)
-            {
-                jsonRequest.Add(XmlElementNames.MaxItemsToReturn, this.MaxItemsToReturn.Value);
-            }
-
-            if (this.SortOrder.HasValue)
-            {
-                jsonRequest.Add(XmlElementNames.SortOrder, this.SortOrder.Value);
-            }
-
-            if (this.MailboxScope.HasValue)
-            {
-                jsonRequest.Add(XmlElementNames.MailboxScope, this.MailboxScope.Value);
-            }
-
-            List<object> jsonPropertyCollection = new List<object>();
-
-            this.Conversations.ForEach((conversation) => jsonPropertyCollection.Add(conversation.InternalToJson(service)));
-
-            jsonRequest.Add(XmlElementNames.Conversations, jsonPropertyCollection.ToArray());
-
-            return jsonRequest;
         }
 
         /// <summary>

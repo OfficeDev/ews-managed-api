@@ -83,26 +83,5 @@ namespace Microsoft.Exchange.WebServices.Data
         {
             writer.WriteValue(this.ImAddress, XmlElementNames.ImAddress);
         }
-
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            jsonProperty.Add(XmlAttributeNames.Key, this.Key);
-            jsonProperty.Add(XmlElementNames.ImAddress, this.ImAddress);
-
-            return jsonProperty;
-        }
-
-        /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            this.Key = jsonProperty.ReadEnumValue<ImAddressKey>(XmlAttributeNames.Key);
-            this.ImAddress = jsonProperty.ReadAsString(XmlElementNames.ImAddress);
-        }
     }
 }

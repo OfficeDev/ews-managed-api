@@ -34,7 +34,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// </summary>
     /// <typeparam name="TServiceObject">The type of the service object.</typeparam>
     /// <typeparam name="TResponse">The type of the response.</typeparam>
-    internal abstract class GetRequest<TServiceObject, TResponse> : MultiResponseServiceRequest<TResponse>, IJsonSerializable
+    internal abstract class GetRequest<TServiceObject, TResponse> : MultiResponseServiceRequest<TResponse>
         where TServiceObject : ServiceObject
         where TResponse : ServiceResponse
     {
@@ -84,24 +84,5 @@ namespace Microsoft.Exchange.WebServices.Data
             get { return this.propertySet; }
             set { this.propertySet = value; }
         }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-
-            this.propertySet.WriteGetShapeToJson(jsonRequest, service, this.GetServiceObjectType());
-            this.AddIdsToRequest(jsonRequest, service);
-
-            return jsonRequest;
-        }
-
-        internal abstract void AddIdsToRequest(JsonObject jsonRequest, ExchangeService service);
     }
 }

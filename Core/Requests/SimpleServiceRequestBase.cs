@@ -139,40 +139,16 @@ namespace Microsoft.Exchange.WebServices.Data
                             memoryStream.Position = 0;
                         }
 
-                        if (this.Service.RenderingMethod == ExchangeService.RenderingMode.Xml)
-                        {
-                            this.TraceResponseXml(response, memoryStream);
+                        this.TraceResponseXml(response, memoryStream);
 
-                            serviceResponse = this.ReadResponseXml(memoryStream, response.Headers);
-                        }
-                        else if (this.Service.RenderingMethod == ExchangeService.RenderingMode.JSON)
-                        {
-                            this.TraceResponseJson(response, memoryStream);
-
-                            serviceResponse = this.ReadResponseJson(memoryStream);
-                        }
-                        else
-                        {
-                            throw new InvalidOperationException("Unknown RenderingMethod.");
-                        }
+                        serviceResponse = this.ReadResponseXml(memoryStream, response.Headers);
                     }
                 }
                 else
                 {
                     using (Stream responseStream = ServiceRequestBase.GetResponseStream(response))
                     {
-                        if (this.Service.RenderingMethod == ExchangeService.RenderingMode.Xml)
-                        {
-                            serviceResponse = this.ReadResponseXml(responseStream, response.Headers);
-                        }
-                        else if (this.Service.RenderingMethod == ExchangeService.RenderingMode.JSON)
-                        {
-                            serviceResponse = this.ReadResponseJson(responseStream);
-                        }
-                        else
-                        {
-                            throw new InvalidOperationException("Unknown RenderingMethod.");
-                        }
+                        serviceResponse = this.ReadResponseXml(responseStream, response.Headers);
                     }
                 }
             }
@@ -200,17 +176,6 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             return serviceResponse;
-        }
-
-        /// <summary>
-        /// Reads the response json.
-        /// </summary>
-        /// <param name="responseStream">The response stream.</param>
-        /// <returns></returns>
-        private object ReadResponseJson(Stream responseStream)
-        {
-            JsonObject jsonResponse = new JsonParser(responseStream).Parse();
-            return this.BuildResponseObjectFromJson(jsonResponse);
         }
 
         /// <summary>

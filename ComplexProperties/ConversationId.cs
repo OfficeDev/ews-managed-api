@@ -84,11 +84,6 @@ namespace Microsoft.Exchange.WebServices.Data
             return XmlElementNames.ConversationId;
         }
 
-        internal override string GetJsonTypeName()
-        {
-            return XmlElementNames.ItemId;
-        }
-
         /// <summary>
         /// Initializes a new instance of ConversationId.
         /// </summary>

@@ -129,53 +129,5 @@ namespace Microsoft.Exchange.WebServices.Data.Groups
             reader.EnsureCurrentNodeIsEndElement(XmlNamespace.NotSpecified, XmlElementNames.UnifiedGroup);
             reader.Read(); 
         }
-
-        /// <summary>
-        /// Reads response elements from Json.
-        /// </summary>
-        /// <param name="responseObject">The response object.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            if (responseObject.ContainsKey(XmlElementNames.SmtpAddress))
-            {
-                this.SmtpAddress = responseObject.ReadAsString(XmlElementNames.SmtpAddress);
-            }
-
-            if (responseObject.ContainsKey(XmlElementNames.LegacyDN))
-            {
-                this.LegacyDN = responseObject.ReadAsString(XmlElementNames.LegacyDN);
-            }
-
-            if (responseObject.ContainsKey(XmlElementNames.MailboxGuid))
-            {
-                this.MailboxGuid = responseObject.ReadAsString(XmlElementNames.MailboxGuid);
-            }
-
-            if (responseObject.ContainsKey(XmlElementNames.DisplayName))
-            {
-                this.DisplayName = responseObject.ReadAsString(XmlElementNames.DisplayName);
-            }
-
-            if (responseObject.ContainsKey(XmlElementNames.IsFavorite))
-            {
-                this.IsFavorite = responseObject.ReadAsBool(XmlElementNames.IsFavorite);
-            }
-
-            if (responseObject.ContainsKey(XmlElementNames.LastVisitedTimeUtc))
-            {
-                this.LastVisitedTimeUtc = responseObject.ReadAsString(XmlElementNames.LastVisitedTimeUtc);
-            }
-
-            if (responseObject.ContainsKey(XmlElementNames.AccessType))
-            {
-                this.AccessType = (UnifiedGroupAccessType)Enum.Parse(typeof(UnifiedGroupAccessType), responseObject.ReadAsString(XmlElementNames.AccessType), false);
-            }
-
-            if (responseObject.ContainsKey(XmlElementNames.ExternalDirectoryObjectId))
-            {
-                this.ExternalDirectoryObjectId = responseObject.ReadAsString(XmlElementNames.ExternalDirectoryObjectId);
-            }
-        }
     }
 }

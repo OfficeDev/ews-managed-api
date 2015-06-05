@@ -89,37 +89,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Reads response elements from Json.
-        /// </summary>
-        /// <param name="responseObject">The response object.</param>
-        /// <param name="service">The service.</param>
-        internal override void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            string alternateIdClass = responseObject.ReadTypeString();
-
-            switch (alternateIdClass)
-            {
-                case AlternateId.SchemaTypeName:
-                    this.convertedId = new AlternateId();
-                    break;
-                case AlternatePublicFolderId.SchemaTypeName:
-                    this.convertedId = new AlternatePublicFolderId();
-                    break;
-                case AlternatePublicFolderItemId.SchemaTypeName:
-                    this.convertedId = new AlternatePublicFolderItemId();
-                    break;
-                default:
-                    EwsUtilities.Assert(
-                        false,
-                        "ConvertIdResponse.ReadElementsFromXml",
-                        string.Format("Unknown alternate Id class: {0}", alternateIdClass));
-                    break;
-            }
-
-            this.convertedId.LoadAttributesFromJson(responseObject);
-        }
-
-        /// <summary>
         /// Gets the converted Id.
         /// </summary>
         public AlternateIdBase ConvertedId

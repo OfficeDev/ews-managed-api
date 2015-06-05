@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a CreateUserConfiguration request.
     /// </summary>
-    internal class CreateUserConfigurationRequest : MultiResponseServiceRequest<ServiceResponse>, IJsonSerializable
+    internal class CreateUserConfigurationRequest : MultiResponseServiceRequest<ServiceResponse>
     {
         protected UserConfiguration userConfiguration;
 
@@ -109,22 +109,6 @@ namespace Microsoft.Exchange.WebServices.Data
         {
             // Write UserConfiguation element
             this.userConfiguration.WriteToXml(writer, XmlNamespace.Messages, XmlElementNames.UserConfiguration);
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonObject = new JsonObject();
-
-            jsonObject.Add(XmlElementNames.UserConfiguration, ((IJsonSerializable)this.UserConfiguration).ToJson(service));
-
-            return jsonObject;
         }
 
         /// <summary>

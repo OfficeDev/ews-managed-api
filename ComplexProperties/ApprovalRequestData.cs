@@ -71,35 +71,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.IsUndecidedApprovalRequest:
-                        this.isUndecidedApprovalRequest = jsonProperty.ReadAsBool(key);
-                        break;
-                    case XmlElementNames.ApprovalDecision:
-                        this.approvalDecision = jsonProperty.ReadAsInt(key);
-                        break;
-                    case XmlElementNames.ApprovalDecisionMaker:
-                        this.approvalDecisionMaker = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.ApprovalDecisionTime:
-                        this.approvalDecisionTime = service.ConvertUniversalDateTimeStringToLocalDateTime(jsonProperty.ReadAsString(key)).Value;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets a value indicating whether this is an undecided approval request.
         /// </summary>
         public bool IsUndecidedApprovalRequest

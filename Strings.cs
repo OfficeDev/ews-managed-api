@@ -224,7 +224,5 @@ namespace Microsoft.Exchange.WebServices
         internal static string XsDurationCouldNotBeParsed = "The specified xsDuration argument couldn't be parsed.";
         internal static string UnknownTimeZonePeriodTransitionType = "Unknown time zone transition type: {0}";
         internal static string UserPhotoSizeNotSpecified = "The UserPhotoSize must be not be null or empty.";
-        internal static string JsonSerializationNotImplemented = "JSON Serialization is not implemented for this request.Please retry the request with the XML rendering method.";
-        internal static string JsonDeserializationNotImplemented = "JSON Deserialization is not implemented for this request.Please retry the request with the XML rendering method.";
     }
 }

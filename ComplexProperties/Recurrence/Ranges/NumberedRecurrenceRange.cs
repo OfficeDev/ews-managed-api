@@ -90,18 +90,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Adds the properties to json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void AddPropertiesToJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            base.AddPropertiesToJson(jsonProperty, service);
-
-            jsonProperty.Add(XmlElementNames.NumberOfOccurrences, this.NumberOfOccurrences);
-        }
-
-        /// <summary>
         /// Tries to read element from XML.
         /// </summary>
         /// <param name="reader">The reader.</param>
@@ -121,28 +109,6 @@ namespace Microsoft.Exchange.WebServices.Data
                         return true;
                     default:
                         return false;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            base.LoadFromJson(jsonProperty, service); 
-            
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.NumberOfOccurrences:
-                        this.numberOfOccurrences = jsonProperty.ReadAsInt(key);
-                        break;
-                    default:
-                        break;
                 }
             }
         }

@@ -81,38 +81,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service"></param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.NumberOfMembers:
-                        this.numberOfMembers = jsonProperty.ReadAsInt(key);
-                        break;
-                    case XmlElementNames.NumberOfMembersAvailable:
-                        this.numberOfMembersAvailable = jsonProperty.ReadAsInt(key);
-                        break;
-                    case XmlElementNames.NumberOfMembersWithConflict:
-                        this.numberOfMembersWithConflict = jsonProperty.ReadAsInt(key);
-                        break;
-                    case XmlElementNames.NumberOfMembersWithNoData:
-                        this.numberOfMembersWithNoData = jsonProperty.ReadAsInt(key);
-                        break;
-                    case XmlElementNames.BusyType:
-                        this.freeBusyStatus = jsonProperty.ReadEnumValue<LegacyFreeBusyStatus>(key);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets the type of the conflict.
         /// </summary>
         public ConflictType ConflictType

@@ -66,25 +66,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads the property value from json.
-        /// </summary>
-        /// <param name="value">The JSON value.  Can be a JsonObject, string, number, bool, array, or null.</param>
-        /// <param name="service">The service.</param>
-        /// <param name="propertyBag">The property bag.</param>
-        internal override void LoadPropertyValueFromJson(object value, ExchangeService service, PropertyBag propertyBag)
-        {
-            JsonObject jsonObject = value as JsonObject;
-
-            if (jsonObject != null)
-            {
-                MeetingTimeZone meetingTimeZone = new MeetingTimeZone();
-                meetingTimeZone.LoadFromJson(jsonObject, service);
-
-                propertyBag[AppointmentSchema.StartTimeZone] = meetingTimeZone.ToTimeZoneInfo();
-            }
-        }
-
-        /// <summary>
         /// Writes to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -100,23 +81,6 @@ namespace Microsoft.Exchange.WebServices.Data
             if (value != null)
             {
                 value.WriteToXml(writer, this.XmlElementName);
-            }
-        }
-
-        /// <summary>
-        /// Writes the json value.
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        /// <param name="propertyBag">The property bag.</param>
-        /// <param name="service">The service.</param>
-        /// <param name="isUpdateOperation">if set to <c>true</c> [is update operation].</param>
-        internal override void WriteJsonValue(JsonObject jsonObject, PropertyBag propertyBag, ExchangeService service, bool isUpdateOperation)
-        {
-            MeetingTimeZone value = propertyBag[this] as MeetingTimeZone;
-
-            if (value != null)
-            {
-                jsonObject.Add(this.XmlElementName, value.InternalToJson(service));
             }
         }
 

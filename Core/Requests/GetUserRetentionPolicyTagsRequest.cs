@@ -31,7 +31,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a GetUserRetentionPolicyTagsRequest request.
     /// </summary>
-    internal sealed class GetUserRetentionPolicyTagsRequest : SimpleServiceRequestBase, IJsonSerializable
+    internal sealed class GetUserRetentionPolicyTagsRequest : SimpleServiceRequestBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetUserRetentionPolicyTagsRequest"/> class.
@@ -98,20 +98,6 @@ namespace Microsoft.Exchange.WebServices.Data
         {
             GetUserRetentionPolicyTagsResponse serviceResponse = (GetUserRetentionPolicyTagsResponse)this.InternalExecute();
             return serviceResponse;
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonObject = new JsonObject();
-
-            return jsonObject;
         }
     }
 }

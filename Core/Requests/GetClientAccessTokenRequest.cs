@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a GetClientAccessToken request.
     /// </summary>
-    internal sealed class GetClientAccessTokenRequest : MultiResponseServiceRequest<GetClientAccessTokenResponse>, IJsonSerializable
+    internal sealed class GetClientAccessTokenRequest : MultiResponseServiceRequest<GetClientAccessTokenResponse>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetClientAccessTokenRequest"/> class.
@@ -115,36 +115,6 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             writer.WriteEndElement();
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            List<object> jsonArray = new List<object>();
-
-            foreach (ClientAccessTokenRequest tokenRequestInfo in this.TokenRequests)
-            {
-                JsonObject innerRequest = new JsonObject();
-                innerRequest.AddTypeParameter(XmlElementNames.TokenRequest);
-                innerRequest.Add(XmlElementNames.Id, tokenRequestInfo.Id);
-                innerRequest.Add(XmlElementNames.TokenType, tokenRequestInfo.TokenType);
-                if (!string.IsNullOrEmpty(tokenRequestInfo.Scope))
-                {
-                    innerRequest.Add(XmlElementNames.HighlightTermScope, tokenRequestInfo.Scope);
-                }
-
-                jsonArray.Add(innerRequest);
-            }
-
-            JsonObject jsonRequest = new JsonObject();
-            jsonRequest.Add(XmlElementNames.TokenRequests, jsonArray.ToArray());
-            return jsonRequest;
         }
 
         /// <summary>

@@ -81,21 +81,6 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             /// <summary>
-            /// Patterns to json.
-            /// </summary>
-            /// <param name="service">The service.</param>
-            /// <returns></returns>
-            internal override JsonObject PatternToJson(ExchangeService service)
-            {
-                JsonObject jsonPattern = new JsonObject();
-
-                jsonPattern.AddTypeParameter(this.XmlElementName);
-                jsonPattern.Add(XmlElementNames.Interval, this.Interval);
-
-                return jsonPattern;
-            }
-
-            /// <summary>
             /// Tries to read element from XML.
             /// </summary>
             /// <param name="reader">The reader.</param>
@@ -120,28 +105,6 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             /// <summary>
-            /// Loads from json.
-            /// </summary>
-            /// <param name="jsonProperty">The json property.</param>
-            /// <param name="service">The service.</param>
-            internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-            {
-                base.LoadFromJson(jsonProperty, service);
-
-                foreach (string key in jsonProperty.Keys)
-                {
-                    switch (key)
-                    {
-                        case XmlElementNames.Interval:
-                            this.interval = jsonProperty.ReadAsInt(key);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-
-            /// <summary>
             /// Gets or sets the interval between occurrences. 
             /// </summary>
             public int Interval
@@ -160,6 +123,16 @@ namespace Microsoft.Exchange.WebServices.Data
 
                     this.SetFieldValue<int>(ref this.interval, value);
                 }
+            }
+
+            /// <summary>
+            /// Checks if two recurrence objects are identical. 
+            /// </summary>
+            /// <param name="otherRecurrence">The recurrence to compare this one to.</param>
+            /// <returns>true if the two recurrences are identical, false otherwise.</returns>
+            public override bool IsSame(Recurrence otherRecurrence)
+            {
+                return base.IsSame(otherRecurrence) && this.interval == ((IntervalPattern)otherRecurrence).interval;
             }
         }
     }

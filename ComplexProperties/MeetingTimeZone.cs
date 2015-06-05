@@ -107,37 +107,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service"></param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.BaseOffset:
-                        this.baseOffset = EwsUtilities.XSDurationToTimeSpan(jsonProperty.ReadAsString(key));
-                        break;
-                    case XmlElementNames.Standard:
-                        this.standard = new TimeChange();
-                        this.standard.LoadFromJson(jsonProperty.ReadAsJsonObject(key), service);
-                        break;
-                    case XmlElementNames.Daylight:
-                        this.daylight = new TimeChange();
-                        this.daylight.LoadFromJson(jsonProperty.ReadAsJsonObject(key), service);
-                        break;
-                    case XmlAttributeNames.TimeZoneName:
-                        this.name = jsonProperty.ReadAsString(key);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes the attributes to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -169,39 +138,6 @@ namespace Microsoft.Exchange.WebServices.Data
             {
                 this.Daylight.WriteToXml(writer, XmlElementNames.Daylight);
             }
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service"></param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            if (this.BaseOffset.HasValue)
-            {
-                jsonProperty.Add(
-                    XmlElementNames.BaseOffset,
-                    EwsUtilities.TimeSpanToXSDuration(this.BaseOffset.Value));
-            }
-
-            if (this.Standard != null)
-            {
-                jsonProperty.Add(XmlElementNames.Standard, this.Standard.InternalToJson(service));
-            }
-
-            if (this.Daylight != null)
-            {
-                jsonProperty.Add(XmlElementNames.Daylight, this.Daylight.InternalToJson(service));
-            }
-
-            jsonProperty.Add(XmlAttributeNames.TimeZoneName, this.Name);
-
-            return jsonProperty;
         }
 
         /// <summary>

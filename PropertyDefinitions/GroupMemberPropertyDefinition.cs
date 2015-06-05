@@ -86,11 +86,6 @@ namespace Microsoft.Exchange.WebServices.Data
             return XmlElementNames.IndexedFieldURI;
         }
 
-        protected override string GetJsonType()
-        {
-            return JsonNames.PathToIndexedFieldType;
-        }
-
         /// <summary>
         /// Writes the attributes to XML.
         /// </summary>
@@ -99,17 +94,6 @@ namespace Microsoft.Exchange.WebServices.Data
         {
             base.WriteAttributesToXml(writer);
             writer.WriteAttributeValue(XmlAttributeNames.FieldIndex, this.Key);
-        }
-
-        /// <summary>
-        /// Adds the json properties.
-        /// </summary>
-        /// <param name="jsonPropertyDefinition">The json property definition.</param>
-        /// <param name="service">The service.</param>
-        internal override void AddJsonProperties(JsonObject jsonPropertyDefinition, ExchangeService service)
-        {
-            base.AddJsonProperties(jsonPropertyDefinition, service);
-            jsonPropertyDefinition.Add(XmlAttributeNames.FieldIndex, this.Key);
         }
 
         /// <summary>

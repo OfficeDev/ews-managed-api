@@ -71,5 +71,11 @@ namespace Microsoft.Exchange.WebServices.Data
         /// The EmailAddress represents a store contact or AD mail contact.
         /// </summary>
         Contact,
+
+        /// <summary>
+        /// The EmailAddress represents a GroupMailbox
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
+        GroupMailbox,
     }
 }

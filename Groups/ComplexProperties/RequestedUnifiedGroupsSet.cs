@@ -28,7 +28,7 @@ namespace Microsoft.Exchange.WebServices.Data.Groups
     /// <summary>
     /// Defines the RequestedUnifiedGroupsSet class.
     /// </summary>
-    public sealed class RequestedUnifiedGroupsSet : ComplexProperty, ISelfValidate, IJsonSerializable
+    public sealed class RequestedUnifiedGroupsSet : ComplexProperty, ISelfValidate
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestedUnifiedGroupsSet"/> class.
@@ -81,23 +81,6 @@ namespace Microsoft.Exchange.WebServices.Data.Groups
             writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.SortDirection, this.SortDirection.ToString());
 
             writer.WriteEndElement();
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-            jsonProperty.Add(XmlElementNames.SortType, this.SortType.ToString());
-            jsonProperty.Add(XmlElementNames.FilterType, this.FilterType.ToString());
-            jsonProperty.Add(XmlElementNames.SortDirection, this.SortDirection.ToString());
-
-            return jsonProperty;
         }
     }
 }

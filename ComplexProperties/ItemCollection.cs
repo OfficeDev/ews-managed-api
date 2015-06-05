@@ -36,7 +36,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// </summary>
     /// <typeparam name="TItem">The type of item the collection contains.</typeparam>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public sealed class ItemCollection<TItem> : ComplexProperty, IEnumerable<TItem>, IJsonCollectionDeserializer
+    public sealed class ItemCollection<TItem> : ComplexProperty, IEnumerable<TItem>
         where TItem : Item
     {
         private List<TItem> items = new List<TItem>();
@@ -83,37 +83,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 }
                 while (!reader.IsEndElement(XmlNamespace.Types, localElementName));
             }
-        }
-
-        /// <summary>
-        /// Loads from json collection.
-        /// </summary>
-        /// <param name="jsonCollection">The json collection.</param>
-        /// <param name="service">The service.</param>
-        void IJsonCollectionDeserializer.CreateFromJsonCollection(object[] jsonCollection, ExchangeService service)
-        {
-            foreach (object entry in jsonCollection)
-            {
-                JsonObject jsonServiceObject = entry as JsonObject;
-
-                TItem item = EwsUtilities.CreateEwsObjectFromXmlElementName<Item>(
-                    service,
-                    jsonServiceObject.ReadTypeString()) as TItem;
-
-                item.LoadFromJson(jsonServiceObject, service, true);
-
-                this.items.Add(item);
-            }
-        }
-
-        /// <summary>
-        /// Loads from json collection to update the existing collection element.
-        /// </summary>
-        /// <param name="jsonCollection">The json collection.</param>
-        /// <param name="service">The service.</param>
-        void IJsonCollectionDeserializer.UpdateFromJsonCollection(object[] jsonCollection, ExchangeService service)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>

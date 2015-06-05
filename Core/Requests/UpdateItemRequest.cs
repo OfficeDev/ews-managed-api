@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents an UpdateItem request.
     /// </summary>
-    internal sealed class UpdateItemRequest : MultiResponseServiceRequest<UpdateItemResponse>, IJsonSerializable
+    internal sealed class UpdateItemRequest : MultiResponseServiceRequest<UpdateItemResponse>
     {
         private List<Item> items = new List<Item>();
         private FolderId savedItemsDestinationFolder;
@@ -204,53 +204,6 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             writer.WriteEndElement();
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-
-            if (this.MessageDisposition.HasValue)
-            {
-                jsonRequest.Add(XmlAttributeNames.MessageDisposition, this.MessageDisposition);
-            }
-
-            jsonRequest.Add(XmlAttributeNames.ConflictResolution, this.ConflictResolutionMode);
-
-            if (this.SendInvitationsOrCancellationsMode.HasValue)
-            {
-                jsonRequest.Add(
-                    XmlAttributeNames.SendMeetingInvitationsOrCancellations,
-                    this.SendInvitationsOrCancellationsMode.Value);
-            }
-
-            if (this.SuppressReadReceipts)
-            {
-                jsonRequest.Add(XmlAttributeNames.SuppressReadReceipts, true);
-            }
-
-            if (this.SavedItemsDestinationFolder != null)
-            {
-                jsonRequest.Add(XmlElementNames.SavedItemFolderId, this.SavedItemsDestinationFolder.InternalToJson(service));
-            }
-
-            List<object> jsonUpdates = new List<object>();
-
-            foreach (Item item in this.items)
-            {
-                jsonUpdates.Add(item.WriteToJsonForUpdate(service));
-            }
-
-            jsonRequest.Add(XmlElementNames.ItemChanges, jsonUpdates.ToArray());
-
-            return jsonRequest;
         }
 
         /// <summary>

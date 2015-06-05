@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a PlayOnPhone request.
     /// </summary>
-    internal sealed class PlayOnPhoneRequest : SimpleServiceRequestBase, IJsonSerializable
+    internal sealed class PlayOnPhoneRequest : SimpleServiceRequestBase
     {
         private ItemId itemId;
         private string dialString;
@@ -66,23 +66,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-
-            jsonRequest.Add(XmlElementNames.ItemId, this.ItemId.InternalToJson(service));
-            jsonRequest.Add(XmlElementNames.DialString, this.dialString);
-
-            return jsonRequest;
-        }
-
-        /// <summary>
         /// Gets the name of the response XML element.
         /// </summary>
         /// <returns>XML element name,</returns>
@@ -100,18 +83,6 @@ namespace Microsoft.Exchange.WebServices.Data
         {
             PlayOnPhoneResponse serviceResponse = new PlayOnPhoneResponse(this.Service);
             serviceResponse.LoadFromXml(reader, XmlElementNames.PlayOnPhoneResponse);
-            return serviceResponse;
-        }
-
-        /// <summary>
-        /// Parses the response.
-        /// </summary>
-        /// <param name="jsonBody">The json body.</param>
-        /// <returns>Response object.</returns>
-        internal override object ParseResponse(JsonObject jsonBody)
-        {
-            PlayOnPhoneResponse serviceResponse = new PlayOnPhoneResponse(this.Service);
-            serviceResponse.LoadFromJson(jsonBody, this.Service);
             return serviceResponse;
         }
 

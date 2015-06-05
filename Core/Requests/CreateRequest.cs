@@ -34,7 +34,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// </summary>
     /// <typeparam name="TServiceObject">The type of the service object.</typeparam>
     /// <typeparam name="TResponse">The type of the response.</typeparam>
-    internal abstract class CreateRequest<TServiceObject, TResponse> : MultiResponseServiceRequest<TResponse>, IJsonSerializable
+    internal abstract class CreateRequest<TServiceObject, TResponse> : MultiResponseServiceRequest<TResponse>
         where TServiceObject : ServiceObject
         where TResponse : ServiceResponse
     {
@@ -103,47 +103,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 obj.WriteToXml(writer);
             }
             writer.WriteEndElement();
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-
-            if (this.ParentFolderId != null)
-            {
-                JsonObject targetFolderId = new JsonObject();
-                targetFolderId.Add(XmlElementNames.BaseFolderId, this.ParentFolderId.InternalToJson(service));
-
-                jsonRequest.Add(this.GetParentFolderXmlElementName(), targetFolderId);
-            }
-
-            List<object> jsonServiceObjects = new List<object>();
-            foreach (ServiceObject obj in this.objects)
-            {
-                jsonServiceObjects.Add(obj.ToJson(service, false));
-            }
-
-            jsonRequest.Add(this.GetObjectCollectionXmlElementName(), jsonServiceObjects.ToArray());
-
-            this.AddJsonProperties(jsonRequest, service);
-            
-            return jsonRequest;
-        }
-
-        /// <summary>
-        /// Adds the json properties.
-        /// </summary>
-        /// <param name="jsonRequest">The json request.</param>
-        /// <param name="service">The service.</param>
-        internal virtual void AddJsonProperties(JsonObject jsonRequest, ExchangeService service)
-        {
         }
 
         /// <summary>

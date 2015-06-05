@@ -159,10 +159,10 @@ namespace Microsoft.Exchange.WebServices.Data
         UserProfilePicture,
 
         /// <summary>
-        /// The InsightType represents the Delve doc.
+        /// The InsightType represents the Delve document.
         /// </summary>
         [RequiredServerVersion(ExchangeVersion.Exchange2015)]
-        DelveDoc,
+        DelveDocument,
 
         /// <summary>
         /// The InsightType represents the company profile.
@@ -199,5 +199,101 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         [RequiredServerVersion(ExchangeVersion.Exchange2015)]
         MutualManager,
+
+        /// <summary>
+        /// The InsightType represents when a person's title changes.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
+        TitleChanged,
+
+        /// <summary>
+        /// The InsightType represents when a person's manager changes.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
+        ManagerChanged,
+
+        /// <summary>
+        /// The InsightType represents when a person's office changes.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
+        OfficeChanged,
+
+        /// <summary>
+        /// The InsightType represents when a person's peers changes.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
+        PeersChanged,
+
+        /// <summary>
+        /// The InsightType represents when a person's company changes.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
+        CompanyChanged,
+
+        /// <summary>
+        /// The InsightType represents documents that have been changed.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
+        AuthoredDocumentsChanged,
+
+        /// <summary>
+        /// The InsightType represents co-authored documents that have been changed.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
+        CoAuthoredDocumentsChanged,
+
+        /// <summary>
+        /// The InsightType represents alias in AAD.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
+        Alias,
+
+        /// <summary>
+        /// The InsightType represents department in AAD.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
+        Department,
+
+        /// <summary>
+        /// The InsightType represents department in AAD that have been changed.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
+        DepartmentChanged,
+
+        /// <summary>
+        /// The InsightType represents teamSize in AAD that have been changed.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
+        TeamSizeChanged,
+
+        /// <summary>
+        /// The InsightType represents the Next Meetings.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
+        NextMeetings,
+
+        /// <summary>
+        /// The InsightType represents the Previous Meetings.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
+        PreviousMeetings,
+
+        /// <summary>
+        /// The InsightType represents the Recent Emails.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
+        RecentEmails,
+
+        /// <summary>
+        /// The InsightType represents co-authored documents.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
+        CoAuthoredDocuments,
+
+        /// <summary>
+        /// The InsightType represents out of office.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
+        OutOfOffice
     }
 }

@@ -33,7 +33,7 @@ namespace Microsoft.Exchange.WebServices.Data.Groups
     /// <summary>
     /// Represents a request to the SetUnifiedGroupLastVisitedTimeRequest operation.
     /// </summary>
-    internal sealed class SetUnifiedGroupLastVisitedTimeRequest : SimpleServiceRequestBase, IJsonSerializable
+    internal sealed class SetUnifiedGroupLastVisitedTimeRequest : SimpleServiceRequestBase
     {
         /// <summary>
         /// The last visited time utc for the group
@@ -117,7 +117,7 @@ namespace Microsoft.Exchange.WebServices.Data.Groups
         /// <returns>Earliest Exchange version in which this request is supported.</returns>
         internal override ExchangeVersion GetMinimumRequiredServerVersion()
         {
-            return ExchangeVersion.Exchange2013_SP1;
+            return ExchangeVersion.Exchange2015;
         }
 
         /// <summary>
@@ -127,24 +127,6 @@ namespace Microsoft.Exchange.WebServices.Data.Groups
         internal ServiceResponse Execute()
         {
             return (ServiceResponse)this.InternalExecute();
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-
-            UnifiedGroupIdentity groupIdentity = new UnifiedGroupIdentity(this.identityType, this.identityValue);
-
-            jsonRequest.Add(XmlElementNames.GroupIdentity, groupIdentity.InternalToJson(service));
-            jsonRequest.Add(XmlElementNames.LastVisitedTimeUtc, this.lastVisitedTimeUtc.ToString());
-            return jsonRequest;
         }
     }
 }

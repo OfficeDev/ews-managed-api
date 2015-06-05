@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a SyncFolderItems request.
     /// </summary>
-    internal class SyncFolderItemsRequest : MultiResponseServiceRequest<SyncFolderItemsResponse>, IJsonSerializable
+    internal class SyncFolderItemsRequest : MultiResponseServiceRequest<SyncFolderItemsResponse>
     {
         private PropertySet propertySet;
         private FolderId syncFolderId;
@@ -178,45 +178,6 @@ namespace Microsoft.Exchange.WebServices.Data
                     XmlElementNames.NumberOfDays,
                     this.numberOfDays);
             }
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-
-            this.propertySet.WriteGetShapeToJson(jsonRequest, service, ServiceObjectType.Item);
-
-            JsonObject jsonSyncFolderId = new JsonObject();
-            jsonSyncFolderId.Add(XmlElementNames.BaseFolderId, this.SyncFolderId.InternalToJson(service));
-            jsonRequest.Add(XmlElementNames.SyncFolderId, jsonSyncFolderId);
-
-            jsonRequest.Add(XmlElementNames.SyncState, this.SyncState);
-
-            if (this.IgnoredItemIds.Count > 0)
-            {
-                jsonRequest.Add(XmlElementNames.Ignore, this.IgnoredItemIds.InternalToJson(service));
-            }
-
-            jsonRequest.Add(XmlElementNames.MaxChangesReturned, this.MaxChangesReturned);
-
-            if (this.Service.RequestedServerVersion >= ExchangeVersion.Exchange2010)
-            {
-                jsonRequest.Add(XmlElementNames.SyncScope, this.SyncScope);
-            }
-
-            if (this.Service.RequestedServerVersion >= ExchangeVersion.Exchange2013)
-            {
-                jsonRequest.Add(XmlElementNames.NumberOfDays, this.NumberOfDays);
-            }
-
-            return jsonRequest;
         }
 
         /// <summary>

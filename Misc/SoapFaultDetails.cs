@@ -139,31 +139,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Parses the specified json object.
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        /// <returns></returns>
-        internal static SoapFaultDetails Parse(JsonObject jsonObject)
-        {
-            SoapFaultDetails soapFaultDetails = new SoapFaultDetails();
-
-            foreach (string key in jsonObject.Keys)
-            {
-                switch (key)
-                {
-                    // TODO: Fix up?
-                    case "FaultMessage":
-                        soapFaultDetails.FaultString = jsonObject.ReadAsString(key);
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            return soapFaultDetails;
-        }
-
-        /// <summary>
         /// Parses the detail node.
         /// </summary>
         /// <param name="reader">The reader.</param>

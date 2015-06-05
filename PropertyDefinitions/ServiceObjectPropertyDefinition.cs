@@ -46,15 +46,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Gets the type for json.
-        /// </summary>
-        /// <returns></returns>
-        protected override string GetJsonType()
-        {
-            return JsonNames.PathToUnindexedFieldType;
-        }
-
-        /// <summary>
         /// Gets the minimum Exchange version that supports this property.
         /// </summary>
         /// <value>The version.</value>
@@ -70,16 +61,6 @@ namespace Microsoft.Exchange.WebServices.Data
         internal override void WriteAttributesToXml(EwsServiceXmlWriter writer)
         {
             writer.WriteAttributeValue(XmlAttributeNames.FieldURI, this.Uri);
-        }
-
-        /// <summary>
-        /// Adds the json properties.
-        /// </summary>
-        /// <param name="jsonPropertyDefinition">The json property definition.</param>
-        /// <param name="service">The service.</param>
-        internal override void AddJsonProperties(JsonObject jsonPropertyDefinition, ExchangeService service)
-        {
-            jsonPropertyDefinition.Add(XmlAttributeNames.FieldURI, this.Uri);
         }
 
         /// <summary>

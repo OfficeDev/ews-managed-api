@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents an UpdateFolder request.
     /// </summary>
-    internal sealed class UpdateFolderRequest : MultiResponseServiceRequest<ServiceResponse>, IJsonSerializable
+    internal sealed class UpdateFolderRequest : MultiResponseServiceRequest<ServiceResponse>
     {
         private List<Folder> folders = new List<Folder>();
 
@@ -127,28 +127,6 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             writer.WriteEndElement();
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-            List<object> jsonUpdates = new List<object>();
-
-            foreach (Folder folder in this.folders)
-            {
-                jsonUpdates.Add(folder.WriteToJsonForUpdate(service));
-            }
-
-            jsonRequest.Add(XmlElementNames.FolderChanges, jsonUpdates.ToArray());
-
-            return jsonRequest;
         }
 
         /// <summary>

@@ -71,19 +71,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Adds the ids to json.
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        /// <param name="service">The service.</param>
-        internal override void AddIdsToJson(JsonObject jsonObject, ExchangeService service)
-        {
-            if (this.folderIds.Count > 0)
-            {
-                jsonObject.Add(XmlElementNames.FolderIds, this.folderIds.InternalToJson(service));
-            }
-        }
-
-        /// <summary>
         /// Gets the expected response message count.
         /// </summary>
         /// <returns>Number of expected response messages.</returns>

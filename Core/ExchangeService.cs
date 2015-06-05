@@ -59,7 +59,6 @@ namespace Microsoft.Exchange.WebServices.Data
         private IFileAttachmentContentHandler fileAttachmentContentHandler;
         private UnifiedMessaging unifiedMessaging;
         private bool enableScpLookup = true;
-        private ExchangeService.RenderingMode renderingMode = RenderingMode.Xml;
         private bool traceEnablePrettyPrinting = true;
         private string targetServerVersion = null;
 
@@ -2263,6 +2262,7 @@ namespace Microsoft.Exchange.WebServices.Data
                 frequency,
                 watermark,
                 null,
+                null, // AnchorMailbox
                 eventTypes).Execute()[0].Subscription;
         }
 
@@ -2294,6 +2294,7 @@ namespace Microsoft.Exchange.WebServices.Data
                 frequency,
                 watermark,
                 null,
+                null, // AnchorMailbox
                 eventTypes).BeginExecute(callback, state);
         }
 
@@ -2322,6 +2323,7 @@ namespace Microsoft.Exchange.WebServices.Data
                 frequency,
                 watermark,
                 null,
+                null, // AnchorMailbox
                 eventTypes).Execute()[0].Subscription;
         }
 
@@ -2354,6 +2356,7 @@ namespace Microsoft.Exchange.WebServices.Data
                 frequency,
                 watermark,
                 null,
+                null, // AnchorMailbox
                 eventTypes).BeginExecute(callback, state);
         }
 
@@ -2383,6 +2386,7 @@ namespace Microsoft.Exchange.WebServices.Data
                 frequency,
                 watermark,
                 callerData,
+                null, // AnchorMailbox
                 eventTypes).Execute()[0].Subscription;
         }
 
@@ -2416,6 +2420,69 @@ namespace Microsoft.Exchange.WebServices.Data
                 frequency,
                 watermark,
                 callerData,
+                null, // AnchorMailbox
+                eventTypes).BeginExecute(callback, state);
+        }
+
+        /// <summary>
+        /// Subscribes to push notifications on a group mailbox. Calling this method results in a call to EWS.
+        /// </summary>
+        /// <param name="groupMailboxSmtp">The smtpaddress of the group mailbox to subscribe to.</param>
+        /// <param name="url">The URL of the Web Service endpoint the Exchange server should push events to.</param>
+        /// <param name="frequency">The frequency, in minutes, at which the Exchange server should contact the Web Service endpoint. Frequency must be between 1 and 1440.</param>
+        /// <param name="watermark">An optional watermark representing a previously opened subscription.</param>
+        /// <param name="callerData">Optional caller data that will be returned the call back.</param>
+        /// <param name="eventTypes">The event types to subscribe to.</param>
+        /// <returns>A PushSubscription representing the new subscription.</returns>
+        public PushSubscription SubscribeToGroupPushNotifications(
+            string groupMailboxSmtp,
+            Uri url,
+            int frequency,
+            string watermark,
+            string callerData,
+            params EventType[] eventTypes)
+        {
+            var folderIds = new FolderId[] { new FolderId(WellKnownFolderName.Inbox, new Mailbox(groupMailboxSmtp)) };
+            return this.BuildSubscribeToPushNotificationsRequest(
+                folderIds,
+                url,
+                frequency,
+                watermark,
+                callerData,
+                groupMailboxSmtp, // AnchorMailbox
+                eventTypes).Execute()[0].Subscription;
+        }
+
+        /// <summary>
+        /// Begins an asynchronous request to subscribe to push notifications. Calling this method results in a call to EWS.
+        /// </summary>
+        /// <param name="callback">The AsyncCallback delegate.</param>
+        /// <param name="state">An object that contains state information for this request.</param>
+        /// <param name="groupMailboxSmtp">The smtpaddress of the group mailbox to subscribe to.</param>
+        /// <param name="url">The URL of the Web Service endpoint the Exchange server should push events to.</param>
+        /// <param name="frequency">The frequency, in minutes, at which the Exchange server should contact the Web Service endpoint. Frequency must be between 1 and 1440.</param>
+        /// <param name="watermark">An optional watermark representing a previously opened subscription.</param>
+        /// <param name="callerData">Optional caller data that will be returned the call back.</param>
+        /// <param name="eventTypes">The event types to subscribe to.</param>
+        /// <returns>An IAsyncResult that references the asynchronous request.</returns>
+        public IAsyncResult BeginSubscribeToGroupPushNotifications(
+            AsyncCallback callback,
+            object state,
+            string groupMailboxSmtp,
+            Uri url,
+            int frequency,
+            string watermark,
+            string callerData,
+            params EventType[] eventTypes)
+        {
+            var folderIds = new FolderId[] { new FolderId(WellKnownFolderName.Inbox, new Mailbox(groupMailboxSmtp)) };
+            return this.BuildSubscribeToPushNotificationsRequest(
+                folderIds,
+                url,
+                frequency,
+                watermark,
+                callerData,
+                groupMailboxSmtp, // AnchorMailbox
                 eventTypes).BeginExecute(callback, state);
         }
 
@@ -2446,6 +2513,7 @@ namespace Microsoft.Exchange.WebServices.Data
                 frequency,
                 watermark,
                 callerData,
+                null, // AnchorMailbox
                 eventTypes).Execute()[0].Subscription;
         }
 
@@ -2480,6 +2548,7 @@ namespace Microsoft.Exchange.WebServices.Data
                 frequency,
                 watermark,
                 callerData,
+                null, // AnchorMailbox
                 eventTypes).BeginExecute(callback, state);
         }
 
@@ -2489,6 +2558,18 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="asyncResult">An IAsyncResult that references the asynchronous request.</param>
         /// <returns>A PushSubscription representing the new subscription.</returns>
         public PushSubscription EndSubscribeToPushNotifications(IAsyncResult asyncResult)
+        {
+            var request = AsyncRequestResult.ExtractServiceRequest<SubscribeToPushNotificationsRequest>(this, asyncResult);
+
+            return request.EndExecute(asyncResult)[0].Subscription;
+        }
+
+        /// <summary>
+        /// Ends an asynchronous request to subscribe to push notifications in a group mailbox.
+        /// </summary>
+        /// <param name="asyncResult">An IAsyncResult that references the asynchronous request.</param>
+        /// <returns>A PushSubscription representing the new subscription.</returns>
+        public PushSubscription EndSubscribeToGroupPushNotifications(IAsyncResult asyncResult)
         {
             var request = AsyncRequestResult.ExtractServiceRequest<SubscribeToPushNotificationsRequest>(this, asyncResult);
 
@@ -2544,6 +2625,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="frequency">The frequency, in minutes, at which the Exchange server should contact the Web Service endpoint. Frequency must be between 1 and 1440.</param>
         /// <param name="watermark">An optional watermark representing a previously opened subscription.</param>
         /// <param name="callerData">Optional caller data that will be returned the call back.</param>
+        /// <param name="anchorMailbox">The smtpaddress of the mailbox to subscribe to.</param>
         /// <param name="eventTypes">The event types to subscribe to.</param>
         /// <returns>A request to request to subscribe to push notifications in the authenticated user's mailbox.</returns>
         private SubscribeToPushNotificationsRequest BuildSubscribeToPushNotificationsRequest(
@@ -2552,6 +2634,7 @@ namespace Microsoft.Exchange.WebServices.Data
             int frequency,
             string watermark,
             string callerData,
+            string anchorMailbox,
             EventType[] eventTypes)
         {
             EwsUtilities.ValidateParam(url, "url");
@@ -2564,6 +2647,7 @@ namespace Microsoft.Exchange.WebServices.Data
             EwsUtilities.ValidateParamCollection(eventTypes, "eventTypes");
 
             SubscribeToPushNotificationsRequest request = new SubscribeToPushNotificationsRequest(this);
+            request.AnchorMailbox = anchorMailbox;
 
             if (folderIds != null)
             {
@@ -5446,16 +5530,7 @@ namespace Microsoft.Exchange.WebServices.Data
             Uri endpoint = this.Url;
             this.RegisterCustomBasicAuthModule();
 
-            if (this.RenderingMethod == RenderingMode.JSON)
-            {
-                endpoint = new Uri(
-                    endpoint,
-                    String.Format("{0}/{1}{2}", endpoint.AbsolutePath, methodName, endpoint.Query));
-            }
-            else 
-            {
-                endpoint = this.AdjustServiceUriFromCredentials(endpoint);
-            }
+            endpoint = this.AdjustServiceUriFromCredentials(endpoint);
 
             IEwsHttpWebRequest request = this.PrepareHttpWebRequestForUrl(
                 endpoint,
@@ -5476,20 +5551,8 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="request">The request.</param>
         internal override void SetContentType(IEwsHttpWebRequest request)
         {
-            if (this.renderingMode == RenderingMode.Xml)
-            {
-                request.ContentType = "text/xml; charset=utf-8";
-                request.Accept = "text/xml";
-            }
-            else if (this.renderingMode == RenderingMode.JSON)
-            {
-                request.ContentType = "application/json; charset=utf-8";
-                request.Accept = "application/json";
-            }
-            else
-            {
-                base.SetContentType(request);
-            }
+            request.ContentType = "text/xml; charset=utf-8";
+            request.Accept = "text/xml";
         }
 
         /// <summary>
@@ -5627,15 +5690,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Gets or sets the method by which the service will serialize the request.
-        /// </summary>
-        internal ExchangeService.RenderingMode RenderingMethod
-        {
-            get { return this.renderingMode; }
-            set { this.renderingMode = value; }
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether trace output is pretty printed.
         /// </summary>
         public bool TraceEnablePrettyPrinting
@@ -5661,24 +5715,6 @@ namespace Microsoft.Exchange.WebServices.Data
             }
         }
 
-        #endregion
-
-        #region Private enums
-        /// <summary>
-        /// The rendering method.
-        /// </summary>
-        public enum RenderingMode
-        {
-            /// <summary>
-            /// XML
-            /// </summary>
-            Xml,
-
-            /// <summary>
-            /// Javascript Object Notation
-            /// </summary>
-            JSON
-        }
         #endregion
     }
 }

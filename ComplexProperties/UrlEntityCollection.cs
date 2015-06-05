@@ -66,15 +66,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates the default complex property.
-        /// </summary>
-        /// <returns>UrlEntity.</returns>
-        internal override UrlEntity CreateDefaultComplexProperty()
-        {
-            return new UrlEntity();
-        }
-
-        /// <summary>
         /// Gets the name of the collection item XML element.
         /// </summary>
         /// <param name="complexProperty">The complex property.</param>

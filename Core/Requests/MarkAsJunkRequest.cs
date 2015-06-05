@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Definition for MarkAsJunkRequest
     /// </summary>
-    internal sealed class MarkAsJunkRequest : MultiResponseServiceRequest<MarkAsJunkResponse>, IJsonSerializable
+    internal sealed class MarkAsJunkRequest : MultiResponseServiceRequest<MarkAsJunkResponse>
     {
         private ItemIdWrapperList itemIds = new ItemIdWrapperList();
 
@@ -119,20 +119,6 @@ namespace Microsoft.Exchange.WebServices.Data
         internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
         {
             this.itemIds.WriteToXml(writer, XmlNamespace.Messages, XmlElementNames.ItemIds);
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-            jsonRequest.Add(XmlElementNames.ItemIds, this.ItemIds.InternalToJson(service));
-            return jsonRequest;
         }
 
         /// <summary>

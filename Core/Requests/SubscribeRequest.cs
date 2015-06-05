@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// Represents an abstract Subscribe request.
     /// </summary>
     /// <typeparam name="TSubscription">The type of the subscription.</typeparam>
-    internal abstract class SubscribeRequest<TSubscription> : MultiResponseServiceRequest<SubscribeResponse<TSubscription>>, IJsonSerializable
+    internal abstract class SubscribeRequest<TSubscription> : MultiResponseServiceRequest<SubscribeResponse<TSubscription>>
         where TSubscription : SubscriptionBase
     {
         /// <summary>
@@ -150,50 +150,6 @@ namespace Microsoft.Exchange.WebServices.Data
 
             writer.WriteEndElement();
         }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-
-            JsonObject jsonSubscribeRequest = new JsonObject();
-
-            jsonSubscribeRequest.AddTypeParameter(this.GetSubscriptionXmlElementName());
-            jsonSubscribeRequest.Add(XmlElementNames.EventTypes, this.EventTypes.ToArray());
-
-            if (this.FolderIds.Count > 0)
-            {
-                jsonSubscribeRequest.Add(XmlElementNames.FolderIds, this.FolderIds.InternalToJson(service));
-            }
-            else
-            {
-                jsonSubscribeRequest.Add(XmlAttributeNames.SubscribeToAllFolders, true);
-            }
-
-            if (!string.IsNullOrEmpty(this.Watermark))
-            {
-                jsonSubscribeRequest.Add(XmlElementNames.Watermark, this.Watermark);
-            }
-
-            this.AddJsonProperties(jsonSubscribeRequest, service);
-
-            jsonRequest.Add(XmlElementNames.SubscriptionRequest, jsonSubscribeRequest);
-
-            return jsonRequest;
-        }
-
-        /// <summary>
-        /// Adds the json properties.
-        /// </summary>
-        /// <param name="jsonSubscribeRequest">The json subscribe request.</param>
-        /// <param name="service">The service.</param>
-        internal abstract void AddJsonProperties(JsonObject jsonSubscribeRequest, ExchangeService service);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscribeRequest&lt;TSubscription&gt;"/> class.

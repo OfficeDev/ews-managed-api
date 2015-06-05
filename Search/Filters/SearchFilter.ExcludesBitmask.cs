@@ -92,18 +92,6 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             /// <summary>
-            /// Loads from json.
-            /// </summary>
-            /// <param name="jsonProperty">The json property.</param>
-            /// <param name="service">The service.</param>
-            internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-            {
-                base.LoadFromJson(jsonProperty, service);
-
-                this.bitmask = Convert.ToInt32(jsonProperty.ReadAsJsonObject(XmlElementNames.Bitmask).ReadAsString(XmlElementNames.Value), 16);
-            }
-
-            /// <summary>
             /// Writes the elements to XML.
             /// </summary>
             /// <param name="writer">The writer.</param>
@@ -114,21 +102,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 writer.WriteStartElement(XmlNamespace.Types, XmlElementNames.Bitmask);
                 writer.WriteAttributeValue(XmlAttributeNames.Value, this.Bitmask);
                 writer.WriteEndElement(); // Bitmask
-            }
-
-            /// <summary>
-            /// Internals to json.
-            /// </summary>
-            /// <param name="service">The service.</param>
-            /// <returns></returns>
-            internal override object InternalToJson(ExchangeService service)
-            {
-                JsonObject jsonfilter = base.InternalToJson(service) as JsonObject;
-
-                JsonObject jsonBitmask = new JsonObject();
-                jsonBitmask.Add(XmlElementNames.Value, "0x" + this.Bitmask.ToString("X", System.Globalization.CultureInfo.InvariantCulture));
-
-                return jsonfilter;
             }
 
             /// <summary>

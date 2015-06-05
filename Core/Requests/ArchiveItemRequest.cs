@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a ArchiveItem request.
     /// </summary>
-    internal class ArchiveItemRequest : MultiResponseServiceRequest<ArchiveItemResponse>, IJsonSerializable
+    internal class ArchiveItemRequest : MultiResponseServiceRequest<ArchiveItemResponse>
     {
         /// <summary>
         /// Source folder id
@@ -161,34 +161,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 writer,
                 XmlNamespace.Messages,
                 XmlElementNames.ItemIds);
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonObject = new JsonObject();
-            
-            jsonObject.Add(XmlElementNames.ArchiveSourceFolderId, this.SourceFolderId.InternalToJson(service));
-
-            this.AddIdsToJson(jsonObject, service);
-
-            return jsonObject;
-        }
-
-        /// <summary>
-        /// Adds the ids to json.
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        /// <param name="service">The service.</param>
-        internal void AddIdsToJson(JsonObject jsonObject, ExchangeService service)
-        {
-            jsonObject.Add(XmlElementNames.ItemIds, this.Ids.InternalToJson(service));
         }
     }
 }

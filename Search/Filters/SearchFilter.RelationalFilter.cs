@@ -131,27 +131,6 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             /// <summary>
-            /// Loads from json.
-            /// </summary>
-            /// <param name="jsonProperty">The json property.</param>
-            /// <param name="service">The service.</param>
-            internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-            {
-                base.LoadFromJson(jsonProperty, service);
-
-                JsonObject jsonFieldUriOrConstant = jsonProperty.ReadAsJsonObject(XmlElementNames.FieldURIOrConstant).ReadAsJsonObject(XmlElementNames.Item);
-
-                if (jsonFieldUriOrConstant.ReadTypeString() == XmlElementNames.Constant)
-                {
-                    this.value = jsonFieldUriOrConstant[XmlElementNames.Value];
-                }
-                else
-                {
-                    this.otherPropertyDefinition = PropertyDefinitionBase.TryLoadFromJson(jsonProperty);
-                }
-            }
-
-            /// <summary>
             /// Writes the elements to XML.
             /// </summary>
             /// <param name="writer">The writer.</param>
@@ -173,35 +152,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 }
 
                 writer.WriteEndElement(); // FieldURIOrConstant
-            }
-
-            /// <summary>
-            /// Serializes the property to a Json value.
-            /// </summary>
-            /// <param name="service">The service.</param>
-            /// <returns>
-            /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-            /// </returns>
-            internal override object InternalToJson(ExchangeService service)
-            {
-                JsonObject jsonFilter = base.InternalToJson(service) as JsonObject;
-                JsonObject jsonFieldUriOrConstant = new JsonObject();
-
-                if (this.Value != null)
-                {
-                    JsonObject jsonConstant = new JsonObject();
-                    jsonConstant.Add(XmlElementNames.Value, this.Value);
-                    jsonConstant.AddTypeParameter(XmlElementNames.Constant);
-                    jsonFieldUriOrConstant.Add(XmlElementNames.Item, jsonConstant);
-                }
-                else
-                {
-                    jsonFieldUriOrConstant.Add(XmlElementNames.Item, ((IJsonSerializable)this.OtherPropertyDefinition).ToJson(service));
-                }
-
-                jsonFilter.Add(XmlElementNames.FieldURIOrConstant, jsonFieldUriOrConstant);
-
-                return jsonFilter;
             }
 
             /// <summary>

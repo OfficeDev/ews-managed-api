@@ -155,34 +155,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service"></param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.Bias:
-                        this.bias = TimeSpan.FromMinutes(jsonProperty.ReadAsInt(key));
-                        break;
-                    case XmlElementNames.StandardTime:
-                        this.standardTime = new LegacyAvailabilityTimeZoneTime();
-                        this.standardTime.LoadFromJson(jsonProperty.ReadAsJsonObject(key), service);
-                        break;
-                    case XmlElementNames.DaylightTime:
-                        this.daylightTime = new LegacyAvailabilityTimeZoneTime();
-                        this.daylightTime.LoadFromJson(jsonProperty.ReadAsJsonObject(key), service);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes the elements to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -195,24 +167,6 @@ namespace Microsoft.Exchange.WebServices.Data
 
             this.standardTime.WriteToXml(writer, XmlElementNames.StandardTime);
             this.daylightTime.WriteToXml(writer, XmlElementNames.DaylightTime);
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service"></param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            jsonProperty.Add(XmlElementNames.Bias, (int)this.bias.TotalMinutes);
-            jsonProperty.Add(XmlElementNames.StandardTime, this.standardTime.InternalToJson(service));
-            jsonProperty.Add(XmlElementNames.DaylightTime, this.daylightTime.InternalToJson(service));
-
-            return jsonProperty;
         }
     }
 }

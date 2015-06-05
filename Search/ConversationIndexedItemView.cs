@@ -74,15 +74,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Gets the name of the view json type.
-        /// </summary>
-        /// <returns></returns>
-        internal override string GetViewJsonTypeName()
-        {
-            return "IndexedPageView";
-        }
-
-        /// <summary>
         /// Validates this view.
         /// </summary>
         /// <param name="request">The request using this view.</param>
@@ -118,26 +109,6 @@ namespace Microsoft.Exchange.WebServices.Data
         internal override void WriteOrderByToXml(EwsServiceXmlWriter writer)
         {
             this.orderBy.WriteToXml(writer, XmlElementNames.SortOrder);
-        }
-
-        /// <summary>
-        /// Adds the json properties.
-        /// </summary>
-        /// <param name="jsonRequest">The json request.</param>
-        /// <param name="service">The service.</param>
-        internal override void AddJsonProperties(JsonObject jsonRequest, ExchangeService service)
-        {
-            jsonRequest.Add(XmlElementNames.SortOrder, ((IJsonSerializable)this.orderBy).ToJson(service));
-
-            if (this.Traversal.HasValue)
-            {
-                jsonRequest.Add(XmlAttributeNames.Traversal, this.Traversal);
-            }
-
-            if (this.ViewFilter.HasValue)
-            {
-                jsonRequest.Add(XmlAttributeNames.ViewFilter, this.ViewFilter);
-            }
         }
 
         /// <summary>

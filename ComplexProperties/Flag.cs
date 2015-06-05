@@ -71,35 +71,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.FlagStatus:
-                        this.flagStatus = jsonProperty.ReadEnumValue<ItemFlagStatus>(key);
-                        break;
-                    case XmlElementNames.StartDate:
-                        this.startDate = service.ConvertUniversalDateTimeStringToLocalDateTime(jsonProperty.ReadAsString(key)).Value;
-                        break;
-                    case XmlElementNames.DueDate:
-                        this.dueDate = service.ConvertUniversalDateTimeStringToLocalDateTime(jsonProperty.ReadAsString(key)).Value;
-                        break;
-                    case XmlElementNames.CompleteDate:
-                        this.completeDate = service.ConvertUniversalDateTimeStringToLocalDateTime(jsonProperty.ReadAsString(key)).Value;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes elements to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -107,40 +78,15 @@ namespace Microsoft.Exchange.WebServices.Data
         {
             writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.FlagStatus, this.FlagStatus);
 
-            if (this.FlagStatus == ItemFlagStatus.Flagged && this.StartDate != null && this.DueDate != null)
+            if (this.FlagStatus == ItemFlagStatus.Flagged)
             {
                 writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.StartDate, this.StartDate);
                 writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.DueDate, this.DueDate);
             }
-            else if (this.FlagStatus == ItemFlagStatus.Complete && this.CompleteDate != null)
+            else if (this.FlagStatus == ItemFlagStatus.Complete)
             {
                 writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.CompleteDate, this.CompleteDate);
             }
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonObject = new JsonObject();
-
-            jsonObject.Add(XmlElementNames.FlagStatus, this.FlagStatus);
-            if (this.FlagStatus == ItemFlagStatus.Flagged && this.StartDate != null && this.DueDate != null)
-            {
-                jsonObject.Add(XmlElementNames.StartDate, this.StartDate);
-                jsonObject.Add(XmlElementNames.DueDate, this.DueDate);
-            }
-            else if (this.FlagStatus == ItemFlagStatus.Complete && this.CompleteDate != null)
-            {
-                jsonObject.Add(XmlElementNames.CompleteDate, this.CompleteDate);
-            }
-
-            return jsonObject;
         }
 
         /// <summary>

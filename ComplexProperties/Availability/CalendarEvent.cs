@@ -106,39 +106,5 @@ namespace Microsoft.Exchange.WebServices.Data
                     return false;
             }
         }
-
-        /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service"></param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.StartTime:
-                        this.startTime = EwsUtilities.ParseAsUnbiasedDatetimescopedToServicetimeZone(
-                            jsonProperty.ReadAsString(key),
-                            service);
-                        break;
-                    case XmlElementNames.EndTime:
-                        this.endTime = EwsUtilities.ParseAsUnbiasedDatetimescopedToServicetimeZone(
-                            jsonProperty.ReadAsString(key),
-                            service);
-                        break;
-                    case XmlElementNames.BusyType:
-                        this.freeBusyStatus = jsonProperty.ReadEnumValue<LegacyFreeBusyStatus>(key);
-                        break;
-                    case XmlElementNames.CalendarEventDetails:
-                        this.details = new CalendarEventDetails();
-                        this.details.LoadFromJson(jsonProperty.ReadAsJsonObject(key), service);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
     }
 }

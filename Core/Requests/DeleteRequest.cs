@@ -33,7 +33,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// Represents an abstract Delete request.
     /// </summary>
     /// <typeparam name="TResponse">The type of the response.</typeparam>
-    internal abstract class DeleteRequest<TResponse> : MultiResponseServiceRequest<TResponse>, IJsonSerializable
+    internal abstract class DeleteRequest<TResponse> : MultiResponseServiceRequest<TResponse>
         where TResponse : ServiceResponse
     {
         /// <summary>
@@ -61,26 +61,6 @@ namespace Microsoft.Exchange.WebServices.Data
 
             writer.WriteAttributeValue(XmlAttributeNames.DeleteType, this.DeleteMode);
         }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject body = new JsonObject();
-
-            body.Add(XmlAttributeNames.DeleteType, this.DeleteMode.ToString());
-
-            this.InternalToJson(body);
-
-            return body;
-        }
-
-        protected abstract void InternalToJson(JsonObject body);
 
         /// <summary>
         /// Gets or sets the delete mode.

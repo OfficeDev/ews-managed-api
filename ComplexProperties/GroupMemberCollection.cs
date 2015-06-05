@@ -297,24 +297,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Writes the set update to json.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="ewsObject">The ews object.</param>
-        /// <param name="propertyDefinition">The property definition.</param>
-        /// <param name="updates">The updates.</param>
-        /// <returns></returns>
-        bool ICustomUpdateSerializer.WriteSetUpdateToJson(
-             ExchangeService service,
-             ServiceObject ewsObject,
-             PropertyDefinition propertyDefinition,
-             List<JsonObject> updates)
-        {
-            // TODO: Implement
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Writes the deletion update to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -326,32 +308,11 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Writes the delete update to json.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="ewsObject">The ews object.</param>
-        /// <param name="updates">The updates.</param>
-        /// <returns></returns>
-        bool ICustomUpdateSerializer.WriteDeleteUpdateToJson(ExchangeService service, ServiceObject ewsObject, List<JsonObject> updates)
-        {
-            return false;
-        }
-
-        /// <summary>
         /// Creates a GroupMember object from an XML element name.
         /// </summary>
         /// <param name="xmlElementName">The XML element name from which to create the e-mail address.</param>
         /// <returns>An GroupMember object.</returns>
         internal override GroupMember CreateComplexProperty(string xmlElementName)
-        {
-            return new GroupMember();
-        }
-
-        /// <summary>
-        /// Creates the default complex property.
-        /// </summary>
-        /// <returns>An GroupMember object.</returns>
-        internal override GroupMember CreateDefaultComplexProperty()
         {
             return new GroupMember();
         }

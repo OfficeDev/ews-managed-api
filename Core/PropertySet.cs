@@ -490,24 +490,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Writes the additional properties to json.
-        /// </summary>
-        /// <param name="jsonItemShape">The json attachment shape.</param>
-        /// <param name="service">The service.</param>
-        /// <param name="propertyDefinitions">The property definitions.</param>
-        internal static void WriteAdditionalPropertiesToJson(JsonObject jsonItemShape, ExchangeService service, IEnumerable<PropertyDefinitionBase> propertyDefinitions)
-        {
-            List<object> additionalProperties = new List<object>();
-            
-            foreach (PropertyDefinitionBase propertyDefinition in propertyDefinitions)
-            {
-                additionalProperties.Add(((IJsonSerializable)propertyDefinition).ToJson(service));
-            }
-
-            jsonItemShape.Add(XmlElementNames.AdditionalProperties, additionalProperties.ToArray());
-        }
-
-        /// <summary>
         /// Validates this property set.
         /// </summary>
         internal void InternalValidate()
@@ -730,71 +712,6 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             writer.WriteEndElement(); // Item/FolderShape
-        }
-
-        /// <summary>
-        /// Writes the get shape to json.
-        /// </summary>
-        /// <param name="jsonRequest">The json request.</param>
-        /// <param name="service">The service.</param>
-        /// <param name="serviceObjectType">Type of the service object.</param>
-        internal void WriteGetShapeToJson(JsonObject jsonRequest, ExchangeService service, ServiceObjectType serviceObjectType)
-        {
-            string shapeName = GetShapeName(serviceObjectType);
-
-            JsonObject jsonShape = new JsonObject();
-
-            jsonShape.Add(XmlElementNames.BaseShape, defaultPropertySetMap.Member[this.BasePropertySet]);
-
-            if (serviceObjectType == ServiceObjectType.Item)
-            {
-                if (this.RequestedBodyType.HasValue)
-                {
-                    jsonShape.Add(XmlElementNames.BodyType, this.RequestedBodyType.Value);
-                }
-
-                if (this.FilterHtmlContent.HasValue)
-                {
-                    jsonShape.Add(XmlElementNames.FilterHtmlContent, this.FilterHtmlContent.Value);
-                }
-
-                if (this.ConvertHtmlCodePageToUTF8.HasValue &&
-                    service.RequestedServerVersion >= ExchangeVersion.Exchange2010_SP1)
-                {
-                    jsonShape.Add(XmlElementNames.ConvertHtmlCodePageToUTF8, this.ConvertHtmlCodePageToUTF8.Value);
-                }
-
-                if (!string.IsNullOrEmpty(this.InlineImageUrlTemplate) &&
-                    service.RequestedServerVersion >= ExchangeVersion.Exchange2013)
-                {
-                    jsonShape.Add(XmlElementNames.InlineImageUrlTemplate, this.InlineImageUrlTemplate);
-                }
-
-                if (this.BlockExternalImages.HasValue &&
-                    service.RequestedServerVersion >= ExchangeVersion.Exchange2013)
-                {
-                    jsonShape.Add(XmlElementNames.BlockExternalImages, this.BlockExternalImages.Value);
-                }
-
-                if (this.AddBlankTargetToLinks.HasValue &&
-                    service.RequestedServerVersion >= ExchangeVersion.Exchange2013)
-                {
-                    jsonShape.Add(XmlElementNames.AddBlankTargetToLinks, this.AddBlankTargetToLinks.Value);
-                }
-
-                if (this.MaximumBodySize.HasValue &&
-                    service.RequestedServerVersion >= ExchangeVersion.Exchange2013)
-                {
-                    jsonShape.Add(XmlElementNames.MaximumBodySize, this.MaximumBodySize.Value);
-                }
-            }
-
-            if (this.additionalProperties.Count > 0)
-            {
-                WriteAdditionalPropertiesToJson(jsonShape, service, this.additionalProperties);
-            }
-
-            jsonRequest.Add(shapeName, jsonShape);
         }
 
         #region IEnumerable<PropertyDefinitionBase> Members

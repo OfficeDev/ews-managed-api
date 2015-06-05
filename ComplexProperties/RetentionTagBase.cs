@@ -94,29 +94,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlAttributeNames.IsExplicit:
-                        this.isExplicit = jsonProperty.ReadAsBool(key);
-                        break;
-                    case JsonObject.JsonValueString:
-                        this.retentionId = new Guid(jsonProperty.ReadAsString(key));
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes attributes to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -131,31 +108,10 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="writer">The writer.</param>
         internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
         {
-            if (this.retentionId != null && this.retentionId != Guid.Empty)
+            if (this.retentionId != Guid.Empty)
             {
                 writer.WriteValue(this.retentionId.ToString(), this.xmlElementName);
             }
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service"></param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            jsonProperty.Add(XmlAttributeNames.IsExplicit, this.isExplicit);
-
-            if (this.retentionId != null && this.retentionId != Guid.Empty)
-            {
-                jsonProperty.Add(JsonObject.JsonValueString, this.retentionId);
-            }
-
-            return jsonProperty;
         }
 
         #region Object method overrides
@@ -168,7 +124,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </returns>
         public override string ToString()
         {
-            if (this.retentionId == null || this.retentionId == Guid.Empty)
+            if (this.retentionId == Guid.Empty)
             {
                 return string.Empty;
             }

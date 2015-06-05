@@ -88,33 +88,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service"></param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            this.AddPropertiesToJson(jsonProperty, service);
-
-            return jsonProperty;
-        }
-
-        /// <summary>
-        /// Adds the properties to json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal virtual void AddPropertiesToJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            jsonProperty.AddTypeParameter(this.XmlElementName);
-            jsonProperty.Add(XmlElementNames.StartDate, EwsUtilities.DateTimeToXSDate(this.StartDate));
-        }
-
-        /// <summary>
         /// Tries to read element from XML.
         /// </summary>
         /// <param name="reader">The reader.</param>
@@ -136,33 +109,6 @@ namespace Microsoft.Exchange.WebServices.Data
 
                 default:
                     return false;
-            }
-        }
-
-        /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            base.LoadFromJson(jsonProperty, service);
-
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.StartDate:
-
-                        DateTime? startDate = service.ConvertStartDateToUnspecifiedDateTime(jsonProperty.ReadAsString(key));
-                        if (startDate.HasValue)
-                        {
-                            this.startDate = startDate.Value;
-                        }
-                        break;
-                    default:
-                        break;
-                }
             }
         }
 

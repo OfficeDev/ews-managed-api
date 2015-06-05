@@ -82,38 +82,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Reads response elements from Json.
-        /// </summary>
-        /// <param name="responseObject">The response object.</param>
-        /// <param name="service">The service.</param>
-        internal override void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            object[] attachmentsArray;
-            if (responseObject.ContainsKey(XmlElementNames.Attachments) &&
-                (attachmentsArray = responseObject.ReadAsArray(XmlElementNames.Attachments)).Length > 0)
-            {
-                JsonObject attachmentArrayJsonObject = attachmentsArray[0] as JsonObject;
-                
-                if (this.attachment == null && attachmentArrayJsonObject != null)
-                {
-                    if (attachmentArrayJsonObject.ContainsKey(XmlElementNames.FileAttachment))
-                    {
-                        this.attachment = new FileAttachment(service);
-                    }
-                    else if (attachmentArrayJsonObject.ContainsKey(XmlElementNames.ItemAttachment))
-                    {
-                        this.attachment = new ItemAttachment(service);
-                    }
-                }
-
-                if (this.attachment != null)
-                {
-                    this.attachment.LoadFromJson(attachmentArrayJsonObject, service);
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets the attachment that was retrieved.
         /// </summary>
         public Attachment Attachment

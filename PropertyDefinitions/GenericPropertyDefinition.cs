@@ -110,17 +110,5 @@ namespace Microsoft.Exchange.WebServices.Data
         {
             get { return this.IsNullable ? typeof(Nullable<TPropertyValue>) : typeof(TPropertyValue); }
         }
-        
-        /// <summary>
-        /// Writes the json value.
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        /// <param name="propertyBag">The property bag.</param>
-        /// <param name="service">The service.</param>
-        /// <param name="isUpdateOperation">if set to <c>true</c> [is update operation].</param>
-        internal override void WriteJsonValue(JsonObject jsonObject, PropertyBag propertyBag, ExchangeService service, bool isUpdateOperation)
-        {
-            jsonObject.Add(this.XmlElementName, propertyBag[this]);
-        }
     }
 }

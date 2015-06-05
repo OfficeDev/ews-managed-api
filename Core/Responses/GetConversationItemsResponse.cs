@@ -61,16 +61,5 @@ namespace Microsoft.Exchange.WebServices.Data
             reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.Conversation);
             this.Conversation.LoadFromXml(reader, XmlNamespace.Messages, XmlElementNames.Conversation);
         }
-
-        /// <summary>
-        /// Reads response elements from Json.
-        /// </summary>
-        /// <param name="responseObject">The response object.</param>
-        /// <param name="service">The service.</param>
-        internal override void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            this.Conversation = new ConversationResponse(this.propertySet);
-            this.Conversation.LoadFromJson(responseObject.ReadAsJsonObject(XmlElementNames.Conversation), service);
-        }
     }
 }

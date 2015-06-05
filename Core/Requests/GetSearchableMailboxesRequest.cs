@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a GetSearchableMailboxesRequest request.
     /// </summary>
-    internal sealed class GetSearchableMailboxesRequest : SimpleServiceRequestBase, IJsonSerializable
+    internal sealed class GetSearchableMailboxesRequest : SimpleServiceRequestBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetSearchableMailboxesRequest"/> class.
@@ -100,20 +100,6 @@ namespace Microsoft.Exchange.WebServices.Data
         {
             GetSearchableMailboxesResponse serviceResponse = (GetSearchableMailboxesResponse)this.InternalExecute();
             return serviceResponse;
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonObject = new JsonObject();
-
-            return jsonObject;
         }
 
         /// <summary>

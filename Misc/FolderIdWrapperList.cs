@@ -112,25 +112,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal object InternalToJson(ExchangeService service)
-        {
-            List<object> jsonArray = new List<object>();
-
-            foreach (AbstractFolderIdWrapper folderIdWrapper in this.ids)
-            {
-                jsonArray.Add(((IJsonSerializable)folderIdWrapper).ToJson(service));
-            }
-
-            return jsonArray.ToArray();
-        }
-
-        /// <summary>
         /// Gets the id count.
         /// </summary>
         /// <value>The count.</value>

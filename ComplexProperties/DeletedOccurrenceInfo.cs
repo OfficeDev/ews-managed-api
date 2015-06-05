@@ -66,19 +66,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service"></param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            if (jsonProperty.ContainsKey(XmlElementNames.Start))
-            {
-                this.originalStart = service.ConvertUniversalDateTimeStringToLocalDateTime(jsonProperty.ReadAsString(XmlElementNames.Start)).Value;
-            }
-        }
-
-        /// <summary>
         /// Gets the original start date and time of the deleted occurrence.
         /// </summary>
         public DateTime OriginalStart

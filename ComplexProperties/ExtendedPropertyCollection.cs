@@ -46,15 +46,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates the default complex property.
-        /// </summary>
-        /// <returns></returns>
-        internal override ExtendedProperty CreateDefaultComplexProperty()
-        {
-            return new ExtendedProperty();
-        }
-
-        /// <summary>
         /// Gets the name of the collection item XML element.
         /// </summary>
         /// <param name="complexProperty">The complex property.</param>
@@ -89,23 +80,6 @@ namespace Microsoft.Exchange.WebServices.Data
             {
                 extendedProperty.WriteToXml(writer, XmlElementNames.ExtendedProperty);
             }
-        }
-
-        /// <summary>
-        /// Internals to json.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns></returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            List<object> values = new List<object>();
-
-            foreach (ExtendedProperty extendedProperty in this)
-            {
-                values.Add(extendedProperty.InternalToJson(service));
-            }
-
-            return values.ToArray();
         }
 
         /// <summary>
@@ -243,42 +217,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Writes the set update to json.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="ewsObject">The ews object.</param>
-        /// <param name="propertyDefinition">The property definition.</param>
-        /// <param name="updates">The updates.</param>
-        /// <returns></returns>
-        bool ICustomUpdateSerializer.WriteSetUpdateToJson(
-             ExchangeService service,
-             ServiceObject ewsObject,
-             PropertyDefinition propertyDefinition,
-             List<JsonObject> updates)
-        {
-            List<ExtendedProperty> propertiesToSet = new List<ExtendedProperty>();
-
-            propertiesToSet.AddRange(this.AddedItems);
-            propertiesToSet.AddRange(this.ModifiedItems);
-
-            foreach (ExtendedProperty extendedProperty in propertiesToSet)
-            {
-                updates.Add(
-                    PropertyBag.CreateJsonSetUpdate(
-                    extendedProperty,
-                    service,
-                    ewsObject));
-            }
-
-            foreach (ExtendedProperty extendedProperty in this.RemovedItems)
-            {
-                updates.Add(PropertyBag.CreateJsonDeleteUpdate(extendedProperty.PropertyDefinition, service, ewsObject));
-            }
-
-            return true;
-        }
-
-        /// <summary>
         /// Writes the deletion update to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -293,23 +231,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 writer.WriteStartElement(XmlNamespace.Types, ewsObject.GetDeleteFieldXmlElementName());
                 extendedProperty.PropertyDefinition.WriteToXml(writer);
                 writer.WriteEndElement();
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Writes the delete update to json.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="ewsObject">The ews object.</param>
-        /// <param name="updates">The updates.</param>
-        /// <returns></returns>
-        bool ICustomUpdateSerializer.WriteDeleteUpdateToJson(ExchangeService service, ServiceObject ewsObject, List<JsonObject> updates)
-        {
-            foreach (ExtendedProperty extendedProperty in this.Items)
-            {
-                updates.Add(PropertyBag.CreateJsonDeleteUpdate(extendedProperty.PropertyDefinition, service, ewsObject));
             }
 
             return true;

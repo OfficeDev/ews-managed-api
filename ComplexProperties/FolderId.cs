@@ -108,35 +108,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service"></param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            if (this.FolderName.HasValue)
-            {
-                JsonObject jsonProperty = new JsonObject();
-
-                jsonProperty.AddTypeParameter(this.GetXmlElementName());
-                jsonProperty.Add(XmlAttributeNames.Id, this.FolderName.Value.ToString().ToLowerInvariant());
-
-                if (this.Mailbox != null)
-                {
-                    jsonProperty.Add(XmlElementNames.Mailbox, this.Mailbox.InternalToJson(service));
-                }
-
-                return jsonProperty;
-            }
-            else
-            {
-                return base.InternalToJson(service);
-            }
-        }
-
-        /// <summary>
         /// Validates FolderId against a specified request version.
         /// </summary>
         /// <param name="version">The version.</param>

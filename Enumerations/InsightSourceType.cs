@@ -67,5 +67,11 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         [RequiredServerVersion(ExchangeVersion.Exchange2015)]
         Satori,
+
+        /// <summary>
+        /// The InsightSourceType represents the insight data source from O365.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
+        O365
     }
 }

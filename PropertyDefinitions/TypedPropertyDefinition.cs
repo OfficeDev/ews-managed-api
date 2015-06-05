@@ -134,26 +134,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads the property value from json.
-        /// </summary>
-        /// <param name="value">The JSON value.  Can be a JsonObject, string, number, bool, array, or null.</param>
-        /// <param name="service">The service.</param>
-        /// <param name="propertyBag">The property bag.</param>
-        internal override void LoadPropertyValueFromJson(object value, ExchangeService service, PropertyBag propertyBag)
-        {
-            string stringValue = value as string;
-
-            if (!string.IsNullOrEmpty(stringValue))
-            {
-                propertyBag[this] = this.Parse(stringValue);
-            }
-            else if (value != null)
-            {
-                propertyBag[this] = this.Parse(value.ToString());
-            }
-        }
-
-        /// <summary>
         /// Writes to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>

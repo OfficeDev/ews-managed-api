@@ -98,21 +98,6 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             /// <summary>
-            /// Patterns to json.
-            /// </summary>
-            /// <param name="service">The service.</param>
-            /// <returns></returns>
-            internal override JsonObject PatternToJson(ExchangeService service)
-            {
-                JsonObject jsonPattern = base.PatternToJson(service);
-
-                jsonPattern.Add(XmlElementNames.DaysOfWeek, this.DayOfTheWeek);
-                jsonPattern.Add(XmlElementNames.DayOfWeekIndex, this.DayOfTheWeekIndex);
-
-                return jsonPattern;
-            }
-
-            /// <summary>
             /// Tries to read element from XML.
             /// </summary>
             /// <param name="reader">The reader.</param>
@@ -140,31 +125,6 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             /// <summary>
-            /// Loads from json.
-            /// </summary>
-            /// <param name="jsonProperty">The json property.</param>
-            /// <param name="service">The service.</param>
-            internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-            {
-                base.LoadFromJson(jsonProperty, service);
-
-                foreach (string key in jsonProperty.Keys)
-                {
-                    switch (key)
-                    {
-                        case XmlElementNames.DaysOfWeek:
-                            this.dayOfTheWeek = jsonProperty.ReadEnumValue<DayOfTheWeek>(key);
-                            break;
-                        case XmlElementNames.DayOfWeekIndex:
-                            this.dayOfTheWeekIndex = jsonProperty.ReadEnumValue<DayOfTheWeekIndex>(key);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-
-            /// <summary>
             /// Validates this instance.
             /// </summary>
             internal override void InternalValidate()
@@ -180,6 +140,20 @@ namespace Microsoft.Exchange.WebServices.Data
                 {
                     throw new ServiceValidationException(Strings.DayOfWeekIndexMustBeSpecifiedForRecurrencePattern);
                 }
+            }
+
+            /// <summary>
+            /// Checks if two recurrence objects are identical. 
+            /// </summary>
+            /// <param name="otherRecurrence">The recurrence to compare this one to.</param>
+            /// <returns>true if the two recurrences are identical, false otherwise.</returns>
+            public override bool IsSame(Recurrence otherRecurrence)
+            {
+                RelativeMonthlyPattern otherRelativeMonthlyPattern = (RelativeMonthlyPattern)otherRecurrence;
+
+                return base.IsSame(otherRecurrence) &&
+                       this.dayOfTheWeek == otherRelativeMonthlyPattern.dayOfTheWeek &&
+                       this.dayOfTheWeekIndex == otherRelativeMonthlyPattern.dayOfTheWeekIndex;
             }
 
             /// <summary>

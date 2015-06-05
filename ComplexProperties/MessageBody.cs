@@ -102,29 +102,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlAttributeNames.BodyType:
-                        this.bodyType = jsonProperty.ReadEnumValue<BodyType>(key);
-                        break;
-                    case JsonObject.JsonValueString:
-                        this.text = jsonProperty.ReadAsString(key);
-                        break;
-                    default:
-                        break; 
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes attributes to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -143,26 +120,6 @@ namespace Microsoft.Exchange.WebServices.Data
             {
                 writer.WriteValue(this.Text, XmlElementNames.Body);
             }
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            jsonProperty.Add(XmlAttributeNames.BodyType, this.BodyType);
-
-            if (!string.IsNullOrEmpty(this.Text))
-            {
-                jsonProperty.Add(JsonObject.JsonValueString, this.Text);
-            }
-            return jsonProperty;
         }
 
         /// <summary>

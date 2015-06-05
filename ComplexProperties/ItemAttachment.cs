@@ -154,32 +154,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service"></param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            base.LoadFromJson(jsonProperty, service);
-
-            if (jsonProperty.ContainsKey(XmlElementNames.Item))
-            {
-                JsonObject jsonItem = jsonProperty.ReadAsJsonObject(XmlElementNames.Item);
-
-                // skip this - "Item" : null
-                if (jsonItem != null)
-                {
-                    this.item = EwsUtilities.CreateItemFromXmlElementName(this, jsonItem.ReadTypeString());
-
-                    if (this.item != null)
-                    {
-                        this.item.LoadFromJson(jsonItem, service, true /* clearPropertyBag */);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes the properties of this object as XML elements.
         /// </summary>
         /// <param name="writer">The writer to write the elements to.</param>
@@ -188,22 +162,6 @@ namespace Microsoft.Exchange.WebServices.Data
             base.WriteElementsToXml(writer);
 
             this.Item.WriteToXml(writer);
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service"></param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonAttachment = base.InternalToJson(service) as JsonObject;
-
-            jsonAttachment.Add(XmlElementNames.Item, this.item.ToJson(service, false /* isUpdateOperation */) as JsonObject);
-
-            return jsonAttachment;
         }
 
         /// <summary>

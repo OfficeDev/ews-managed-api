@@ -275,31 +275,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service"></param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.Status:
-                        this.status = jsonProperty.ReadEnumValue<MemberStatus>(key);
-                        break;
-
-                    case XmlElementNames.Mailbox:
-                        this.AddressInformation = new EmailAddress();
-                        this.AddressInformation.LoadFromJson(jsonProperty.ReadAsJsonObject(key), service);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes the member key attribute to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -321,23 +296,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 writer,
                 XmlNamespace.Types,
                 XmlElementNames.Mailbox);
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service"></param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            jsonProperty.Add(XmlAttributeNames.Key, this.key);
-            jsonProperty.Add(XmlElementNames.Mailbox, this.AddressInformation.InternalToJson(service));
-
-            return jsonProperty;
         }
 
         /// <summary>

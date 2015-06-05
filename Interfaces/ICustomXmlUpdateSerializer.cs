@@ -51,32 +51,5 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="ewsObject">The ews object.</param>
         /// <returns>True if property generated serialization.</returns>
         bool WriteDeleteUpdateToXml(EwsServiceXmlWriter writer, ServiceObject ewsObject);
-
-        /// <summary>
-        /// Writes the update to Json.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="ewsObject">The ews object.</param>
-        /// <param name="propertyDefinition">Property definition.</param>
-        /// <param name="updates">The updates.</param>
-        /// <returns>
-        /// True if property generated serialization.
-        /// </returns>
-        bool WriteSetUpdateToJson(
-            ExchangeService service,
-            ServiceObject ewsObject,
-            PropertyDefinition propertyDefinition,
-            List<JsonObject> updates);
-
-        /// <summary>
-        /// Writes the deletion update to Json.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="ewsObject">The ews object.</param>
-        /// <param name="updates">The updates.</param>
-        /// <returns>
-        /// True if property generated serialization.
-        /// </returns>
-        bool WriteDeleteUpdateToJson(ExchangeService service, ServiceObject ewsObject, List<JsonObject> updates);
     }
 }

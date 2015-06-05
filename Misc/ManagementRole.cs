@@ -116,25 +116,5 @@ namespace Microsoft.Exchange.WebServices.Data
                 writer.WriteEndElement();
             }
         }
-
-        /// <summary>
-        /// ToJsonObject
-        /// </summary>
-        /// <returns></returns>
-        internal JsonObject ToJsonObject()
-        {
-            JsonObject managementRoleJsonObject = new JsonObject();
-            if (this.userRoles != null)
-            {
-                managementRoleJsonObject.Add(XmlElementNames.UserRoles, this.userRoles);
-            }
-
-            if (this.applicationRoles != null)
-            {
-                managementRoleJsonObject.Add(XmlElementNames.ApplicationRoles, this.applicationRoles);
-            }
-
-            return managementRoleJsonObject;
-        }
     }
 }

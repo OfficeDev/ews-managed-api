@@ -34,7 +34,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents an ordered collection of property definitions qualified with a sort direction.
     /// </summary>
-    public sealed class OrderByCollection : IEnumerable<PropertyDefinitionSortDirectionPair>, IJsonSerializable
+    public sealed class OrderByCollection : IEnumerable<PropertyDefinitionSortDirectionPair>
     {
         private List<PropertyDefinitionSortDirectionPair> propDefSortOrderPairList;
 
@@ -153,37 +153,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 }
 
                 writer.WriteEndElement();
-            }
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            if (this.Count > 0)
-            {
-                List<object> sortRestrictions = new List<object>();
-
-                foreach (PropertyDefinitionSortDirectionPair keyValuePair in this)
-                {
-                    JsonObject jsonSortRestriction = new JsonObject();
-
-                    jsonSortRestriction.Add(XmlAttributeNames.Order, keyValuePair.Value);
-                    jsonSortRestriction.Add("Path", ((IJsonSerializable)keyValuePair.Key).ToJson(service));
-
-                    sortRestrictions.Add(jsonSortRestriction);
-                }
-
-                return sortRestrictions.ToArray();
-            }
-            else
-            {
-                return null;
             }
         }
 

@@ -28,7 +28,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// 
     /// </summary>
-    public sealed class ConversationRequest : ComplexProperty, ISelfValidate, IJsonSerializable
+    public sealed class ConversationRequest : ComplexProperty, ISelfValidate
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ConversationRequest"/> class.
@@ -75,26 +75,6 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             writer.WriteEndElement();
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-            
-            jsonProperty.Add(XmlElementNames.ConversationId, this.ConversationId.InternalToJson(service));
-            if (!string.IsNullOrEmpty(this.SyncState))
-            {
-                jsonProperty.Add(XmlElementNames.SyncState, this.SyncState);
-            }
-
-            return jsonProperty;
         }
 
         /// <summary>

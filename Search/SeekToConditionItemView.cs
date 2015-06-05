@@ -80,11 +80,6 @@ namespace Microsoft.Exchange.WebServices.Data
             return XmlElementNames.SeekToConditionPageItemView;
         }
 
-        internal override string GetViewJsonTypeName()
-        {
-            return "SeekToConditionPageView";
-        }
-
         /// <summary>
         /// Validates this view.
         /// </summary>
@@ -113,25 +108,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Internals the write paging to json.
-        /// </summary>
-        /// <param name="jsonView">The json view.</param>
-        /// <param name="service">The service.</param>
-        internal override void InternalWritePagingToJson(JsonObject jsonView, ExchangeService service)
-        {
-            base.InternalWritePagingToJson(jsonView, service);
-            jsonView.Add(XmlAttributeNames.BasePoint, this.OffsetBasePoint);
-
-            if (this.Condition != null)
-            {
-                JsonObject jsonCondition = new JsonObject();
-                jsonCondition.Add(XmlElementNames.Item, this.Condition.InternalToJson(service));
-
-                jsonView.Add(XmlElementNames.Condition, jsonCondition);
-            }
-        }
-
-        /// <summary>
         /// Internals the write search settings to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -141,24 +117,6 @@ namespace Microsoft.Exchange.WebServices.Data
             if (groupBy != null)
             {
                 groupBy.WriteToXml(writer);
-            }
-        }
-
-        /// <summary>
-        /// Writes the grouping to json.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="groupBy"></param>
-        /// <returns></returns>
-        internal override object WriteGroupingToJson(ExchangeService service, Grouping groupBy)
-        {
-            if (groupBy != null)
-            {
-                return ((IJsonSerializable)groupBy).ToJson(service);
-            }
-            else
-            {
-                return null;
             }
         }
 
@@ -178,21 +136,6 @@ namespace Microsoft.Exchange.WebServices.Data
         internal override void WriteOrderByToXml(EwsServiceXmlWriter writer)
         {
             this.orderBy.WriteToXml(writer, XmlElementNames.SortOrder);
-        }
-
-        /// <summary>
-        /// Adds the json properties.
-        /// </summary>
-        /// <param name="jsonRequest">The json request.</param>
-        /// <param name="service">The service.</param>
-        internal override void AddJsonProperties(JsonObject jsonRequest, ExchangeService service)
-        {
-            if (this.serviceObjType == ServiceObjectType.Item)
-            {
-                jsonRequest.Add(XmlAttributeNames.Traversal, this.Traversal);
-            }
-
-            jsonRequest.Add(XmlElementNames.SortOrder, ((IJsonSerializable)this.orderBy).ToJson(service));
         }
 
         /// <summary>

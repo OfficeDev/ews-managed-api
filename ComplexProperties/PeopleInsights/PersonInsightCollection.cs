@@ -132,15 +132,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates the default complex property.
-        /// </summary>
-        /// <returns></returns>
-        internal override PersonInsight CreateDefaultComplexProperty()
-        {
-            return new PersonInsight();
-        }
-
-        /// <summary>
         /// Retrieves the XML element name corresponding to the provided PersonInsight object.
         /// </summary>
         /// <param name="insight">The PersonInsight object from which to determine the XML element name.</param>

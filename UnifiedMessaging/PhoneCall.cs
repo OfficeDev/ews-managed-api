@@ -127,35 +127,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service"></param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.PhoneCallState:
-                        this.state = jsonProperty.ReadEnumValue<PhoneCallState>(key);
-                        break;
-                    case XmlElementNames.ConnectionFailureCause:
-                        this.connectionFailureCause = jsonProperty.ReadEnumValue<ConnectionFailureCause>(key);
-                        break;
-                    case XmlElementNames.SIPResponseText:
-                        this.sipResponseText = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.SIPResponseCode:
-                        this.sipResponseCode = jsonProperty.ReadAsInt(key);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets a value indicating the last known state of this phone call.
         /// </summary>
         public PhoneCallState State

@@ -83,31 +83,12 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             /// <summary>
-            /// Loads from json.
-            /// </summary>
-            /// <param name="jsonProperty">The json property.</param>
-            /// <param name="service">The service.</param>
-            internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-            {
-                this.PropertyDefinition = PropertyDefinitionBase.TryLoadFromJson(jsonProperty.ReadAsJsonObject(XmlElementNames.Item));
-            }
-
-            /// <summary>
             /// Writes the elements to XML.
             /// </summary>
             /// <param name="writer">The writer.</param>
             internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
             {
                 this.PropertyDefinition.WriteToXml(writer);
-            }
-
-            internal override object InternalToJson(ExchangeService service)
-            {
-                JsonObject jsonFilter = base.InternalToJson(service) as JsonObject;
-
-                jsonFilter.Add(XmlElementNames.Item, ((IJsonSerializable)this.PropertyDefinition).ToJson(service));
-
-                return jsonFilter;
             }
 
             /// <summary>

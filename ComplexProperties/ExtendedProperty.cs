@@ -94,46 +94,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.ExtendedFieldURI:
-                        this.propertyDefinition = new ExtendedPropertyDefinition();
-                        this.propertyDefinition.LoadFromJson(jsonProperty.ReadAsJsonObject(key));
-                        break;
-                    case XmlElementNames.Value:
-                        EwsUtilities.Assert(
-                            this.PropertyDefinition != null,
-                            "ExtendedProperty.TryReadElementFromXml",
-                            "PropertyDefintion is missing");
-
-                        string stringValue = jsonProperty.ReadAsString(key);
-                        this.value = MapiTypeConverter.ConvertToValue(this.PropertyDefinition.MapiType, stringValue);
-                        break;
-                    case XmlElementNames.Values:
-                        EwsUtilities.Assert(
-                            this.PropertyDefinition != null,
-                            "ExtendedProperty.TryReadElementFromXml",
-                            "PropertyDefintion is missing");
-
-                        StringList stringList = new StringList(XmlElementNames.Value);
-                        ((IJsonCollectionDeserializer)stringList).CreateFromJsonCollection(jsonProperty.ReadAsArray(key), service);
-                        this.value = MapiTypeConverter.ConvertToValue(this.PropertyDefinition.MapiType, stringList);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes elements to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -161,43 +121,6 @@ namespace Microsoft.Exchange.WebServices.Data
                     XmlElementNames.Value,
                     MapiTypeConverter.ConvertToString(this.PropertyDefinition.MapiType, this.Value));
             }
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonExtendedProp = new JsonObject();
-
-            JsonObject jsonExtendedFieldUri = new JsonObject();
-            this.PropertyDefinition.AddJsonProperties(jsonExtendedFieldUri, service);
-
-            jsonExtendedProp.Add(XmlElementNames.ExtendedFieldURI, jsonExtendedFieldUri);
-
-            if (MapiTypeConverter.IsArrayType(this.PropertyDefinition.MapiType))
-            {
-                List<object> values = new List<object>();
-
-                foreach (object value in this.Value as Array)
-                {
-                    values.Add(MapiTypeConverter.ConvertToString(this.PropertyDefinition.MapiType, value));
-                }
-
-                jsonExtendedProp.Add(XmlElementNames.Values, values.ToArray());
-            }
-            else
-            {
-                jsonExtendedProp.Add(
-                    XmlElementNames.Value,
-                    MapiTypeConverter.ConvertToString(this.PropertyDefinition.MapiType, this.Value));
-            }
-
-            return jsonExtendedProp;
         }
 
         /// <summary>

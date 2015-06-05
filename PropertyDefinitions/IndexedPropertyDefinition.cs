@@ -87,33 +87,12 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Adds the json properties.
-        /// </summary>
-        /// <param name="jsonPropertyDefinition">The json property definition.</param>
-        /// <param name="service">The service.</param>
-        internal override void AddJsonProperties(JsonObject jsonPropertyDefinition, ExchangeService service)
-        {
-            base.AddJsonProperties(jsonPropertyDefinition, service);
-
-            jsonPropertyDefinition.Add(XmlAttributeNames.FieldIndex, this.Index);
-        }
-
-        /// <summary>
         /// Gets the name of the XML element.
         /// </summary>
         /// <returns>XML element name.</returns>
         internal override string GetXmlElementName()
         {
             return XmlElementNames.IndexedFieldURI;
-        }
-
-        /// <summary>
-        /// Gets the type for json.
-        /// </summary>
-        /// <returns></returns>
-        protected override string GetJsonType()
-        {
-            return JsonNames.PathToIndexedFieldType;
         }
 
         /// <summary>

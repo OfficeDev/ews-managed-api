@@ -141,18 +141,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Load from json
-        /// </summary>
-        /// <param name="jsonObject">The json object</param>
-        /// <returns>Search result object</returns>
-        internal static SearchMailboxesResult LoadFromJson(JsonObject jsonObject)
-        {
-            SearchMailboxesResult searchResult = new SearchMailboxesResult();
-
-            return searchResult;
-        }
-
-        /// <summary>
         /// Load keyword stats xml
         /// </summary>
         /// <param name="reader">The reader</param>

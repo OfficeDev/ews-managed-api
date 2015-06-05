@@ -71,27 +71,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Reads response elements from Json.
-        /// </summary>
-        /// <param name="responseObject">The response object.</param>
-        /// <param name="service">The service.</param>
-        internal override void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            this.configurations.Clear();
-
-            base.ReadElementsFromJson(responseObject, service);
-
-            if (responseObject.ContainsKey(XmlElementNames.DiscoverySearchConfigurations))
-            {
-                foreach (object searchConfiguration in responseObject.ReadAsArray(XmlElementNames.DiscoverySearchConfigurations))
-                {
-                    JsonObject jsonSearchConfiguration = searchConfiguration as JsonObject;
-                    this.configurations.Add(DiscoverySearchConfiguration.LoadFromJson(jsonSearchConfiguration));
-                }
-            }
-        }
-
-        /// <summary>
         /// Searchable mailboxes result
         /// </summary>
         public DiscoverySearchConfiguration[] DiscoverySearchConfigurations

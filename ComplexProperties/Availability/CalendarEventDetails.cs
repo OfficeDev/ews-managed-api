@@ -90,47 +90,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service"></param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.ID:
-                        this.storeId = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.Subject:
-                        this.subject = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.Location:
-                        this.location = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.IsMeeting:
-                        this.isMeeting = jsonProperty.ReadAsBool(key);
-                        break;
-                    case XmlElementNames.IsRecurring:
-                        this.isRecurring = jsonProperty.ReadAsBool(key);
-                        break;
-                    case XmlElementNames.IsException:
-                        this.isException = jsonProperty.ReadAsBool(key);
-                        break;
-                    case XmlElementNames.IsReminderSet:
-                        this.isReminderSet = jsonProperty.ReadAsBool(key);
-                        break;
-                    case XmlElementNames.IsPrivate:
-                        this.isPrivate = jsonProperty.ReadAsBool(key);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets the store Id of the calendar event.
         /// </summary>
         public string StoreId

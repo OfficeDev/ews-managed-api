@@ -62,16 +62,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            this.id = jsonProperty.ReadAsString(XmlAttributeNames.Id);
-        }
-
-        /// <summary>
         /// Writes attributes to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -87,22 +77,6 @@ namespace Microsoft.Exchange.WebServices.Data
         internal void WriteToXml(EwsServiceXmlWriter writer)
         {
             this.WriteToXml(writer, XmlElementNames.PhoneCallId);
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            jsonProperty.Add(XmlAttributeNames.Id, this.id);
-
-            return jsonProperty;
         }
 
         /// <summary>

@@ -61,13 +61,6 @@ namespace Microsoft.Exchange.WebServices.Data
             this.userConfiguration.LoadFromXml(reader);
         }
 
-        internal override void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            base.ReadElementsFromJson(responseObject, service);
-
-            this.UserConfiguration.LoadFromJson(responseObject.ReadAsJsonObject(XmlElementNames.UserConfiguration), service);
-        }
-
         /// <summary>
         /// Gets the user configuration that was created.
         /// </summary>

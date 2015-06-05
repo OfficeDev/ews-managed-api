@@ -57,18 +57,5 @@ namespace Microsoft.Exchange.WebServices.Data.Groups
             base.ReadElementsFromXml(reader);
             this.UnseenCount = reader.ReadElementValue<int>(XmlNamespace.NotSpecified, XmlElementNames.UnseenCount);
         }
-
-        /// <summary>
-        /// Reads response elements from Json.
-        /// </summary>
-        /// <param name="responseObject">The response object.</param>
-        /// <param name="service">The service.</param>
-        internal override void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            if (responseObject.ContainsKey(XmlElementNames.UnseenCount))
-            {
-                this.UnseenCount = responseObject.ReadAsInt(XmlElementNames.UnseenCount);
-            }
-        }
     }
 }

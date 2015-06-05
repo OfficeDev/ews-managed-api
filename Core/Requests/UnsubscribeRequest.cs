@@ -28,7 +28,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents an Unsubscribe request.
     /// </summary>
-    internal class UnsubscribeRequest : MultiResponseServiceRequest<ServiceResponse>, IJsonSerializable
+    internal class UnsubscribeRequest : MultiResponseServiceRequest<ServiceResponse>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UnsubscribeRequest"/> class.
@@ -105,15 +105,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 XmlNamespace.Messages,
                 XmlElementNames.SubscriptionId,
                 this.SubscriptionId);
-        }
-
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-
-            jsonRequest.Add(XmlElementNames.SubscriptionId, this.SubscriptionId);
-
-            return jsonRequest;
         }
 
         /// <summary>

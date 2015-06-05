@@ -71,27 +71,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Reads response elements from Json.
-        /// </summary>
-        /// <param name="responseObject">The response object.</param>
-        /// <param name="service">The service.</param>
-        internal override void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            this.retentionPolicyTags.Clear();
-
-            base.ReadElementsFromJson(responseObject, service);
-
-            if (responseObject.ContainsKey(XmlElementNames.RetentionPolicyTags))
-            {
-                foreach (object retentionPolicyTagObject in responseObject.ReadAsArray(XmlElementNames.RetentionPolicyTags))
-                {
-                    JsonObject jsonRetentionPolicyTag = retentionPolicyTagObject as JsonObject;
-                    this.retentionPolicyTags.Add(RetentionPolicyTag.LoadFromJson(jsonRetentionPolicyTag));
-                }
-            }
-        }
-
-        /// <summary>
         /// Retention policy tags result.
         /// </summary>
         public RetentionPolicyTag[] RetentionPolicyTags

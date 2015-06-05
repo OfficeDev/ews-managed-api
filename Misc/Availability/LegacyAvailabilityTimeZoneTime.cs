@@ -142,41 +142,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service"></param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.Bias:
-                        this.delta = TimeSpan.FromMinutes(jsonProperty.ReadAsInt(key));
-                        break;
-                    case XmlElementNames.Time:
-                        this.timeOfDay = TimeSpan.Parse(jsonProperty.ReadAsString(key));
-                        break;
-                    case XmlElementNames.DayOrder:
-                        this.dayOrder = jsonProperty.ReadAsInt(key);
-                        break;
-                    case XmlElementNames.DayOfWeek:
-                        this.dayOfTheWeek = jsonProperty.ReadEnumValue<DayOfTheWeek>(key);
-                        break;
-                    case XmlElementNames.Month:
-                        this.month = jsonProperty.ReadAsInt(key);
-                        break;
-                    case XmlElementNames.Year:
-                        this.year = jsonProperty.ReadAsInt(key);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes the elements to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -219,52 +184,6 @@ namespace Microsoft.Exchange.WebServices.Data
                     XmlElementNames.Year,
                     this.Year);
             }
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service"></param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            jsonProperty.Add(
-                XmlElementNames.Bias,
-                (int)this.delta.TotalMinutes);
-
-            jsonProperty.Add(
-                XmlElementNames.Time,
-                EwsUtilities.TimeSpanToXSTime(this.timeOfDay));
-
-            jsonProperty.Add(
-                XmlElementNames.DayOrder,
-                this.dayOrder);
-
-            jsonProperty.Add(
-                XmlElementNames.Month,
-                (int)this.month);
-
-            // Only write DayOfWeek if this is a recurring time change
-            if (this.Year == 0)
-            {
-                jsonProperty.Add(
-                    XmlElementNames.DayOfWeek,
-                    this.dayOfTheWeek);
-            }
-
-            // Only emit year if it's non zero, otherwise AS returns "Request is invalid"
-            if (this.Year != 0)
-            {
-                jsonProperty.Add(
-                    XmlElementNames.Year,
-                    this.Year);
-            }
-
-            return jsonProperty;
         }
 
         /// <summary>

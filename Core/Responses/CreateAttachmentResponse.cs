@@ -69,21 +69,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Reads response elements from Json.
-        /// </summary>
-        /// <param name="responseObject">The response object.</param>
-        /// <param name="service">The service.</param>
-        internal override void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            object[] attachmentArray = responseObject.ReadAsArray(XmlElementNames.Attachments);
-
-            if (attachmentArray != null && attachmentArray.Length > 0)
-            {
-                this.attachment.LoadFromJson(attachmentArray[0] as JsonObject, service);
-            }
-        }
-
-        /// <summary>
         /// Gets the attachment that was created.
         /// </summary>
         internal Attachment Attachment

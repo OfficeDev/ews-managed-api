@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents the Id of an Exchange item.
     /// </summary>
-    public class ItemId : ServiceId, IJsonSerializable
+    public class ItemId : ServiceId
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemId"/> class.

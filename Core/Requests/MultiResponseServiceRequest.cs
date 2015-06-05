@@ -93,46 +93,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Parses the response.
-        /// </summary>
-        /// <param name="jsonBody">The json body.</param>
-        /// <returns>Response object.</returns>
-        internal override object ParseResponse(JsonObject jsonBody)
-        {
-            ServiceResponseCollection<TResponse> serviceResponses = new ServiceResponseCollection<TResponse>();
-
-            object[] jsonResponseMessages = jsonBody.ReadAsJsonObject(XmlElementNames.ResponseMessages).ReadAsArray(XmlElementNames.Items);
-
-            int responseCtr = 0;
-            foreach (object jsonResponseObject in jsonResponseMessages)
-            {
-                TResponse response = this.CreateServiceResponse(this.Service, responseCtr);
-
-                response.LoadFromJson(jsonResponseObject as JsonObject, this.Service);
-
-                // Add the response to the list after it has been deserialized because the response
-                // list updates an overall result as individual responses are added to it.
-                serviceResponses.Add(response);
-
-                responseCtr++;
-            }
-
-            if (serviceResponses.Count < this.GetExpectedResponseMessageCount())
-            {
-                if ((serviceResponses.Count == 1) && (serviceResponses[0].Result == ServiceResult.Error))
-                {
-                    throw new ServiceResponseException(serviceResponses[0]);
-                }
-                else
-                {
-                    throw new ServiceJsonDeserializationException();
-                }
-            }
-
-            return serviceResponses;
-        }
-
-        /// <summary>
         /// Creates the service response.
         /// </summary>
         /// <param name="service">The service.</param>

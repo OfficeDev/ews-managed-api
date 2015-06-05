@@ -105,29 +105,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.StartDateTime:
-                        this.start = service.ConvertUniversalDateTimeStringToLocalDateTime(jsonProperty.ReadAsString(key));
-                        break;
-                    case XmlElementNames.EndDateTime:
-                        this.end = service.ConvertUniversalDateTimeStringToLocalDateTime(jsonProperty.ReadAsString(key));
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes elements to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -141,29 +118,6 @@ namespace Microsoft.Exchange.WebServices.Data
             {
                 writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.EndDateTime, this.End.Value);
             }
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            if (this.Start.HasValue)
-            {
-                jsonProperty.Add(XmlElementNames.StartDateTime, service.ConvertDateTimeToUniversalDateTimeString(this.Start.Value));
-            }
-            if (this.End.HasValue)
-            {
-                jsonProperty.Add(XmlElementNames.EndDateTime, service.ConvertDateTimeToUniversalDateTimeString(this.End.Value));
-            }
-
-            return jsonProperty;
         }
 
         /// <summary>

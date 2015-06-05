@@ -74,35 +74,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.DayOfWeek:
-                        EwsUtilities.ParseEnumValueList<DayOfTheWeek>(
-                            this.daysOfWeek,
-                            jsonProperty.ReadAsString(key),
-                            ' ');
-                        break;
-                    case XmlElementNames.StartTimeInMinutes:
-                        this.startTime = TimeSpan.FromMinutes(jsonProperty.ReadAsInt(key));
-                        break;
-                    case XmlElementNames.EndTimeInMinutes:
-                        this.endTime = TimeSpan.FromMinutes(jsonProperty.ReadAsInt(key));
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets a collection of work days.
         /// </summary>
         internal Collection<DayOfTheWeek> DaysOfWeek

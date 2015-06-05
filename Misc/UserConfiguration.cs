@@ -34,7 +34,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents an object that can be used to store user-defined configuration settings.
     /// </summary>
-    public class UserConfiguration : IJsonSerializable
+    public class UserConfiguration
     {
         private const ExchangeVersion ObjectVersion = ExchangeVersion.Exchange2010;
 
@@ -432,71 +432,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonObject = new JsonObject();
-
-            jsonObject.Add(XmlElementNames.UserConfigurationName, this.GetJsonUserConfigName(service));
-            jsonObject.Add(XmlElementNames.ItemId, this.itemId);
-
-            // Write the Dictionary element
-            if (this.IsPropertyUpdated(UserConfigurationProperties.Dictionary))
-            {
-                jsonObject.Add(XmlElementNames.Dictionary, ((IJsonSerializable)this.dictionary).ToJson(service));
-            }
-
-            // Write the XmlData element
-            if (this.IsPropertyUpdated(UserConfigurationProperties.XmlData))
-            {
-                jsonObject.Add(XmlElementNames.XmlData, this.GetBase64PropertyValue(this.XmlData));
-            }
-
-            // Write the BinaryData element
-            if (this.IsPropertyUpdated(UserConfigurationProperties.BinaryData))
-            {
-                jsonObject.Add(XmlElementNames.BinaryData, this.GetBase64PropertyValue(this.BinaryData));
-            }
-
-            return jsonObject;
-        }
-
-        /// <summary>
-        /// Gets the name of the user config for json.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns></returns>
-        private JsonObject GetJsonUserConfigName(ExchangeService service)
-        {
-            FolderId parentFolderId = this.parentFolderId;
-            string name = this.name;
-
-            return GetJsonUserConfigName(service, parentFolderId, name);
-        }
-
-        /// <summary>
-        /// Gets the name of the user config for json.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="parentFolderId">The parent folder id.</param>
-        /// <param name="name">The name.</param>
-        /// <returns></returns>
-        internal static JsonObject GetJsonUserConfigName(ExchangeService service, FolderId parentFolderId, string name)
-        {
-            JsonObject jsonName = new JsonObject();
-
-            jsonName.Add(XmlElementNames.BaseFolderId, parentFolderId.InternalToJson(service));
-            jsonName.Add(XmlElementNames.Name, name);
-
-            return jsonName;
-        }
-
-        /// <summary>
         /// Gets the base64 property value.
         /// </summary>
         /// <param name="bytes">The bytes.</param>
@@ -647,50 +582,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 reader.Read();
             }
             while (!reader.IsEndElement(XmlNamespace.Messages, XmlElementNames.UserConfiguration));
-        }
-
-        /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="responseObject">The response object.</param>
-        /// <param name="service">The service.</param>
-        internal void LoadFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            foreach (string key in responseObject.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.UserConfigurationName:
-                        JsonObject jsonUserConfigName = responseObject.ReadAsJsonObject(key);
-                        string responseName = jsonUserConfigName.ReadAsString(XmlAttributeNames.Name);
-
-                        EwsUtilities.Assert(
-                            string.Compare(this.name, responseName, StringComparison.Ordinal) == 0,
-                            "UserConfiguration.LoadFromJson",
-                            "UserConfigurationName does not match: Expected: " + this.name + " Name in response: " + responseName);
-
-                        break;
-
-                    case XmlElementNames.ItemId:
-                        this.itemId = new ItemId();
-                        this.itemId.LoadFromJson(responseObject.ReadAsJsonObject(key), service);
-                        break;
-
-                    case XmlElementNames.Dictionary:
-                        ((IJsonCollectionDeserializer)this.dictionary).CreateFromJsonCollection(responseObject.ReadAsArray(key), service);
-                        break;
-
-                    case XmlElementNames.XmlData:
-                        this.xmlData = Convert.FromBase64String(responseObject.ReadAsString(key));
-                        break;
-
-                    case XmlElementNames.BinaryData:
-                        this.binaryData = Convert.FromBase64String(responseObject.ReadAsString(key));
-                        break;
-                    default:
-                        break;
-                }
-            }
         }
 
         /// <summary>

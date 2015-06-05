@@ -63,18 +63,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Reads response elements from Json.
-        /// </summary>
-        /// <param name="responseObject">The response object.</param>
-        /// <param name="service">The service.</param>
-        internal override void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            base.ReadElementsFromJson(responseObject, service);
-
-            this.Resolutions.LoadFromJson(responseObject.ReadAsJsonObject(XmlElementNames.ResolutionSet), service);
-        }
-
-        /// <summary>
         /// Override base implementation so that API does not throw when name resolution fails to find a match.
         /// EWS returns an error in this case but the API will just return an empty NameResolutionCollection. 
         /// </summary>

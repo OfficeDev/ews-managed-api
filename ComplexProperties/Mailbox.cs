@@ -140,46 +140,8 @@ namespace Microsoft.Exchange.WebServices.Data
 
         #endregion
 
-        #region Json Methods
-
-        /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            if (jsonProperty.ContainsKey(XmlElementNames.EmailAddress))
-            {
-                this.Address = jsonProperty.ReadAsString(XmlElementNames.EmailAddress);
-            }
-
-            if (jsonProperty.ContainsKey(XmlElementNames.RoutingType))
-            {
-                this.RoutingType = jsonProperty.ReadAsString(XmlElementNames.RoutingType);
-            }
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonObject = new JsonObject();
-
-            jsonObject.Add(XmlElementNames.EmailAddress, this.Address);
-            jsonObject.Add(XmlElementNames.RoutingType, this.RoutingType);
-
-            return jsonObject;
-        }
-
-        #endregion
-
         #region ISearchStringProvider methods
+
         /// <summary>
         /// Get a string representation for using this instance in a search filter.
         /// </summary>
@@ -188,6 +150,7 @@ namespace Microsoft.Exchange.WebServices.Data
         {
             return this.Address;
         }
+
         #endregion
 
         /// <summary>

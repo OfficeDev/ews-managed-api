@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a GetHoldOnMailboxesRequest request.
     /// </summary>
-    internal sealed class GetHoldOnMailboxesRequest : SimpleServiceRequestBase, IJsonSerializable
+    internal sealed class GetHoldOnMailboxesRequest : SimpleServiceRequestBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GetHoldOnMailboxesRequest"/> class.
@@ -112,20 +112,6 @@ namespace Microsoft.Exchange.WebServices.Data
         {
             GetHoldOnMailboxesResponse serviceResponse = (GetHoldOnMailboxesResponse)this.InternalExecute();
             return serviceResponse;
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonObject = new JsonObject();
-
-            return jsonObject;
         }
 
         /// <summary>

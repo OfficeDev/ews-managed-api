@@ -59,34 +59,12 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Writes the grouping to json.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <param name="groupBy"></param>
-        /// <returns></returns>
-        internal override object WriteGroupingToJson(ExchangeService service, Grouping groupBy)
-        {
-            // No search settings for calendar views.
-            return null;
-        }
-
-        /// <summary>
         /// Writes OrderBy property to XML.
         /// </summary>
         /// <param name="writer">The writer</param>
         internal override void WriteOrderByToXml(EwsServiceXmlWriter writer)
         {
             // No OrderBy for calendar views.
-        }
-
-        /// <summary>
-        /// Adds the json properties.
-        /// </summary>
-        /// <param name="jsonRequest">The json request.</param>
-        /// <param name="service">The service.</param>
-        internal override void AddJsonProperties(JsonObject jsonRequest, ExchangeService service)
-        {
-            jsonRequest.Add(XmlAttributeNames.Traversal, this.Traversal);
         }
 
         /// <summary>
@@ -154,34 +132,12 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Internals the write paging to json.
-        /// </summary>
-        /// <param name="jsonView">The json view.</param>
-        /// <param name="service">The service.</param>
-        internal override void InternalWritePagingToJson(JsonObject jsonView, ExchangeService service)
-        {
-            base.InternalWritePagingToJson(jsonView, service);
-
-            jsonView.Add(XmlAttributeNames.StartDate, this.StartDate);
-            jsonView.Add(XmlAttributeNames.EndDate, this.EndDate);
-        }
-
-        /// <summary>
         /// Gets the name of the view XML element.
         /// </summary>
         /// <returns>XML element name.</returns>
         internal override string GetViewXmlElementName()
         {
             return XmlElementNames.CalendarView;
-        }
-
-        /// <summary>
-        /// Gets the name of the view json type.
-        /// </summary>
-        /// <returns></returns>
-        internal override string GetViewJsonTypeName()
-        {
-            return "CalendarPageView";
         }
 
         /// <summary>

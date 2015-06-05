@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a DeleteUserConfiguration request.
     /// </summary>
-    internal class DeleteUserConfigurationRequest : MultiResponseServiceRequest<ServiceResponse>, IJsonSerializable
+    internal class DeleteUserConfigurationRequest : MultiResponseServiceRequest<ServiceResponse>
     {
         private string name;
         private FolderId parentFolderId;
@@ -116,24 +116,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 XmlNamespace.Messages,
                 this.name,
                 this.parentFolderId);
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonObject = new JsonObject();
-
-            jsonObject.Add(
-                XmlElementNames.UserConfigurationName,
-                UserConfiguration.GetJsonUserConfigName(service, this.parentFolderId, this.name));
-
-            return jsonObject;
         }
 
         /// <summary>

@@ -66,29 +66,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service"></param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlAttributeNames.Id:
-                        this.uniqueId = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlAttributeNames.ChangeKey:
-                        this.changeKey = jsonProperty.ReadAsString(key);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Writes attributes to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -99,37 +76,10 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            jsonProperty.AddTypeParameter(this.GetJsonTypeName());
-            jsonProperty.Add(XmlAttributeNames.Id, this.UniqueId);
-            jsonProperty.Add(XmlAttributeNames.ChangeKey, this.ChangeKey);
-
-            return jsonProperty;
-        }
-
-        /// <summary>
         /// Gets the name of the XML element.
         /// </summary>
         /// <returns>XML element name.</returns>
         internal abstract string GetXmlElementName();
-
-        /// <summary>
-        /// Gets the name of the json type.
-        /// </summary>
-        /// <returns></returns>
-        internal virtual string GetJsonTypeName()
-        {
-            return this.GetXmlElementName();
-        }
 
         /// <summary>
         /// Writes to XML.

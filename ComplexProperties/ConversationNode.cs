@@ -93,34 +93,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            this.InternetMessageId = jsonProperty.ReadAsString(XmlElementNames.ConversationIndex);
-
-            if (jsonProperty.ContainsKey(XmlElementNames.ParentInternetMessageId))
-            {
-                this.ParentInternetMessageId = jsonProperty.ReadAsString(XmlElementNames.ParentInternetMessageId);
-            }
-
-            if (jsonProperty.ContainsKey(XmlElementNames.Items))
-            {
-                EwsServiceJsonReader jsonReader = new EwsServiceJsonReader(service);
-
-                this.Items = jsonReader.ReadServiceObjectsCollectionFromJson<Item>(
-                    jsonProperty,
-                    XmlElementNames.Items,
-                    this.GetObjectInstance,
-                    false,              /* clearPropertyBag */
-                    this.propertySet,   /* requestedPropertySet */
-                    false);             /* summaryPropertiesOnly */
-            }
-        }
-
-        /// <summary>
         /// Gets the item instance.
         /// </summary>
         /// <param name="service">The service.</param>

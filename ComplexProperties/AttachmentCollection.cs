@@ -231,15 +231,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates the default complex property.
-        /// </summary>
-        /// <returns>An Attachment instance.</returns>
-        internal override Attachment CreateDefaultComplexProperty()
-        {
-            throw new JsonDeserializationNotImplementedException();
-        }
-
-        /// <summary>
         /// Determines the name of the XML element associated with the complexProperty parameter.
         /// </summary>
         /// <param name="complexProperty">The attachment object for which to determine the XML element name with.</param>

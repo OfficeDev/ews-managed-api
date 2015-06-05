@@ -62,13 +62,6 @@ namespace Microsoft.Exchange.WebServices.Data
             reader.ReadEndElementIfNecessary(XmlNamespace.Messages, XmlElementNames.PhoneCallId);
         }
 
-        internal override void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            base.ReadElementsFromJson(responseObject, service);
-
-            this.phoneCallId.LoadFromJson(responseObject.ReadAsJsonObject(XmlElementNames.PhoneCallId), service);
-        }
-
         /// <summary>
         /// Gets the Id of the phone call.
         /// </summary>

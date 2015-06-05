@@ -66,15 +66,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates the default complex property.
-        /// </summary>
-        /// <returns>MeetingSuggestion.</returns>
-        internal override MeetingSuggestion CreateDefaultComplexProperty()
-        {
-            return new MeetingSuggestion();
-        }
-
-        /// <summary>
         /// Gets the name of the collection item XML element.
         /// </summary>
         /// <param name="complexProperty">The complex property.</param>

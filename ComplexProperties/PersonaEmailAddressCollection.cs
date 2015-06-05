@@ -179,15 +179,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates the default complex property.
-        /// </summary>
-        /// <returns></returns>
-        internal override PersonaEmailAddress CreateDefaultComplexProperty()
-        {
-            return new PersonaEmailAddress();
-        }
-
-        /// <summary>
         /// Retrieves the XML element name corresponding to the provided PersonaEmailAddress object.
         /// </summary>
         /// <param name="personaEmailAddress">The PersonaEmailAddress object from which to determine the XML element name.</param>

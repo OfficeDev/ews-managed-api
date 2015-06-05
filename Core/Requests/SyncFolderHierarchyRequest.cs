@@ -28,7 +28,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a SyncFolderHierarchy request.
     /// </summary>
-    internal class SyncFolderHierarchyRequest : MultiResponseServiceRequest<SyncFolderHierarchyResponse>, IJsonSerializable
+    internal class SyncFolderHierarchyRequest : MultiResponseServiceRequest<SyncFolderHierarchyResponse>
     {
         private PropertySet propertySet;
         private FolderId syncFolderId;
@@ -124,31 +124,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 XmlNamespace.Messages,
                 XmlElementNames.SyncState,
                 this.SyncState);
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            JsonObject jsonRequest = new JsonObject();
-
-            this.propertySet.WriteGetShapeToJson(jsonRequest, service, ServiceObjectType.Folder);
-
-            if (this.SyncFolderId != null)
-            {
-                JsonObject jsonSyncFolderId = new JsonObject();
-                jsonSyncFolderId.Add(XmlElementNames.BaseFolderId, this.SyncFolderId.InternalToJson(service));
-                jsonRequest.Add(XmlElementNames.SyncFolderId, jsonSyncFolderId);
-            }
-
-            jsonRequest.Add(XmlElementNames.SyncState, this.SyncState);
-
-            return jsonRequest;
         }
 
         /// <summary>

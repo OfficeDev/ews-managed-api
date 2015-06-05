@@ -127,16 +127,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="body">The body.</param>
-        protected override void InternalToJson(JsonObject body)
-        {
-            body.Add(XmlAttributeNames.DeleteSubFolders, this.DeleteSubFolders);
-            body.Add(XmlElementNames.FolderIds, this.FolderIds.InternalToJson(this.Service));
-        }
-
-        /// <summary>
         /// Gets the request version.
         /// </summary>
         /// <returns>Earliest Exchange version in which this request is supported.</returns>

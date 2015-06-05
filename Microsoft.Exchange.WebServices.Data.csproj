@@ -69,18 +69,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComplexProperties\PeopleInsights\CompanyInsightValue.cs" />
-    <Compile Include="ComplexProperties\PeopleInsights\DelveDoc.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\CompanyInsightValueCollection.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\ComputedInsightValue.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\ComputedInsightValueProperty.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\ComputedInsightValuePropertyCollection.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\DelveDocument.cs" />
     <Compile Include="ComplexProperties\PeopleInsights\EducationInsightValue.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\EmailInsightValue.cs" />
     <Compile Include="ComplexProperties\PeopleInsights\InsightValue.cs" />
     <Compile Include="ComplexProperties\PeopleInsights\InsightValueCollection.cs" />
     <Compile Include="ComplexProperties\PeopleInsights\JobInsightValue.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\JobInsightValueCollection.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\MeetingInsightValue.cs" />
     <Compile Include="ComplexProperties\PeopleInsights\MultiValueInsightContent.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\OutOfOfficeInsightValue.cs" />
     <Compile Include="ComplexProperties\PeopleInsights\Person.cs" />
     <Compile Include="ComplexProperties\PeopleInsights\PersonInsight.cs" />
     <Compile Include="ComplexProperties\PeopleInsights\PersonInsightCollection.cs" />
     <Compile Include="ComplexProperties\PeopleInsights\ProfileInsightValue.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\ProfileInsightValueCollection.cs" />
     <Compile Include="ComplexProperties\PeopleInsights\SingleValueInsightContent.cs" />
     <Compile Include="ComplexProperties\PeopleInsights\SkillInsightValue.cs" />
+    <Compile Include="ComplexProperties\PeopleInsights\SkillInsightValueCollection.cs" />
     <Compile Include="ComplexProperties\PeopleInsights\StringInsightValue.cs" />
     <Compile Include="ComplexProperties\PeopleInsights\UserProfilePicture.cs" />
     <Compile Include="Core\Requests\GetOMEConfigurationRequest.cs" />
@@ -223,15 +233,7 @@
     <Compile Include="Core\EwsHttpWebRequest.cs" />
     <Compile Include="Core\EwsHttpWebRequestFactory.cs" />
     <Compile Include="Core\EwsHttpWebResponse.cs" />
-    <Compile Include="Core\EwsServiceJsonReader.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Core\EwsServiceMultiResponseXmlReader.cs" />
-    <Compile Include="Core\JsonNames.cs" />
-    <Compile Include="Core\JsonObject.cs" />
-    <Compile Include="Core\JsonParser.cs" />
-    <Compile Include="Core\JsonTokenizer.cs" />
-    <Compile Include="Core\JsonWriter.cs" />
     <Compile Include="Core\Requests\ApplyConversationActionRequest.cs" />
     <Compile Include="Core\Requests\ArchiveItemRequest.cs" />
     <Compile Include="Core\Requests\AsyncRequestResult.cs" />
@@ -371,19 +373,14 @@
     <Compile Include="Enumerations\TraceFlags.cs" />
     <Compile Include="Enumerations\ViewFilter.cs" />
     <Compile Include="Exceptions\AccountIsLockedException.cs" />
-    <Compile Include="Exceptions\JsonDeserializationNotImplementedException.cs" />
     <Compile Include="Exceptions\ServerBusyException.cs" />
-    <Compile Include="Exceptions\ServiceJsonDeserializationException.cs" />
     <Compile Include="Exceptions\DnsException.cs" />
-    <Compile Include="Exceptions\JsonSerializationNotImplementedException.cs" />
     <Compile Include="Exceptions\TimeZoneConversionException.cs" />
     <Compile Include="Exceptions\UpdateInboxRulesException.cs" />
     <Compile Include="Interfaces\ICalendarActionProvider.cs" />
     <Compile Include="Interfaces\IEwsHttpWebRequest.cs" />
     <Compile Include="Interfaces\IEwsHttpWebRequestFactory.cs" />
     <Compile Include="Interfaces\IEwsHttpWebResponse.cs" />
-    <Compile Include="Interfaces\IJsonCollectionDeserializer.cs" />
-    <Compile Include="Interfaces\IJSonSerializable.cs" />
     <Compile Include="Interfaces\ISearchStringProvider.cs" />
     <Compile Include="MailboxSearch\DiscoverySearchConfiguration.cs" />
     <Compile Include="MailboxSearch\ExtendedAttributes.cs" />
@@ -847,9 +844,6 @@
     <Compile Include="Core\PropertyBag.cs" />
     <Compile Include="PropertyDefinitions\PropertyDefinition.cs" />
     <Compile Include="Core\EwsUtilities.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="sources" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">

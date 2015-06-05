@@ -60,6 +60,12 @@ namespace Microsoft.Exchange.WebServices.Data
         /// The InsightGroupType represents the company info.
         /// </summary>
         [RequiredServerVersion(ExchangeVersion.Exchange2015)]
-        CompanyInfo
+        CompanyInfo,
+
+        /// <summary>
+        /// The InsightGroupType represents the contact history.
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
+        ContactHistory
     }
 }

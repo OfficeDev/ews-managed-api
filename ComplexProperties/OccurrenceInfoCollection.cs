@@ -58,15 +58,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Creates the default complex property.
-        /// </summary>
-        /// <returns>OccurenceInfo instance.</returns>
-        internal override OccurrenceInfo CreateDefaultComplexProperty()
-        {
-            return new OccurrenceInfo();
-        }
-
-        /// <summary>
         /// Gets the name of the collection item XML element.
         /// </summary>
         /// <param name="complexProperty">The complex property.</param>

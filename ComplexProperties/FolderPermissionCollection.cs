@@ -108,30 +108,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            object[] jsonFolderPermissions = jsonProperty.ReadAsArray(this.InnerCollectionXmlElementName);
-            
-            foreach (object jsonFolderPermission in jsonFolderPermissions)
-            {
-                FolderPermission permission = new FolderPermission();
-                permission.LoadFromJson(jsonFolderPermission as JsonObject, service);
-                this.InternalAdd(permission);
-            }
-
-            object[] jsonUnknownEntries = jsonProperty.ReadAsArray(XmlElementNames.UnknownEntries);
-
-            foreach (object jsonUnknownEntry in jsonUnknownEntries)
-            {
-                this.unknownEntries.Add(jsonUnknownEntry as string);
-            }
-        }
-
-        /// <summary>
         /// Validates this instance.
         /// </summary>
         internal void Validate()
@@ -161,43 +137,11 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-            List<object> permissions = new List<object>();
-
-            foreach (FolderPermission folderPermission in this)
-            {
-                permissions.Add(folderPermission.InternalToJson(service, this.isCalendarFolder));
-            }
-
-            jsonProperty.AddTypeParameter(this.InnerCollectionXmlElementName);
-            jsonProperty.Add(this.InnerCollectionXmlElementName, permissions.ToArray());
-
-            return jsonProperty;
-        }
-
-        /// <summary>
         /// Creates the complex property.
         /// </summary>
         /// <param name="xmlElementName">Name of the XML element.</param>
         /// <returns>FolderPermission instance.</returns>
         internal override FolderPermission CreateComplexProperty(string xmlElementName)
-        {
-            return new FolderPermission();
-        }
-
-        /// <summary>
-        /// Creates the default complex property.
-        /// </summary>
-        /// <returns>FolderPermission instance.</returns>
-        internal override FolderPermission CreateDefaultComplexProperty()
         {
             return new FolderPermission();
         }

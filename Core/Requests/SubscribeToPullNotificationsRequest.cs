@@ -90,16 +90,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Adds the json properties.
-        /// </summary>
-        /// <param name="jsonSubscribeRequest">The json subscribe request.</param>
-        /// <param name="service">The service.</param>
-        internal override void AddJsonProperties(JsonObject jsonSubscribeRequest, ExchangeService service)
-        {
-            jsonSubscribeRequest.Add(XmlElementNames.Timeout, this.Timeout);
-        }
-
-        /// <summary>
         /// Gets the request version.
         /// </summary>
         /// <returns>Earliest Exchange version in which this request is supported.</returns>

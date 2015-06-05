@@ -111,34 +111,5 @@ namespace Microsoft.Exchange.WebServices.Data.Groups
              reader.EnsureCurrentNodeIsEndElement(XmlNamespace.Types, XmlElementNames.UnifiedGroupsSet);
              reader.Read();
          }
-
-         /// <summary>
-         /// Reads response elements from Json.
-         /// </summary>
-         /// <param name="responseObject">The response object.</param>
-         /// <param name="service">The service.</param>
-         internal override void LoadFromJson(JsonObject responseObject, ExchangeService service)
-         {
-             if (responseObject.ContainsKey(XmlElementNames.FilterType))
-             {
-                 this.FilterType = (UnifiedGroupsFilterType)Enum.Parse(typeof(UnifiedGroupsFilterType), responseObject.ReadAsString(XmlElementNames.FilterType), false);
-             }
-
-             if (responseObject.ContainsKey(XmlElementNames.TotalGroups))
-             {
-                 this.TotalGroups = responseObject.ReadAsInt(XmlElementNames.TotalGroups);
-             }
-
-             if (responseObject.ContainsKey(XmlElementNames.GroupsTag))
-             {
-                 foreach (object unifiedGroup in responseObject.ReadAsArray(XmlElementNames.UnifiedGroup))
-                 {
-                     JsonObject jsonUnifiedGroup = unifiedGroup as JsonObject;
-                     UnifiedGroup unifiedGroupResponse = new UnifiedGroup();
-                     unifiedGroupResponse.LoadFromJson(jsonUnifiedGroup, service);
-                     this.unifiedGroups.Add(unifiedGroupResponse);
-                 }
-             }
-         }
     }
 }

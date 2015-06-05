@@ -184,65 +184,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service"></param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            foreach (string key in jsonProperty.Keys)
-            {
-                switch (key)
-                {
-                    case XmlElementNames.Street:
-                        this.street = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.City:
-                        this.city = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.Country:
-                        this.country = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.PostalCode:
-                        this.postalCode = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.PostOfficeBox:
-                        this.postOfficeBox = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.PostalAddressType:
-                        this.type = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.Latitude:
-                        this.latitude = jsonProperty.ReadAsDouble(key);
-                        break;
-                    case XmlElementNames.Longitude:
-                        this.longitude = jsonProperty.ReadAsDouble(key);
-                        break;
-                    case XmlElementNames.Accuracy:
-                        this.accuracy = jsonProperty.ReadAsDouble(key);
-                        break;
-                    case XmlElementNames.Altitude:
-                        this.altitude = jsonProperty.ReadAsDouble(key);
-                        break;
-                    case XmlElementNames.AltitudeAccuracy:
-                        this.altitudeAccuracy = jsonProperty.ReadAsDouble(key);
-                        break;
-                    case XmlElementNames.FormattedAddress:
-                        this.formattedAddress = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.LocationUri:
-                        this.uri = jsonProperty.ReadAsString(key);
-                        break;
-                    case XmlElementNames.LocationSource:
-                        this.source = jsonProperty.ReadEnumValue<LocationSource>(key);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-        
-        /// <summary>
         /// Gets or sets the street.
         /// </summary>
         public string Street
@@ -398,35 +339,6 @@ namespace Microsoft.Exchange.WebServices.Data
             writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.FormattedAddress, this.formattedAddress);
             writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.LocationUri, this.uri);
             writer.WriteElementValue(XmlNamespace.Types, XmlElementNames.LocationSource, this.source);
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            jsonProperty.Add(XmlElementNames.Street, this.street);
-            jsonProperty.Add(XmlElementNames.City, this.city);
-            jsonProperty.Add(XmlElementNames.Country, this.country);
-            jsonProperty.Add(XmlElementNames.PostalCode, this.postalCode);
-            jsonProperty.Add(XmlElementNames.PostOfficeBox, this.postOfficeBox);
-            jsonProperty.Add(XmlElementNames.PostalAddressType, this.type);
-            jsonProperty.Add(XmlElementNames.Latitude, this.latitude);
-            jsonProperty.Add(XmlElementNames.Longitude, this.longitude);
-            jsonProperty.Add(XmlElementNames.Accuracy, this.accuracy);
-            jsonProperty.Add(XmlElementNames.Altitude, this.altitude);
-            jsonProperty.Add(XmlElementNames.AltitudeAccuracy, this.altitudeAccuracy);
-            jsonProperty.Add(XmlElementNames.FormattedAddress, this.formattedAddress);
-            jsonProperty.Add(XmlElementNames.LocationUri, this.uri);
-            jsonProperty.Add(XmlElementNames.LocationSource, this.source);
-            
-            return jsonProperty;
         }
 
         /// <summary>

@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a list of strings.
     /// </summary>
-    public sealed class StringList : ComplexProperty, IEnumerable<string>, IJsonCollectionDeserializer
+    public sealed class StringList : ComplexProperty, IEnumerable<string>
     {
         private List<string> items = new List<string>();
         private string itemXmlElementName = XmlElementNames.String;
@@ -82,29 +82,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json collection.
-        /// </summary>
-        /// <param name="jsonCollection">The json collection.</param>
-        /// <param name="service">The service.</param>
-        void IJsonCollectionDeserializer.CreateFromJsonCollection(object[] jsonCollection, ExchangeService service)
-        {
-            foreach (object element in jsonCollection)
-            {
-                this.Add(element as string);
-            }
-        }
-
-        /// <summary>
-        /// Loads from json collection to update the existing collection element.
-        /// </summary>
-        /// <param name="jsonCollection">The json collection.</param>
-        /// <param name="service">The service.</param>
-        void IJsonCollectionDeserializer.UpdateFromJsonCollection(object[] jsonCollection, ExchangeService service)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Writes elements to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -116,18 +93,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 writer.WriteValue(item, this.itemXmlElementName);
                 writer.WriteEndElement();
             }
-        }
-
-        /// <summary>
-        /// Serializes the property to a Json value.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal override object InternalToJson(ExchangeService service)
-        {
-            return new List<string>(this).ToArray();
         }
 
         /// <summary>

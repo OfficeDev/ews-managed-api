@@ -32,7 +32,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents the abstraction of an item Id.
     /// </summary>
-    internal abstract class AbstractItemIdWrapper : IJsonSerializable
+    internal abstract class AbstractItemIdWrapper
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractItemIdWrapper"/> class.
@@ -55,26 +55,5 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         /// <param name="writer">The writer to write the Id to.</param>
         internal abstract void WriteToXml(EwsServiceXmlWriter writer);
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        object IJsonSerializable.ToJson(ExchangeService service)
-        {
-            return this.IternalToJson(service);
-        }
-
-        /// <summary>
-        /// Creates a JSON representation of this object.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns>
-        /// A Json value (either a JsonObject, an array of Json values, or a Json primitive)
-        /// </returns>
-        internal abstract object IternalToJson(ExchangeService service);
     }
 }

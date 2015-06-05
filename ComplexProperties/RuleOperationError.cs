@@ -112,25 +112,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonProperty">The json property.</param>
-        /// <param name="service">The service.</param>
-        internal override void LoadFromJson(JsonObject jsonProperty, ExchangeService service)
-        {
-            if (jsonProperty.ContainsKey(XmlElementNames.OperationIndex))
-            {
-                this.operationIndex = jsonProperty.ReadAsInt(XmlElementNames.OperationIndex);
-            }
-
-            if (jsonProperty.ContainsKey(XmlElementNames.ValidationErrors))
-            {
-                this.ruleErrors = new RuleErrorCollection();
-                (this.ruleErrors as IJsonCollectionDeserializer).CreateFromJsonCollection(jsonProperty.ReadAsArray(XmlElementNames.ValidationErrors), service);
-            }
-        }
-
-        /// <summary>
         /// Set operation property by the index of a given opeation enumerator.
         /// </summary>
         /// <param name="operations">Operation enumerator.</param>

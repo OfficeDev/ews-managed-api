@@ -33,7 +33,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents a collection of rules.
     /// </summary>
-    public sealed class RuleCollection : ComplexProperty, IEnumerable<Rule>, IJsonCollectionDeserializer
+    public sealed class RuleCollection : ComplexProperty, IEnumerable<Rule>
     {
         /// <summary>
         /// The OutlookRuleBlobExists flag.
@@ -119,35 +119,6 @@ namespace Microsoft.Exchange.WebServices.Data
             {
                 return false;
             }
-        }
-
-        /// <summary>
-        /// Loads from json collection.
-        /// </summary>
-        /// <param name="jsonCollection">The json collection.</param>
-        /// <param name="service">The service.</param>
-        void IJsonCollectionDeserializer.CreateFromJsonCollection(object[] jsonCollection, ExchangeService service)
-        {
-            foreach (object entry in jsonCollection)
-            {
-                JsonObject jsonEntry = entry as JsonObject;
-                if (jsonEntry != null)
-                {
-                    Rule rule = new Rule();
-                    rule.LoadFromJson(jsonEntry, service);
-                    this.rules.Add(rule);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Loads from json collection to update the existing collection element.
-        /// </summary>
-        /// <param name="jsonCollection">The json collection.</param>
-        /// <param name="service">The service.</param>
-        void IJsonCollectionDeserializer.UpdateFromJsonCollection(object[] jsonCollection, ExchangeService service)
-        {
-            throw new NotImplementedException();
         }
 
         #region IEnumerable Interface

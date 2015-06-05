@@ -90,17 +90,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Loads from json.
-        /// </summary>
-        /// <param name="jsonObject">The json object.</param>
-        /// <param name="service">The service.</param>
-        internal void LoadFromJson(JsonObject jsonObject, ExchangeService service)
-        {
-            this.startTime = service.ConvertUniversalDateTimeStringToLocalDateTime(jsonObject.ReadAsString(XmlElementNames.StartTime)).Value;
-            this.endTime = service.ConvertUniversalDateTimeStringToLocalDateTime(jsonObject.ReadAsString(XmlElementNames.EndTime)).Value;
-        }
-
-        /// <summary>
         /// Writes to XML.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -156,21 +145,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 xmlElementName,
                 this.StartTime,
                 this.EndTime);
-        }
-
-        /// <summary>
-        /// Serializes to json.
-        /// </summary>
-        /// <param name="service">The service.</param>
-        /// <returns></returns>
-        internal JsonObject InternalToJson(ExchangeService service)
-        {
-            JsonObject jsonProperty = new JsonObject();
-
-            jsonProperty.Add(XmlElementNames.StartTime, EwsUtilities.DateTimeToXSDateTime(startTime));
-            jsonProperty.Add(XmlElementNames.EndTime, EwsUtilities.DateTimeToXSDateTime(endTime));
-
-            return jsonProperty;
         }
 
         /// <summary>
