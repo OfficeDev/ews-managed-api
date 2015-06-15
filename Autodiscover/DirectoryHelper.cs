@@ -360,15 +360,7 @@ namespace Microsoft.Exchange.WebServices.Autodiscover
                     return site.Name;
                 }
             }
-            catch (ActiveDirectoryObjectNotFoundException)  // object not found in directory store
-            {
-                return null;
-            }
-            catch (ActiveDirectoryOperationException)       // underlying directory operation failed
-            {
-                return null;
-            }
-            catch (ActiveDirectoryServerDownException)      // server unavailable
+            catch (Exception)
             {
                 return null;
             }
