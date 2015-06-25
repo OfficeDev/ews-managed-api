@@ -325,6 +325,48 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
+        /// Binds to multiple folders in a single call to EWS.
+        /// </summary>
+        /// <param name="folderIds">The Ids of the folders to bind to.</param>
+        /// <param name="propertySet">The set of properties to load.</param>
+        /// <returns>A ServiceResponseCollection providing results for each of the specified folder Ids.</returns>
+        public ServiceResponseCollection<GetFolderResponse> BindToFolders(
+            IEnumerable<FolderId> folderIds,
+            PropertySet propertySet
+        )
+        {
+            EwsUtilities.ValidateParamCollection(folderIds, "folderIds");
+            EwsUtilities.ValidateParam(propertySet, "propertySet");
+
+            return this.InternalBindToFolders(
+                folderIds,
+                propertySet,
+                ServiceErrorHandling.ReturnErrors
+            );
+        }
+
+        /// <summary>
+        /// Binds to multiple folders in a single call to EWS.
+        /// </summary>
+        /// <param name="folderIds">The Ids of the folders to bind to.</param>
+        /// <param name="propertySet">The set of properties to load.</param>
+        /// <param name="errorHandling">Type of error handling to perform.</param>
+        /// <returns>A ServiceResponseCollection providing results for each of the specified folder Ids.</returns>
+        private ServiceResponseCollection<GetFolderResponse> InternalBindToFolders(
+            IEnumerable<FolderId> folderIds,
+            PropertySet propertySet,
+            ServiceErrorHandling errorHandling
+        )
+        {
+            GetFolderRequest request = new GetFolderRequest(this, errorHandling);
+
+            request.FolderIds.AddRange(folderIds);
+            request.PropertySet = propertySet;
+
+            return request.Execute();
+        }
+
+        /// <summary>
         /// Deletes a folder. Calling this method results in a call to EWS.
         /// </summary>
         /// <param name="folderId">The folder id.</param>
