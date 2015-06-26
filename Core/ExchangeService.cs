@@ -288,12 +288,11 @@ namespace Microsoft.Exchange.WebServices.Data
             EwsUtilities.ValidateParam(folderId, "folderId");
             EwsUtilities.ValidateParam(propertySet, "propertySet");
 
-            GetFolderRequest request = new GetFolderRequest(this, ServiceErrorHandling.ThrowOnError);
-
-            request.FolderIds.Add(folderId);
-            request.PropertySet = propertySet;
-
-            ServiceResponseCollection<GetFolderResponse> responses = request.Execute();
+            ServiceResponseCollection<GetFolderResponse> responses = this.InternalBindToFolders(
+                new[] { folderId },
+                propertySet,
+                ServiceErrorHandling.ThrowOnError
+            );
 
             return responses[0].Folder;
         }
