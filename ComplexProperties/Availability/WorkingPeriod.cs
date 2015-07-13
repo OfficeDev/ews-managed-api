@@ -57,9 +57,11 @@ namespace Microsoft.Exchange.WebServices.Data
             switch (reader.LocalName)
             {
                 case XmlElementNames.DayOfWeek:
+                    string rawValue = reader.ReadElementValue();
+                    if (string.IsNullOrEmpty(rawValue)) { return false; }
                     EwsUtilities.ParseEnumValueList<DayOfTheWeek>(
                         this.daysOfWeek,
-                        reader.ReadElementValue(),
+                        rawValue,
                         ' ');
                     return true;
                 case XmlElementNames.StartTimeInMinutes:
