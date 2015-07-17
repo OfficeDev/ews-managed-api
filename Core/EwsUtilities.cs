@@ -656,7 +656,6 @@ namespace Microsoft.Exchange.WebServices.Data
             params char[] separators)
             where T : struct
         {
-            if (string.IsNullOrEmpty(value)) { return; }
             EwsUtilities.Assert(
                 typeof(T).IsEnum,
                 "EwsUtilities.ParseEnumValueList",
