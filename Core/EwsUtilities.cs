@@ -661,6 +661,11 @@ namespace Microsoft.Exchange.WebServices.Data
                 "EwsUtilities.ParseEnumValueList",
                 "T is not an enum type.");
 
+            if (string.IsNullOrEmpty(value))
+            {
+                return;
+            }
+
             string[] enumValues = value.Split(separators);
 
             foreach (string enumValue in enumValues)
