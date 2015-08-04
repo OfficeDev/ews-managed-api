@@ -106,7 +106,7 @@ namespace Microsoft.Exchange.WebServices.Data
             switch (reader.LocalName)
             {
                 case XmlElementNames.InsightSource:
-                    this.InsightSource = reader.ReadElementValue<InsightSourceType>();
+                    this.InsightSource = reader.ReadElementValue<string>();
                     break;
                 case XmlElementNames.UpdatedUtcTicks:
                     this.UpdatedUtcTicks = reader.ReadElementValue<long>();

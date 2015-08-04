@@ -33,6 +33,9 @@ namespace Microsoft.Exchange.WebServices.Data
         {
             switch (reader.LocalName)
             {
+                case XmlElementNames.InsightSource:
+                    this.InsightSource = reader.ReadElementValue<string>();
+                    break;
                 case XmlElementNames.Properties:
                     this.Properties = new ComputedInsightValuePropertyCollection();
                     this.Properties.LoadFromXml(reader, XmlNamespace.Types, XmlElementNames.Properties);

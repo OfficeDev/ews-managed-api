@@ -42,14 +42,9 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Gets the InsightGroupType
+        /// Gets the string
         /// </summary>
-        public InsightGroupType InsightGroupType { get; internal set; }
-
-        /// <summary>
-        /// Gets the InsightType
-        /// </summary>
-        public InsightType InsightType { get; internal set; }
+        public string InsightType { get; internal set; }
 
         /// <summary>
         /// Gets the Rank
@@ -77,11 +72,8 @@ namespace Microsoft.Exchange.WebServices.Data
             {
                 switch (reader.LocalName)
                 {
-                    case XmlElementNames.InsightGroupType:
-                        this.InsightGroupType = reader.ReadElementValue<InsightGroupType>();
-                        break;
                     case XmlElementNames.InsightType:
-                        this.InsightType = reader.ReadElementValue<InsightType>();
+                        this.InsightType = reader.ReadElementValue<string>();
                         break;
                     case XmlElementNames.Rank:
                         this.Rank = reader.ReadElementValue<double>();
@@ -178,10 +170,20 @@ namespace Microsoft.Exchange.WebServices.Data
                             item.LoadFromXml(reader, reader.LocalName);
                             this.ItemList.InternalAdd(item);
                             break;
+                        case XmlElementNames.CompanyInsightValue:
+                            item = new CompanyInsightValue();
+                            item.LoadFromXml(reader, reader.LocalName);
+                            this.ItemList.InternalAdd(item);
+                            break;
+                        case XmlElementNames.OutOfOfficeInsightValue:
+                            item = new OutOfOfficeInsightValue();
+                            item.LoadFromXml(reader, reader.LocalName);
+                            this.ItemList.InternalAdd(item);
+                            break;
                     }
                 }
             } 
-            while (!reader.IsEndElement(XmlNamespace.Messages, XmlElementNames.ItemList));
+            while (!reader.IsEndElement(XmlNamespace.Types, XmlElementNames.ItemList));
         }
     }
 }

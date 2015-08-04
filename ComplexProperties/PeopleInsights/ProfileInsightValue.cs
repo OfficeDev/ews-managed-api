@@ -39,6 +39,8 @@ namespace Microsoft.Exchange.WebServices.Data
         private string emailAddress;
         private string avatar;
         private long joinedUtcTicks;
+        private UserProfilePicture profilePicture;
+        private string title;
 
         /// <summary>
         /// Gets the FullName
@@ -48,11 +50,6 @@ namespace Microsoft.Exchange.WebServices.Data
             get
             {
                 return this.fullName;
-            }
-
-            set
-            {
-                this.SetFieldValue<string>(ref this.fullName, value);
             }
         }
 
@@ -65,11 +62,6 @@ namespace Microsoft.Exchange.WebServices.Data
             {
                 return this.firstName;
             }
-
-            set
-            {
-                this.SetFieldValue<string>(ref this.firstName, value);
-            }
         }
 
         /// <summary>
@@ -80,11 +72,6 @@ namespace Microsoft.Exchange.WebServices.Data
             get
             {
                 return this.lastName;
-            }
-
-            set
-            {
-                this.SetFieldValue<string>(ref this.lastName, value);
             }
         }
 
@@ -97,11 +84,6 @@ namespace Microsoft.Exchange.WebServices.Data
             {
                 return this.emailAddress;
             }
-
-            set
-            {
-                this.SetFieldValue<string>(ref this.emailAddress, value);
-            }
         }
 
         /// <summary>
@@ -112,11 +94,6 @@ namespace Microsoft.Exchange.WebServices.Data
             get
             {
                 return this.avatar;
-            }
-
-            set
-            {
-                this.SetFieldValue<string>(ref this.avatar, value);
             }
         }
 
@@ -129,10 +106,27 @@ namespace Microsoft.Exchange.WebServices.Data
             {
                 return this.joinedUtcTicks;
             }
+        }
 
-            set
+        /// <summary>
+        /// Gets the ProfilePicture
+        /// </summary>
+        public UserProfilePicture ProfilePicture
+        {
+            get
             {
-                this.SetFieldValue<long>(ref this.joinedUtcTicks, value);
+                return this.profilePicture;
+            }
+        }
+
+        /// <summary>
+        /// Gets the Title
+        /// </summary>
+        public string Title
+        {
+            get
+            {
+                return this.title;
             }
         }
 
@@ -146,28 +140,36 @@ namespace Microsoft.Exchange.WebServices.Data
             switch (reader.LocalName)
             {
                 case XmlElementNames.InsightSource:
-                    this.InsightSource = reader.ReadElementValue<InsightSourceType>();
+                    this.InsightSource = reader.ReadElementValue<string>();
                     break;
                 case XmlElementNames.UpdatedUtcTicks:
                     this.UpdatedUtcTicks = reader.ReadElementValue<long>();
                     break;
                 case XmlElementNames.FullName:
-                    this.FullName = reader.ReadElementValue();
+                    this.fullName = reader.ReadElementValue();
                     break;
                 case XmlElementNames.FirstName:
-                    this.FirstName = reader.ReadElementValue();
+                    this.firstName = reader.ReadElementValue();
                     break;
                 case XmlElementNames.LastName:
-                    this.LastName = reader.ReadElementValue();
+                    this.lastName = reader.ReadElementValue();
                     break;
                 case XmlElementNames.EmailAddress:
-                    this.EmailAddress = reader.ReadElementValue();
+                    this.emailAddress = reader.ReadElementValue();
                     break;
                 case XmlElementNames.Avatar:
-                    this.Avatar = reader.ReadElementValue();
+                    this.avatar = reader.ReadElementValue();
                     break;
                 case XmlElementNames.JoinedUtcTicks:
-                    this.JoinedUtcTicks = reader.ReadElementValue<long>();
+                    this.joinedUtcTicks = reader.ReadElementValue<long>();
+                    break;
+                case XmlElementNames.ProfilePicture:
+                    var picture = new UserProfilePicture();
+                    picture.LoadFromXml(reader, XmlNamespace.Types, XmlElementNames.UserProfilePicture);
+                    this.profilePicture = new UserProfilePicture();
+                    break;
+                case XmlElementNames.Title:
+                    this.title = reader.ReadElementValue();
                     break;
                 default:
                     return false;

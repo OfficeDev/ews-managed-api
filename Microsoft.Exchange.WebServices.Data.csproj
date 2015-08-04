@@ -45,6 +45,7 @@
     <DocumentationFile>bin\Debug\Microsoft.Exchange.WebServices.xml</DocumentationFile>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -53,6 +54,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -93,6 +95,7 @@
     <Compile Include="ComplexProperties\PeopleInsights\SkillInsightValueCollection.cs" />
     <Compile Include="ComplexProperties\PeopleInsights\StringInsightValue.cs" />
     <Compile Include="ComplexProperties\PeopleInsights\UserProfilePicture.cs" />
+    <Compile Include="ComplexProperties\ReferenceAttachment.cs" />
     <Compile Include="Core\Requests\GetOMEConfigurationRequest.cs" />
     <Compile Include="Core\Requests\GetPeopleInsightsRequest.cs" />
     <Compile Include="Core\Requests\GetUserPhotoRequest.cs" />
@@ -103,10 +106,9 @@
     <Compile Include="Core\Responses\SetOMEConfigurationResponse.cs" />
     <Compile Include="Core\Responses\RegisterConsentResponse.cs" />
     <Compile Include="Enumerations\ConsentState.cs" />
-    <Compile Include="Enumerations\InsightGroupType.cs" />
-    <Compile Include="Enumerations\InsightSourceType.cs" />
-    <Compile Include="Enumerations\InsightType.cs" />
     <Compile Include="Enumerations\GetUserPhotoStatus.cs" />
+    <Compile Include="Enumerations\PeopleQueryContextKeys.cs" />
+    <Compile Include="Enumerations\PeopleQuerySource.cs" />
     <Compile Include="Enumerations\UserPhotoSize.cs" />
     <Compile Include="Enumerations\UnifiedGroupEnumTypes.cs" />
     <Compile Include="Groups\Requests\SetUnifiedGroupLastVisitedTimeRequest.cs" />
@@ -437,6 +439,8 @@
     <Compile Include="Search\ItemView.cs" />
     <Compile Include="Search\PeopleIndexedItemView.cs" />
     <Compile Include="Search\OrderByCollection.cs" />
+    <Compile Include="Search\PeopleQueryMode.cs" />
+    <Compile Include="Search\PeopleQueryResults.cs" />
     <Compile Include="Search\SeekToConditionItemView.cs" />
     <Compile Include="Security\SafeXmlDocument.cs" />
     <Compile Include="Security\SafeXmlFactory.cs" />

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Exchange Web Services Managed API
  *
  * Copyright (c) Microsoft Corporation
@@ -25,35 +25,31 @@
 
 namespace Microsoft.Exchange.WebServices.Data
 {
+    using System;
     using System.Collections.Generic;
-    using System.Xml;
-    
+    using System.Collections.ObjectModel;
+
     /// <summary>
-    /// Represents the InsightValue.
+    /// Lists different keys that can be passed to the people query context dictionary
     /// </summary>
-    public class InsightValue : ComplexProperty
+    public sealed class PeopleQueryContextKeys
     {
-        private long updatedUtcTicks;
+        /// <summary> Topic Query </summary>
+        public static readonly string TopicQuery = "TopicQuery";
 
-        /// <summary>
-        /// Gets the InsightSource
-        /// </summary>
-        public string InsightSource { get; set; }
+        /// <summary> Guid for client session </summary>
+        public static readonly string ClientSessionId = "ClientSessionId";
 
-        /// <summary>
-        /// Gets the UpdatedUtcTicks
-        /// </summary>
-        public long UpdatedUtcTicks
-        {
-            get
-            {
-                return this.updatedUtcTicks;
-            }
+        /// <summary> Client Flight Number </summary>
+        public static readonly string ClientFlightNumber = "ClientFlightNumber";
 
-            set
-            {
-                this.SetFieldValue<long>(ref this.updatedUtcTicks, value);
-            }
-        }
+        /// <summary> User Agent </summary>
+        public static readonly string UserAgent = "UserAgent";
+
+        /// <summary> App Name </summary>
+        public static readonly string AppName = "AppName";
+
+        /// <summary> App Scenario </summary>
+        public static readonly string AppScenario = "AppScenario";
     }
 }

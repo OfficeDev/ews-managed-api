@@ -25,6 +25,7 @@
 
 namespace Microsoft.Exchange.WebServices.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Xml;
 
@@ -40,6 +41,7 @@ namespace Microsoft.Exchange.WebServices.Data
             : base()
         {
             this.Results = new FindPeopleResults();
+            this.Sources = new List<string>();
         }
 
         /// <summary>
@@ -58,6 +60,16 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         /// <returns>FindPersona results.</returns>
         internal FindPeopleResults Results { get; private set; }
+
+        /// <summary>
+        /// The transaction ID for the query
+        /// </summary>
+        internal string TransactionId { get; private set; }
+
+        /// <summary>
+        /// Whether we queried GAL
+        /// </summary>
+        internal ICollection<string> Sources { get; private set; }
 
         /// <summary>
         /// Read Personas from XML.
@@ -101,21 +113,30 @@ namespace Microsoft.Exchange.WebServices.Data
             if (reader.IsStartElement(XmlNamespace.Messages, XmlElementNames.TotalNumberOfPeopleInView) && !reader.IsEmptyElement)
             {
                 this.Results.TotalCount = reader.ReadElementValue<int>();
-
                 reader.Read();
             }
 
             if (reader.IsStartElement(XmlNamespace.Messages, XmlElementNames.FirstMatchingRowIndex) && !reader.IsEmptyElement)
             {
                 this.Results.FirstMatchingRowIndex = reader.ReadElementValue<int>();
-
                 reader.Read();
             }
 
             if (reader.IsStartElement(XmlNamespace.Messages, XmlElementNames.FirstLoadedRowIndex) && !reader.IsEmptyElement)
             {
                 this.Results.FirstLoadedRowIndex = reader.ReadElementValue<int>();
+                reader.Read();
+            }
 
+            if (reader.IsStartElement(XmlNamespace.Messages, XmlElementNames.FindPeopleTransactionId) && !reader.IsEmptyElement)
+            {
+                this.TransactionId = reader.ReadElementValue<string>();
+                reader.Read();
+            }
+   
+            // Future proof by skipping any additional elements before returning
+            while (!reader.IsEndElement(XmlNamespace.Messages, XmlElementNames.FindPeopleResponse))
+            {
                 reader.Read();
             }
         }
