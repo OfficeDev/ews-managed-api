@@ -60,7 +60,7 @@ namespace Microsoft.Exchange.WebServices.Data
 
             set
             {
-                // The occurence index has to be positive integer.
+                // The occurrence index has to be positive integer.
                 if (value < 1)
                 {
                     throw new ArgumentException(Strings.OccurrenceIndexMustBeGreaterThanZero);

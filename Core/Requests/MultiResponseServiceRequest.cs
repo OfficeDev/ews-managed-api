@@ -68,7 +68,7 @@ namespace Microsoft.Exchange.WebServices.Data
             // If there's a general error in batch processing,
             // the server will return a single response message containing the error
             // (for example, if the SavedItemFolderId is bogus in a batch CreateItem
-            // call). In this case, throw a ServiceResponsException. Otherwise this 
+            // call). In this case, throw a ServiceResponseException. Otherwise this 
             // is an unexpected server error.
             if (serviceResponses.Count < this.GetExpectedResponseMessageCount())
             {
