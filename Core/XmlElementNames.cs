@@ -120,6 +120,14 @@ namespace Microsoft.Exchange.WebServices.Data
         public const string Culture = "Culture";
         public const string FileAttachment = "FileAttachment";
         public const string ItemAttachment = "ItemAttachment";
+        public const string ReferenceAttachment = "ReferenceAttachment";
+        public const string AttachLongPathName = "AttachLongPathName";
+        public const string ProviderType = "ProviderType";
+        public const string ProviderEndpointUrl = "ProviderEndpointUrl";
+        public const string AttachmentThumbnailUrl = "AttachmentThumbnailUrl";
+        public const string AttachmentPreviewUrl = "AttachmentPreviewUrl";
+        public const string PermissionType = "PermissionType";
+        public const string AttachmentIsFolder = "AttachmentIsFolder";
         public const string AttachmentIds = "AttachmentIds";
         public const string AttachmentId = "AttachmentId";
         public const string ContentType = "ContentType";
@@ -778,7 +786,6 @@ namespace Microsoft.Exchange.WebServices.Data
         public const string Person = "Person";
         public const string Insights = "Insights";
         public const string Insight = "Insight";
-        public const string InsightGroupType = "InsightGroupType";
         public const string InsightType = "InsightType";
         public const string InsightSourceType = "InsightSourceType";
         public const string InsightValue = "InsightValue";
@@ -858,6 +865,7 @@ namespace Microsoft.Exchange.WebServices.Data
         public const string DocumentId = "DocumentId";
         public const string PreviewURL = "PreviewURL";
         public const string LastEditor = "LastEditor";
+        public const string ProfilePicture = "ProfilePicture";
 
         #endregion
 
@@ -1288,6 +1296,11 @@ namespace Microsoft.Exchange.WebServices.Data
         public const string FindPeople = "FindPeople";
         public const string FindPeopleResponse = "FindPeopleResponse";
         public const string FindPeopleResponseMessage = "FindPeopleResponseMessage";
+        public const string SearchPeopleSuggestionIndex = "SearchPeopleSuggestionIndex";
+        public const string SearchPeopleContext = "Context";
+        public const string SearchPeopleQuerySources = "QuerySources";
+        public const string FindPeopleTransactionId = "TransactionId";
+        public const string FindPeopleSources = "Sources";
 
         // GetPeopleInsights
         public const string GetPeopleInsights = "GetPeopleInsights";

@@ -347,7 +347,16 @@ namespace Microsoft.Exchange.WebServices.Data
 
             foreach (string key in headers.AllKeys)
             {
-                this.httpResponseHeaders.Add(key, headers[key]);
+                string existingValue;
+
+                if (this.httpResponseHeaders.TryGetValue(key, out existingValue))
+                {
+                    this.httpResponseHeaders[key] = existingValue + "," + headers[key];
+                }
+                else
+                {
+                    this.httpResponseHeaders.Add(key, headers[key]);
+                }
             }
 
             if (this.OnResponseHeadersCaptured != null)

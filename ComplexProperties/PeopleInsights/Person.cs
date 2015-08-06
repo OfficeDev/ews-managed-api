@@ -273,6 +273,24 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
+        /// Gets the alias.
+        /// </summary>
+        public string Alias
+        {
+            get;
+            internal set;
+        }
+
+        /// <summary>
+        /// Gets the Department.
+        /// </summary>
+        public string Department
+        {
+            get;
+            internal set;
+        }
+
+        /// <summary>
         /// Gets the user profile picture.
         /// </summary>
         public UserProfilePicture UserProfilePicture
@@ -340,6 +358,12 @@ namespace Microsoft.Exchange.WebServices.Data
                     break;
                 case XmlElementNames.Title:
                     this.Title = reader.ReadElementValue();
+                    break;
+                case XmlElementNames.Alias:
+                    this.Alias = reader.ReadElementValue();
+                    break;
+                case XmlElementNames.Department:
+                    this.Department = reader.ReadElementValue();
                     break;
                 case XmlElementNames.MutualManager:
                     this.MutualManager = new ProfileInsightValue();

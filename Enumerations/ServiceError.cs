@@ -2338,5 +2338,36 @@ namespace Microsoft.Exchange.WebServices.Data
         /// The given channel subscription id is invalid.
         /// </summary>
         ErrorInvalidChannelSubscriptionId,
+
+        #region Error codes to map WASCL errors
+
+        /// <summary>Error indicating that message submission blocked by WASCL for a consumer mailboxes</summary>
+        ErrorMessageSubmissionBlocked,
+
+        /// <summary>Error indicating that number of submitted messages exceeded the limit and message submission is blocked by WASCL</summary>
+        ErrorExceededMessageLimit,
+
+        /// <summary>Error indicating that recipients number for a consumer mailbox has exceeded the limit defined by WASCL</summary>
+        ErrorExceededMaxRecipientLimitBlock,
+
+        /// <summary>Error indicating that access to the consumer mailbox is suspended by WASCL</summary>
+        ErrorAccountSuspend,
+
+        /// <summary>Error indicating that recipients number for a consumer mailbox has exceeded the limit defined by WASCL</summary>
+        ErrorExceededMaxRecipientLimit,
+
+        /// <summary>Error indicating that particular message cannot be sent for a consumer mailbox as it is considered as SPAM by WASCL</summary>
+        ErrorMessageBlocked,
+
+        /// <summary>Error indicating that access to the consumer mailbox is suspended by WASCL</summary>
+        ErrorAccountSuspendShowTierUpgrade,
+
+        /// <summary>Error indicating that message sent from a consumer mailbox has exceeded the limit defined by WASCL</summary>
+        ErrorExceededMessageLimitShowTierUpgrade,
+
+        /// <summary>Error indicating that recipients number for a consumer mailbox has exceeded the limit defined by WASCL</summary>
+        ErrorExceededMaxRecipientLimitShowTierUpgrade,
+
+        #endregion
     }
 }
