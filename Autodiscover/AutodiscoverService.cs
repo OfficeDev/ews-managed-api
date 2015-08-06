@@ -453,7 +453,7 @@ namespace Microsoft.Exchange.WebServices.Autodiscover
             }
 
             // Assume caller is not inside the Intranet, regardless of whether SCP Urls 
-            // were returned or not. SCP Urls are only relevent if one of them returns
+            // were returned or not. SCP Urls are only relevant if one of them returns
             // valid Autodiscover settings.
             this.isExternal = true;
 
@@ -539,7 +539,7 @@ namespace Microsoft.Exchange.WebServices.Autodiscover
                             EwsUtilities.Assert(
                                 false,
                                 "Autodiscover.GetConfigurationSettings",
-                                "An unexpected error has occured. This code path should never be reached.");
+                                "An unexpected error has occurred. This code path should never be reached.");
                             break;
                     }
                 }

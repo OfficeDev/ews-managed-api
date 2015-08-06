@@ -107,7 +107,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="writer">The writer.</param>
         internal override void WriteElementsToXml(EwsServiceXmlWriter writer)
         {
-            // Write UserConfiguation element
+            // Write UserConfiguration element
             this.userConfiguration.WriteToXml(writer, XmlNamespace.Messages, XmlElementNames.UserConfiguration);
         }
 

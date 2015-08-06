@@ -446,7 +446,7 @@ namespace Microsoft.Exchange.WebServices.Data
             // there is little perf gain with this approach because of EWS's message nature.
             // The overall latency of BeginGetRequestStream() is same as GetRequestStream() in this case.
             // The overhead to implement a two-step async operation includes wait handle synchronization, exception handling and wrapping.
-            // Therefore, we only leverage BeginGetResponse() and EndGetReponse() to provide the async functionality.
+            // Therefore, we only leverage BeginGetResponse() and EndGetResponse() to provide the async functionality.
             // Reference: http://www.wintellect.com/CS/blogs/jeffreyr/archive/2009/02/08/httpwebrequest-its-request-stream-and-sending-data-in-chunks.aspx
             return request.EndGetRequestStream(request.BeginGetRequestStream(null, null));
         }

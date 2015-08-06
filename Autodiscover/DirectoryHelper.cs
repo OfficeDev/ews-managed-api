@@ -194,7 +194,7 @@ namespace Microsoft.Exchange.WebServices.Autodiscover
                             // Stop the current search, start another from a new location.
                             this.TraceMessage(
                                 string.Format(
-                                    "SCP pointer for '{0}' is found in '{1}', restarting seach in '{2}'",
+                                    "SCP pointer for '{0}' is found in '{1}', restarting search in '{2}'",
                                     domainMatch,
                                     scpDirEntry.Path,
                                     scpPtrLdapPath));

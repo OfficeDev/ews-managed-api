@@ -51,7 +51,7 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Gets a value indicating whether the TimeZoneContext SOAP header should be eimitted.
+        /// Gets a value indicating whether the TimeZoneContext SOAP header should be emitted.
         /// </summary>
         /// <value>
         ///     <c>true</c> if the time zone should be emitted; otherwise, <c>false</c>.
@@ -62,7 +62,7 @@ namespace Microsoft.Exchange.WebServices.Data
             {
                 foreach (Item item in this.Items)
                 {
-                    if (item.GetIsTimeZoneHeaderRequired(true /* isUpdateOpeartion */))
+                    if (item.GetIsTimeZoneHeaderRequired(true /* isUpdateOperation */))
                     {
                         return true;
                     }
