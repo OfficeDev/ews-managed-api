@@ -392,6 +392,26 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
+        /// Binds to a folder.
+        /// </summary>
+        /// <param name="folderId">The folder id.</param>
+        /// <param name="propertySet">The property set.</param>
+        /// <returns>Folder</returns>
+        internal async System.Threading.Tasks.Task<Folder> BindToFolderAsync(FolderId folderId, PropertySet propertySet)
+        {
+            EwsUtilities.ValidateParam(folderId, "folderId");
+            EwsUtilities.ValidateParam(propertySet, "propertySet");
+
+            ServiceResponseCollection<GetFolderResponse> responses = await this.InternalBindToFoldersAsync(
+                new[] { folderId },
+                propertySet,
+                ServiceErrorHandling.ThrowOnError
+            );
+
+            return responses[0].Folder;
+        }
+
+        /// <summary>
         /// Binds to folder.
         /// </summary>
         /// <typeparam name="TFolder">The type of the folder.</typeparam>
@@ -402,6 +422,32 @@ namespace Microsoft.Exchange.WebServices.Data
             where TFolder : Folder
         {
             Folder result = this.BindToFolder(folderId, propertySet);
+
+            if (result is TFolder)
+            {
+                return (TFolder)result;
+            }
+            else
+            {
+                throw new ServiceLocalException(
+                    string.Format(
+                        Strings.FolderTypeNotCompatible,
+                        result.GetType().Name,
+                        typeof(TFolder).Name));
+            }
+        }
+
+        /// <summary>
+        /// Binds to folder.
+        /// </summary>
+        /// <typeparam name="TFolder">The type of the folder.</typeparam>
+        /// <param name="folderId">The folder id.</param>
+        /// <param name="propertySet">The property set.</param>
+        /// <returns>Folder</returns>
+        internal async System.Threading.Tasks.Task<TFolder> BindToFolderAsync<TFolder>(FolderId folderId, PropertySet propertySet)
+            where TFolder : Folder
+        {
+            Folder result = await this.BindToFolderAsync(folderId, propertySet);
 
             if (result is TFolder)
             {
@@ -442,6 +488,26 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         /// <param name="folderIds">The Ids of the folders to bind to.</param>
         /// <param name="propertySet">The set of properties to load.</param>
+        /// <returns>A ServiceResponseCollection providing results for each of the specified folder Ids.</returns>
+        public async System.Threading.Tasks.Task<ServiceResponseCollection<GetFolderResponse>> BindToFoldersAsync(
+            IEnumerable<FolderId> folderIds,
+            PropertySet propertySet)
+        {
+            EwsUtilities.ValidateParamCollection(folderIds, "folderIds");
+            EwsUtilities.ValidateParam(propertySet, "propertySet");
+
+            return await this.InternalBindToFoldersAsync(
+                folderIds,
+                propertySet,
+                ServiceErrorHandling.ReturnErrors
+            );
+        }
+
+        /// <summary>
+        /// Binds to multiple folders in a single call to EWS.
+        /// </summary>
+        /// <param name="folderIds">The Ids of the folders to bind to.</param>
+        /// <param name="propertySet">The set of properties to load.</param>
         /// <param name="errorHandling">Type of error handling to perform.</param>
         /// <returns>A ServiceResponseCollection providing results for each of the specified folder Ids.</returns>
         private ServiceResponseCollection<GetFolderResponse> InternalBindToFolders(
@@ -455,6 +521,26 @@ namespace Microsoft.Exchange.WebServices.Data
             request.PropertySet = propertySet;
 
             return request.Execute();
+        }
+
+        /// <summary>
+        /// Binds to multiple folders in a single call to EWS.
+        /// </summary>
+        /// <param name="folderIds">The Ids of the folders to bind to.</param>
+        /// <param name="propertySet">The set of properties to load.</param>
+        /// <param name="errorHandling">Type of error handling to perform.</param>
+        /// <returns>A ServiceResponseCollection providing results for each of the specified folder Ids.</returns>
+        private async System.Threading.Tasks.Task<ServiceResponseCollection<GetFolderResponse>> InternalBindToFoldersAsync(
+            IEnumerable<FolderId> folderIds,
+            PropertySet propertySet,
+            ServiceErrorHandling errorHandling)
+        {
+            GetFolderRequest request = new GetFolderRequest(this, errorHandling);
+
+            request.FolderIds.AddRange(folderIds);
+            request.PropertySet = propertySet;
+
+            return await request.ExecuteAsync();
         }
 
         /// <summary>
