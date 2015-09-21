@@ -23,6 +23,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+
 namespace Microsoft.Exchange.WebServices.Data
 {
     using System;
@@ -99,7 +100,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="responseIndex">Index of the response.</param>
         /// <returns>Service response.</returns>
         internal abstract TResponse CreateServiceResponse(ExchangeService service, int responseIndex);
-        
+
         /// <summary>
         /// Gets the name of the response message XML element.
         /// </summary>
@@ -164,6 +165,15 @@ namespace Microsoft.Exchange.WebServices.Data
             }
 
             return serviceResponses;
+        }
+
+        /// <summary>
+        /// Executes this request in an async-await fashion.
+        /// </summary>
+        /// <returns>Service response collection promise.</returns>
+        internal async System.Threading.Tasks.Task<ServiceResponseCollection<TResponse>> ExecuteAsync()
+        {
+            return await System.Threading.Tasks.Task.Factory.FromAsync<ServiceResponseCollection<TResponse>>(this.BeginExecute, this.EndExecute, this);
         }
 
         /// <summary>
