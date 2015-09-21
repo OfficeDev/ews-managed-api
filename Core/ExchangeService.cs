@@ -1493,6 +1493,29 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         /// <param name="itemIds">The Ids of the items to bind to.</param>
         /// <param name="propertySet">The set of properties to load.</param>
+        /// <param name="anchorMailbox">The SmtpAddress of mailbox that hosts all items we need to bind to</param>
+        /// <param name="errorHandling">Type of error handling to perform.</param>
+        /// <returns>A ServiceResponseCollection providing results for each of the specified item Ids.</returns>
+        private async System.Threading.Tasks.Task<ServiceResponseCollection<GetItemResponse>> InternalBindToItemsAsync(
+            IEnumerable<ItemId> itemIds,
+            PropertySet propertySet,
+            string anchorMailbox,
+            ServiceErrorHandling errorHandling)
+        {
+            GetItemRequest request = new GetItemRequest(this, errorHandling);
+
+            request.ItemIds.AddRange(itemIds);
+            request.PropertySet = propertySet;
+            request.AnchorMailbox = anchorMailbox;
+
+            return await request.ExecuteAsync();
+        }
+
+        /// <summary>
+        /// Binds to multiple items in a single call to EWS.
+        /// </summary>
+        /// <param name="itemIds">The Ids of the items to bind to.</param>
+        /// <param name="propertySet">The set of properties to load.</param>
         /// <returns>A ServiceResponseCollection providing results for each of the specified item Ids.</returns>
         public ServiceResponseCollection<GetItemResponse> BindToItems(IEnumerable<ItemId> itemIds, PropertySet propertySet)
         {
@@ -1556,6 +1579,26 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <summary>
         /// Binds to item.
         /// </summary>
+        /// <param name="itemId">The item id.</param>
+        /// <param name="propertySet">The property set.</param>
+        /// <returns>Item.</returns>
+        internal async System.Threading.Tasks.Task<Item> BindToItemAsync(ItemId itemId, PropertySet propertySet)
+        {
+            EwsUtilities.ValidateParam(itemId, "itemId");
+            EwsUtilities.ValidateParam(propertySet, "propertySet");
+
+            ServiceResponseCollection<GetItemResponse> responses = await this.InternalBindToItemsAsync(
+                new ItemId[] { itemId },
+                propertySet,
+                null, /* anchorMailbox */
+                ServiceErrorHandling.ThrowOnError);
+
+            return responses[0].Item;
+        }
+
+        /// <summary>
+        /// Binds to item.
+        /// </summary>
         /// <typeparam name="TItem">The type of the item.</typeparam>
         /// <param name="itemId">The item id.</param>
         /// <param name="propertySet">The property set.</param>
@@ -1564,6 +1607,32 @@ namespace Microsoft.Exchange.WebServices.Data
             where TItem : Item
         {
             Item result = this.BindToItem(itemId, propertySet);
+
+            if (result is TItem)
+            {
+                return (TItem)result;
+            }
+            else
+            {
+                throw new ServiceLocalException(
+                    string.Format(
+                        Strings.ItemTypeNotCompatible,
+                        result.GetType().Name,
+                        typeof(TItem).Name));
+            }
+        }
+
+        /// <summary>
+        /// Binds to item.
+        /// </summary>
+        /// <typeparam name="TItem">The type of the item.</typeparam>
+        /// <param name="itemId">The item id.</param>
+        /// <param name="propertySet">The property set.</param>
+        /// <returns>Item</returns>
+        internal async System.Threading.Tasks.Task<TItem> BindToItemAsync<TItem>(ItemId itemId, PropertySet propertySet)
+            where TItem : Item
+        {
+            Item result = await this.BindToItemAsync(itemId, propertySet);
 
             if (result is TItem)
             {
