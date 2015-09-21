@@ -2060,6 +2060,33 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
+        /// Gets an attachment.
+        /// </summary>
+        /// <param name="attachments">The attachments.</param>
+        /// <param name="bodyType">Type of the body.</param>
+        /// <param name="additionalProperties">The additional properties.</param>
+        /// <param name="errorHandling">Type of error handling to perform.</param>
+        /// <returns>Service response collection.</returns>
+        private async System.Threading.Tasks.Task<ServiceResponseCollection<GetAttachmentResponse>> InternalGetAttachmentsAsync(
+            IEnumerable<Attachment> attachments,
+            BodyType? bodyType,
+            IEnumerable<PropertyDefinitionBase> additionalProperties,
+            ServiceErrorHandling errorHandling)
+        {
+            GetAttachmentRequest request = new GetAttachmentRequest(this, errorHandling);
+
+            request.Attachments.AddRange(attachments);
+            request.BodyType = bodyType;
+
+            if (additionalProperties != null)
+            {
+                request.AdditionalProperties.AddRange(additionalProperties);
+            }
+
+            return await request.ExecuteAsync();
+        }
+
+        /// <summary>
         /// Gets attachments.
         /// </summary>
         /// <param name="attachments">The attachments.</param>
@@ -2072,6 +2099,25 @@ namespace Microsoft.Exchange.WebServices.Data
             IEnumerable<PropertyDefinitionBase> additionalProperties)
         {
             return this.InternalGetAttachments(
+                attachments,
+                bodyType,
+                additionalProperties,
+                ServiceErrorHandling.ReturnErrors);
+        }
+
+        /// <summary>
+        /// Gets attachments.
+        /// </summary>
+        /// <param name="attachments">The attachments.</param>
+        /// <param name="bodyType">Type of the body.</param>
+        /// <param name="additionalProperties">The additional properties.</param>
+        /// <returns>Service response collection.</returns>
+        public async System.Threading.Tasks.Task<ServiceResponseCollection<GetAttachmentResponse>> GetAttachmentsAsync(
+            Attachment[] attachments,
+            BodyType? bodyType,
+            IEnumerable<PropertyDefinitionBase> additionalProperties)
+        {
+            return await this.InternalGetAttachmentsAsync(
                 attachments,
                 bodyType,
                 additionalProperties,
@@ -2104,6 +2150,31 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
+        /// Gets attachments.
+        /// </summary>
+        /// <param name="attachmentIds">The attachment ids.</param>
+        /// <param name="bodyType">Type of the body.</param>
+        /// <param name="additionalProperties">The additional properties.</param>
+        /// <returns>Service response collection.</returns>
+        public async System.Threading.Tasks.Task<ServiceResponseCollection<GetAttachmentResponse>> GetAttachmentsAsync(
+            string[] attachmentIds,
+            BodyType? bodyType,
+            IEnumerable<PropertyDefinitionBase> additionalProperties)
+        {
+            GetAttachmentRequest request = new GetAttachmentRequest(this, ServiceErrorHandling.ReturnErrors);
+
+            request.AttachmentIds.AddRange(attachmentIds);
+            request.BodyType = bodyType;
+
+            if (additionalProperties != null)
+            {
+                request.AdditionalProperties.AddRange(additionalProperties);
+            }
+
+            return await request.ExecuteAsync();
+        }
+
+        /// <summary>
         /// Gets an attachment.
         /// </summary>
         /// <param name="attachment">The attachment.</param>
@@ -2115,6 +2186,24 @@ namespace Microsoft.Exchange.WebServices.Data
             IEnumerable<PropertyDefinitionBase> additionalProperties)
         {
             this.InternalGetAttachments(
+                new Attachment[] { attachment },
+                bodyType,
+                additionalProperties,
+                ServiceErrorHandling.ThrowOnError);
+        }
+
+        /// <summary>
+        /// Gets an attachment.
+        /// </summary>
+        /// <param name="attachment">The attachment.</param>
+        /// <param name="bodyType">Type of the body.</param>
+        /// <param name="additionalProperties">The additional properties.</param>
+        internal async System.Threading.Tasks.Task GetAttachmentAsync(
+            Attachment attachment,
+            BodyType? bodyType,
+            IEnumerable<PropertyDefinitionBase> additionalProperties)
+        {
+            await this.InternalGetAttachmentsAsync(
                 new Attachment[] { attachment },
                 bodyType,
                 additionalProperties,

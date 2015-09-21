@@ -202,6 +202,24 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
+        /// Loads the content of the file attachment into the specified stream. Calling this method results in a call to EWS.
+        /// </summary>
+        /// <param name="stream">The stream to load the content of the attachment into.</param>
+        public async System.Threading.Tasks.Task LoadAsync(Stream stream)
+        {
+            this.loadToStream = stream;
+
+            try
+            {
+                await this.LoadAsync();
+            }
+            finally
+            {
+                this.loadToStream = null;
+            }
+        }
+
+        /// <summary>
         /// Loads the content of the file attachment into the specified file. Calling this method results in a call to EWS.
         /// </summary>
         /// <param name="fileName">The name of the file to load the content of the attachment into. If the file already exists, it is overwritten.</param>
@@ -212,6 +230,29 @@ namespace Microsoft.Exchange.WebServices.Data
             try
             {
                 this.Load();
+            }
+            finally
+            {
+                this.loadToStream.Dispose();
+                this.loadToStream = null;
+            }
+
+            this.fileName = fileName;
+            this.content = null;
+            this.contentStream = null;
+        }
+
+        /// <summary>
+        /// Loads the content of the file attachment into the specified file. Calling this method results in a call to EWS.
+        /// </summary>
+        /// <param name="fileName">The name of the file to load the content of the attachment into. If the file already exists, it is overwritten.</param>
+        public async System.Threading.Tasks.Task LoadAsync(string fileName)
+        {
+            this.loadToStream = new FileStream(fileName, FileMode.Create);
+
+            try
+            {
+                await this.LoadAsync();
             }
             finally
             {
@@ -258,7 +299,7 @@ namespace Microsoft.Exchange.WebServices.Data
             set
             {
                 this.ThrowIfThisIsNotNew();
-                
+
                 this.contentStream = value;
                 this.content = null;
                 this.fileName = null;
@@ -278,7 +319,7 @@ namespace Microsoft.Exchange.WebServices.Data
             internal set
             {
                 this.ThrowIfThisIsNotNew();
-                
+
                 this.content = value;
                 this.fileName = null;
                 this.contentStream = null;
@@ -290,7 +331,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         public bool IsContactPhoto
         {
-            get 
+            get
             {
                 EwsUtilities.ValidatePropertyVersion(this.Service, ExchangeVersion.Exchange2010, "IsContactPhoto");
 
