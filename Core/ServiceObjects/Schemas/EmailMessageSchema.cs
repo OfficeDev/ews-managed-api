@@ -279,7 +279,7 @@ namespace Microsoft.Exchange.WebServices.Data
                 XmlElementNames.Likers,
                 FieldUris.Likers,
                 PropertyDefinitionFlags.AutoInstantiateOnRead,
-                ExchangeVersion.Exchange2015,
+                ExchangeVersion.Exchange2016,
                 delegate() { return new EmailAddressCollection(); });
 
         // This must be after the declaration of property definitions

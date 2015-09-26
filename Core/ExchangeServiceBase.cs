@@ -777,6 +777,60 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
+        /// Gets the server version associated with the server that processed the last request.
+        /// Will be null if no request have been processed or the version cannot be derived
+        /// </summary>
+        public ExchangeVersion? ActualServerVersion
+        {
+            get
+            {
+                if (this.ServerInfo == null)
+                {
+                    return null;
+                }
+
+                // Derived from https://technet.microsoft.com/library/hh135098.aspx
+                switch (this.ServerInfo.MajorVersion)
+                {
+                    case 8:
+                        return ExchangeVersion.Exchange2007_SP1;
+                    case 14:
+                        if (this.ServerInfo.MinorVersion < 1)
+                        {
+                            return ExchangeVersion.Exchange2010;
+                        }
+                        else if(this.ServerInfo.MinorVersion < 2)
+                        {
+                            return ExchangeVersion.Exchange2010_SP1;
+                        }
+                        else
+                        {
+                            return ExchangeVersion.Exchange2010_SP2;
+                        }
+                    case 15:
+                        if (this.ServerInfo.MinorVersion < 1)
+                        {
+                            if (this.ServerInfo.MajorBuildNumber < 847)
+                            {
+                                return ExchangeVersion.Exchange2013;
+                            }
+                            else
+                            {
+                                return ExchangeVersion.Exchange2013_SP1;
+                            }
+                        }
+                        else
+                        {
+                            return ExchangeVersion.Exchange2016;
+                        }
+                                                
+                }
+
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the user agent.
         /// </summary>
         /// <value>The user agent.</value>

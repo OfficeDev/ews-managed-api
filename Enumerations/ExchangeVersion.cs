@@ -63,8 +63,8 @@ namespace Microsoft.Exchange.WebServices.Data
         Exchange2013_SP1 = 5,
 
         /// <summary>
-        /// Microsoft Exchange 2015
+        /// Microsoft Exchange 2016
         /// </summary>
-        Exchange2015 = 6,
+        Exchange2016 = 6,
     }
 }

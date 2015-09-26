@@ -110,7 +110,7 @@ namespace Microsoft.Exchange.WebServices.Data.Groups
         /// <returns>Earliest Exchange version in which this request is supported.</returns>
         internal override ExchangeVersion GetMinimumRequiredServerVersion()
         {
-            return ExchangeVersion.Exchange2015;
+            return ExchangeVersion.Exchange2016;
         }
 
         /// <summary>
