@@ -1673,7 +1673,7 @@ namespace Microsoft.Exchange.WebServices.Data
         private PeopleQueryResults PerformPeopleQuery(ViewBase view, string queryString, Dictionary<string, string> context, PeopleQueryMode queryMode)
         {
             EwsUtilities.ValidateParam(view, "view");
-            EwsUtilities.ValidateMethodVersion(this, ExchangeVersion.Exchange2015, "FindPeople");
+            EwsUtilities.ValidateMethodVersion(this, ExchangeVersion.Exchange2016, "FindPeople");
 
             if (context == null)
             {
@@ -3369,7 +3369,7 @@ namespace Microsoft.Exchange.WebServices.Data
             EwsUtilities.ValidateParam(anchorMailbox, "anchorMailbox");
             EwsUtilities.ValidateMethodVersion(
                                             this,
-                                            ExchangeVersion.Exchange2015,
+                                            ExchangeVersion.Exchange2016,
                                             "FindConversation");
 
             FindConversationRequest request = new FindConversationRequest(this);

@@ -75,7 +75,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <summary>
         /// The EmailAddress represents a GroupMailbox
         /// </summary>
-        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
+        [RequiredServerVersion(ExchangeVersion.Exchange2016)]
         GroupMailbox,
     }
 }

@@ -79,7 +79,7 @@ namespace Microsoft.Exchange.WebServices.Data
         {
             EwsUtilities.ValidateClassVersion(
                 this.Owner.Service,
-                ExchangeVersion.Exchange2015,
+                ExchangeVersion.Exchange2016,
                 this.GetType().Name);
         }
 
