@@ -999,6 +999,32 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
+        /// Gets or sets the list of hashtags associated with this item.
+        /// </summary>
+        public StringList Hashtags
+        {
+            get { return (StringList)this.PropertyBag[ItemSchema.Hashtags]; }
+            set { this.PropertyBag[ItemSchema.Hashtags] = value; }
+        }
+
+        /// <summary>
+        /// Gets the Mentions associated with the message.
+        /// </summary>
+        public EmailAddressCollection Mentions
+        {
+            get { return (EmailAddressCollection)this.PropertyBag[ItemSchema.Mentions]; }
+            set { this.PropertyBag[ItemSchema.Mentions] = value; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the item mentions me.
+        /// </summary>
+        public bool? MentionedMe
+        {
+            get { return (bool?)this.PropertyBag[ItemSchema.MentionedMe]; }
+        }
+
+        /// <summary>
         /// Gets the default setting for how to treat affected task occurrences on Delete.
         /// Subclasses will override this for different default behavior.
         /// </summary>

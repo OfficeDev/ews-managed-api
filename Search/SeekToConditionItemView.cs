@@ -155,6 +155,8 @@ namespace Microsoft.Exchange.WebServices.Data
             this.InternalWriteViewToXml(writer);
 
             writer.WriteEndElement(); // this.GetViewXmlElementName()
+
+            this.InternalWriteSearchSettingsToXml(writer, groupBy);
         }
 
         /// <summary>

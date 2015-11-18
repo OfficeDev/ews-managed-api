@@ -36,12 +36,36 @@ namespace Microsoft.Exchange.WebServices.Data
     /// </summary>
     internal sealed class InstallAppResponse : ServiceResponse
     {
+        private bool? wasFirstInstall;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="InstallAppResponse"/> class.
         /// </summary>
         public InstallAppResponse()
             : base()
         {
+        }
+
+        /// <summary>
+        /// Reads response elements from XML.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        internal override void ReadElementsFromXml(EwsServiceXmlReader reader)
+        {
+            base.ReadElementsFromXml(reader);
+
+            if (this.ErrorCode == ServiceError.NoError && reader.IsStartElement(XmlNamespace.NotSpecified, XmlElementNames.WasFirstInstall))
+            {
+                this.wasFirstInstall = reader.ReadElementValue<bool>(XmlNamespace.NotSpecified, XmlElementNames.WasFirstInstall);
+            }
+        }
+
+        /// <summary>
+        /// Was this first install
+        /// </summary>
+        public bool? WasFirstInstall
+        {
+            get { return this.WasFirstInstall; }
         }
     }
 }

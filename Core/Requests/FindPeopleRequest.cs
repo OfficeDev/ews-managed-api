@@ -59,7 +59,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// is null, no search filters are applied.
         /// </summary>
         internal SearchFilter SearchFilter { get; set; }
-        
+
         /// <summary>
         /// Query string accessors
         /// </summary>
@@ -85,7 +85,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         internal override void Validate()
         {
-            base.Validate();               
+            base.Validate();
             this.View.InternalValidate(this);
         }
 
@@ -146,25 +146,25 @@ namespace Microsoft.Exchange.WebServices.Data
                 writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.SearchPeopleContext);
                 foreach (KeyValuePair<string, string> contextItem in this.Context)
                 {
-                    writer.WriteStartElement(XmlNamespace.Messages, "ContextProperty");
+                    writer.WriteStartElement(XmlNamespace.Types, "ContextProperty");
 
-                    writer.WriteStartElement(XmlNamespace.Messages, "Key");
+                    writer.WriteStartElement(XmlNamespace.Types, "Key");
                     writer.WriteValue(contextItem.Key, "Key");
                     writer.WriteEndElement();
 
-                    writer.WriteStartElement(XmlNamespace.Messages, "Value");
+                    writer.WriteStartElement(XmlNamespace.Types, "Value");
                     writer.WriteValue(contextItem.Value, "Value");
                     writer.WriteEndElement();
 
                     writer.WriteEndElement();
                 }
                 writer.WriteEndElement();
-                
+
                 // Write the Query Mode Sources
                 writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.SearchPeopleQuerySources);
                 foreach (string querySource in this.QueryMode.Sources)
                 {
-                    writer.WriteStartElement(XmlNamespace.Messages, "Source");
+                    writer.WriteStartElement(XmlNamespace.Types, "Source");
                     writer.WriteValue(querySource, "Source");
                     writer.WriteEndElement();
                 }

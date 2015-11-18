@@ -87,6 +87,9 @@ namespace Microsoft.Exchange.WebServices.Data
             public const string Preview = "item:Preview";
             public const string TextBody = "item:TextBody";
             public const string IconIndex = "item:IconIndex";
+            public const string Hashtags = "item:Hashtags";
+            public const string Mentions = "item:Mentions";
+            public const string MentionedMe = "item:MentionedMe";
         }
 
         /// <summary>
@@ -641,6 +644,42 @@ namespace Microsoft.Exchange.WebServices.Data
                 PropertyDefinitionFlags.CanFind,
                 ExchangeVersion.Exchange2013);
 
+        /// <summary>
+        /// Defines the Hashtags property.
+        /// </summary>
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Immutable type")]
+        public static readonly PropertyDefinition Hashtags =
+            new ComplexPropertyDefinition<StringList>(
+                XmlElementNames.Hashtags,
+                FieldUris.Hashtags,
+                PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete,
+                ExchangeVersion.Exchange2015,
+                delegate() { return new StringList(); });
+
+        /// <summary>
+        /// Defines the Mentions property.
+        /// </summary>
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Immutable type")]
+        public static readonly PropertyDefinition Mentions =
+            new ComplexPropertyDefinition<EmailAddressCollection>(
+                XmlElementNames.Mentions,
+                FieldUris.Mentions,
+                PropertyDefinitionFlags.AutoInstantiateOnRead | PropertyDefinitionFlags.CanSet | PropertyDefinitionFlags.CanUpdate | PropertyDefinitionFlags.CanDelete,
+                ExchangeVersion.Exchange2015,
+                delegate() { return new EmailAddressCollection(); });
+
+        /// <summary>
+        /// Defines the MentionedMe property.
+        /// </summary>
+        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes", Justification = "Immutable type")]
+        public static readonly PropertyDefinition MentionedMe =
+            new BoolPropertyDefinition(
+                XmlElementNames.MentionedMe,
+                FieldUris.MentionedMe,
+                PropertyDefinitionFlags.CanFind,
+                ExchangeVersion.Exchange2015,
+                true);
+
         // This must be declared after the property definitions
         internal static readonly ItemSchema Instance = new ItemSchema();
 
@@ -704,6 +743,10 @@ namespace Microsoft.Exchange.WebServices.Data
             this.RegisterProperty(TextBody);
             this.RegisterProperty(IconIndex);
             this.RegisterProperty(MimeContentUTF8);
+
+            this.RegisterProperty(Hashtags);
+            this.RegisterProperty(Mentions);
+            this.RegisterProperty(MentionedMe);
         }
 
         /// <summary>
