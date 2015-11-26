@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Exchange Web Services Managed API
  *
  * Copyright (c) Microsoft Corporation
@@ -23,49 +23,21 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-using System.Xml.Serialization;
-
 namespace Microsoft.Exchange.WebServices.Data
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+
     /// <summary>
-    /// Defines the type of an InsightGroup object.
+    /// Lists the names of various sources of people
     /// </summary>
-    public enum InsightGroupType
+    public sealed class PeopleQuerySource
     {
-        /// <summary>
-        /// The InsightGroupType represents the basic info.
-        /// </summary>
-        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
-        BasicBio,
+        /// <summary>The users mailbox</summary>
+        public static readonly string Mailbox = "Mailbox";
 
-        /// <summary>
-        /// The InsightGroupType represents the professional info.
-        /// </summary>
-        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
-        ProfessionalBio,
-
-        /// <summary>
-        /// The InsightGroupType represents the organization structure.
-        /// </summary>
-        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
-        OrgStructure,
-
-        /// <summary>
-        /// The InsightGroupType represents the office.
-        /// </summary>
-        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
-        Office,
-
-        /// <summary>
-        /// The InsightGroupType represents the company info.
-        /// </summary>
-        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
-        CompanyInfo,
-
-        /// <summary>
-        /// The InsightGroupType represents the contact history.
-        /// </summary>
-        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
-        ContactHistory
+        /// <summary>The users directory</summary>
+        public static readonly string Directory = "Directory";
     }
 }

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Exchange Web Services Managed API
  *
  * Copyright (c) Microsoft Corporation
@@ -23,55 +23,32 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-using System.Xml.Serialization;
-
 namespace Microsoft.Exchange.WebServices.Data
 {
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+
     /// <summary>
-    /// Defines the type of an InsightSource object.
+    /// Represents the results of an Persona search operation.
     /// </summary>
-    public enum InsightSourceType
+    public sealed class PeopleQueryResults
     {
         /// <summary>
-        /// The InsightSourceType represents the insight data source from AAD.
+        /// Creates a new instance of the <see cref="PeopleQueryResults"/> class.
         /// </summary>
-        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
-        AAD,
+        internal PeopleQueryResults()
+        {
+            this.Personas = new List<Persona>();
+        }
 
         /// <summary>
-        /// The InsightSourceType represents the insight data source from Mailbox.
+        /// Gets the Personas that were found by the search operation.
         /// </summary>
-        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
-        Mailbox,
+        public IList<Persona> Personas { get; internal set; }
 
         /// <summary>
-        /// The InsightSourceType represents the insight data source from LinkedIn.
+        /// Gets the ID for this FindPeople call, which can be used for feedback
         /// </summary>
-        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
-        LinkedIn,
-
-        /// <summary>
-        /// The InsightSourceType represents the insigt data source from Facebook.
-        /// </summary>
-        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
-        Facebook,
-
-        /// <summary>
-        /// The InsightSourceType represents the insigt data source from Delve.
-        /// </summary>
-        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
-        Delve,
-
-        /// <summary>
-        /// The InsightSourceType represents the insigt data source from Satori.
-        /// </summary>
-        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
-        Satori,
-
-        /// <summary>
-        /// The InsightSourceType represents the insight data source from O365.
-        /// </summary>
-        [RequiredServerVersion(ExchangeVersion.Exchange2015)]
-        O365
+        public string TransactionId { get; internal set; }
     }
 }

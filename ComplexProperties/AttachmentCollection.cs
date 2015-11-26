@@ -155,6 +155,26 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
+        /// Adds a reference attachment to the collection
+        /// </summary>
+        /// <param name="name">The display name of the new attachment.</param>
+        /// <param name="attachLongPathName">The fully-qualified path identifying the attachment</param>
+        /// <returns>A ReferenceAttachment instance</returns>
+        public ReferenceAttachment AddReferenceAttachment(
+            string name, 
+            string attachLongPathName)
+        {
+            ReferenceAttachment referenceAttachment = new ReferenceAttachment(this.owner);
+
+            referenceAttachment.Name = name; 
+            referenceAttachment.AttachLongPathName = attachLongPathName;
+
+            this.InternalAdd(referenceAttachment);
+
+            return referenceAttachment;
+        }
+
+        /// <summary>
         /// Adds an item attachment to the collection
         /// </summary>
         /// <typeparam name="TItem">The type of the item to attach.</typeparam>
@@ -225,6 +245,8 @@ namespace Microsoft.Exchange.WebServices.Data
                     return new FileAttachment(this.owner);
                 case XmlElementNames.ItemAttachment:
                     return new ItemAttachment(this.owner);
+                case XmlElementNames.ReferenceAttachment:
+                    return new ReferenceAttachment(this.owner);
                 default:
                     return null;
             }
@@ -240,6 +262,10 @@ namespace Microsoft.Exchange.WebServices.Data
             if (complexProperty is FileAttachment)
             {
                 return XmlElementNames.FileAttachment;
+            }
+            else if (complexProperty is ReferenceAttachment)
+            {
+                return XmlElementNames.ReferenceAttachment;
             }
             else
             {

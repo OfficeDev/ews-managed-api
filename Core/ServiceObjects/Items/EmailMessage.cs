@@ -383,7 +383,7 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Gets the Internat Message Id of the e-mail message.
+        /// Gets the Internet Message Id of the e-mail message.
         /// </summary>
         public string InternetMessageId
         {

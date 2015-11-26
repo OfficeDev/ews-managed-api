@@ -206,7 +206,7 @@ namespace Microsoft.Exchange.WebServices.Data
                 writer.WriteStartElement(XmlNamespace.Types, XmlElementNames.MailboxSearchScopes);
                 foreach (MailboxSearchScope mailboxSearchScope in mailboxQuery.MailboxSearchScopes)
                 {
-                    // The checks here silently downgrade the schema based on compatability checks, to recieve errors use the validate method
+                    // The checks here silently downgrade the schema based on compatibility checks, to receive errors use the validate method
                     if (mailboxSearchScope.SearchScopeType == MailboxSearchScopeType.LegacyExchangeDN || DiscoverySchemaChanges.SearchMailboxesAdditionalSearchScopes.IsCompatible(this))
                     {
                         writer.WriteStartElement(XmlNamespace.Types, XmlElementNames.MailboxSearchScope);

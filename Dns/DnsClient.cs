@@ -65,7 +65,7 @@ namespace Microsoft.Exchange.WebServices.Dns
             // Each strongly-typed DnsRecord type maps to a DnsRecordType enum.
             DnsRecordType dnsRecordTypeToQuery = typeToDnsTypeMap.Member[typeof(T)];
 
-            // queryResultsPtr will point to unmanaged heap memoery if DnsQuery succeeds.
+            // queryResultsPtr will point to unmanaged heap memory if DnsQuery succeeds.
             IntPtr queryResultsPtr = IntPtr.Zero;
 
             try

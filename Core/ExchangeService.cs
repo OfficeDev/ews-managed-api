@@ -288,12 +288,11 @@ namespace Microsoft.Exchange.WebServices.Data
             EwsUtilities.ValidateParam(folderId, "folderId");
             EwsUtilities.ValidateParam(propertySet, "propertySet");
 
-            GetFolderRequest request = new GetFolderRequest(this, ServiceErrorHandling.ThrowOnError);
-
-            request.FolderIds.Add(folderId);
-            request.PropertySet = propertySet;
-
-            ServiceResponseCollection<GetFolderResponse> responses = request.Execute();
+            ServiceResponseCollection<GetFolderResponse> responses = this.InternalBindToFolders(
+                new[] { folderId },
+                propertySet,
+                ServiceErrorHandling.ThrowOnError
+            );
 
             return responses[0].Folder;
         }
@@ -322,6 +321,46 @@ namespace Microsoft.Exchange.WebServices.Data
                         result.GetType().Name,
                         typeof(TFolder).Name));
             }
+        }
+
+        /// <summary>
+        /// Binds to multiple folders in a single call to EWS.
+        /// </summary>
+        /// <param name="folderIds">The Ids of the folders to bind to.</param>
+        /// <param name="propertySet">The set of properties to load.</param>
+        /// <returns>A ServiceResponseCollection providing results for each of the specified folder Ids.</returns>
+        public ServiceResponseCollection<GetFolderResponse> BindToFolders(
+            IEnumerable<FolderId> folderIds,
+            PropertySet propertySet)
+        {
+            EwsUtilities.ValidateParamCollection(folderIds, "folderIds");
+            EwsUtilities.ValidateParam(propertySet, "propertySet");
+
+            return this.InternalBindToFolders(
+                folderIds,
+                propertySet,
+                ServiceErrorHandling.ReturnErrors
+            );
+        }
+
+        /// <summary>
+        /// Binds to multiple folders in a single call to EWS.
+        /// </summary>
+        /// <param name="folderIds">The Ids of the folders to bind to.</param>
+        /// <param name="propertySet">The set of properties to load.</param>
+        /// <param name="errorHandling">Type of error handling to perform.</param>
+        /// <returns>A ServiceResponseCollection providing results for each of the specified folder Ids.</returns>
+        private ServiceResponseCollection<GetFolderResponse> InternalBindToFolders(
+            IEnumerable<FolderId> folderIds,
+            PropertySet propertySet,
+            ServiceErrorHandling errorHandling)
+        {
+            GetFolderRequest request = new GetFolderRequest(this, errorHandling);
+
+            request.FolderIds.AddRange(folderIds);
+            request.PropertySet = propertySet;
+
+            return request.Execute();
         }
 
         /// <summary>
@@ -1568,11 +1607,98 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         /// <param name="folderName">Name of the folder being browsed</param>
         /// <param name="searchFilter">Search filter</param>
-        /// <param name="view">The view which defines paging and the number of persona being returned</param>
+        /// <param name="view">The view which defines paging and the number of personas being returned</param>
         /// <returns>A result object containing resultset for browsing</returns>
         public FindPeopleResults FindPeople(WellKnownFolderName folderName, SearchFilter searchFilter, ViewBase view)
         {
             return this.FindPeople(new FolderId(folderName), searchFilter, view);
+        }
+
+        /// <summary>
+        /// Retrieves all people who are relevant to the user
+        /// </summary>
+        /// <param name="view">The view which defines the number of personas being returned</param>
+        /// <returns>A collection of personas matching the query string</returns>
+        public PeopleQueryResults BrowsePeople(ViewBase view)
+        {
+            return this.BrowsePeople(view, null);
+        }
+
+        /// <summary>
+        /// Retrieves all people who are relevant to the user
+        /// </summary>
+        /// <param name="view">The view which defines the number of personas being returned</param>
+        /// <param name="context">The context for this query. See PeopleQueryContextKeys for keys</param>
+        /// <returns>A collection of personas matching the query string</returns>
+        public PeopleQueryResults BrowsePeople(ViewBase view, Dictionary<string, string> context)
+        {
+            return this.PerformPeopleQuery(view, string.Empty, context, null);
+        }
+
+        /// <summary>
+        /// Searches for people who are relevant to the user, automatically determining
+        /// the best sources to use.
+        /// </summary>
+        /// <param name="view">The view which defines the number of personas being returned</param>
+        /// <param name="queryString">The query string for which the search is being performed</param>
+        /// <returns>A collection of personas matching the query string</returns>
+        public PeopleQueryResults SearchPeople(ViewBase view, string queryString)
+        {
+            return this.SearchPeople(view, queryString, null, null);
+        }
+
+        /// <summary>
+        /// Searches for people who are relevant to the user
+        /// </summary>
+        /// <param name="view">The view which defines the number of personas being returned</param>
+        /// <param name="queryString">The query string for which the search is being performed</param>
+        /// <param name="context">The context for this query. See PeopleQueryContextKeys for keys</param>
+        /// <param name="queryMode">The scope of the query.</param>
+        /// <returns>A collection of personas matching the query string</returns>
+        public PeopleQueryResults SearchPeople(ViewBase view, string queryString, Dictionary<string, string> context, PeopleQueryMode queryMode)
+        {
+            EwsUtilities.ValidateParam(queryString, "queryString");
+
+            return this.PerformPeopleQuery(view, queryString, context, queryMode);
+        }
+
+        /// <summary>
+        /// Performs a People Query FindPeople call
+        /// </summary>
+        /// <param name="view">The view which defines the number of personas being returned</param>
+        /// <param name="queryString">The query string for which the search is being performed</param>
+        /// <param name="context">The context for this query</param>
+        /// <param name="queryMode">The scope of the query.</param>
+        /// <returns></returns>
+        private PeopleQueryResults PerformPeopleQuery(ViewBase view, string queryString, Dictionary<string, string> context, PeopleQueryMode queryMode)
+        {
+            EwsUtilities.ValidateParam(view, "view");
+            EwsUtilities.ValidateMethodVersion(this, ExchangeVersion.Exchange2015, "FindPeople");
+
+            if (context == null)
+            {
+                context = new Dictionary<string, string>();
+            }
+
+            if (queryMode == null)
+            {
+                queryMode = PeopleQueryMode.Auto;
+            }
+
+            FindPeopleRequest request = new FindPeopleRequest(this);
+            request.View = view;
+            request.QueryString = queryString;
+            request.SearchPeopleSuggestionIndex = true;
+            request.Context = context;
+            request.QueryMode = queryMode;
+
+            FindPeopleResponse response = request.Execute();
+
+            PeopleQueryResults results = new PeopleQueryResults();
+            results.Personas = response.Personas.ToList();
+            results.TransactionId = response.TransactionId;
+
+            return results;
         }
 
         /// <summary>

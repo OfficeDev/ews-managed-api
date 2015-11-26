@@ -25,6 +25,9 @@
 
 namespace Microsoft.Exchange.WebServices.Data
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// Represents a request of a find persona operation
     /// </summary>
@@ -61,6 +64,21 @@ namespace Microsoft.Exchange.WebServices.Data
         /// Query string accessors
         /// </summary>
         internal string QueryString { get; set; }
+
+        /// <summary>
+        /// Whether to search the people suggestion index
+        /// </summary>
+        internal bool SearchPeopleSuggestionIndex { get; set; }
+
+        /// <summary>
+        /// The context for suggestion index enabled queries
+        /// </summary>
+        internal Dictionary<string, string> Context { get; set; }
+
+        /// <summary>
+        /// The query mode for suggestion index enabled queries
+        /// </summary>
+        internal PeopleQueryMode QueryMode { get; set; }
 
         /// <summary>
         /// Validate request.
@@ -114,6 +132,42 @@ namespace Microsoft.Exchange.WebServices.Data
                 // Emit the QueryString element
                 writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.QueryString);
                 writer.WriteValue(this.QueryString, XmlElementNames.QueryString);
+                writer.WriteEndElement();
+            }
+
+            // Emit the SuggestionIndex-enabled elements
+            if (this.SearchPeopleSuggestionIndex)
+            {
+                writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.SearchPeopleSuggestionIndex);
+                writer.WriteValue(this.SearchPeopleSuggestionIndex.ToString().ToLowerInvariant(), XmlElementNames.SearchPeopleSuggestionIndex);
+                writer.WriteEndElement();
+
+                // Write the Context key value pairs
+                writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.SearchPeopleContext);
+                foreach (KeyValuePair<string, string> contextItem in this.Context)
+                {
+                    writer.WriteStartElement(XmlNamespace.Messages, "ContextProperty");
+
+                    writer.WriteStartElement(XmlNamespace.Messages, "Key");
+                    writer.WriteValue(contextItem.Key, "Key");
+                    writer.WriteEndElement();
+
+                    writer.WriteStartElement(XmlNamespace.Messages, "Value");
+                    writer.WriteValue(contextItem.Value, "Value");
+                    writer.WriteEndElement();
+
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
+                
+                // Write the Query Mode Sources
+                writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.SearchPeopleQuerySources);
+                foreach (string querySource in this.QueryMode.Sources)
+                {
+                    writer.WriteStartElement(XmlNamespace.Messages, "Source");
+                    writer.WriteValue(querySource, "Source");
+                    writer.WriteEndElement();
+                }
                 writer.WriteEndElement();
             }
 
