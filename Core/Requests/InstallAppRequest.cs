@@ -40,10 +40,16 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         /// <param name="service">The service.</param>
         /// <param name="manifestStream">The manifest's plain text XML stream. </param>
-        internal InstallAppRequest(ExchangeService service, Stream manifestStream)
+        /// <param name="marketplaceAssetId">The asset id of the addin in marketpalce</param>
+        /// <param name="marketplaceContentMarket">The target market for the content</param>
+        /// <param name="sendWelcomeEmail">Whether to send email on installation</param>
+        internal InstallAppRequest(ExchangeService service, Stream manifestStream, string marketplaceAssetId, string marketplaceContentMarket, bool sendWelcomeEmail)
             : base(service)
         {
             this.manifestStream = manifestStream;
+            this.marketplaceAssetId = marketplaceAssetId;
+            this.marketplaceContentMarket = marketplaceContentMarket;
+            this.sendWelcomeEmail = sendWelcomeEmail;
         }
 
         /// <summary>
@@ -64,7 +70,21 @@ namespace Microsoft.Exchange.WebServices.Data
             writer.WriteStartElement(XmlNamespace.Messages, XmlElementNames.Manifest);
 
             writer.WriteBase64ElementValue(manifestStream);
-            
+
+            writer.WriteEndElement();
+
+            if (!string.IsNullOrEmpty(this.marketplaceAssetId))
+            {
+                writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.MarketplaceAssetId, this.marketplaceAssetId);
+
+                if (!string.IsNullOrEmpty(this.marketplaceContentMarket))
+                {
+                    writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.MarketplaceContentMarket, this.marketplaceContentMarket);
+                }
+
+                writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.SendWelcomeEmail, this.sendWelcomeEmail);
+            }
+
             writer.WriteEndElement();
         }
 
@@ -113,5 +133,20 @@ namespace Microsoft.Exchange.WebServices.Data
         /// The plain text manifest stream. 
         /// </summary>
         private readonly Stream manifestStream;
+
+        /// <summary>
+        /// The asset id of the addin in marketplace
+        /// </summary>
+        private readonly string marketplaceAssetId;
+
+        /// <summary>
+        /// The target market for content
+        /// </summary>
+        private readonly string marketplaceContentMarket;
+
+        /// <summary>
+        /// Whether to send welcome email or not
+        /// </summary>
+        private readonly bool sendWelcomeEmail;
     }
 }

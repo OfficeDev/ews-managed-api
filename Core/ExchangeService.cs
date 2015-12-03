@@ -1619,7 +1619,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         /// <param name="view">The view which defines the number of personas being returned</param>
         /// <returns>A collection of personas matching the query string</returns>
-        public PeopleQueryResults BrowsePeople(ViewBase view)
+        public IPeopleQueryResults BrowsePeople(ViewBase view)
         {
             return this.BrowsePeople(view, null);
         }
@@ -1630,7 +1630,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="view">The view which defines the number of personas being returned</param>
         /// <param name="context">The context for this query. See PeopleQueryContextKeys for keys</param>
         /// <returns>A collection of personas matching the query string</returns>
-        public PeopleQueryResults BrowsePeople(ViewBase view, Dictionary<string, string> context)
+        public IPeopleQueryResults BrowsePeople(ViewBase view, Dictionary<string, string> context)
         {
             return this.PerformPeopleQuery(view, string.Empty, context, null);
         }
@@ -1642,7 +1642,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="view">The view which defines the number of personas being returned</param>
         /// <param name="queryString">The query string for which the search is being performed</param>
         /// <returns>A collection of personas matching the query string</returns>
-        public PeopleQueryResults SearchPeople(ViewBase view, string queryString)
+        public IPeopleQueryResults SearchPeople(ViewBase view, string queryString)
         {
             return this.SearchPeople(view, queryString, null, null);
         }
@@ -1655,7 +1655,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="context">The context for this query. See PeopleQueryContextKeys for keys</param>
         /// <param name="queryMode">The scope of the query.</param>
         /// <returns>A collection of personas matching the query string</returns>
-        public PeopleQueryResults SearchPeople(ViewBase view, string queryString, Dictionary<string, string> context, PeopleQueryMode queryMode)
+        public IPeopleQueryResults SearchPeople(ViewBase view, string queryString, Dictionary<string, string> context, PeopleQueryMode queryMode)
         {
             EwsUtilities.ValidateParam(queryString, "queryString");
 
@@ -1670,7 +1670,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="context">The context for this query</param>
         /// <param name="queryMode">The scope of the query.</param>
         /// <returns></returns>
-        private PeopleQueryResults PerformPeopleQuery(ViewBase view, string queryString, Dictionary<string, string> context, PeopleQueryMode queryMode)
+        private IPeopleQueryResults PerformPeopleQuery(ViewBase view, string queryString, Dictionary<string, string> context, PeopleQueryMode queryMode)
         {
             EwsUtilities.ValidateParam(view, "view");
             EwsUtilities.ValidateMethodVersion(this, ExchangeVersion.Exchange2015, "FindPeople");
@@ -1734,7 +1734,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <returns>An IAsyncResult that references the asynchronous request.</returns>
         public IAsyncResult BeginGetUserPhoto(
             AsyncCallback callback,
-            object state, 
+            object state,
             string emailAddress,
             string userPhotoSize,
             string entityTag)
@@ -2006,7 +2006,7 @@ namespace Microsoft.Exchange.WebServices.Data
                 returnContactDetails,
                 contactDataPropertySet);
         }
-        
+
         /// <summary>
         /// Finds contacts in the Global Address List that have names that match the one passed as a parameter.
         /// Calling this method results in a call to EWS.
@@ -3453,7 +3453,7 @@ namespace Microsoft.Exchange.WebServices.Data
             EwsUtilities.ValidateParamAllowNull(queryString, "queryString");
             EwsUtilities.ValidateParam(returnHighlightTerms, "returnHighlightTerms");
             EwsUtilities.ValidateParam(folderId, "folderId");
-            
+
             EwsUtilities.ValidateMethodVersion(
                                             this,
                                             ExchangeVersion.Exchange2013, // This method is only applicable for Exchange2013
@@ -5159,9 +5159,33 @@ namespace Microsoft.Exchange.WebServices.Data
         {
             EwsUtilities.ValidateParam(manifestStream, "manifestStream");
 
-            InstallAppRequest request = new InstallAppRequest(this, manifestStream);
+            this.InternalInstallApp(manifestStream, marketplaceAssetId: null, marketplaceContentMarket: null, sendWelcomeEmail: false);
+        }
 
-            request.Execute();
+        /// <summary>
+        /// Install App. 
+        /// </summary>
+        /// <param name="manifestStream">The manifest's plain text XML stream. 
+        /// Notice: Stream has state. If you want this function read from the expected position of the stream,
+        /// please make sure set read position by manifestStream.Position = expectedPosition.
+        /// Be aware read manifestStream.Lengh puts stream's Position at stream end.
+        /// If you retrieve manifestStream.Lengh before call this function, nothing will be read.
+        /// When this function succeeds, manifestStream is closed. This is by EWS design to 
+        /// release resource in timely manner. </param>
+        /// <param name="marketplaceAssetId">The asset id of the addin in marketplace</param>
+        /// <param name="marketplaceContentMarket">The target market for content</param>
+        /// <param name="sendWelcomeEmail">Whether to send welcome email for the addin</param>
+        /// <returns>True if the app was not already installed. False if it was not installed. Null if it is not a user mailbox.</returns>
+        /// <remarks>Exception will be thrown for errors. </remarks>
+        internal bool? InternalInstallApp(Stream manifestStream, string marketplaceAssetId, string marketplaceContentMarket, bool sendWelcomeEmail)
+        {
+            EwsUtilities.ValidateParam(manifestStream, "manifestStream");
+
+            InstallAppRequest request = new InstallAppRequest(this, manifestStream, marketplaceAssetId, marketplaceContentMarket, false);
+
+            InstallAppResponse response = request.Execute();
+
+            return response.WasFirstInstall;
         }
 
         /// <summary>
@@ -5279,32 +5303,6 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
-        /// Get the encryption configuration data. This method is used in server-to-server calls to retrieve encryption configuration
-        /// </summary>
-        /// <returns>Encryption Configuration response object</returns>
-        public GetEncryptionConfigurationResponse GetEncryptionConfiguration()
-        {
-            GetEncryptionConfigurationRequest request = new GetEncryptionConfigurationRequest(this);
-
-            return request.Execute();
-        }
-
-        /// <summary>
-        /// Set the encryption configuration data. This method is used in server-to-server calls to set encryption configuration
-        /// </summary>
-        /// <param name="imageBase64">The base64 encoding of the image</param>
-        /// <param name="emailText">The email text</param>
-        /// <param name="portalText">The portal text</param>
-        /// <param name="disclaimerText">The disclaimer text</param>
-        /// <param name="otpEnabled">If OTP is enabled</param>
-        public void SetEncryptionConfiguration(string imageBase64, string emailText, string portalText, string disclaimerText, bool otpEnabled)
-        {
-            SetEncryptionConfigurationRequest request = new SetEncryptionConfigurationRequest(this, imageBase64, emailText, portalText, disclaimerText, otpEnabled);
-
-            request.Execute();
-        }
-
-        /// <summary>
         /// Get the OME (i.e. Office Message Encryption) configuration data. This method is used in server-to-server calls to retrieve OME configuration
         /// </summary>
         /// <returns>OME Configuration response object</returns>
@@ -5405,7 +5403,7 @@ namespace Microsoft.Exchange.WebServices.Data
 
             GetUnifiedGroupUnseenCountRequest request = new GetUnifiedGroupUnseenCountRequest(
                 this, lastVisitedTimeUtc, UnifiedGroupIdentityType.SmtpAddress, groupMailboxSmtpAddress);
-            
+
             request.AnchorMailbox = groupMailboxSmtpAddress;
 
             return request.Execute().UnseenCount;

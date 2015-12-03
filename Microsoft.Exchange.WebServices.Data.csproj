@@ -120,6 +120,7 @@
     <Compile Include="Groups\Responses\GetUserUnifiedGroupsResponse.cs" />
     <Compile Include="Groups\ComplexProperties\UnifiedGroup.cs" />
     <Compile Include="Groups\ComplexProperties\UnifiedGroupsSet.cs" />
+    <Compile Include="Interfaces\IPeopleQueryResults.cs" />
     <Compile Include="Properties\AssemblyInfoMicrosoft.cs" />
     <Compile Include="Properties\AssemblyInfoOpenSource.cs" />
     <Compile Include="Attributes\AttachableAttribute.cs" />
@@ -252,7 +253,6 @@
     <Compile Include="Core\Requests\FindConversationRequest.cs" />
     <Compile Include="Core\Requests\GetAppManifestsRequest.cs" />
     <Compile Include="Core\Requests\GetDiscoverySearchConfigurationRequest.cs" />
-    <Compile Include="Core\Requests\GetEncryptionConfigurationRequest.cs" />
     <Compile Include="Core\Requests\GetHoldOnMailboxesRequest.cs" />
     <Compile Include="Core\Requests\GetInboxRulesRequest.cs" />
     <Compile Include="Core\Requests\GetNonIndexableItemDetailsRequest.cs" />
@@ -267,7 +267,6 @@
     <Compile Include="Core\Requests\RegisterConsentRequest.cs" />
     <Compile Include="Core\Requests\SearchMailboxesRequest.cs" />
     <Compile Include="Core\Requests\SetClientExtensionRequest.cs" />
-    <Compile Include="Core\Requests\SetEncryptionConfigurationRequest.cs" />
     <Compile Include="Core\Requests\SetHoldOnMailboxesRequest.cs" />
     <Compile Include="Core\Requests\GetUserRetentionPolicyTagsRequest.cs" />
     <Compile Include="Core\Requests\MarkAllItemsAsReadRequest.cs" />
@@ -292,7 +291,6 @@
     <Compile Include="Core\Responses\FindConversationResponse.cs" />
     <Compile Include="Core\Responses\GetAppManifestsResponse.cs" />
     <Compile Include="Core\Responses\GetDiscoverySearchConfigurationResponse.cs" />
-    <Compile Include="Core\Responses\GetEncryptionConfigurationResponse.cs" />
     <Compile Include="Core\Responses\GetHoldOnMailboxesResponse.cs" />
     <Compile Include="Core\Responses\GetInboxRulesResponse.cs" />
     <Compile Include="Core\Responses\GetNonIndexableItemDetailsResponse.cs" />
@@ -305,7 +303,6 @@
     <Compile Include="Core\Responses\InstallAppResponse.cs" />
     <Compile Include="Core\Responses\MarkAsJunkResponse.cs" />
     <Compile Include="Core\Responses\SearchMailboxesResponse.cs" />
-    <Compile Include="Core\Responses\SetEncryptionConfigurationResponse.cs" />
     <Compile Include="Core\Responses\SetHoldOnMailboxesResponse.cs" />
     <Compile Include="Core\Responses\GetUserRetentionPolicyTagsResponse.cs" />
     <Compile Include="Core\Responses\UninstallAppResponse.cs" />
