@@ -912,6 +912,28 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
+        /// Ole Koeckemann: Amend FindItems to support multiple folder ids
+        /// </summary>
+        /// <param name="parentFolderIds"></param>
+        /// <param name="queryString"></param>
+        /// <param name="view"></param>
+        /// <returns></returns>
+        public FindItemsResults<Item>[] FindItems(IEnumerable<FolderId> parentFolderIds, string queryString, ViewBase view)
+        {
+            EwsUtilities.ValidateParamAllowNull(queryString, "queryString");
+
+            ServiceResponseCollection<FindItemResponse<Item>> responses = this.FindItems<Item>(
+                parentFolderIds.ToArray(),
+                null, /* searchFilter */
+                queryString,
+                view,
+                null,   /* groupBy */
+                ServiceErrorHandling.ThrowOnError);
+
+            return responses.Select(p => p.Results).ToArray();
+        }
+
+        /// <summary>
         /// Obtains a list of items by searching the contents of a specific folder. 
         /// Along with conversations, a list of highlight terms are returned.
         /// Calling this method results in a call to EWS.
@@ -998,6 +1020,28 @@ namespace Microsoft.Exchange.WebServices.Data
                 ServiceErrorHandling.ThrowOnError);
 
             return responses[0].Results;
+        }
+
+        /// <summary>
+        /// Ole Koeckemann: Amend FindItems to support multiple folder ids
+        /// </summary>
+        /// <param name="parentFolderIds"></param>
+        /// <param name="searchFilter"></param>
+        /// <param name="view"></param>
+        /// <returns></returns>
+        public FindItemsResults<Item>[] FindItems(IEnumerable<FolderId> parentFolderIds, SearchFilter searchFilter, ViewBase view)
+        {
+            EwsUtilities.ValidateParamAllowNull(searchFilter, "searchFilter");
+
+            ServiceResponseCollection<FindItemResponse<Item>> responses = this.FindItems<Item>(
+                parentFolderIds.ToArray(),
+                searchFilter,
+                null, /* queryString */
+                view,
+                null,   /* groupBy */
+                ServiceErrorHandling.ThrowOnError);
+
+            return responses.Select(p => p.Results).ToArray();
         }
 
         /// <summary>
