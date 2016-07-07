@@ -235,5 +235,13 @@ namespace Microsoft.Exchange.WebServices.Data
         {
             get; set;
         }
+
+        /// <summary>
+        /// Gets or sets if the request to the internet resource should allow high-speed NTLM-authenticated connection sharing
+        /// </summary>
+        bool UnsafeAuthenticatedConnectionSharing
+        {
+            get; set;
+        }
     }
 }

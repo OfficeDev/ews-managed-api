@@ -293,6 +293,15 @@ namespace Microsoft.Exchange.WebServices.Data
             set { this.request.ConnectionGroupName = value; }
         }
 
+        /// <summary>
+        /// Gets or sets if the request to the internet resource should allow high-speed NTLM-authenticated connection sharing
+        /// </summary>
+        public bool UnsafeAuthenticatedConnectionSharing
+        {
+            get { return this.request.UnsafeAuthenticatedConnectionSharing; }
+            set { this.request.UnsafeAuthenticatedConnectionSharing = value; }
+        }
+
         #endregion
     }
 }
