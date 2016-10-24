@@ -26,8 +26,7 @@
 namespace Microsoft.Exchange.WebServices.Autodiscover
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
+	using System.Runtime.Serialization;
     using Microsoft.Exchange.WebServices.Data;
 
     /// <summary>
@@ -39,7 +38,7 @@ namespace Microsoft.Exchange.WebServices.Autodiscover
         /// <summary>
         /// Error code when Autodiscover service operation failed remotely.
         /// </summary>
-        private AutodiscoverErrorCode errorCode;
+        private readonly AutodiscoverErrorCode errorCode;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AutodiscoverResponseException"/> class.
@@ -50,12 +49,36 @@ namespace Microsoft.Exchange.WebServices.Autodiscover
             : base(message)
         {
             this.errorCode = errorCode;
-        }
+		}
 
-        /// <summary>
-        /// Gets the ErrorCode for the exception.
-        /// </summary>
-        public AutodiscoverErrorCode ErrorCode
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:Microsoft.Exchange.WebServices.Data.AutodiscoverResponseException"/> class with serialized data.
+		/// </summary>
+		/// <param name="info">The object that holds the serialized object data.</param>
+		/// <param name="context">The contextual information about the source or destination.</param>
+		protected AutodiscoverResponseException(SerializationInfo info, StreamingContext context)
+			: base(info, context)
+		{
+			this.errorCode = (AutodiscoverErrorCode)info.GetInt32("ErrorCode");
+		}
+
+		/// <summary>Sets the <see cref="T:System.Runtime.Serialization.SerializationInfo" /> object with the parameter name and additional exception information.</summary>
+		/// <param name="info">The object that holds the serialized object data. </param>
+		/// <param name="context">The contextual information about the source or destination. </param>
+		/// <exception cref="T:System.ArgumentNullException">The <paramref name="info" /> object is a null reference (Nothing in Visual Basic). </exception>
+		public override void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			EwsUtilities.Assert(info != null, "AutodiscoverResponseException.GetObjectData", "info is null");
+
+			base.GetObjectData(info, context);
+
+			info.AddValue("ErrorCode", (int)this.errorCode);
+		}
+
+		/// <summary>
+		/// Gets the ErrorCode for the exception.
+		/// </summary>
+		public AutodiscoverErrorCode ErrorCode
         {
             get { return this.errorCode; }
         }
