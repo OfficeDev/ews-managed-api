@@ -344,6 +344,12 @@ namespace Microsoft.Exchange.WebServices.Data
         [RequiredServerVersion(ExchangeVersion.Exchange2013)]
         [EwsEnum("workingset")]
         WorkingSet,
+
+        // All Contacts Folder
+
+        [RequiredServerVersion(ExchangeVersion.Exchange2013)]
+        [EwsEnum("allcontacts")]
+        AllContacts,
         //// Note when you adding new folder id here, please update sources\test\Services\src\ComponentTests\GlobalVersioningControl.cs
         //// IsExchange2013Folder method accordingly.
     }
