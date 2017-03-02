@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Microsoft.Exchange.WebServices.Data
 {
-    internal class ExportItemsRequest: MultiResponseServiceRequest<ExportItemsResponse>, IJsonSerializable
+    internal class ExportItemsRequest: MultiResponseServiceRequest<ExportItemsResponse>
     {
         private ItemIdWrapperList itemIds = new ItemIdWrapperList();
 
@@ -53,15 +53,6 @@ namespace Microsoft.Exchange.WebServices.Data
         public ItemIdWrapperList ItemIds
         {
             get { return this.itemIds; }
-        }
-
-        public object ToJson(ExchangeService service)
-        {
-            JsonObject request = new JsonObject();
-
-            request.Add(XmlElementNames.ItemIds, this.itemIds.InternalToJson(service));
-
-            return request;
-        }
+        }        
     }
 }

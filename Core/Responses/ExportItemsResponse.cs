@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Microsoft.Exchange.WebServices.Data
 {
+    /// <summary>
+    /// Represents the response from an Export Items Request
+    /// </summary>
     public class ExportItemsResponse : ServiceResponse
     {
         private ItemId itemId = new ItemId();
@@ -27,11 +30,10 @@ namespace Microsoft.Exchange.WebServices.Data
             }
             data = reader.ReadBase64ElementValue();
         }
-
-        internal override void ReadElementsFromJson(JsonObject responseObject, ExchangeService service)
-        {
-            base.ReadElementsFromJson(responseObject, service);
-        }
+        
+        /// <summary>
+        /// ItemId of the item exported.
+        /// </summary>
 
         public ItemId ItemId
         {
@@ -41,6 +43,9 @@ namespace Microsoft.Exchange.WebServices.Data
             }
         }
 
+        /// <summary>
+        /// Field containing the item exported.
+        /// </summary>
         public byte[] Data
         {
             get

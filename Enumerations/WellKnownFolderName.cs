@@ -344,9 +344,10 @@ namespace Microsoft.Exchange.WebServices.Data
         [RequiredServerVersion(ExchangeVersion.Exchange2013)]
         [EwsEnum("workingset")]
         WorkingSet,
-
-        // All Contacts Folder
-
+        
+        /// <summary>
+        /// All Contacts Folder        
+        /// </summary>
         [RequiredServerVersion(ExchangeVersion.Exchange2013)]
         [EwsEnum("allcontacts")]
         AllContacts,

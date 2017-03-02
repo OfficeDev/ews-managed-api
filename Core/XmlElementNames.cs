@@ -1342,7 +1342,6 @@ namespace Microsoft.Exchange.WebServices.Data
         public const string ExportItems = "ExportItems";
         public const string ExportItemsResponse = "ExportItemsResponse";
         public const string ExportItemsResponseMessage = "ExportItemsResponseMessage";
-        public const string Data = "Data";
         
         // Upload Items
 

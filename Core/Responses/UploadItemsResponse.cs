@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Microsoft.Exchange.WebServices.Data
 {
+    /// <summary>
+    /// Reponse of the Upload items operation.
+    /// </summary>
     public class UploadItemsResponse : ServiceResponse
     {
         private ItemId itemId = new ItemId();
@@ -21,6 +24,9 @@ namespace Microsoft.Exchange.WebServices.Data
             itemId.LoadFromXml(reader, XmlNamespace.Messages, XmlElementNames.ItemId);
         }
 
+        /// <summary>
+        /// Id of the item uploaded
+        /// </summary>
         public ItemId Id
         {
             get { return itemId; }

@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Microsoft.Exchange.WebServices.Data
 {
+    /// <summary>
+    /// Upload Schema
+    /// </summary>
     [Schema]
     public class UploadSchema : ServiceObjectSchema
     {
@@ -15,6 +18,10 @@ namespace Microsoft.Exchange.WebServices.Data
             public const string Data = "upload:Data";
         }
 
+
+        /// <summary>
+        /// Defines the uploads id property
+        /// </summary>
         public static readonly PropertyDefinition Id = new ComplexPropertyDefinition<ItemId>(
             XmlElementNames.ItemId,
             FieldUris.ItemId,
@@ -22,7 +29,9 @@ namespace Microsoft.Exchange.WebServices.Data
             ExchangeVersion.Exchange2010,
             delegate() { return new ItemId(); }
             );
-
+        /// <summary>
+        /// Defines the uploads ParentFolderId property.
+        /// </summary>
         public static readonly PropertyDefinition ParentFolderId = new ComplexPropertyDefinition<FolderId>(
             XmlElementNames.ParentFolderId,
             FieldUris.ParentFolderId,
@@ -31,6 +40,9 @@ namespace Microsoft.Exchange.WebServices.Data
             delegate() { return new FolderId(); }
             );
 
+        /// <summary>
+        /// Defines the data property.
+        /// </summary>
         public static readonly PropertyDefinition Data = new ByteArrayPropertyDefinition(
             XmlElementNames.Data,
             FieldUris.Data,

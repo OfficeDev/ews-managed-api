@@ -1529,7 +1529,11 @@ namespace Microsoft.Exchange.WebServices.Data
             request.MoveItem = moveItem;
             return request.Execute();
         }
-
+        /// <summary>
+        /// Export items from exchange
+        /// </summary>
+        /// <param name="itemIds">The ids of the items to be exported.</param>
+        /// <returns></returns>
         public ServiceResponseCollection<ExportItemsResponse> ExportItems(IEnumerable<ItemId> itemIds)
         {
             ExportItemsRequest request = new ExportItemsRequest(this, ServiceErrorHandling.ReturnErrors);
@@ -5848,7 +5852,11 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         #endregion
-
+        /// <summary>
+        /// Upload items to Exchange
+        /// </summary>
+        /// <param name="item">The item to Upload</param>
+        /// <returns></returns>
         public UploadItemsResponse UploadItem(UploadItem item)
         {
             UploadItemsRequest request = new UploadItemsRequest(this, ServiceErrorHandling.ReturnErrors);
