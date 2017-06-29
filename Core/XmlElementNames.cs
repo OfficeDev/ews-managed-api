@@ -617,7 +617,7 @@ namespace Microsoft.Exchange.WebServices.Data
         public const string InstanceKey = "InstanceKey";
         public const string NormalizedBody = "NormalizedBody";
         public const string PolicyTag = "PolicyTag";
-        public const string ArchiveTag = "ArchiveTag";        
+        public const string ArchiveTag = "ArchiveTag";
         public const string RetentionDate = "RetentionDate";
         public const string DisableReason = "DisableReason";
         public const string AppMarketplaceUrl = "AppMarketplaceUrl";
@@ -1164,7 +1164,7 @@ namespace Microsoft.Exchange.WebServices.Data
         public const string IsLessThan = "IsLessThan";
         public const string IsLessThanOrEqualTo = "IsLessThanOrEqualTo";
         #endregion
-        
+
         #region Directory only contact properties
         public const string PhoneticFullName = "PhoneticFullName";
         public const string PhoneticFirstName = "PhoneticFirstName";
@@ -1618,17 +1618,6 @@ namespace Microsoft.Exchange.WebServices.Data
         public const string SetClientExtensionResponse = "SetClientExtensionResponse";
         public const string SetClientExtensionResponseMessage = "SetClientExtensionResponseMessage";
 
-        // GetEncryptionConfiguration/SetEncryptionConfiguration
-        public const string GetEncryptionConfigurationRequest = "GetEncryptionConfiguration";
-        public const string SetEncryptionConfigurationRequest = "SetEncryptionConfiguration";
-        public const string EncryptionConfigurationImageBase64 = "ImageBase64";
-        public const string EncryptionConfigurationEmailText = "EmailText";
-        public const string EncryptionConfigurationPortalText = "PortalText";
-        public const string EncryptionConfigurationDisclaimerText = "DisclaimerText";
-        public const string EncryptionConfigurationOTPEnabled = "OTPEnabled";
-        public const string GetEncryptionConfigurationResponse = "GetEncryptionConfigurationResponse";
-        public const string SetEncryptionConfigurationResponse = "SetEncryptionConfigurationResponse";
-
         // GetOMEConfiguration/SetOMEConfiguration
         public const string GetOMEConfigurationRequest = "GetOMEConfiguration";
         public const string SetOMEConfigurationRequest = "SetOMEConfiguration";
@@ -1639,6 +1628,10 @@ namespace Microsoft.Exchange.WebServices.Data
         // InstallApp
         public const string InstallAppRequest = "InstallApp";
         public const string InstallAppResponse = "InstallAppResponse";
+        public const string MarketplaceAssetId = "MarketplaceAssetId";
+        public const string MarketplaceContentMarket = "MarketplaceContentMarket";
+        public const string SendWelcomeEmail = "SendWelcomeEmail";
+        public const string WasFirstInstall = "WasFirstInstall";
 
         // UninstallApp
         public const string UninstallAppRequest = "UninstallApp";
@@ -1713,6 +1706,15 @@ namespace Microsoft.Exchange.WebServices.Data
         public const string SetUnifiedGroupLastVisitedTimeResponseMessage = "SetUnifiedGroupLastVisitedTimeResponseMessage";
         #endregion
 
+        #region Hashtag and Mentions
+
+        public const string Hashtags = "Hashtags";
+
+        public const string Mentions = "Mentions";
+
+        public const string MentionedMe = "MentionedMe";
+
+        #endregion
         #region SOAP element names
 
         public const string SOAPEnvelopeElementName = "Envelope";

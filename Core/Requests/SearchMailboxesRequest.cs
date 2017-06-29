@@ -119,28 +119,6 @@ namespace Microsoft.Exchange.WebServices.Data
                 {
                     throw new ServiceValidationException(Strings.MailboxQueriesParameterIsNotSpecified);
                 }
-
-                foreach (MailboxSearchScope searchScope in searchQuery.MailboxSearchScopes)
-                {
-                    if (searchScope.ExtendedAttributes != null && searchScope.ExtendedAttributes.Count > 0 && !DiscoverySchemaChanges.SearchMailboxesExtendedData.IsCompatible(this))
-                    {
-                        throw new ServiceVersionException(
-                           string.Format(
-                                         Strings.ClassIncompatibleWithRequestVersion,
-                                         typeof(ExtendedAttribute).Name,
-                                         DiscoverySchemaChanges.SearchMailboxesExtendedData.MinimumServerVersion));
-                    }
-
-                    if (searchScope.SearchScopeType != MailboxSearchScopeType.LegacyExchangeDN && (!DiscoverySchemaChanges.SearchMailboxesExtendedData.IsCompatible(this) || !DiscoverySchemaChanges.SearchMailboxesAdditionalSearchScopes.IsCompatible(this)))
-                    {
-                        throw new ServiceVersionException(
-                           string.Format(
-                                         Strings.EnumValueIncompatibleWithRequestVersion,
-                                         searchScope.SearchScopeType.ToString(),
-                                         typeof(MailboxSearchScopeType).Name,
-                                         DiscoverySchemaChanges.SearchMailboxesAdditionalSearchScopes.MinimumServerVersion));
-                    }
-                }
             }
 
             if (!string.IsNullOrEmpty(this.SortByProperty))

@@ -116,6 +116,7 @@ namespace Microsoft.Exchange.WebServices.Data
         public const string ClientExtensionMarketplaceContentMarket = "MarketplaceContentMarket";
         public const string ClientExtensionAppStatus = "AppStatus";
         public const string ClientExtensionEtoken = "Etoken";
+        public const string ClientExtensionInstalledDateTime = "InstalledDateTime";
         public const string IsTruncated = "IsTruncated";
         public const string IsJunk = "IsJunk";
         public const string MoveItem = "MoveItem";

@@ -165,8 +165,8 @@ namespace Microsoft.Exchange.WebServices.Data
                     break;
                 case XmlElementNames.ProfilePicture:
                     var picture = new UserProfilePicture();
-                    picture.LoadFromXml(reader, XmlNamespace.Types, XmlElementNames.UserProfilePicture);
-                    this.profilePicture = new UserProfilePicture();
+                    picture.LoadFromXml(reader, XmlNamespace.Types, XmlElementNames.ProfilePicture);
+                    this.profilePicture = picture;
                     break;
                 case XmlElementNames.Title:
                     this.title = reader.ReadElementValue();

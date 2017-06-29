@@ -122,6 +122,11 @@ namespace Microsoft.Exchange.WebServices.Data
         public string Etoken { get; set; }
 
         /// <summary>
+        /// Gets or sets the Installed DateTime of the manifest
+        /// </summary>
+        public string InstalledDateTime { get; set; }
+
+        /// <summary>
         /// Gets or sets the value indicating whether extension is available.
         /// </summary>
         public bool IsAvailable { get; set; }
@@ -188,6 +193,12 @@ namespace Microsoft.Exchange.WebServices.Data
                 this.Etoken = reader.ReadAttributeValue<string>(XmlAttributeNames.ClientExtensionEtoken);
             }
 
+            value = reader.ReadAttributeValue(XmlAttributeNames.ClientExtensionInstalledDateTime);
+            if (!string.IsNullOrEmpty(value))
+            {
+                this.InstalledDateTime = reader.ReadAttributeValue<string>(XmlAttributeNames.ClientExtensionInstalledDateTime);
+            }
+
             value = reader.ReadAttributeValue(XmlAttributeNames.ClientExtensionIsAvailable);
             if (!string.IsNullOrEmpty(value))
             {
@@ -225,6 +236,7 @@ namespace Microsoft.Exchange.WebServices.Data
             writer.WriteAttributeValue(XmlAttributeNames.ClientExtensionMarketplaceContentMarket, this.MarketplaceContentMarket);
             writer.WriteAttributeValue(XmlAttributeNames.ClientExtensionAppStatus, this.AppStatus);
             writer.WriteAttributeValue(XmlAttributeNames.ClientExtensionEtoken, this.Etoken);
+            writer.WriteAttributeValue(XmlAttributeNames.ClientExtensionInstalledDateTime, this.InstalledDateTime);
             writer.WriteAttributeValue(XmlAttributeNames.ClientExtensionIsAvailable, this.IsAvailable);
             writer.WriteAttributeValue(XmlAttributeNames.ClientExtensionIsMandatory, this.IsMandatory);
             writer.WriteAttributeValue(XmlAttributeNames.ClientExtensionIsEnabledByDefault, this.IsEnabledByDefault);
