@@ -34,7 +34,7 @@ namespace Microsoft.Exchange.WebServices.Data
     /// <summary>
     /// Represents the response to a folder search operation.
     /// </summary>
-    internal sealed class FindFolderResponse : ServiceResponse
+    public sealed class FindFolderResponse : ServiceResponse
     {
         private FindFoldersResults results = new FindFoldersResults();
         private PropertySet propertySet;
