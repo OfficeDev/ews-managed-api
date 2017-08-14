@@ -211,6 +211,28 @@ namespace Microsoft.Exchange.WebServices.Data
 
             return responses[0].Results;
         }
+        
+        /// <summary>
+        /// Obtains a list of folders by searching the sub-folders of each of the specified folders.
+        /// </summary>
+        /// <param name="parentFolderIds">The Ids of the folders in which to search for folders.</param>
+        /// <param name="searchFilter">The search filter. Available search filter classes
+        /// include SearchFilter.IsEqualTo, SearchFilter.ContainsSubstring and 
+        /// SearchFilter.SearchFilterCollection</param>
+        /// <param name="view">The view controlling the number of folders returned.</param>
+        /// <returns>An object representing the results of the search operation.</returns>
+        public ServiceResponseCollection<FindFolderResponse> FindFolders(IEnumerable<FolderId> parentFolderIds, SearchFilter searchFilter, FolderView view)
+        {
+            EwsUtilities.ValidateParam(parentFolderIds, "parentFolderIds");
+            EwsUtilities.ValidateParam(view, "view");
+            EwsUtilities.ValidateParamAllowNull(searchFilter, "searchFilter");
+
+            return this.InternalFindFolders(
+                parentFolderIds,
+                searchFilter,
+                view,
+                ServiceErrorHandling.ReturnErrors);
+        }
 
         /// <summary>
         /// Obtains a list of folders by searching the sub-folders of the specified folder.
