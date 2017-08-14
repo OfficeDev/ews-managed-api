@@ -42,6 +42,17 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
+        /// Initializes a new instance with the specified subscription id, for continuing an existing subscription.
+        /// </summary>
+        /// <param name="service">The service.</param>
+        /// <param name="subscriptionId">The id of a previously created streaming subscription.</param>
+        public StreamingSubscription(ExchangeService service, string subscriptionId)
+            : base(service)
+        {
+            this.Id = subscriptionId;
+        }
+
+        /// <summary>
         /// Unsubscribes from the streaming subscription.
         /// </summary>
         public void Unsubscribe()
