@@ -59,6 +59,11 @@ namespace Microsoft.Exchange.WebServices.Data
         private GetStreamingEventsRequest currentHangingRequest;
         
         /// <summary>
+        /// Whether OnConnectionCompleted has been fired since last connect
+        /// </summary>
+        private bool hasFiredConnectionCompleted;
+
+        /// <summary>
         /// Lock object
         /// </summary>
         private object lockObject = new object();
@@ -86,6 +91,11 @@ namespace Microsoft.Exchange.WebServices.Data
         /// Occurs when a subscription encounters an error.
         /// </summary>
         public event SubscriptionErrorDelegate OnSubscriptionError;
+
+        /// <summary>
+        /// Occurs on the first response from the server, successfull or not.
+        /// </summary>
+        public event EventHandler OnConnectionCompleted;
 
         /// <summary>
         /// Occurs when a streaming subscription connection is disconnected from the server.
@@ -215,6 +225,8 @@ namespace Microsoft.Exchange.WebServices.Data
                     throw new ServiceLocalException(Strings.NoSubscriptionsOnConnection);
                 }
 
+                this.hasFiredConnectionCompleted = false;
+
                 this.currentHangingRequest = new GetStreamingEventsRequest(
                     this.session,
                     this.HandleServiceResponseObject,
@@ -317,6 +329,11 @@ namespace Microsoft.Exchange.WebServices.Data
             }
             else
             {
+                if (!hasFiredConnectionCompleted)
+                {
+                    OnConnectionCompleted?.Invoke(this, new EventArgs());
+                    hasFiredConnectionCompleted = true;
+                }
                 if (gseResponse.Result == ServiceResult.Success || gseResponse.Result == ServiceResult.Warning)
                 {
                     if (gseResponse.Results.Notifications.Count > 0)
