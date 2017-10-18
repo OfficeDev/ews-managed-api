@@ -409,6 +409,7 @@ namespace Microsoft.Exchange.WebServices.Data
         public const string CalendarView = "CalendarView";
         public const string PostedTime = "PostedTime";
         public const string PostItem = "PostItem";
+        public const string RequestVersion = "RequestVersion";
         public const string RequestServerVersion = "RequestServerVersion";
         public const string PostReplyItem = "PostReplyItem";
         public const string CreateAssociated = "CreateAssociated";
@@ -1311,6 +1312,12 @@ namespace Microsoft.Exchange.WebServices.Data
         public const string GetUserPhoto = "GetUserPhoto";
         public const string GetUserPhotoResponse = "GetUserPhotoResponse";
         public const string GetUserPhotoResponseMessage = "GetUserPhotoResponseMessage";
+
+        // SetUserPhoto
+        public const string SetUserPhoto = "SetUserPhoto";
+        public const string SetUserPhotoResponse = "SetUserPhotoResponse";
+        public const string SetUserPhotoResponseMessage = "SetUserPhotoResponseMessage";
+
 
         // GetAttachment
         public const string GetAttachment = "GetAttachment";

@@ -23,6 +23,8 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+using System.Security.Cryptography;
+
 namespace Microsoft.Exchange.WebServices.Data
 {
     using System;
@@ -1741,6 +1743,25 @@ namespace Microsoft.Exchange.WebServices.Data
             request.EmailAddress = emailAddress;
             request.UserPhotoSize = userPhotoSize;
             request.EntityTag = entityTag;
+
+            return request.Execute().Results;
+        }
+
+        /// <summary>
+        /// Set a user's photo.
+        /// </summary>
+        /// <param name="emailAddress">The user's email address</param>
+        /// <param name="photo">The photo to set</param>
+        /// <returns>A result object</returns>
+        public SetUserPhotoResults SetUserPhoto(string emailAddress, byte[] photo)
+        {
+            EwsUtilities.ValidateParam(emailAddress, "emailAddress");
+            EwsUtilities.ValidateParam(photo, "photo");
+            
+            SetUserPhotoRequest request = new SetUserPhotoRequest(this);
+
+            request.EmailAddress = emailAddress;
+            request.Photo = photo;
 
             return request.Execute().Results;
         }
