@@ -37,3 +37,6 @@ You need the following to work with the EWS Managed API:
 ## Community
 
 Exchange has an active developer community that you can turn to when you need help. We recommend using the [Exchange Server Development forum on MSDN](http://social.msdn.microsoft.com/Forums/en-US/home?category=exchangeserver&filter=alltypes&sort=lastpostdesc), or using the [ews] tag on [StackOverflow](http://stackoverflow.com/questions/tagged/ews).
+
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information, see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
