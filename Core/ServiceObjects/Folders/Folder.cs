@@ -59,6 +59,22 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
+        /// Binds to an existing folder, whatever its actual type is, and loads the specified set of properties.
+        /// Calling this method results in a call to EWS.
+        /// </summary>
+        /// <param name="service">The service to use to bind to the folder.</param>
+        /// <param name="id">The Id of the folder to bind to.</param>
+        /// <param name="propertySet">The set of properties to load.</param>
+        /// <returns>A Folder instance representing the folder corresponding to the specified Id.</returns>
+        public static async System.Threading.Tasks.Task<Folder> BindAsync(
+            ExchangeService service,
+            FolderId id,
+            PropertySet propertySet)
+        {
+            return await service.BindToFolderAsync<Folder>(id, propertySet);
+        }
+
+        /// <summary>
         /// Binds to an existing folder, whatever its actual type is, and loads its first class properties.
         /// Calling this method results in a call to EWS.
         /// </summary>
@@ -68,6 +84,21 @@ namespace Microsoft.Exchange.WebServices.Data
         public static Folder Bind(ExchangeService service, FolderId id)
         {
             return Folder.Bind(
+                service,
+                id,
+                PropertySet.FirstClassProperties);
+        }
+
+        /// <summary>
+        /// Binds to an existing folder, whatever its actual type is, and loads its first class properties.
+        /// Calling this method results in a call to EWS.
+        /// </summary>
+        /// <param name="service">The service to use to bind to the folder.</param>
+        /// <param name="id">The Id of the folder to bind to.</param>
+        /// <returns>A Folder instance representing the folder corresponding to the specified Id.</returns>
+        public static async System.Threading.Tasks.Task<Folder> BindAsync(ExchangeService service, FolderId id)
+        {
+            return await Folder.BindAsync(
                 service,
                 id,
                 PropertySet.FirstClassProperties);
@@ -93,6 +124,25 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
+        /// Binds to an existing folder, whatever its actual type is, and loads the specified set of properties.
+        /// Calling this method results in a call to EWS.
+        /// </summary>
+        /// <param name="service">The service to use to bind to the folder.</param>
+        /// <param name="name">The name of the folder to bind to.</param>
+        /// <param name="propertySet">The set of properties to load.</param>
+        /// <returns>A Folder instance representing the folder with the specified name.</returns>
+        public static async System.Threading.Tasks.Task<Folder> BindAsync(
+            ExchangeService service,
+            WellKnownFolderName name,
+            PropertySet propertySet)
+        {
+            return await Folder.BindAsync(
+                service,
+                new FolderId(name),
+                propertySet);
+        }
+
+        /// <summary>
         /// Binds to an existing folder, whatever its actual type is, and loads its first class properties.
         /// Calling this method results in a call to EWS.
         /// </summary>
@@ -102,6 +152,21 @@ namespace Microsoft.Exchange.WebServices.Data
         public static Folder Bind(ExchangeService service, WellKnownFolderName name)
         {
             return Folder.Bind(
+                service,
+                new FolderId(name),
+                PropertySet.FirstClassProperties);
+        }
+
+        /// <summary>
+        /// Binds to an existing folder, whatever its actual type is, and loads its first class properties.
+        /// Calling this method results in a call to EWS.
+        /// </summary>
+        /// <param name="service">The service to use to bind to the folder.</param>
+        /// <param name="name">The name of the folder to bind to.</param>
+        /// <returns>A Folder instance representing the folder with the specified name.</returns>
+        public static async System.Threading.Tasks.Task<Folder> BindAsync(ExchangeService service, WellKnownFolderName name)
+        {
+            return await Folder.BindAsync(
                 service,
                 new FolderId(name),
                 PropertySet.FirstClassProperties);
@@ -190,7 +255,7 @@ namespace Microsoft.Exchange.WebServices.Data
         {
             this.ThrowIfThisIsNew();
 
-            this.Service.DeleteFolder( this.Id, deleteMode);
+            this.Service.DeleteFolder(this.Id, deleteMode);
         }
 
         /// <summary>
@@ -397,7 +462,7 @@ namespace Microsoft.Exchange.WebServices.Data
 
             ServiceResponseCollection<FindItemResponse<Item>> responses = this.InternalFindItems<Item>(
                 searchFilter,
-                view, 
+                view,
                 null /* groupBy */);
 
             return responses[0].Results;
@@ -449,7 +514,7 @@ namespace Microsoft.Exchange.WebServices.Data
 
             ServiceResponseCollection<FindItemResponse<Item>> responses = this.InternalFindItems<Item>(
                 searchFilter,
-                view, 
+                view,
                 groupBy);
 
             return responses[0].GroupedFindResults;

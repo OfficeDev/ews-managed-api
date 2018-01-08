@@ -312,6 +312,19 @@ namespace Microsoft.Exchange.WebServices.Data
         }
 
         /// <summary>
+        /// Load the attachment.
+        /// </summary>
+        /// <param name="bodyType">Type of the body.</param>
+        /// <param name="additionalProperties">The additional properties.</param>
+        internal async System.Threading.Tasks.Task InternalLoadAsync(BodyType? bodyType, IEnumerable<PropertyDefinitionBase> additionalProperties)
+        {
+            await this.service.GetAttachmentAsync(
+                this,
+                bodyType,
+                additionalProperties);
+        }
+
+        /// <summary>
         /// Validates this instance.
         /// </summary>
         /// <param name="attachmentIndex">Index of this attachment.</param>
@@ -325,6 +338,14 @@ namespace Microsoft.Exchange.WebServices.Data
         public void Load()
         {
             this.InternalLoad(null, null);
+        }
+
+        /// <summary>
+        /// Loads the attachment. Calling this method results in a call to EWS.
+        /// </summary>
+        public async System.Threading.Tasks.Task LoadAsync()
+        {
+            await this.InternalLoadAsync(null, null);
         }
     }
 }
