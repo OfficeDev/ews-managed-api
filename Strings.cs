@@ -224,5 +224,7 @@ namespace Microsoft.Exchange.WebServices
         internal static string XsDurationCouldNotBeParsed = "The specified xsDuration argument couldn't be parsed.";
         internal static string UnknownTimeZonePeriodTransitionType = "Unknown time zone transition type: {0}";
         internal static string UserPhotoSizeNotSpecified = "The UserPhotoSize must be not be null or empty.";
+        internal static string UserPhotoNotSpecified = "The photo must be not be null or empty.";
+
     }
 }
