@@ -98,10 +98,13 @@
     <Compile Include="ComplexProperties\ReferenceAttachment.cs" />
     <Compile Include="Core\Requests\GetOMEConfigurationRequest.cs" />
     <Compile Include="Core\Requests\GetPeopleInsightsRequest.cs" />
+    <Compile Include="Core\Requests\SetUserPhotoRequest.cs" />
     <Compile Include="Core\Requests\GetUserPhotoRequest.cs" />
     <Compile Include="Core\Requests\SetOMEConfigurationRequest.cs" />
+    <Compile Include="Core\Responses\SetUserPhotoResults.cs" />
     <Compile Include="Core\Responses\GetOMEConfigurationResponse.cs" />
     <Compile Include="Core\Responses\GetPeopleInsightsResponse.cs" />
+    <Compile Include="Core\Responses\SetUserPhotoResponse.cs" />
     <Compile Include="Core\Responses\GetUserPhotoResponse.cs" />
     <Compile Include="Core\Responses\SetOMEConfigurationResponse.cs" />
     <Compile Include="Core\Responses\RegisterConsentResponse.cs" />
