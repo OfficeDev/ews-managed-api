@@ -26,6 +26,7 @@
 namespace Microsoft.Exchange.WebServices.Data
 {
     using System;
+	using System.Runtime.Serialization;
 
     /// <summary>
     /// Represents a remote service exception that has a single response.
@@ -43,7 +44,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <summary>
         /// ServiceResponse when service operation failed remotely.
         /// </summary>
-        private ServiceResponse response;
+        private readonly ServiceResponse response;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceResponseException"/> class.
@@ -52,12 +53,36 @@ namespace Microsoft.Exchange.WebServices.Data
         internal ServiceResponseException(ServiceResponse response)
         {
             this.response = response;
-        }
+		}
 
-        /// <summary>
-        /// Gets the ServiceResponse for the exception.
-        /// </summary>
-        public ServiceResponse Response
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:Microsoft.Exchange.WebServices.Data.ServiceResponseException"/> class with serialized data.
+		/// </summary>
+		/// <param name="info">The object that holds the serialized object data.</param>
+		/// <param name="context">The contextual information about the source or destination.</param>
+		protected ServiceResponseException(SerializationInfo info, StreamingContext context)
+			: base(info, context)
+		{
+			this.response = (ServiceResponse)info.GetValue("Response", typeof(ServiceResponse));
+		}
+
+		/// <summary>Sets the <see cref="T:System.Runtime.Serialization.SerializationInfo" /> object with the parameter name and additional exception information.</summary>
+		/// <param name="info">The object that holds the serialized object data. </param>
+		/// <param name="context">The contextual information about the source or destination. </param>
+		/// <exception cref="T:System.ArgumentNullException">The <paramref name="info" /> object is a null reference (Nothing in Visual Basic). </exception>
+		public override void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			EwsUtilities.Assert(info != null, "ServiceResponseException.GetObjectData", "info is null");
+
+			base.GetObjectData(info, context);
+
+			info.AddValue("Response", this.response, typeof(ServiceResponse));
+		}
+
+		/// <summary>
+		/// Gets the ServiceResponse for the exception.
+		/// </summary>
+		public ServiceResponse Response
         {
             get { return this.response; }
         }
