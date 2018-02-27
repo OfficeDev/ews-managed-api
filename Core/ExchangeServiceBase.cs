@@ -92,6 +92,7 @@ namespace Microsoft.Exchange.WebServices.Data
         private IDictionary<string, string> httpHeaders = new Dictionary<string, string>();
         private IDictionary<string, string> httpResponseHeaders = new Dictionary<string, string>();
         private IEwsHttpWebRequestFactory ewsHttpWebRequestFactory = new EwsHttpWebRequestFactory();  
+        private object lockObject = new object();
         #endregion
 
         #region Event handlers
@@ -188,7 +189,10 @@ namespace Microsoft.Exchange.WebServices.Data
                 serviceCredentials.PrepareWebRequest(request);
             }
 
-            this.httpResponseHeaders.Clear();
+            lock (this.lockObject)
+            {
+                this.httpResponseHeaders.Clear();
+            }
 
             return request;
         }        
@@ -343,17 +347,11 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="headers">The response headers</param>
         private void SaveHttpResponseHeaders(WebHeaderCollection headers)
         {
-            this.httpResponseHeaders.Clear();
-
-            foreach (string key in headers.AllKeys)
+            lock (this.lockObject)
             {
-                string existingValue;
+                this.httpResponseHeaders.Clear();
 
-                if (this.httpResponseHeaders.TryGetValue(key, out existingValue))
-                {
-                    this.httpResponseHeaders[key] = existingValue + "," + headers[key];
-                }
-                else
+                foreach (string key in headers.AllKeys)
                 {
                     this.httpResponseHeaders.Add(key, headers[key]);
                 }
