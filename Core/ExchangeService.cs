@@ -3705,7 +3705,7 @@ namespace Microsoft.Exchange.WebServices.Data
                 actionType == ConversationActionType.AlwaysMove ||
                 actionType == ConversationActionType.AlwaysDelete,
                 "ApplyConversationAction",
-                "Invalic actionType");
+                "Invalid actionType");
 
             EwsUtilities.ValidateParam(conversationIds, "conversationId");
             EwsUtilities.ValidateMethodVersion(
@@ -3714,16 +3714,18 @@ namespace Microsoft.Exchange.WebServices.Data
                                 "ApplyConversationAction");
 
             ApplyConversationActionRequest request = new ApplyConversationActionRequest(this, errorHandlingMode);
-            ConversationAction action = new ConversationAction();
 
             foreach (var conversationId in conversationIds)
             {
+                ConversationAction action = new ConversationAction();
+
                 action.Action = actionType;
                 action.ConversationId = conversationId;
                 action.ProcessRightAway = processRightAway;
                 action.Categories = categories;
                 action.EnableAlwaysDelete = enableAlwaysDelete;
                 action.DestinationFolderId = destinationFolderId != null ? new FolderIdWrapper(destinationFolderId) : null;
+
                 request.ConversationActions.Add(action);
             }
 
