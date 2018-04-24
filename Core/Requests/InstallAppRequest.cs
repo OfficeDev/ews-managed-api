@@ -71,8 +71,6 @@ namespace Microsoft.Exchange.WebServices.Data
 
             writer.WriteBase64ElementValue(manifestStream);
 
-            writer.WriteEndElement();
-
             if (!string.IsNullOrEmpty(this.marketplaceAssetId))
             {
                 writer.WriteElementValue(XmlNamespace.Messages, XmlElementNames.MarketplaceAssetId, this.marketplaceAssetId);
