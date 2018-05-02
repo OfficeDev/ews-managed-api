@@ -118,39 +118,58 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <param name="standardPeriod">A reference to the pre-created standard period.</param>
         internal virtual void InitializeFromAdjustmentRule(TimeZoneInfo.AdjustmentRule adjustmentRule, TimeZonePeriod standardPeriod)
         {
-            TimeZonePeriod daylightPeriod = new TimeZonePeriod();
+            if (adjustmentRule.DaylightDelta.TotalSeconds == 0)
+            {
+                // If the time zone info doesn't support Daylight Saving Time, we just need to
+                // create one transition to one group with one transition to the standard period.
+                TimeZonePeriod standardPeriodToSet = new TimeZonePeriod();
+                standardPeriodToSet.Id = string.Format(
+                    "{0}/{1}",
+                    standardPeriod.Id,
+                    adjustmentRule.DateStart.Year);
+                standardPeriodToSet.Name = standardPeriod.Name;
+                standardPeriodToSet.Bias = standardPeriod.Bias;
+                this.timeZoneDefinition.Periods.Add(standardPeriodToSet.Id, standardPeriodToSet);
 
-            // Generate an Id of the form "Daylight/2008"
-            daylightPeriod.Id = string.Format(
-                "{0}/{1}",
-                TimeZonePeriod.DaylightPeriodId,
-                adjustmentRule.DateStart.Year);
-            daylightPeriod.Name = TimeZonePeriod.DaylightPeriodName;
-            daylightPeriod.Bias = standardPeriod.Bias - adjustmentRule.DaylightDelta;
+                this.transitionToStandard = new TimeZoneTransition(this.timeZoneDefinition, standardPeriodToSet);
+                this.transitions.Add(this.transitionToStandard);
+            }
+            else
+            {
+                TimeZonePeriod daylightPeriod = new TimeZonePeriod();
 
-            this.timeZoneDefinition.Periods.Add(daylightPeriod.Id, daylightPeriod);
+                // Generate an Id of the form "Daylight/2008"
+                daylightPeriod.Id = string.Format(
+                    "{0}/{1}",
+                    TimeZonePeriod.DaylightPeriodId,
+                    adjustmentRule.DateStart.Year);
+                daylightPeriod.Name = TimeZonePeriod.DaylightPeriodName;
+                daylightPeriod.Bias = standardPeriod.Bias - adjustmentRule.DaylightDelta;
 
-            this.transitionToDaylight = TimeZoneTransition.CreateTimeZoneTransition(
-                this.timeZoneDefinition,
-                daylightPeriod,
-                adjustmentRule.DaylightTransitionStart);
+                this.timeZoneDefinition.Periods.Add(daylightPeriod.Id, daylightPeriod);
 
-            TimeZonePeriod standardPeriodToSet = new TimeZonePeriod();
-            standardPeriodToSet.Id = string.Format(
-                "{0}/{1}",
-                standardPeriod.Id,
-                adjustmentRule.DateStart.Year);
-            standardPeriodToSet.Name = standardPeriod.Name;
-            standardPeriodToSet.Bias = standardPeriod.Bias;
-            this.timeZoneDefinition.Periods.Add(standardPeriodToSet.Id, standardPeriodToSet);
+                this.transitionToDaylight = TimeZoneTransition.CreateTimeZoneTransition(
+                    this.timeZoneDefinition,
+                    daylightPeriod,
+                    adjustmentRule.DaylightTransitionStart);
 
-            this.transitionToStandard = TimeZoneTransition.CreateTimeZoneTransition(
-                this.timeZoneDefinition,
-                standardPeriodToSet,
-                adjustmentRule.DaylightTransitionEnd);
+                TimeZonePeriod standardPeriodToSet = new TimeZonePeriod();
+                standardPeriodToSet.Id = string.Format(
+                    "{0}/{1}",
+                    standardPeriod.Id,
+                    adjustmentRule.DateStart.Year);
+                standardPeriodToSet.Name = standardPeriod.Name;
+                standardPeriodToSet.Bias = standardPeriod.Bias;
+                this.timeZoneDefinition.Periods.Add(standardPeriodToSet.Id, standardPeriodToSet);
 
-            this.transitions.Add(this.transitionToDaylight);
-            this.transitions.Add(this.transitionToStandard);
+                this.transitionToStandard = TimeZoneTransition.CreateTimeZoneTransition(
+                    this.timeZoneDefinition,
+                    standardPeriodToSet,
+                    adjustmentRule.DaylightTransitionEnd);
+
+                this.transitions.Add(this.transitionToDaylight);
+                this.transitions.Add(this.transitionToStandard);
+            }
         }
 
         /// <summary>
