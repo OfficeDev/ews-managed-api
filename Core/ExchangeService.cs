@@ -5856,7 +5856,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// Upload items to Exchange
         /// </summary>
         /// <param name="item">The item to Upload</param>
-        /// <returns></returns>
+        /// <returns>An UploadItemsResponse for the requested UploadItem</returns>
         public UploadItemsResponse UploadItem(UploadItem item)
         {
             UploadItemsRequest request = new UploadItemsRequest(this, ServiceErrorHandling.ReturnErrors);
