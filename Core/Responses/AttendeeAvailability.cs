@@ -83,6 +83,20 @@ namespace Microsoft.Exchange.WebServices.Data
                             {
                                 reader.Read();
 
+                                // Sometimes Exchange Online returns blank CalendarEventArray tag like bellow.
+                                // <CalendarEventArray xmlns="http://schemas.microsoft.com/exchange/services/2006/types" />
+                                // So we have to check the end of CalendarEventArray tag.
+                                if (reader.LocalName == XmlElementNames.FreeBusyView)
+                                {
+                                    // There is no the end tag of CalendarEventArray, but the reader is reading the end tag of FreeBusyView.
+                                    break;
+                                }
+                                else if (reader.LocalName == XmlElementNames.WorkingHours)
+                                {
+                                    // There is no the end tag of CalendarEventArray, but the reader is reading the start tag of WorkingHours.
+                                    goto case XmlElementNames.WorkingHours;
+                                }
+
                                 if (reader.IsStartElement(XmlNamespace.Types, XmlElementNames.CalendarEvent))
                                 {
                                     CalendarEvent calendarEvent = new CalendarEvent();

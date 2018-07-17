@@ -25,41 +25,50 @@
 
 namespace Microsoft.Exchange.WebServices.Data
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+	using System;
+	using System.Runtime.Serialization;
 
-    /// <summary>
-    /// Represents an error that occurs when a service operation fails remotely.
-    /// </summary>
-    [Serializable]
-    public class ServiceRemoteException : Exception
-    {
-        /// <summary>
-        /// ServiceRemoteException Constructor.
-        /// </summary>
-        public ServiceRemoteException()
-            : base()
-        {
-        }
+	/// <summary>
+	/// Represents an error that occurs when a service operation fails remotely.
+	/// </summary>
+	[Serializable]
+	public class ServiceRemoteException : Exception
+	{
+		/// <summary>
+		/// ServiceRemoteException Constructor.
+		/// </summary>
+		public ServiceRemoteException()
+			: base()
+		{
+		}
 
-        /// <summary>
-        /// ServiceRemoteException Constructor.
-        /// </summary>
-        /// <param name="message">Error message text.</param>
-        public ServiceRemoteException(string message)
-            : base(message)
-        {
-        }
+		/// <summary>
+		/// ServiceRemoteException Constructor.
+		/// </summary>
+		/// <param name="message">Error message text.</param>
+		public ServiceRemoteException(string message)
+			: base(message)
+		{
+		}
 
-        /// <summary>
-        /// ServiceRemoteException Constructor.
-        /// </summary>
-        /// <param name="message">Error message text.</param>
-        /// <param name="innerException">Inner exception.</param>
-        public ServiceRemoteException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
-    }
+		/// <summary>
+		/// ServiceRemoteException Constructor.
+		/// </summary>
+		/// <param name="message">Error message text.</param>
+		/// <param name="innerException">Inner exception.</param>
+		public ServiceRemoteException(string message, Exception innerException)
+			: base(message, innerException)
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:Microsoft.Exchange.WebServices.Data.ServiceRemoteException"/> class with serialized data.
+		/// </summary>
+		/// <param name="info">The object that holds the serialized object data.</param>
+		/// <param name="context">The contextual information about the source or destination.</param>
+		protected ServiceRemoteException(SerializationInfo info, StreamingContext context)
+			: base(info, context)
+	    {
+		}
+	}
 }

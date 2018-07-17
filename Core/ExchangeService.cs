@@ -23,6 +23,8 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+using System.Security.Cryptography;
+
 namespace Microsoft.Exchange.WebServices.Data
 {
     using System;
@@ -210,6 +212,28 @@ namespace Microsoft.Exchange.WebServices.Data
                 ServiceErrorHandling.ThrowOnError);
 
             return responses[0].Results;
+        }
+        
+        /// <summary>
+        /// Obtains a list of folders by searching the sub-folders of each of the specified folders.
+        /// </summary>
+        /// <param name="parentFolderIds">The Ids of the folders in which to search for folders.</param>
+        /// <param name="searchFilter">The search filter. Available search filter classes
+        /// include SearchFilter.IsEqualTo, SearchFilter.ContainsSubstring and 
+        /// SearchFilter.SearchFilterCollection</param>
+        /// <param name="view">The view controlling the number of folders returned.</param>
+        /// <returns>An object representing the results of the search operation.</returns>
+        public ServiceResponseCollection<FindFolderResponse> FindFolders(IEnumerable<FolderId> parentFolderIds, SearchFilter searchFilter, FolderView view)
+        {
+            EwsUtilities.ValidateParam(parentFolderIds, "parentFolderIds");
+            EwsUtilities.ValidateParam(view, "view");
+            EwsUtilities.ValidateParamAllowNull(searchFilter, "searchFilter");
+
+            return this.InternalFindFolders(
+                parentFolderIds,
+                searchFilter,
+                view,
+                ServiceErrorHandling.ReturnErrors);
         }
 
         /// <summary>
@@ -1731,6 +1755,25 @@ namespace Microsoft.Exchange.WebServices.Data
             request.EmailAddress = emailAddress;
             request.UserPhotoSize = userPhotoSize;
             request.EntityTag = entityTag;
+
+            return request.Execute().Results;
+        }
+
+        /// <summary>
+        /// Set a user's photo.
+        /// </summary>
+        /// <param name="emailAddress">The user's email address</param>
+        /// <param name="photo">The photo to set</param>
+        /// <returns>A result object</returns>
+        public SetUserPhotoResults SetUserPhoto(string emailAddress, byte[] photo)
+        {
+            EwsUtilities.ValidateParam(emailAddress, "emailAddress");
+            EwsUtilities.ValidateParam(photo, "photo");
+            
+            SetUserPhotoRequest request = new SetUserPhotoRequest(this);
+
+            request.EmailAddress = emailAddress;
+            request.Photo = photo;
 
             return request.Execute().Results;
         }
@@ -3674,7 +3717,7 @@ namespace Microsoft.Exchange.WebServices.Data
                 actionType == ConversationActionType.AlwaysMove ||
                 actionType == ConversationActionType.AlwaysDelete,
                 "ApplyConversationAction",
-                "Invalic actionType");
+                "Invalid actionType");
 
             EwsUtilities.ValidateParam(conversationIds, "conversationId");
             EwsUtilities.ValidateMethodVersion(
@@ -3683,16 +3726,18 @@ namespace Microsoft.Exchange.WebServices.Data
                                 "ApplyConversationAction");
 
             ApplyConversationActionRequest request = new ApplyConversationActionRequest(this, errorHandlingMode);
-            ConversationAction action = new ConversationAction();
 
             foreach (var conversationId in conversationIds)
             {
+                ConversationAction action = new ConversationAction();
+
                 action.Action = actionType;
                 action.ConversationId = conversationId;
                 action.ProcessRightAway = processRightAway;
                 action.Categories = categories;
                 action.EnableAlwaysDelete = enableAlwaysDelete;
                 action.DestinationFolderId = destinationFolderId != null ? new FolderIdWrapper(destinationFolderId) : null;
+
                 request.ConversationActions.Add(action);
             }
 

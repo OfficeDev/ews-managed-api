@@ -26,8 +26,7 @@
 namespace Microsoft.Exchange.WebServices.Data
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Represents an error that occurs when a call to the CreateAttachment web method fails.
@@ -59,6 +58,16 @@ namespace Microsoft.Exchange.WebServices.Data
             Exception innerException)
             : base(serviceResponses, message, innerException)
         {
-        }
-    }
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:Microsoft.Exchange.WebServices.Data.CreateAttachmentException"/> class with serialized data.
+		/// </summary>
+		/// <param name="info">The object that holds the serialized object data.</param>
+		/// <param name="context">The contextual information about the source or destination.</param>
+		private CreateAttachmentException(SerializationInfo info, StreamingContext context)
+			: base(info, context)
+		{
+		}
+	}
 }

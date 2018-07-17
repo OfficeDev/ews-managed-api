@@ -25,10 +25,6 @@
 
 namespace Microsoft.Exchange.WebServices.Data
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     /// <summary>
     /// Defines phone number entries for a contact.
     /// </summary>
@@ -127,6 +123,26 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <summary>
         /// The TTY/TTD phone number.
         /// </summary>
-        TtyTddPhone
+        TtyTddPhone,
+
+        /// <summary>
+        /// Business mobile number.
+        /// </summary>
+        BusinessMobile,
+
+        /// <summary>
+        /// IP Phone number.
+        /// </summary>
+        IPPhone,
+
+        /// <summary>
+        /// Mms number.
+        /// </summary>
+        Mms,
+
+        /// <summary>
+        /// Msn number.
+        /// </summary>
+        Msn
     }
 }

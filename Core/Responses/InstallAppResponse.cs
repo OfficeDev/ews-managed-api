@@ -65,7 +65,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// </summary>
         public bool? WasFirstInstall
         {
-            get { return this.WasFirstInstall; }
+            get { return this.wasFirstInstall; }
         }
     }
 }
