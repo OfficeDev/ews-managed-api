@@ -81,6 +81,7 @@ namespace Microsoft.Exchange.WebServices.Data
         private string userAgent = ExchangeService.defaultUserAgent;
         private bool acceptGzipEncoding = true;
         private bool keepAlive = true;
+        private bool unsafeAuthenticatedConnectionSharing = false;
         private string connectionGroupName;
         private string clientRequestId;
         private bool returnClientRequestId;
@@ -820,6 +821,22 @@ namespace Microsoft.Exchange.WebServices.Data
             set
             {
                 this.keepAlive = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether to allow high-speed NTLM-authenticated connection sharing.
+        /// </summary>
+        public bool UnsafeAuthenticatedConnectionSharing
+        {
+            get
+            {
+                return this.unsafeAuthenticatedConnectionSharing;
+            }
+
+            set
+            {
+                this.unsafeAuthenticatedConnectionSharing = value;
             }
         }
 
