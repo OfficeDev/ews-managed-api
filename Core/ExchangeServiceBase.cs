@@ -147,6 +147,7 @@ namespace Microsoft.Exchange.WebServices.Data
             request.AllowAutoRedirect = allowAutoRedirect;
             request.CookieContainer = this.CookieContainer;
             request.KeepAlive = this.keepAlive;
+            request.UnsafeAuthenticatedConnectionSharing = this.unsafeAuthenticatedConnectionSharing ;
             request.ConnectionGroupName = this.connectionGroupName;
 
             if (acceptGzipEncoding)
@@ -546,6 +547,7 @@ namespace Microsoft.Exchange.WebServices.Data
             this.userAgent = service.userAgent;
             this.acceptGzipEncoding = service.acceptGzipEncoding;
             this.keepAlive = service.keepAlive;
+            this.unsafeAuthenticatedConnectionSharing  = service.unsafeAuthenticatedConnectionSharing ;
             this.connectionGroupName = service.connectionGroupName;
             this.timeZone = service.timeZone;
             this.httpHeaders = service.httpHeaders;
