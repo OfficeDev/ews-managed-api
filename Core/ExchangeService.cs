@@ -2849,7 +2849,9 @@ namespace Microsoft.Exchange.WebServices.Data
 
             EwsUtilities.ValidateParamCollection(folderIds, "folderIds");
 
-            return this.BuildSubscribeToStreamingNotificationsRequest(folderIds, eventTypes).Execute()[0].Subscription;
+            StreamingSubscription StreamingSub = this.BuildSubscribeToStreamingNotificationsRequest(folderIds, eventTypes).Execute()[0].Subscription;
+            StreamingSub.folderIds = folderIds;
+            return StreamingSub;
         }
 
         /// <summary>

@@ -101,5 +101,10 @@ namespace Microsoft.Exchange.WebServices.Data
                 return false;
             }
         }
+
+        /// <summary>
+        /// List of the folderIds in the subscription.
+        /// </summary>
+        public System.Collections.Generic.IEnumerable<FolderId> folderIds;
     }
 }
