@@ -81,6 +81,7 @@ namespace Microsoft.Exchange.WebServices.Data
         private string userAgent = ExchangeService.defaultUserAgent;
         private bool acceptGzipEncoding = true;
         private bool keepAlive = true;
+        private bool unsafeAuthenticatedConnectionSharing = false;
         private string connectionGroupName;
         private string clientRequestId;
         private bool returnClientRequestId;
@@ -146,6 +147,7 @@ namespace Microsoft.Exchange.WebServices.Data
             request.AllowAutoRedirect = allowAutoRedirect;
             request.CookieContainer = this.CookieContainer;
             request.KeepAlive = this.keepAlive;
+            request.UnsafeAuthenticatedConnectionSharing = this.unsafeAuthenticatedConnectionSharing ;
             request.ConnectionGroupName = this.connectionGroupName;
 
             if (acceptGzipEncoding)
@@ -545,6 +547,7 @@ namespace Microsoft.Exchange.WebServices.Data
             this.userAgent = service.userAgent;
             this.acceptGzipEncoding = service.acceptGzipEncoding;
             this.keepAlive = service.keepAlive;
+            this.unsafeAuthenticatedConnectionSharing  = service.unsafeAuthenticatedConnectionSharing ;
             this.connectionGroupName = service.connectionGroupName;
             this.timeZone = service.timeZone;
             this.httpHeaders = service.httpHeaders;
@@ -820,6 +823,22 @@ namespace Microsoft.Exchange.WebServices.Data
             set
             {
                 this.keepAlive = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether to allow high-speed NTLM-authenticated connection sharing.
+        /// </summary>
+        public bool UnsafeAuthenticatedConnectionSharing
+        {
+            get
+            {
+                return this.unsafeAuthenticatedConnectionSharing;
+            }
+
+            set
+            {
+                this.unsafeAuthenticatedConnectionSharing = value;
             }
         }
 
