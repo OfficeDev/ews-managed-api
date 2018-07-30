@@ -125,6 +125,13 @@
     <Compile Include="Groups\ComplexProperties\UnifiedGroup.cs" />
     <Compile Include="Groups\ComplexProperties\UnifiedGroupsSet.cs" />
     <Compile Include="Interfaces\IPeopleQueryResults.cs" />
+    <Compile Include="Core\Requests\ExportItemsRequest.cs" />
+    <Compile Include="Core\Requests\UploadItemsRequest.cs" />
+    <Compile Include="Core\Responses\ExportItemsResponse.cs" />
+    <Compile Include="Core\Responses\UploadItemsResponse.cs" />
+    <Compile Include="Core\ServiceObjects\Items\UploadItem.cs" />
+    <Compile Include="Core\ServiceObjects\Schemas\UploadSchema.cs" />
+    <Compile Include="Enumerations\CreateAction.cs" />
     <Compile Include="Properties\AssemblyInfoMicrosoft.cs" />
     <Compile Include="Properties\AssemblyInfoOpenSource.cs" />
     <Compile Include="Attributes\AttachableAttribute.cs" />
@@ -416,6 +423,11 @@
     <Compile Include="Notifications\StreamingSubscription.cs" />
     <Compile Include="Notifications\StreamingSubscriptionConnection.cs" />
     <Compile Include="Notifications\SubscriptionErrorEventArgs.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="PropertyDefinitions\AttachmentsPropertyDefinition.cs" />
     <Compile Include="PropertyDefinitions\ListValuePropertyDefinition.cs" />
     <Compile Include="PropertyDefinitions\GroupMemberPropertyDefinition.cs" />

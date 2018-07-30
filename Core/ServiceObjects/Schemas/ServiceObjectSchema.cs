@@ -75,6 +75,7 @@ namespace Microsoft.Exchange.WebServices.Data
                 typeList.Add(typeof(ServiceObjectSchema));
                 typeList.Add(typeof(SearchFolderSchema));
                 typeList.Add(typeof(TaskSchema));
+                typeList.Add(typeof(UploadSchema));
 
 #if DEBUG
                 // Verify that all Schema types in the Managed API assembly have been included.

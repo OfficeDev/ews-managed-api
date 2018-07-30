@@ -330,7 +330,27 @@ namespace Microsoft.Exchange.WebServices.Data
         [RequiredServerVersion(ExchangeVersion.Exchange2013)]
         [EwsEnum("favorites")]
         Favorites,
-
+        
+        /// <summary>
+        /// From Favorite senders folder
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2013)]
+        [EwsEnum("fromfavoritesenders")]
+        FromFavoriteSenders,
+        
+        /// <summary>
+        /// Working Set folder
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2013)]
+        [EwsEnum("workingset")]
+        WorkingSet,
+        
+        /// <summary>
+        /// All Contacts Folder        
+        /// </summary>
+        [RequiredServerVersion(ExchangeVersion.Exchange2013)]
+        [EwsEnum("allcontacts")]
+        AllContacts,
         //// Note when you adding new folder id here, please update sources\test\Services\src\ComponentTests\GlobalVersioningControl.cs
         //// IsExchange2013Folder method accordingly.
     }
