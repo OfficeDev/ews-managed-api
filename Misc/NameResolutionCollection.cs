@@ -60,19 +60,21 @@ namespace Microsoft.Exchange.WebServices.Data
         {
             reader.ReadStartElement(XmlNamespace.Messages, XmlElementNames.ResolutionSet);
 
-            int totalItemsInView = reader.ReadAttributeValue<int>(XmlAttributeNames.TotalItemsInView);
+            // Note: TotalItemsInView is not reliable, https://github.com/OfficeDev/ews-managed-api/issues/177
             this.includesAllResolutions = reader.ReadAttributeValue<bool>(XmlAttributeNames.IncludesLastItemInRange);
 
-            for (int i = 0; i < totalItemsInView; i++)
+            NameResolution nameResolution;
+            while (true)
             {
-                NameResolution nameResolution = new NameResolution(this);
+                nameResolution = new NameResolution(this);
 
-                nameResolution.LoadFromXml(reader);
+                if (!nameResolution.LoadFromXml(reader, true))
+                    break;
 
                 this.items.Add(nameResolution);
             }
 
-            reader.ReadEndElement(XmlNamespace.Messages, XmlElementNames.ResolutionSet);
+            reader.EnsureCurrentNodeIsEndElement(XmlNamespace.Messages, XmlElementNames.ResolutionSet);
         }
 
         /// <summary>

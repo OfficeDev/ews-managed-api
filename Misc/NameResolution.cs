@@ -56,9 +56,15 @@ namespace Microsoft.Exchange.WebServices.Data
         /// Loads from XML.
         /// </summary>
         /// <param name="reader">The reader.</param>
-        internal void LoadFromXml(EwsServiceXmlReader reader)
+        /// <param name="allowNoMoreElements">If true the function returns false rather than throw an exception
+        /// if the last element has been read.</param>
+        internal bool LoadFromXml(EwsServiceXmlReader reader, bool allowNoMoreElements)
         {
-            reader.ReadStartElement(XmlNamespace.Types, XmlElementNames.Resolution);
+            reader.Read();
+            if (allowNoMoreElements && reader.NodeType == System.Xml.XmlNodeType.EndElement)
+                return false;
+
+            reader.EnsureCurrentNodeIsStartElement(XmlNamespace.Types, XmlElementNames.Resolution);
 
             reader.ReadStartElement(XmlNamespace.Types, XmlElementNames.Mailbox);
             this.mailbox.LoadFromXml(reader, XmlElementNames.Mailbox);
@@ -81,6 +87,7 @@ namespace Microsoft.Exchange.WebServices.Data
             {
                 reader.EnsureCurrentNodeIsEndElement(XmlNamespace.Types, XmlElementNames.Resolution);
             }
+            return true;
         }
 
         /// <summary>
