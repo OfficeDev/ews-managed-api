@@ -247,7 +247,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <summary>
         /// Throws a ServiceResponseException if this response has its Result property set to Error.
         /// </summary>
-        internal void ThrowIfNecessary()
+        public void ThrowIfNecessary()
         {
             this.InternalThrowIfNecessary();
         }
