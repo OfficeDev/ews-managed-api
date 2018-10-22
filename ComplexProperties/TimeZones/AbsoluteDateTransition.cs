@@ -85,10 +85,14 @@ namespace Microsoft.Exchange.WebServices.Data
         {
             base.WriteElementsToXml(writer);
 
+            // Write the DateTime element as a datetime value formatted with no time zone conversions.
+            // We must not pass the dateTime value to WriteElementValue as a DateTime value, because
+            // WriteElementValue would convert the DateTime value to UTC using the time zone
+            // on the ExchangeService object. No time zone conversions should be done on transition objects.
             writer.WriteElementValue(
                 XmlNamespace.Types,
                 XmlElementNames.DateTime,
-                this.dateTime);
+                dateTime.ToString("yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture));
         }
 
         /// <summary>
