@@ -114,62 +114,39 @@ namespace Microsoft.Exchange.WebServices.Data
         /// <summary>
         /// Initializes this transition group based on the specified asjustment rule.
         /// </summary>
+        /// <param name="timeZoneInfo">The time zone that the adjustment rule applies to.</param>
         /// <param name="adjustmentRule">The adjustment rule to initialize from.</param>
-        /// <param name="standardPeriod">A reference to the pre-created standard period.</param>
-        internal virtual void InitializeFromAdjustmentRule(TimeZoneInfo.AdjustmentRule adjustmentRule, TimeZonePeriod standardPeriod)
+        internal virtual void InitializeFromAdjustmentRule(TimeZoneInfo timeZoneInfo, TimeZoneInfo.AdjustmentRule adjustmentRule)
         {
-            if (adjustmentRule.DaylightDelta.TotalSeconds == 0)
+            if ((adjustmentRule.DaylightDelta == TimeSpan.Zero)
+                || adjustmentRule.DaylightTransitionStart.HasSameDate(adjustmentRule.DaylightTransitionEnd))
             {
-                // If the time zone info doesn't support Daylight Saving Time, we just need to
-                // create one transition to one group with one transition to the standard period.
-                TimeZonePeriod standardPeriodToSet = new TimeZonePeriod();
-                standardPeriodToSet.Id = string.Format(
-                    "{0}/{1}",
-                    standardPeriod.Id,
-                    adjustmentRule.DateStart.Year);
-                standardPeriodToSet.Name = standardPeriod.Name;
-                standardPeriodToSet.Bias = standardPeriod.Bias;
-                this.timeZoneDefinition.Periods.Add(standardPeriodToSet.Id, standardPeriodToSet);
-
-                this.transitionToStandard = new TimeZoneTransition(this.timeZoneDefinition, standardPeriodToSet);
-                this.transitions.Add(this.transitionToStandard);
+                // If the admustment rule does not support daylight savings time,
+                // the transition must target a transition group that targets a single period.
+                // If the adjustment rule supports daylight savings time, but the DST start and end are on the same day,
+                // we treat is as through there is no DST period at all. This is because EWS would reject it as an invalid
+                // time zone. This is true for the "Sao Tome Standard Time" time zone, which has a DST period that lasts only
+                // one hour (sounds strange, but there is actually a valid reason for it).
+                this.transitionToStandard = new TimeZoneTransition(this.timeZoneDefinition, this.timeZoneDefinition.CreateStandardPeriodForAdjustmentRule(timeZoneInfo, adjustmentRule));
             }
             else
             {
-                TimeZonePeriod daylightPeriod = new TimeZonePeriod();
-
-                // Generate an Id of the form "Daylight/2008"
-                daylightPeriod.Id = string.Format(
-                    "{0}/{1}",
-                    TimeZonePeriod.DaylightPeriodId,
-                    adjustmentRule.DateStart.Year);
-                daylightPeriod.Name = TimeZonePeriod.DaylightPeriodName;
-                daylightPeriod.Bias = standardPeriod.Bias - adjustmentRule.DaylightDelta;
-
-                this.timeZoneDefinition.Periods.Add(daylightPeriod.Id, daylightPeriod);
-
+                // If the adjustment rule supports daylight savings time, the transition must target a standard transition group.
+                // with two transitions; one to DST, and a second back to Standard time.
                 this.transitionToDaylight = TimeZoneTransition.CreateTimeZoneTransition(
                     this.timeZoneDefinition,
-                    daylightPeriod,
+                    timeZoneDefinition.CreateDaylightPeriodForAdjustmentRule(timeZoneInfo, adjustmentRule),
                     adjustmentRule.DaylightTransitionStart);
-
-                TimeZonePeriod standardPeriodToSet = new TimeZonePeriod();
-                standardPeriodToSet.Id = string.Format(
-                    "{0}/{1}",
-                    standardPeriod.Id,
-                    adjustmentRule.DateStart.Year);
-                standardPeriodToSet.Name = standardPeriod.Name;
-                standardPeriodToSet.Bias = standardPeriod.Bias;
-                this.timeZoneDefinition.Periods.Add(standardPeriodToSet.Id, standardPeriodToSet);
 
                 this.transitionToStandard = TimeZoneTransition.CreateTimeZoneTransition(
                     this.timeZoneDefinition,
-                    standardPeriodToSet,
+                    timeZoneDefinition.CreateStandardPeriodForAdjustmentRule(timeZoneInfo, adjustmentRule),
                     adjustmentRule.DaylightTransitionEnd);
 
                 this.transitions.Add(this.transitionToDaylight);
-                this.transitions.Add(this.transitionToStandard);
             }
+
+            this.transitions.Add(this.transitionToStandard);
         }
 
         /// <summary>

@@ -24,6 +24,7 @@
  */
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // CLS Compliant
@@ -34,3 +35,4 @@ using System.Runtime.InteropServices;
 
 
 // Friend Assemblies: Add to AssemblyInfoMicrosoft.cs
+[assembly: InternalsVisibleTo("EwsManagedApiTest")]

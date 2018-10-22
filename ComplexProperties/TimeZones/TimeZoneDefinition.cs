@@ -93,39 +93,25 @@ namespace Microsoft.Exchange.WebServices.Data
             this.Id = timeZoneInfo.Id;
             this.Name = timeZoneInfo.DisplayName;
 
-            // TimeZoneInfo only supports one standard period, which bias is the time zone's base
+            // TimeZoneInfo only supports one standard period, whose bias is the time zone's base
             // offset to UTC.
-            TimeZonePeriod standardPeriod = new TimeZonePeriod();
-            standardPeriod.Id = TimeZonePeriod.StandardPeriodId;
-            standardPeriod.Name = TimeZonePeriod.StandardPeriodName;
-            standardPeriod.Bias = -timeZoneInfo.BaseUtcOffset;
-            
-            TimeZoneInfo.AdjustmentRule[] adjustmentRules = timeZoneInfo.GetAdjustmentRules();
+            TimeZonePeriod standardPeriod = this.CreateStandardPeriod(timeZoneInfo);
 
-            TimeZoneTransition transitionToStandardPeriod = new TimeZoneTransition(this, standardPeriod);
+            TimeZoneInfo.AdjustmentRule[] adjustmentRules = timeZoneInfo.GetAdjustmentRules();
 
             if (adjustmentRules.Length == 0)
             {
-                this.periods.Add(standardPeriod.Id, standardPeriod);
-
                 // If the time zone info doesn't support Daylight Saving Time, we just need to
                 // create one transition to one group with one transition to the standard period.
-                TimeZoneTransitionGroup transitionGroup = new TimeZoneTransitionGroup(this, "0");
-                transitionGroup.Transitions.Add(transitionToStandardPeriod);
-
-                this.transitionGroups.Add(transitionGroup.Id, transitionGroup);
-
-                TimeZoneTransition initialTransition = new TimeZoneTransition(this, transitionGroup);
-
-                this.transitions.Add(initialTransition);
+                this.transitions.Add(new TimeZoneTransition(this,
+                    CreateTransitionGroupToPeriod(standardPeriod)));
             }
             else
             {
                 for (int i = 0; i < adjustmentRules.Length; i++)
                 {
                     TimeZoneTransitionGroup transitionGroup = new TimeZoneTransitionGroup(this, this.transitionGroups.Count.ToString());
-                    transitionGroup.InitializeFromAdjustmentRule(adjustmentRules[i], standardPeriod);
-
+                    transitionGroup.InitializeFromAdjustmentRule(timeZoneInfo, adjustmentRules[i]);
                     this.transitionGroups.Add(transitionGroup.Id, transitionGroup);
 
                     TimeZoneTransition transition;
@@ -137,17 +123,15 @@ namespace Microsoft.Exchange.WebServices.Data
                         // period and a group containing the transitions mapping to the adjustment rule.
                         if (adjustmentRules[i].DateStart > DateTime.MinValue.Date)
                         {
-                            TimeZoneTransition transitionToDummyGroup = new TimeZoneTransition(
-                                this,
-                                this.CreateTransitionGroupToPeriod(standardPeriod));
+                            // Add the dummy transition for the standard period.
+                            this.transitions.Add(new TimeZoneTransition(this,
+                                this.CreateTransitionGroupToPeriod(standardPeriod)));
 
-                            this.transitions.Add(transitionToDummyGroup);
-
+                            // Add the transition corresponding with the adjustment rule's start date.
                             AbsoluteDateTransition absoluteDateTransition = new AbsoluteDateTransition(this, transitionGroup);
                             absoluteDateTransition.DateTime = adjustmentRules[i].DateStart;
 
                             transition = absoluteDateTransition;
-                            this.periods.Add(standardPeriod.Id, standardPeriod);
                         }
                         else
                         {
@@ -156,6 +140,17 @@ namespace Microsoft.Exchange.WebServices.Data
                     }
                     else
                     {
+                        if ((adjustmentRules[i - 1].DateEnd.Year + 1) != adjustmentRules[i].DateStart.Year)
+                        {
+                            // If the next adjustment rule does not start the year after the previous adjustment rule ends,
+                            // we need to add a dummy transition to cover the years in between.
+                            AbsoluteDateTransition transitionToDummyGroup = new AbsoluteDateTransition(this,
+                                CreateTransitionGroupToPeriod(standardPeriod));
+                            transitionToDummyGroup.DateTime = adjustmentRules[i - 1].DateEnd.AddDays(1);
+
+                            this.transitions.Add(transitionToDummyGroup);
+                        }
+
                         AbsoluteDateTransition absoluteDateTransition = new AbsoluteDateTransition(this, transitionGroup);
                         absoluteDateTransition.DateTime = adjustmentRules[i].DateStart;
 
@@ -181,6 +176,89 @@ namespace Microsoft.Exchange.WebServices.Data
                     this.transitions.Add(transitionToDummyGroup);
                 }
             }
+        }
+
+        /// <summary>
+        /// Creates the standard period for the time zone and adds it to the Period collection.
+        /// </summary>
+        /// <param name="timeZoneInfo">The TimeZoneInfo object whose standard period is to be created.</param>
+        /// <returns>The standard period that was created.</returns>
+        private TimeZonePeriod CreateStandardPeriod(TimeZoneInfo timeZoneInfo)
+        {
+            TimeZonePeriod standardPeriod = new TimeZonePeriod();
+            standardPeriod.Id = TimeZonePeriod.StandardPeriodId;
+            standardPeriod.Name = TimeZonePeriod.StandardPeriodName;
+            standardPeriod.Bias = -timeZoneInfo.BaseUtcOffset;
+
+            this.periods.Add(standardPeriod.Id, standardPeriod);
+
+            return standardPeriod;
+        }
+
+        /// <summary>
+        /// Searches the period collection for a standard period that matches the specifications of the provided adjustment rule.
+        /// If one is found, it is returned.
+        /// If none are found, a new one is created, added to the collection and returned.
+        /// </summary>
+        /// <param name="timeZoneInfo">The TimeZoneInfo object that the adjustmentRule applies to.</param>
+        /// <param name="adjustmentRule">The AdjustmentRule object that we need a period for.</param>
+        /// <returns>The TimeZonePeriod object that was found or created.</returns>
+        internal TimeZonePeriod CreateStandardPeriodForAdjustmentRule(TimeZoneInfo timeZoneInfo, TimeZoneInfo.AdjustmentRule adjustmentRule)
+        {
+            var baseUtcOffsetDelta = adjustmentRule.GetBaseUtcOffsetDelta();
+
+            if (baseUtcOffsetDelta == TimeSpan.Zero)
+            {
+                // The standard bias of this adjustment rule matches the standard bias for the time zone. Use the standard period.
+                return this.periods[TimeZonePeriod.StandardPeriodId];
+            }
+            else
+            {
+                TimeSpan periodBias = -timeZoneInfo.BaseUtcOffset - baseUtcOffsetDelta;
+                String periodId = String.Format("{0}{1}", TimeZonePeriod.StandardPeriodId, (int)periodBias.TotalMinutes);
+
+                TimeZonePeriod period;
+                if (!this.periods.TryGetValue(periodId, out period))
+                {
+                    period = new TimeZonePeriod();
+                    period.Id = periodId;
+                    period.Name = TimeZonePeriod.StandardPeriodName;
+                    period.Bias = periodBias;
+
+                    this.periods.Add(periodId, period);
+                }
+
+                return period;
+            }
+        }
+
+        /// <summary>
+        /// Searches the period collection for a daylight period that matches the specifications of the provided adjustment rule.
+        /// If one is found, it is returned.
+        /// If none are found, a new one is created, added to the collection and returned.
+        /// </summary>
+        /// <param name="timeZoneInfo">The TimeZoneInfo object that the adjustmentRule applies to.</param>
+        /// <param name="adjustmentRule">The AdjustmentRule object that we need a period for.</param>
+        /// <returns>The TimeZonePeriod object that was found or created.</returns>
+        internal TimeZonePeriod CreateDaylightPeriodForAdjustmentRule(TimeZoneInfo timeZoneInfo, TimeZoneInfo.AdjustmentRule adjustmentRule)
+        {
+            var baseUtcOffsetDelta = adjustmentRule.GetBaseUtcOffsetDelta();
+
+            TimeSpan periodBias = -timeZoneInfo.BaseUtcOffset - baseUtcOffsetDelta - adjustmentRule.DaylightDelta;
+            String periodId = String.Format("{0}{1}", TimeZonePeriod.DaylightPeriodId, (int)periodBias.TotalMinutes);
+
+            TimeZonePeriod period;
+            if (!this.periods.TryGetValue(periodId, out period))
+            {
+                period = new TimeZonePeriod();
+                period.Id = periodId;
+                period.Name = TimeZonePeriod.DaylightPeriodName;
+                period.Bias = periodBias;
+
+                this.periods.Add(periodId, period);
+            }
+
+            return period;
         }
 
         /// <summary>

@@ -171,7 +171,7 @@ namespace Microsoft.Exchange.WebServices.Data
             {
                 return (SetUserPhotoResponse)serviceResponseFactory();
             }
-            catch (ServiceRequestException ex)
+            catch (ServiceRequestException)
             {
                 throw;
             }
