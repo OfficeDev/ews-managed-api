@@ -189,7 +189,7 @@ namespace Microsoft.Exchange.WebServices.Autodiscover
                         scpPtrLdapPath = scpDirEntry.Properties["serviceBindingInformation"][0] as string;
 
                         // If the SCP pointer matches the user's domain, then restart search from that point.
-                        if (entryKeywords.CaseInsensitiveContains(domainMatch))
+                        if (scpPtrLdapPath.CaseInsensitiveContains(domainMatch))
                         {
                             // Stop the current search, start another from a new location.
                             this.TraceMessage(
