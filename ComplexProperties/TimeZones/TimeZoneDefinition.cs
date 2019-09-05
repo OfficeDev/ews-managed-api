@@ -164,22 +164,6 @@ namespace Microsoft.Exchange.WebServices.Data
 
                     this.transitions.Add(transition);
                 }
-
-                // If the last adjustment rule's end date is not undefined (DateTime.MaxValue),
-                // we need to create another absolute date transition that occurs the date after
-                // the last rule's end date. We target this additional transition to a group that
-                // contains a single simple transition to the Standard period.
-                DateTime lastAdjustmentRuleEndDate = adjustmentRules[adjustmentRules.Length - 1].DateEnd;
-
-                if (lastAdjustmentRuleEndDate < DateTime.MaxValue.Date)
-                {
-                    AbsoluteDateTransition transitionToDummyGroup = new AbsoluteDateTransition(
-                        this,
-                        this.CreateTransitionGroupToPeriod(standardPeriod));
-                    transitionToDummyGroup.DateTime = lastAdjustmentRuleEndDate.AddDays(1);
-
-                    this.transitions.Add(transitionToDummyGroup);
-                }
             }
         }
 
