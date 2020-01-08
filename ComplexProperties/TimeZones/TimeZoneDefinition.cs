@@ -179,6 +179,8 @@ namespace Microsoft.Exchange.WebServices.Data
                     transitionToDummyGroup.DateTime = lastAdjustmentRuleEndDate.AddDays(1);
 
                     this.transitions.Add(transitionToDummyGroup);
+                    if(!this.periods.ContainsKey(standardPeriod.Id))
+	                    this.periods.Add(standardPeriod.Id, standardPeriod);
                 }
             }
         }
