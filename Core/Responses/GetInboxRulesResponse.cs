@@ -55,9 +55,9 @@ namespace Microsoft.Exchange.WebServices.Data
                 XmlNamespace.Messages, 
                 XmlElementNames.OutlookRuleBlobExists);
             reader.Read();
-            if (reader.IsStartElement(XmlNamespace.NotSpecified, XmlElementNames.InboxRules))
+            if (reader.IsStartElement(XmlNamespace.Messages, XmlElementNames.InboxRules))
             {
-                this.ruleCollection.LoadFromXml(reader, XmlNamespace.NotSpecified, XmlElementNames.InboxRules);
+                this.ruleCollection.LoadFromXml(reader, XmlNamespace.Messages, XmlElementNames.InboxRules);
             }
         }
 
