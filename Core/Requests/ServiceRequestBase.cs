@@ -108,7 +108,7 @@ namespace Microsoft.Exchange.WebServices.Data
 
         private static Stream WrapStream(Stream responseStream, string contentEncoding)
         {
-            if (contentEncoding == null)
+            if (string.IsNullOrWhiteSpace(contentEncoding))
             {
                 return responseStream;
             }
