@@ -27,11 +27,6 @@ namespace Microsoft.Exchange.WebServices.Data
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
-    using System.Net;
-    using System.Reflection;
-    using System.Text;
-    using System.Web.Services.Protocols;
     using System.Xml;
 
     /// <summary>

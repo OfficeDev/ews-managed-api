@@ -27,12 +27,14 @@ namespace Microsoft.Exchange.WebServices.Data
 {
     using System;
     using System.IO;
-    using System.IO.Compression;
     using System.Net;
-    using System.Text;
     using System.Threading;
     using System.Web;
     using System.Xml;
+
+#if NETSTANDARD2_0
+    using System.Net.Http;
+#endif
 
     /// <summary>
     /// Enumeration of reasons that a hanging request may disconnect.
@@ -242,12 +244,21 @@ namespace Microsoft.Exchange.WebServices.Data
                     this.Disconnect(HangingRequestDisconnectReason.Exception, ex);
                     return;
                 }
+#if NETSTANDARD2_0
+                catch (HttpRequestException ex)
+                {
+                    // Stream is closed, so disconnect.
+                    this.Disconnect(HangingRequestDisconnectReason.Exception, ex);
+                    return;
+                }
+#else
                 catch (HttpException ex)
                 {
                     // Stream is closed, so disconnect.
                     this.Disconnect(HangingRequestDisconnectReason.Exception, ex);
                     return;
                 }
+#endif
                 catch (WebException ex)
                 {
                     // Stream is closed, so disconnect.
