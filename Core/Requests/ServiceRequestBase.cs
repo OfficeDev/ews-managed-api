@@ -448,7 +448,7 @@ namespace Microsoft.Exchange.WebServices.Data
             // The overhead to implement a two-step async operation includes wait handle synchronization, exception handling and wrapping.
             // Therefore, we only leverage BeginGetResponse() and EndGetResponse() to provide the async functionality.
             // Reference: http://www.wintellect.com/CS/blogs/jeffreyr/archive/2009/02/08/httpwebrequest-its-request-stream-and-sending-data-in-chunks.aspx
-            return request.EndGetRequestStream(request.BeginGetRequestStream(null, null));
+            return request.GetRequestStream();
         }
 
         /// <summary>
