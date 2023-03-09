@@ -4539,7 +4539,7 @@ namespace Microsoft.Exchange.WebServices.Data
         #region eDiscovery/Compliance operations
 
         /// <summary>
-        /// Get dicovery search configuration
+        /// Get discovery search configuration
         /// </summary>
         /// <param name="searchId">Search Id</param>
         /// <param name="expandGroupMembership">True if want to expand group membership</param>
