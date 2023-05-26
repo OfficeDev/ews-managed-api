@@ -108,6 +108,7 @@
     <Compile Include="Core\Responses\GetUserPhotoResponse.cs" />
     <Compile Include="Core\Responses\SetOMEConfigurationResponse.cs" />
     <Compile Include="Core\Responses\RegisterConsentResponse.cs" />
+    <Compile Include="Core\ServiceObjects\Items\Booking.cs" />
     <Compile Include="Credentials\DualAuthCredentials.cs" />
     <Compile Include="Enumerations\ConsentState.cs" />
     <Compile Include="Enumerations\GetUserPhotoStatus.cs" />
@@ -879,41 +880,23 @@
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets. -->
   <UsingTask TaskName="DownloadFile" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
-
     <ParameterGroup>
-
       <Url ParameterType="System.String" Required="true" />
-
       <FileName ParameterType="System.String" Required="true" />
-
     </ParameterGroup>
-
     <Task>
-
       <Reference Include="System" />
-
-      <Code Type="Fragment" Language="cs">
-        <![CDATA[
+      <Code Type="Fragment" Language="cs"><![CDATA[
 		
           new System.Net.WebClient().DownloadFile(Url, FileName);
 		  
-        ]]>
-      </Code>
-
+        ]]></Code>
     </Task>
-
   </UsingTask>
-
   <Target Name="AfterBuild" Condition="'$(Configuration)' == 'Release'">
-
     <!-- Download nuget.exe if we need it -->
-
     <DownloadFile Condition="!Exists('$(OutputPath)\nuget.exe')" FileName="$(OutputPath)\nuget.exe" Url="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" />
-
     <!-- Pack up a nuget package -->
-
     <Exec Command="$(OutputPath)\nuget pack $(ProjectFileName) -Properties Configuration=Release -Symbols -OutputDirectory $(OutputPath) -IncludeReferencedProjects" />
-
   </Target>
- 
 </Project>

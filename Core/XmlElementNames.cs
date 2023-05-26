@@ -207,6 +207,7 @@ namespace Microsoft.Exchange.WebServices.Data
         public const string AccessLevel = "AccessLevel";
         public const string Presenters = "Presenters";
         public const string CalendarItem = "CalendarItem";
+        public const string Booking = "Booking";
         public const string CalendarFolder = "CalendarFolder";
         public const string Attendee = "Attendee";
         public const string ResponseType = "ResponseType";
