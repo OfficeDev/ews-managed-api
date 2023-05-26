@@ -72,6 +72,13 @@ namespace Microsoft.Exchange.WebServices.Data
                 delegate(ExchangeService srv) { return new Appointment(srv); },
                 delegate(ItemAttachment itemAttachment, bool isNew) { return new Appointment(itemAttachment, isNew); });
 
+            // Booking
+            this.AddServiceObjectType(
+                XmlElementNames.Booking,
+                typeof(Booking),
+                delegate (ExchangeService srv) { return new Booking(srv); },
+                delegate (ItemAttachment itemAttachment, bool isNew) { return new Appointment(itemAttachment, isNew); });
+
             // CalendarFolder
             this.AddServiceObjectType(
                 XmlElementNames.CalendarFolder,
