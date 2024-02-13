@@ -23,8 +23,6 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-using System.Drawing.Imaging;
-
 namespace Microsoft.Exchange.WebServices.Data
 {
     using System;
