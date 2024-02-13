@@ -67,25 +67,5 @@ namespace Microsoft.Exchange.WebServices.Data
         /// The status of the photo response
         /// </summary>
         public GetUserPhotoStatus Status { get; internal set; }
-
-        /// <summary>
-        /// Creates an image from the photo data
-        /// </summary>
-        /// <returns>The photo data as an Image</returns>
-        public Image AsImage()
-        {
-            if (this.Photo == null || this.Photo.Length == 0)
-            {
-                throw new InvalidOperationException("Cannot create image when no photo data returned.");
-            }
-
-            Image img;
-            using (MemoryStream stream = new MemoryStream(this.Photo))
-            {
-                img = Image.FromStream(stream);
-            }
-
-            return img;
-        }
     }
 }
