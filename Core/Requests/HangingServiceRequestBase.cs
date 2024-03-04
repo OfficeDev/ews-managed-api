@@ -180,7 +180,6 @@ namespace Microsoft.Exchange.WebServices.Data
         {
             try
             {
-                Guid traceId = Guid.Empty;
                 HangingTraceStream tracingStream = null;
                 MemoryStream responseCopy = null;
 
@@ -190,8 +189,10 @@ namespace Microsoft.Exchange.WebServices.Data
 
                     using (Stream responseStream = this.response.GetResponseStream())
                     {
-                        responseStream.ReadTimeout = 2 * this.heartbeatFrequencyMilliseconds;
                         tracingStream = new HangingTraceStream(responseStream, this.Service);
+                        
+                        if (tracingStream.CanTimeout)
+                            tracingStream.ReadTimeout = 2 * heartbeatFrequencyMilliseconds;
 
                         // EwsServiceMultiResponseXmlReader.Create causes a read.
                         if (traceEwsResponse)
